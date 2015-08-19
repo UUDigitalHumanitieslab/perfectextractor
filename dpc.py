@@ -10,6 +10,7 @@ def get_translated_lines(document, segment_number):
     """
     Returns the translated segment numbers (could be multiple) for a segment number in the original text.
     TODO: deal with 2 to 1 translations here.
+    TODO: add parameters to deal with the other way around.
     """
     alignment_tree = etree.parse(document + 'nl-en-tei.xml')
     for link in alignment_tree.xpath('//ns:link', namespaces=TEI):
@@ -48,7 +49,7 @@ def get_original_language(document):
     return metadata_tree.getroot().find('metaTrans').find('Original').get('lang')
 
 
-def check_present_perfect(element):
+def check_present_perfect(element, perfect_tag, check_ppc, ppc_lemma='be'):
     """
     Checks whether this element is the start of a present perfect (continuous).
     If it is, the present perfect is returned as a list.
@@ -60,10 +61,10 @@ def check_present_perfect(element):
     for sibling in element.itersiblings():
         pp.append(sibling.text)
         ana = sibling.get('ana')
-        if ana == 'VBN':
+        if ana == perfect_tag:
             is_pp = True
             # Check for present perfect continuous (by recursion)
-            if sibling.get('lemma') == 'be':
+            if check_ppc and sibling.get('lemma') == ppc_lemma:
                 ppc = check_present_perfect(sibling)
                 if ppc:
                     pp.extend(ppc[1:])
@@ -93,6 +94,7 @@ def process_folder(dir_name):
         for filename in glob.glob(dir_name + '/*[0-9]-en-tei.xml'):
             process_file(f, filename)
 
+
 def process_file(f, filename):
     """
     Processes a single file.
@@ -104,7 +106,7 @@ def process_file(f, filename):
     tree = etree.parse(filename)
     found = False
     for e in tree.xpath('//ns:w[@ana="VBZ" and @lemma="have"]', namespaces=TEI):
-        pp = check_present_perfect(e)
+        pp = check_present_perfect(e, 'VBN', True)
 
         if pp:
             found = True
