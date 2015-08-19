@@ -48,6 +48,42 @@ def get_original_language(document):
     return metadata_tree.getroot().find('metaTrans').find('Original').get('lang')
 
 
+def check_present_perfect(element):
+    """
+    Checks whether this element is the start of a present perfect (continuous).
+    If it is, the present perfect is returned as a list.
+    If not, None is returned.
+    """
+    pp = [element.text]
+    is_pp = False
+
+    for sibling in element.itersiblings():
+        pp.append(sibling.text)
+        ana = sibling.get('ana')
+        if ana == 'VBN':
+            is_pp = True
+            # Check for present perfect continuous (by recursion)
+            if sibling.get('lemma') == 'be':
+                ppc = check_present_perfect(sibling)
+                if ppc:
+                    pp.extend(ppc[1:])
+            break
+        # Stop looking at punctuation
+        if ana in [",", "."]:
+            break
+
+    return pp if is_pp else None
+
+
+def get_marked_sentence(e, pp):
+    """
+    Retrieve the full sentence for an element and mark the pp in there.
+    TODO: this is a bit iffy, another idea could be to compose the sentence from the remaining siblings
+    """
+    full_sentence = e.getparent().getprevious().text
+    return full_sentence.replace(' '.join(pp), '**' + ' '.join(pp) + '**')
+
+
 def process_folder(dir_name):
     """
     Creates a result file and processes each English file in a folder.
@@ -56,7 +92,6 @@ def process_folder(dir_name):
     with open(result_file, 'w') as f:
         for filename in glob.glob(dir_name + '/*[0-9]-en-tei.xml'):
             process_file(f, filename)
-
 
 def process_file(f, filename):
     """
@@ -69,22 +104,17 @@ def process_file(f, filename):
     tree = etree.parse(filename)
     found = False
     for e in tree.xpath('//ns:w[@ana="VBZ" and @lemma="have"]', namespaces=TEI):
-        next = e.getnext()
-        if next.get('ana') == 'VBN':
+        pp = check_present_perfect(e)
+
+        if pp:
             found = True
+            f.write('Present perfect: ' + ' '.join(pp) + '\n')
 
-            pp = e.text + ' ' + next.text
-            # Check for present perfect continuous
-            if next.get('lemma') == 'be' and next.getnext().get('ana') == 'VBN':
-                pp += ' ' + next.getnext().text
-            f.write('Present perfect: ' + pp + '\n')
-
-            # Write the complete segment
-            s = e.getparent()
-            f.write(s.getprevious().text.encode('utf-8') + '\n')
+            # Write the complete segment with mark-up
+            f.write(get_marked_sentence(e, pp).encode('utf-8') + '\n')
 
             # Find the translated lines
-            seg_n = s.getparent().get('n')[4:]
+            seg_n = e.getparent().getparent().get('n')[4:]
             translated_lines = get_translated_lines(document, seg_n)
             if translated_lines:
                 translated_tree = etree.parse(document + 'nl-tei.xml')
@@ -106,4 +136,4 @@ def process_file(f, filename):
 #process_folder('bal')
 
 if __name__ == "__main__":
-    process_folder('data/gru')
+    process_folder('data/bal')
