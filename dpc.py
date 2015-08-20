@@ -1,4 +1,5 @@
 import ConfigParser
+import codecs
 import glob
 import string
 
@@ -17,7 +18,7 @@ def get_line_by_number(tree, segment_number):
     result = '-'
     line = tree.xpath('//ns:s[@n="' + segment_number + '"]', namespaces=TEI)
     if line:
-        result = line[0].getprevious().text.encode('utf-8')
+        result = line[0].getprevious().text
     return result
 
 
@@ -54,6 +55,8 @@ class PerfectExtractor:
         """
         Returns the translated segment numbers (could be multiple) for a segment number in the original text.
 
+        The translation document file format either ends with nl-en-tei.xml or nl-fr-tei.xml.
+
         An alignment line looks like this:
             <link type="A: 1-1" targets="p1.s1; p1.s1"/>
         To get from NL to EN/FR, we have to find the segment number in the targets attribute BEFORE the semicolon.
@@ -63,8 +66,9 @@ class PerfectExtractor:
 
         TODO: deal with 2-to-1 alignments as well here.
         """
+        not_nl = self.l_to if self.l_from == NL else self.l_from
 
-        alignment_tree = etree.parse(document + 'nl-en-tei.xml')
+        alignment_tree = etree.parse(document + NL + '-' + not_nl + '-tei.xml')
         for link in alignment_tree.xpath('//ns:link', namespaces=TEI):
             targets = link.get('targets').split('; ')
             if segment_number in targets[1 - self.is_nl()].split(' '):
@@ -112,7 +116,7 @@ class PerfectExtractor:
         Creates a result file and processes each English file in a folder.
         """
         result_file = dir_name + '.txt'
-        with open(result_file, 'w') as f:
+        with codecs.open(result_file, 'w', 'utf-8') as f:
             for filename in glob.glob(dir_name + '/*[0-9]-' + self.l_from + '-tei.xml'):
                 self.process_file(f, filename)
 
@@ -134,7 +138,7 @@ class PerfectExtractor:
                 f.write('Present perfect: ' + ' '.join(pp) + '\n')
 
                 # Write the complete segment with mark-up
-                f.write(get_marked_sentence(e, pp).encode('utf-8') + '\n')
+                f.write(get_marked_sentence(e, pp) + '\n')
 
                 # Find the translated lines
                 seg_n = e.getparent().getparent().get('n')[4:]
@@ -163,5 +167,5 @@ if __name__ == "__main__":
     en_extractor.process_folder('data/bal')
     nl_extractor = PerfectExtractor('nl', 'en')
     nl_extractor.process_folder('data/gru')
-    #nl_extractor = PerfectExtractor('nl', 'fr')
-    #nl_extractor.process_folder('data/mok')
+    nl_extractor = PerfectExtractor('nl', 'fr')
+    nl_extractor.process_folder('data/mok')
