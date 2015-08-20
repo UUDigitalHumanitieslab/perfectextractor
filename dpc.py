@@ -1,5 +1,6 @@
-import glob
 import ConfigParser
+import glob
+import string
 
 from lxml import etree
 
@@ -78,7 +79,7 @@ class PerfectExtractor:
 
     def check_present_perfect(self, element, check_ppc=True):
         """
-        Checks whether this element is the start of a present perfect (continuous).
+        Checks whether this element is the start of a present perfect (or pp continuous).
         If it is, the present perfect is returned as a list.
         If not, None is returned.
         """
@@ -91,17 +92,17 @@ class PerfectExtractor:
 
         for sibling in element.itersiblings():
             pp.append(sibling.text)
-            ana = sibling.get('ana')
-            if ana == perfect_tag:
+            # We found a perfect...
+            if sibling.get('ana') == perfect_tag:
                 is_pp = True
-                # Check for present perfect continuous (by recursion)
+                # ... now check whether this is a present perfect continuous (by recursion)
                 if check_ppc and sibling.get('lemma') == ppc_lemma:
-                    ppc = self.check_present_perfect(sibling, check_ppc)
+                    ppc = self.check_present_perfect(sibling, False)
                     if ppc:
                         pp.extend(ppc[1:])
                 break
             # Stop looking at punctuation
-            if ana in [",", "."]:
+            if sibling.text in string.punctuation:
                 break
 
         return pp if is_pp else None
@@ -160,5 +161,7 @@ class PerfectExtractor:
 if __name__ == "__main__":
     en_extractor = PerfectExtractor('en', 'nl')
     en_extractor.process_folder('data/bal')
-    #nl_extractor = PerfectExtractor('nl', 'en')
-    #nl_extractor.process_folder('data/gru')
+    nl_extractor = PerfectExtractor('nl', 'en')
+    nl_extractor.process_folder('data/gru')
+    #nl_extractor = PerfectExtractor('nl', 'fr')
+    #nl_extractor.process_folder('data/mok')
