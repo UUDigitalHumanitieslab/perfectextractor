@@ -4,6 +4,7 @@ import ConfigParser
 from lxml import etree
 
 TEI = {'ns': 'http://www.tei-c.org/ns/1.0'}
+NL = 'nl'
 
 
 def get_line_by_number(tree, segment_number):
@@ -45,17 +46,28 @@ class PerfectExtractor:
         config.read('dpc.cfg')
         self.config = config
 
+    def is_nl(self):
+        return int(self.l_from == NL)
+
     def get_translated_lines(self, document, segment_number):
         """
         Returns the translated segment numbers (could be multiple) for a segment number in the original text.
-        TODO: deal with 2 to 1 translations here.
-        TODO: add parameters to deal with the other way around.
+
+        An alignment line looks like this:
+            <link type="A: 1-1" targets="p1.s1; p1.s1"/>
+        To get from NL to EN/FR, we have to find the segment number in the targets attribute BEFORE the semicolon.
+        For the reverse pattern, we have to find the segment number in the targets attribute AFTER the semicolon.
+
+        This function supports 1-to-2 alignments, as it will return the translated lines as a list.
+
+        TODO: deal with 2-to-1 alignments as well here.
         """
+
         alignment_tree = etree.parse(document + 'nl-en-tei.xml')
         for link in alignment_tree.xpath('//ns:link', namespaces=TEI):
-            targets = link.get('targets').split(';')
-            if segment_number in targets[1].split(' '):
-                return targets[0].split(' ')
+            targets = link.get('targets').split('; ')
+            if segment_number in targets[1 - self.is_nl()].split(' '):
+                return targets[self.is_nl()].split(' ')
 
     def get_original_language(self, document):
         """
@@ -127,7 +139,7 @@ class PerfectExtractor:
                 seg_n = e.getparent().getparent().get('n')[4:]
                 translated_lines = self.get_translated_lines(document, seg_n)
                 if translated_lines:
-                    translated_tree = etree.parse(document + self.l_from + '-tei.xml')
+                    translated_tree = etree.parse(document + self.l_to + '-tei.xml')
                     for t in translated_lines:
                         #f.write(get_line_by_number(translated_tree, get_adjacent_line_number(t, -1)) + '\n')
                         f.write(get_line_by_number(translated_tree, t) + '\n')
@@ -148,5 +160,5 @@ class PerfectExtractor:
 if __name__ == "__main__":
     en_extractor = PerfectExtractor('en', 'nl')
     en_extractor.process_folder('data/bal')
-    nl_extractor = PerfectExtractor('nl', 'en')
-    nl_extractor.process_folder('data/gru')
+    #nl_extractor = PerfectExtractor('nl', 'en')
+    #nl_extractor.process_folder('data/gru')
