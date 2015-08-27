@@ -7,6 +7,7 @@ from lxml import etree
 
 TEI = {'ns': 'http://www.tei-c.org/ns/1.0'}
 NL = 'nl'
+MARKUP = u'**{}**'
 
 
 def get_line_by_number(tree, segment_number):
@@ -36,8 +37,20 @@ def get_marked_sentence(e, pp):
     Retrieve the full sentence for an element and mark the pp in there.
     TODO: this is a bit iffy, another idea could be to compose the sentence from the remaining siblings
     """
+    # Retrieve the full sentence for this element
     full_sentence = e.getparent().getprevious().text
-    return full_sentence.replace(' '.join(pp), '**' + ' '.join(pp) + '**')
+    
+    # To find the pp in the full text, just join all the parts of the pp
+    pp_text = ' '.join([part for (part, _) in pp])
+
+    # For the replacement, mark the verbs with the MARKUP
+    pp_verbs = [part for (part, is_verb) in pp if is_verb]
+    if len(pp) == len(pp_verbs):
+        marked_pp = MARKUP.format(pp_text)
+    else:
+        marked_pp = ' '.join([MARKUP.format(part) if is_verb else part for (part, is_verb) in pp])
+    
+    return full_sentence.replace(pp_text, marked_pp)
 
 
 class PerfectExtractor:
@@ -94,13 +107,14 @@ class PerfectExtractor:
         check_ppc = check_ppc and self.config.getboolean(self.l_from, 'ppc')
         ppc_lemma = self.config.get(self.l_from, 'ppc_lemma')
 
-        pp = [element.text]
-        is_pp = False
+        # Collect all parts of the present perfect as tuples with text and whether it's verb
+        pp = [(element.text, True)]
 
+        is_pp = False
         for sibling in element.itersiblings():
-            pp.append(sibling.text)
-            # We found a perfect...
+            # If the tag of the sibling is the perfect tag, we found a present perfect! 
             if sibling.get('ana') == perfect_tag:
+                pp.append((sibling.text, True))
                 is_pp = True
                 # ... now check whether this is a present perfect continuous (by recursion)
                 if check_ppc and sibling.get('lemma') == ppc_lemma:
@@ -109,8 +123,11 @@ class PerfectExtractor:
                         pp.extend(ppc[1:])
                 break
             # Stop looking at punctuation
-            if sibling.text in string.punctuation:
+            elif sibling.text in string.punctuation:
                 break
+            # No break? Then add as a non-verb part
+            else: 
+                pp.append((sibling.text, False))
 
         return pp if is_pp else None
 
@@ -138,7 +155,8 @@ class PerfectExtractor:
 
             if pp:
                 found = True
-                f.write('Present perfect: ' + ' '.join(pp) + '\n')
+                pp_text = [part for (part, is_verb) in pp if is_verb]
+                f.write('Present perfect: ' + ' '.join(pp_text) + '\n')
 
                 # Write the complete segment with mark-up
                 f.write(get_marked_sentence(e, pp) + '\n')
