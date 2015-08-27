@@ -115,7 +115,7 @@ class PerfectExtractor:
         """
         Creates a result file and processes each English file in a folder.
         """
-        result_file = dir_name + '.txt'
+        result_file = '-'.join([dir_name, self.l_from, self.l_to]) + '.txt'
         with codecs.open(result_file, 'w', 'utf-8') as f:
             for filename in glob.glob(dir_name + '/*[0-9]-' + self.l_from + '-tei.xml'):
                 self.process_file(f, filename)
@@ -163,9 +163,9 @@ class PerfectExtractor:
 #process_folder('bal')
 
 if __name__ == "__main__":
-    en_extractor = PerfectExtractor('en', 'nl')
-    en_extractor.process_folder('data/bal')
+    #en_extractor = PerfectExtractor('en', 'nl')
+    #en_extractor.process_folder('data/bal')
     nl_extractor = PerfectExtractor('nl', 'en')
-    nl_extractor.process_folder('data/gru')
-    nl_extractor = PerfectExtractor('nl', 'fr')
-    nl_extractor.process_folder('data/mok')
+    nl_extractor.process_folder('data/bal')
+    #nl_extractor = PerfectExtractor('nl', 'fr')
+    #nl_extractor.process_folder('data/mok')
