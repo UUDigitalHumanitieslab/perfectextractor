@@ -103,9 +103,10 @@ class PerfectExtractor:
         If it is, the present perfect is returned as a list.
         If not, None is returned.
         """
-        perfect_tag = self.config.get(self.l_from, 'stop_tag')
+        perfect_tag = self.config.get(self.l_from, 'perfect_tag')
         check_ppc = check_ppc and self.config.getboolean(self.l_from, 'ppc')
         ppc_lemma = self.config.get(self.l_from, 'ppc_lemma')
+        stop_tags = tuple(self.config.get(self.l_from, 'stop_tags').split(','))
 
         # Collect all parts of the present perfect as tuples with text and whether it's verb
         pp = [(element.text, True)]
@@ -122,8 +123,8 @@ class PerfectExtractor:
                     if ppc:
                         pp.extend(ppc[1:])
                 break
-            # Stop looking at punctuation
-            elif sibling.text in string.punctuation:
+            # Stop looking at punctuation or stop tags
+            elif sibling.text in string.punctuation or sibling.get('ana').startswith(stop_tags):
                 break
             # No break? Then add as a non-verb part
             else: 
