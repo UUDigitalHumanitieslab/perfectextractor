@@ -49,6 +49,9 @@ class PerfectExtractor:
         self.config = config
 
     def is_nl(self):
+        """
+        Returns whether the current from language is Dutch (as integer).
+        """
         return int(self.l_from == NL)
 
     def get_translated_lines(self, document, segment_number):
@@ -66,7 +69,7 @@ class PerfectExtractor:
 
         TODO: deal with 2-to-1 alignments as well here.
         """
-        not_nl = self.l_to if self.l_from == NL else self.l_from
+        not_nl = self.l_to if self.is_nl() else self.l_from
 
         alignment_tree = etree.parse(document + NL + '-' + not_nl + '-tei.xml')
         for link in alignment_tree.xpath('//ns:link', namespaces=TEI):
