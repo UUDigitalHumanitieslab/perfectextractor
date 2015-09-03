@@ -1,5 +1,7 @@
 import ConfigParser
 import codecs
+import csv
+import cStringIO
 import glob
 import string
 
@@ -52,6 +54,35 @@ def get_marked_sentence(e, pp):
     
     return full_sentence.replace(pp_text, marked_pp)
 
+
+class UnicodeWriter:
+    """
+    A CSV writer which will write rows to CSV file "f",
+    which is encoded in the given encoding.
+    """
+
+    def __init__(self, f, dialect=csv.excel, encoding="utf-8", **kwds):
+        # Redirect output to a queue
+        self.queue = cStringIO.StringIO()
+        self.writer = csv.writer(self.queue, dialect=dialect, **kwds)
+        self.stream = f
+        self.encoder = codecs.getincrementalencoder(encoding)()
+
+    def writerow(self, row):
+        self.writer.writerow([s.encode("utf-8") for s in row])
+        # Fetch UTF-8 output from the queue ...
+        data = self.queue.getvalue()
+        data = data.decode("utf-8")
+        # ... and reencode it into the target encoding
+        data = self.encoder.encode(data)
+        # write to the target stream
+        self.stream.write(data)
+        # empty queue
+        self.queue.truncate(0)
+
+    def writerows(self, rows):
+        for row in rows:
+            self.writerow(row)
 
 class PerfectExtractor:
     def __init__(self, language_from, language_to):
@@ -161,47 +192,53 @@ class PerfectExtractor:
         """
         Creates a result file and processes each English file in a folder.
         """
-        result_file = '-'.join([dir_name, self.l_from, self.l_to]) + '.txt'
-        with codecs.open(result_file, 'w', 'utf-8') as f:
+        result_file = '-'.join([dir_name, self.l_from, self.l_to]) + '.csv'
+        with open(result_file, 'wb') as f:
+            f.write(u'\uFEFF'.encode('utf-8'))  # the UTF-8 BOM to hint Excel we are using that...
+            csv_writer = UnicodeWriter(f, delimiter=';', quoting=csv.QUOTE_MINIMAL)
+            csv_writer.writerow(['document', 'original_language', 'present perfect', self.l_from, self.l_to])
             for filename in glob.glob(dir_name + '/*[0-9]-' + self.l_from + '-tei.xml'):
-                self.process_file(f, filename)
+                results = self.process_file(filename)
+                csv_writer.writerows(results)
 
-    def process_file(self, f, filename):
+    def process_file(self, filename):
         """
         Processes a single file.
         """
         document = filename.split(self.l_from + '-tei.xml')[0]
-        f.write('Document: ' + document[:-1] + '\n')
-        f.write('Original language: ' + self.get_original_language(document) + '\n')
+        results = []
 
         tree = etree.parse(filename)
-        found = False
         for e in tree.xpath(self.config.get(self.l_from, 'xpath'), namespaces=TEI):
             pp = self.check_present_perfect(e)
 
             if pp:
-                found = True
+                result = [document[:-1], self.get_original_language(document)]
+
                 pp_text = [part for (part, is_verb) in pp if is_verb]
-                f.write('Present perfect: ' + ' '.join(pp_text) + '\n')
+                result.append(' '.join(pp_text))
 
                 # Write the complete segment with mark-up
-                f.write(get_marked_sentence(e, pp) + '\n')
+                result.append(get_marked_sentence(e, pp))
 
                 # Find the translated lines
                 seg_n = e.getparent().getparent().get('n')[4:]
                 translated_lines = self.get_translated_lines(document, seg_n)
                 if translated_lines:
                     translated_tree = etree.parse(document + self.l_to + '-tei.xml')
+                    lines = []
                     for t in translated_lines:
                         #f.write(get_line_by_number(translated_tree, get_adjacent_line_number(t, -1)) + '\n')
-                        f.write(get_line_by_number(translated_tree, t) + '\n')
+                        lines.append(get_line_by_number(translated_tree, t))
                         #f.write(get_line_by_number(translated_tree, get_adjacent_line_number(t, 1)) + '\n')
-                    f.write('\n')
+                    result.append('\n'.join(lines))
                 else:
-                    f.write('Not translated\n\n')
+                    result.append('Not translated')
 
-        if not found:
-            f.write('No present perfects found in this document\n\n')
+                results.append(result)
+
+        return results
+
 
 #for root, dirs, files in os.walk(os.getcwd()):
 #    for d in dirs:
@@ -214,5 +251,5 @@ if __name__ == "__main__":
     #en_extractor.process_folder('data/bal')
     nl_extractor = PerfectExtractor('nl', 'en')
     nl_extractor.process_folder('data/bal')
-    fr_extractor = PerfectExtractor('fr', 'nl')
-    fr_extractor.process_folder('data/mok')
+    #fr_extractor = PerfectExtractor('fr', 'nl')
+    #fr_extractor.process_folder('data/mok')
