@@ -57,9 +57,17 @@ class PerfectExtractor:
     def __init__(self, language_from, language_to):
         self.l_from = language_from
         self.l_to = language_to
+
+        # Read the config
         config = ConfigParser.RawConfigParser()
-        config.read('dpc.cfg')
+        config.readfp(codecs.open('dpc.cfg', 'r', 'utf8'))
         self.config = config
+
+        # Read the list of verbs that use 'to be' as auxiliary verb
+        self.aux_be_list = []
+        if self.config.get(self.l_from, 'lexical_bound'):
+            with codecs.open(self.l_from + '_aux_be.txt', 'rb', 'utf-8') as lexicon:
+                self.aux_be_list = lexicon.read().split()
 
     def is_nl(self):
         """
@@ -97,6 +105,20 @@ class PerfectExtractor:
         metadata_tree = etree.parse(document + self.l_from + '-mtd.xml')
         return metadata_tree.getroot().find('metaTrans').find('Original').get('lang')
 
+    def is_lexically_bound(self, aux_verb, perfect):
+        """
+        Checks if the perfect is lexically bound to the auxiliary verb.
+        If not, we are not dealing with a present perfect here.
+        """
+        aux_be = self.config.get(self.l_from, 'lexical_bound')
+
+        # If lexical bounds do not exist or we're dealing with an auxiliary verb that is unbound, return True
+        if not aux_be or aux_verb.get('lemma') != aux_be:
+            return True
+        # Else, check whether the perfect is in the list of bound verbs
+        else:
+            return perfect.get('lemma') in self.aux_be_list
+
     def check_present_perfect(self, element, check_ppc=True):
         """
         Checks whether this element is the start of a present perfect (or pp continuous).
@@ -115,6 +137,9 @@ class PerfectExtractor:
         for sibling in element.itersiblings():
             # If the tag of the sibling is the perfect tag, we found a present perfect! 
             if sibling.get('ana') == perfect_tag:
+                # Check if the sibling is lexically bound to the auxiliary verb
+                if not self.is_lexically_bound(element, sibling):
+                    break
                 pp.append((sibling.text, True))
                 is_pp = True
                 # ... now check whether this is a present perfect continuous (by recursion)
@@ -189,5 +214,5 @@ if __name__ == "__main__":
     #en_extractor.process_folder('data/bal')
     nl_extractor = PerfectExtractor('nl', 'en')
     nl_extractor.process_folder('data/bal')
-    #nl_extractor = PerfectExtractor('nl', 'fr')
-    #nl_extractor.process_folder('data/mok')
+    fr_extractor = PerfectExtractor('fr', 'nl')
+    fr_extractor.process_folder('data/mok')
