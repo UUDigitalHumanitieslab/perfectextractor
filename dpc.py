@@ -196,7 +196,7 @@ class PerfectExtractor:
         with open(result_file, 'wb') as f:
             f.write(u'\uFEFF'.encode('utf-8'))  # the UTF-8 BOM to hint Excel we are using that...
             csv_writer = UnicodeWriter(f, delimiter=';', quoting=csv.QUOTE_MINIMAL)
-            csv_writer.writerow(['document', 'original_language', 'present perfect', self.l_from, self.l_to])
+            csv_writer.writerow(['document', 'original_language', 'present perfect', 'words between', self.l_from, self.l_to])
             for filename in glob.glob(dir_name + '/*[0-9]-' + self.l_from + '-tei.xml'):
                 results = self.process_file(filename)
                 csv_writer.writerows(results)
@@ -216,7 +216,9 @@ class PerfectExtractor:
                 result = [document[:-1], self.get_original_language(document)]
 
                 pp_text = [part for (part, is_verb) in pp if is_verb]
+                words_between = [part for (part, is_verb) in pp if not is_verb]
                 result.append(' '.join(pp_text))
+                result.append(str(len(words_between)))
 
                 # Write the complete segment with mark-up
                 result.append(get_marked_sentence(e, pp))
@@ -251,5 +253,5 @@ if __name__ == "__main__":
     #en_extractor.process_folder('data/bal')
     nl_extractor = PerfectExtractor('nl', 'en')
     nl_extractor.process_folder('data/bal')
-    #fr_extractor = PerfectExtractor('fr', 'nl')
-    #fr_extractor.process_folder('data/mok')
+    fr_extractor = PerfectExtractor('fr', 'nl')
+    fr_extractor.process_folder('data/mok')
