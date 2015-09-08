@@ -1,11 +1,10 @@
 import ConfigParser
 import codecs
-import csv
-import cStringIO
 import glob
 import string
 
 from lxml import etree
+from csv_utils import UnicodeWriter
 
 TEI = {'ns': 'http://www.tei-c.org/ns/1.0'}
 NL = 'nl'
@@ -54,35 +53,6 @@ def get_marked_sentence(e, pp):
     
     return full_sentence.replace(pp_text, marked_pp)
 
-
-class UnicodeWriter:
-    """
-    A CSV writer which will write rows to CSV file "f",
-    which is encoded in the given encoding.
-    """
-
-    def __init__(self, f, dialect=csv.excel, encoding="utf-8", **kwds):
-        # Redirect output to a queue
-        self.queue = cStringIO.StringIO()
-        self.writer = csv.writer(self.queue, dialect=dialect, **kwds)
-        self.stream = f
-        self.encoder = codecs.getincrementalencoder(encoding)()
-
-    def writerow(self, row):
-        self.writer.writerow([s.encode("utf-8") for s in row])
-        # Fetch UTF-8 output from the queue ...
-        data = self.queue.getvalue()
-        data = data.decode("utf-8")
-        # ... and reencode it into the target encoding
-        data = self.encoder.encode(data)
-        # write to the target stream
-        self.stream.write(data)
-        # empty queue
-        self.queue.truncate(0)
-
-    def writerows(self, rows):
-        for row in rows:
-            self.writerow(row)
 
 class PerfectExtractor:
     def __init__(self, language_from, language_to):
@@ -195,7 +165,7 @@ class PerfectExtractor:
         result_file = '-'.join([dir_name, self.l_from, self.l_to]) + '.csv'
         with open(result_file, 'wb') as f:
             f.write(u'\uFEFF'.encode('utf-8'))  # the UTF-8 BOM to hint Excel we are using that...
-            csv_writer = UnicodeWriter(f, delimiter=';', quoting=csv.QUOTE_MINIMAL)
+            csv_writer = UnicodeWriter(f, delimiter=';')
             csv_writer.writerow(['document', 'original_language', 'present perfect', 'words between', self.l_from, self.l_to])
             for filename in glob.glob(dir_name + '/*[0-9]-' + self.l_from + '-tei.xml'):
                 results = self.process_file(filename)
