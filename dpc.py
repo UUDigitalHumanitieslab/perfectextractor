@@ -11,17 +11,11 @@ NL = 'nl'
 MARKUP = u'**{}**'
 
 
-def get_line_by_number(tree, segment_number):
+def pp_to_text(pp):
     """
-    Returns the line for a segment number.
-    TODO: handle not found here.
-    TODO: handle more than one here? => bug
+    Turns a present perfect into text.
     """
-    result = '-'
-    line = tree.xpath('//ns:s[@n="' + segment_number + '"]', namespaces=TEI)
-    if line:
-        result = line[0].getprevious().text
-    return result
+    return ' '.join([part for (part, is_verb) in pp if is_verb])
 
 
 def get_adjacent_line_number(segment_number, i):
@@ -33,14 +27,11 @@ def get_adjacent_line_number(segment_number, i):
     return split[0] + 's' + str(adj)
 
 
-def get_marked_sentence(e, pp):
+def get_marked_sentence(sentence, pp):
     """
-    Retrieve the full sentence for an element and mark the pp in there.
+    Marks the present perfect in a full sentence.
     TODO: this is a bit iffy, another idea could be to compose the sentence from the remaining siblings
-    """
-    # Retrieve the full sentence for this element
-    full_sentence = e.getparent().getprevious().text
-    
+    """    
     # To find the pp in the full text, just join all the parts of the pp
     pp_text = ' '.join([part for (part, _) in pp])
 
@@ -51,7 +42,7 @@ def get_marked_sentence(e, pp):
     else:
         marked_pp = ' '.join([MARKUP.format(part) if is_verb else part for (part, is_verb) in pp])
     
-    return full_sentence.replace(pp_text, marked_pp)
+    return sentence.replace(pp_text, marked_pp)
 
 
 class PerfectExtractor:
@@ -99,6 +90,26 @@ class PerfectExtractor:
             if segment_number in targets[1 - self.is_nl()].split(' '):
                 return targets[self.is_nl()].split(' ')
 
+    def get_line_by_number(self, tree, segment_number):
+        """
+        Returns the line for a segment number.
+        TODO: handle more than one here? => bug
+        """
+        sentence = '-'
+        pp = None
+
+        line = tree.xpath('//ns:s[@n="' + segment_number + '"]', namespaces=TEI)
+        if line:
+            s = line[0]
+            sentence = s.getprevious().text
+            for e in s.xpath(self.config.get(self.l_to, 'xpath'), namespaces=TEI):
+                pp = self.check_present_perfect(e, self.l_to)
+                if pp: 
+                    sentence = get_marked_sentence(s.getprevious().text, pp)
+                    break
+
+        return sentence, pp
+
     def get_original_language(self, document):
         """
         Returns the original language for a document.
@@ -120,16 +131,16 @@ class PerfectExtractor:
         else:
             return perfect.get('lemma') in self.aux_be_list
 
-    def check_present_perfect(self, element, check_ppc=True):
+    def check_present_perfect(self, element, language, check_ppc=True):
         """
         Checks whether this element is the start of a present perfect (or pp continuous).
         If it is, the present perfect is returned as a list.
         If not, None is returned.
         """
-        perfect_tag = self.config.get(self.l_from, 'perfect_tag')
-        check_ppc = check_ppc and self.config.getboolean(self.l_from, 'ppc')
-        ppc_lemma = self.config.get(self.l_from, 'ppc_lemma')
-        stop_tags = tuple(self.config.get(self.l_from, 'stop_tags').split(','))
+        perfect_tag = self.config.get(language, 'perfect_tag')
+        check_ppc = check_ppc and self.config.getboolean(language, 'ppc')
+        ppc_lemma = self.config.get(language, 'ppc_lemma')
+        stop_tags = tuple(self.config.get(language, 'stop_tags').split(','))
 
         # Collect all parts of the present perfect as tuples with text and whether it's verb
         pp = [(element.text, True)]
@@ -145,7 +156,7 @@ class PerfectExtractor:
                 is_pp = True
                 # ... now check whether this is a present perfect continuous (by recursion)
                 if check_ppc and sibling.get('lemma') == ppc_lemma:
-                    ppc = self.check_present_perfect(sibling, False)
+                    ppc = self.check_present_perfect(sibling, language, False)
                     if ppc:
                         pp.extend(ppc[1:])
                 break
@@ -166,7 +177,15 @@ class PerfectExtractor:
         with open(result_file, 'wb') as f:
             f.write(u'\uFEFF'.encode('utf-8'))  # the UTF-8 BOM to hint Excel we are using that...
             csv_writer = UnicodeWriter(f, delimiter=';')
-            csv_writer.writerow(['document', 'original_language', 'present perfect', 'words between', self.l_from, self.l_to])
+            csv_writer.writerow([
+                'document',
+                'original_language',
+                'present perfect' + self.l_from,
+                'present perfect' + self.l_to,
+                #'words between',
+                self.l_from,
+                self.l_to])
+
             for filename in glob.glob(dir_name + '/*[0-9]-' + self.l_from + '-tei.xml'):
                 results = self.process_file(filename)
                 csv_writer.writerows(results)
@@ -179,32 +198,41 @@ class PerfectExtractor:
         results = []
 
         tree = etree.parse(filename)
-        for e in tree.xpath(self.config.get(self.l_from, 'xpath'), namespaces=TEI):
-            pp = self.check_present_perfect(e)
+        for e in tree.xpath('//' + self.config.get(self.l_from, 'xpath'), namespaces=TEI):
+            pp = self.check_present_perfect(e, self.l_from)
 
             if pp:
                 result = [document[:-1], self.get_original_language(document)]
 
-                pp_text = [part for (part, is_verb) in pp if is_verb]
-                words_between = [part for (part, is_verb) in pp if not is_verb]
-                result.append(' '.join(pp_text))
-                result.append(str(len(words_between)))
+                result.append(pp_to_text(pp))
+                #words_between = [part for (part, is_verb) in pp if not is_verb]
+                #result.append(str(len(words_between)))
 
                 # Write the complete segment with mark-up
-                result.append(get_marked_sentence(e, pp))
+                marked_sentence = get_marked_sentence(e.getparent().getprevious().text, pp)
 
                 # Find the translated lines
                 seg_n = e.getparent().getparent().get('n')[4:]
                 translated_lines = self.get_translated_lines(document, seg_n)
                 if translated_lines:
                     translated_tree = etree.parse(document + self.l_to + '-tei.xml')
+                    translated_pps = []
                     lines = []
                     for t in translated_lines:
                         #f.write(get_line_by_number(translated_tree, get_adjacent_line_number(t, -1)) + '\n')
-                        lines.append(get_line_by_number(translated_tree, t))
+                        translation, translated_pp = self.get_line_by_number(translated_tree, t)
+                        if translated_pp: 
+                            translated_pps.append(pp_to_text(translated_pp))
+                        else:
+                            translated_pps.append('-')
+                        lines.append(translation)
                         #f.write(get_line_by_number(translated_tree, get_adjacent_line_number(t, 1)) + '\n')
+                    result.append('\n'.join(translated_pps))
+                    result.append(marked_sentence)
                     result.append('\n'.join(lines))
                 else:
+                    result.append('Not translated')
+                    result.append(marked_sentence)
                     result.append('Not translated')
 
                 results.append(result)
@@ -219,9 +247,9 @@ class PerfectExtractor:
 #process_folder('bal')
 
 if __name__ == "__main__":
-    #en_extractor = PerfectExtractor('en', 'nl')
-    #en_extractor.process_folder('data/bal')
+    en_extractor = PerfectExtractor('en', 'nl')
+    en_extractor.process_folder('data/bal_small')
     nl_extractor = PerfectExtractor('nl', 'en')
-    nl_extractor.process_folder('data/bal')
-    fr_extractor = PerfectExtractor('fr', 'nl')
-    fr_extractor.process_folder('data/mok')
+    nl_extractor.process_folder('data/bal_small')
+    #fr_extractor = PerfectExtractor('fr', 'nl')
+    #fr_extractor.process_folder('data/mok')
