@@ -2,6 +2,7 @@ import ConfigParser
 import codecs
 import glob
 import string
+import os
 
 from lxml import etree
 from csv_utils import UnicodeWriter
@@ -31,7 +32,7 @@ def get_marked_sentence(sentence, pp):
     """
     Marks the present perfect in a full sentence.
     TODO: this is a bit iffy, another idea could be to compose the sentence from the remaining siblings
-    """    
+    """
     # To find the pp in the full text, just join all the parts of the pp
     pp_text = ' '.join([part for (part, _) in pp])
 
@@ -46,9 +47,9 @@ def get_marked_sentence(sentence, pp):
 
 
 class PerfectExtractor:
-    def __init__(self, language_from, language_to):
+    def __init__(self, language_from, languages_to):
         self.l_from = language_from
-        self.l_to = language_to
+        self.l_to = languages_to
 
         # Read the config
         config = ConfigParser.RawConfigParser()
@@ -67,7 +68,7 @@ class PerfectExtractor:
         """
         return int(self.l_from == NL)
 
-    def get_translated_lines(self, document, segment_number):
+    def get_translated_lines(self, document, language_to, segment_number):
         """
         Returns the translated segment numbers (could be multiple) for a segment number in the original text.
 
@@ -82,15 +83,21 @@ class PerfectExtractor:
 
         TODO: deal with 2-to-1 alignments as well here.
         """
-        not_nl = self.l_to if self.is_nl() else self.l_from
+        not_nl = language_to if language_to != NL else self.l_from
+        alignment_file = document + NL + '-' + not_nl + '-tei.xml'
 
-        alignment_tree = etree.parse(document + NL + '-' + not_nl + '-tei.xml')
-        for link in alignment_tree.xpath('//ns:link', namespaces=TEI):
-            targets = link.get('targets').split('; ')
-            if segment_number in targets[1 - self.is_nl()].split(' '):
-                return targets[self.is_nl()].split(' ')
+        result = []
+        if os.path.isfile(alignment_file):
+            alignment_tree = etree.parse(alignment_file)
+            for link in alignment_tree.xpath('//ns:link', namespaces=TEI):
+                targets = link.get('targets').split('; ')
+                if segment_number in targets[1 - self.is_nl()].split(' '):
+                    result = targets[self.is_nl()].split(' ')
+                    break
 
-    def get_line_by_number(self, tree, segment_number):
+        return result
+
+    def get_line_by_number(self, tree, language_to, segment_number):
         """
         Returns the line for a segment number.
         TODO: handle more than one here? => bug
@@ -102,8 +109,8 @@ class PerfectExtractor:
         if line:
             s = line[0]
             sentence = s.getprevious().text
-            for e in s.xpath(self.config.get(self.l_to, 'xpath'), namespaces=TEI):
-                pp = self.check_present_perfect(e, self.l_to)
+            for e in s.xpath(self.config.get(language_to, 'xpath'), namespaces=TEI):
+                pp = self.check_present_perfect(e, language_to)
                 if pp: 
                     sentence = get_marked_sentence(s.getprevious().text, pp)
                     break
@@ -169,22 +176,41 @@ class PerfectExtractor:
 
         return pp if is_pp else None
 
+    def find_translated_present_perfects(self, document, language_to, translated_lines):
+        translated_pps = []
+        lines = []
+
+        if translated_lines:
+            translated_tree = etree.parse(document + language_to + '-tei.xml')
+            for t in translated_lines:
+                #f.write(get_line_by_number(translated_tree, get_adjacent_line_number(t, -1)) + '\n')
+                translation, translated_pp = self.get_line_by_number(translated_tree, language_to, t)
+                translated_pp = pp_to_text(translated_pp) if translated_pp else '-'
+                
+                translated_pps.append(translated_pp)
+                lines.append(translation)
+                #f.write(get_line_by_number(translated_tree, get_adjacent_line_number(t, 1)) + '\n')
+
+        return translated_pps, lines
+
     def process_folder(self, dir_name):
         """
-        Creates a result file and processes each English file in a folder.
+        Creates a result file and processes each file in a folder.
         """
-        result_file = '-'.join([dir_name, self.l_from, self.l_to]) + '.csv'
+        result_file = '-'.join([dir_name, self.l_from]) + '.csv'
         with open(result_file, 'wb') as f:
             f.write(u'\uFEFF'.encode('utf-8'))  # the UTF-8 BOM to hint Excel we are using that...
             csv_writer = UnicodeWriter(f, delimiter=';')
-            csv_writer.writerow([
+
+            header = [
                 'document',
                 'original_language',
-                'present perfect' + self.l_from,
-                'present perfect' + self.l_to,
-                #'words between',
-                self.l_from,
-                self.l_to])
+                'present perfect ' + self.l_from,
+                self.l_from]
+            for language in self.l_to: 
+                header.append('present perfect ' + language)
+                header.append(language)
+            csv_writer.writerow(header)
 
             for filename in glob.glob(dir_name + '/*[0-9]-' + self.l_from + '-tei.xml'):
                 results = self.process_file(filename)
@@ -210,30 +236,15 @@ class PerfectExtractor:
 
                 # Write the complete segment with mark-up
                 marked_sentence = get_marked_sentence(e.getparent().getprevious().text, pp)
+                result.append(marked_sentence)
 
                 # Find the translated lines
-                seg_n = e.getparent().getparent().get('n')[4:]
-                translated_lines = self.get_translated_lines(document, seg_n)
-                if translated_lines:
-                    translated_tree = etree.parse(document + self.l_to + '-tei.xml')
-                    translated_pps = []
-                    lines = []
-                    for t in translated_lines:
-                        #f.write(get_line_by_number(translated_tree, get_adjacent_line_number(t, -1)) + '\n')
-                        translation, translated_pp = self.get_line_by_number(translated_tree, t)
-                        if translated_pp: 
-                            translated_pps.append(pp_to_text(translated_pp))
-                        else:
-                            translated_pps.append('-')
-                        lines.append(translation)
-                        #f.write(get_line_by_number(translated_tree, get_adjacent_line_number(t, 1)) + '\n')
-                    result.append('\n'.join(translated_pps))
-                    result.append(marked_sentence)
-                    result.append('\n'.join(lines))
-                else:
-                    result.append('Not translated')
-                    result.append(marked_sentence)
-                    result.append('Not translated')
+                segment_number = e.getparent().getparent().get('n')[4:]
+                for language_to in self.l_to:
+                    translated_lines = self.get_translated_lines(document, language_to, segment_number)
+                    translated_present_perfect, translated_marked_sentence = self.find_translated_present_perfects(document, language_to, translated_lines)
+                    result.append('\n'.join(translated_present_perfect))
+                    result.append('\n'.join(translated_marked_sentence))
 
                 results.append(result)
 
@@ -247,9 +258,9 @@ class PerfectExtractor:
 #process_folder('bal')
 
 if __name__ == "__main__":
-    en_extractor = PerfectExtractor('en', 'nl')
+    en_extractor = PerfectExtractor('en', ['nl', 'fr'])
     en_extractor.process_folder('data/bal_small')
-    nl_extractor = PerfectExtractor('nl', 'en')
+    nl_extractor = PerfectExtractor('nl', ['en'])
     nl_extractor.process_folder('data/bal_small')
     #fr_extractor = PerfectExtractor('fr', 'nl')
     #fr_extractor.process_folder('data/mok')
