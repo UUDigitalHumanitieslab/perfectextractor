@@ -56,19 +56,13 @@ class PerfectExtractor:
         config.readfp(codecs.open('dpc.cfg', 'r', 'utf8'))
         self.config = config
 
-        # Read the list of verbs that use 'to be' as auxiliary verb
-        self.aux_be_list = []
-        if self.config.get(self.l_from, 'lexical_bound'):
-            with codecs.open(self.l_from + '_aux_be.txt', 'rb', 'utf-8') as lexicon:
-                self.aux_be_list = lexicon.read().split()
-
     def is_nl(self):
         """
         Returns whether the current from language is Dutch (as integer).
         """
         return int(self.l_from == NL)
 
-    def get_translated_lines(self, document, language_to, segment_number):
+    def get_translated_lines(self, document, language_from, language_to, segment_number):
         """
         Returns the translated segment numbers (could be multiple) for a segment number in the original text.
 
@@ -76,26 +70,36 @@ class PerfectExtractor:
 
         An alignment line looks like this:
             <link type="A: 1-1" targets="p1.s1; p1.s1"/>
+        
         To get from NL to EN/FR, we have to find the segment number in the targets attribute BEFORE the semicolon.
         For the reverse pattern, we have to find the segment number in the targets attribute AFTER the semicolon.
+        
+        To get from EN to FR or from FR to EN, we have to use NL as an in between language.
 
         This function supports 1-to-2 alignments, as it will return the translated lines as a list.
 
-        TODO: deal with 2-to-1 alignments as well here.
+        TODO: deal with 2-to-2 and 2-to-1 alignments as well here.
         """
-        not_nl = language_to if language_to != NL else self.l_from
-        alignment_file = document + NL + '-' + not_nl + '-tei.xml'
-
         result = []
-        if os.path.isfile(alignment_file):
-            alignment_tree = etree.parse(alignment_file)
-            for link in alignment_tree.xpath('//ns:link', namespaces=TEI):
-                targets = link.get('targets').split('; ')
-                if segment_number in targets[1 - self.is_nl()].split(' '):
-                    result = targets[self.is_nl()].split(' ')
-                    break
 
-        return result
+        if NL in [language_from, language_to]: 
+            not_nl = language_to if language_to != NL else language_from
+            alignment_file = document + NL + '-' + not_nl + '-tei.xml'
+
+            if os.path.isfile(alignment_file):
+                alignment_tree = etree.parse(alignment_file)
+                for link in alignment_tree.xpath('//ns:link', namespaces=TEI):
+                    targets = link.get('targets').split('; ')
+                    if segment_number in targets[1 - int(language_from == NL)].split(' '):
+                        result = targets[int(language_from == NL)].split(' ')
+                        break
+        else:
+            lookup = self.get_translated_lines(document, language_from, NL, segment_number)
+            for lookup_number in lookup:
+                lines = self.get_translated_lines(document, NL, language_to, lookup_number)
+                result.extend(lines)
+
+        return set(result)
 
     def get_line_by_number(self, tree, language_to, segment_number):
         """
@@ -124,19 +128,26 @@ class PerfectExtractor:
         metadata_tree = etree.parse(document + self.l_from + '-mtd.xml')
         return metadata_tree.getroot().find('metaTrans').find('Original').get('lang')
 
-    def is_lexically_bound(self, aux_verb, perfect):
+    def is_lexically_bound(self, language, aux_verb, perfect):
         """
         Checks if the perfect is lexically bound to the auxiliary verb.
         If not, we are not dealing with a present perfect here.
         """
-        aux_be = self.config.get(self.l_from, 'lexical_bound')
+        aux_be = self.config.get(language, 'lexical_bound')
+
+        # Read the list of verbs that use 'to be' as auxiliary verb
+        # TODO: read this only once for performance
+        aux_be_list = []
+        if aux_be:
+            with codecs.open(language + '_aux_be.txt', 'rb', 'utf-8') as lexicon:
+                aux_be_list = lexicon.read().split()
 
         # If lexical bounds do not exist or we're dealing with an auxiliary verb that is unbound, return True
         if not aux_be or aux_verb.get('lemma') != aux_be:
             return True
         # Else, check whether the perfect is in the list of bound verbs
         else:
-            return perfect.get('lemma') in self.aux_be_list
+            return perfect.get('lemma') in aux_be_list
 
     def check_present_perfect(self, element, language, check_ppc=True):
         """
@@ -157,7 +168,7 @@ class PerfectExtractor:
             # If the tag of the sibling is the perfect tag, we found a present perfect! 
             if sibling.get('ana') == perfect_tag:
                 # Check if the sibling is lexically bound to the auxiliary verb
-                if not self.is_lexically_bound(element, sibling):
+                if not self.is_lexically_bound(language, element, sibling):
                     break
                 pp.append((sibling.text, True))
                 is_pp = True
@@ -181,11 +192,12 @@ class PerfectExtractor:
         lines = []
 
         if translated_lines:
+            # TODO: parse this only once for performance
             translated_tree = etree.parse(document + language_to + '-tei.xml')
             for t in translated_lines:
                 #f.write(get_line_by_number(translated_tree, get_adjacent_line_number(t, -1)) + '\n')
                 translation, translated_pp = self.get_line_by_number(translated_tree, language_to, t)
-                translated_pp = pp_to_text(translated_pp) if translated_pp else '-'
+                translated_pp = pp_to_text(translated_pp) if translated_pp else ''
                 
                 translated_pps.append(translated_pp)
                 lines.append(translation)
@@ -241,7 +253,7 @@ class PerfectExtractor:
                 # Find the translated lines
                 segment_number = e.getparent().getparent().get('n')[4:]
                 for language_to in self.l_to:
-                    translated_lines = self.get_translated_lines(document, language_to, segment_number)
+                    translated_lines = self.get_translated_lines(document, self.l_from, language_to, segment_number)
                     translated_present_perfect, translated_marked_sentence = self.find_translated_present_perfects(document, language_to, translated_lines)
                     result.append('\n'.join(translated_present_perfect))
                     result.append('\n'.join(translated_marked_sentence))
@@ -259,8 +271,8 @@ class PerfectExtractor:
 
 if __name__ == "__main__":
     en_extractor = PerfectExtractor('en', ['nl', 'fr'])
-    en_extractor.process_folder('data/bal_small')
-    nl_extractor = PerfectExtractor('nl', ['en'])
-    nl_extractor.process_folder('data/bal_small')
-    #fr_extractor = PerfectExtractor('fr', 'nl')
-    #fr_extractor.process_folder('data/mok')
+    en_extractor.process_folder('data/bmm')
+    nl_extractor = PerfectExtractor('nl', ['en', 'fr'])
+    nl_extractor.process_folder('data/bmm')
+    fr_extractor = PerfectExtractor('fr', ['nl', 'en'])
+    fr_extractor.process_folder('data/bmm')
