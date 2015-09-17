@@ -5,8 +5,8 @@ import string
 import os
 
 from lxml import etree
-from csv_utils import UnicodeWriter
 
+from csv_utils import UnicodeWriter
 from presentperfect import PresentPerfect
 
 TEI = {'ns': 'http://www.tei-c.org/ns/1.0'}
@@ -222,8 +222,7 @@ class PerfectExtractor:
                 result.append(pp.verbs_to_string())
 
                 # Write the complete segment with mark-up
-                marked_sentence = pp.mark_sentence(e.getparent().getprevious().text)
-                result.append(marked_sentence)
+                result.append(pp.mark_sentence(e.getparent().getprevious().text))
 
                 # Find the translated lines
                 segment_number = e.getparent().getparent().get('n')[4:]
