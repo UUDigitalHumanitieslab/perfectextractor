@@ -7,16 +7,10 @@ import os
 from lxml import etree
 from csv_utils import UnicodeWriter
 
+from presentperfect import PresentPerfect
+
 TEI = {'ns': 'http://www.tei-c.org/ns/1.0'}
 NL = 'nl'
-MARKUP = u'**{}**'
-
-
-def pp_to_text(pp):
-    """
-    Turns a present perfect into text.
-    """
-    return ' '.join([part for (part, is_verb) in pp if is_verb])
 
 
 def get_adjacent_line_number(segment_number, i):
@@ -26,24 +20,6 @@ def get_adjacent_line_number(segment_number, i):
     split = segment_number.split('s')
     adj = int(split[1]) + i
     return split[0] + 's' + str(adj)
-
-
-def get_marked_sentence(sentence, pp):
-    """
-    Marks the present perfect in a full sentence.
-    TODO: this is a bit iffy, another idea could be to compose the sentence from the remaining siblings
-    """
-    # To find the pp in the full text, just join all the parts of the pp
-    pp_text = ' '.join([part for (part, _) in pp])
-
-    # For the replacement, mark the verbs with the MARKUP
-    pp_verbs = [part for (part, is_verb) in pp if is_verb]
-    if len(pp) == len(pp_verbs):
-        marked_pp = MARKUP.format(pp_text)
-    else:
-        marked_pp = ' '.join([MARKUP.format(part) if is_verb else part for (part, is_verb) in pp])
-    
-    return sentence.replace(pp_text, marked_pp)
 
 
 class PerfectExtractor:
@@ -112,7 +88,7 @@ class PerfectExtractor:
 
     def get_line_by_number(self, tree, language_to, segment_number):
         """
-        Returns the line for a segment number.
+        Returns the line for a segment number, as well as the PresentPerfect found (or None if none found).
         TODO: handle more than one here? => bug
         """
         sentence = '-'
@@ -125,7 +101,7 @@ class PerfectExtractor:
             for e in s.xpath(self.config.get(language_to, 'xpath'), namespaces=TEI):
                 pp = self.check_present_perfect(e, language_to)
                 if pp: 
-                    sentence = get_marked_sentence(s.getprevious().text, pp)
+                    sentence = pp.mark_sentence(s.getprevious().text)
                     break
 
         return sentence, pp
@@ -163,7 +139,7 @@ class PerfectExtractor:
         stop_tags = tuple(self.config.get(language, 'stop_tags').split(','))
 
         # Collect all parts of the present perfect as tuples with text and whether it's verb
-        pp = [(element.text, True)]
+        pp = PresentPerfect(element.text)
 
         is_pp = False
         for sibling in element.itersiblings():
@@ -172,20 +148,20 @@ class PerfectExtractor:
                 # Check if the sibling is lexically bound to the auxiliary verb
                 if not self.is_lexically_bound(language, element, sibling):
                     break
-                pp.append((sibling.text, True))
+                pp.add_word(sibling.text, True)
                 is_pp = True
                 # ... now check whether this is a present perfect continuous (by recursion)
                 if check_ppc and sibling.get('lemma') == ppc_lemma:
                     ppc = self.check_present_perfect(sibling, language, False)
                     if ppc:
-                        pp.extend(ppc[1:])
+                        pp.extend(ppc)
                 break
             # Stop looking at punctuation or stop tags
             elif sibling.text in string.punctuation or sibling.get('ana').startswith(stop_tags):
                 break
             # No break? Then add as a non-verb part
             else: 
-                pp.append((sibling.text, False))
+                pp.add_word(sibling.text, False)
 
         return pp if is_pp else None
 
@@ -197,7 +173,7 @@ class PerfectExtractor:
             for t in translated_lines:
                 #f.write(get_line_by_number(translated_tree, get_adjacent_line_number(t, -1)) + '\n')
                 translation, translated_pp = self.get_line_by_number(translated_tree, language_to, t)
-                translated_pp = pp_to_text(translated_pp) if translated_pp else ''
+                translated_pp = translated_pp.verbs_to_string() if translated_pp else ''
                 
                 translated_pps.append(translated_pp)
                 lines.append(translation)
@@ -243,10 +219,10 @@ class PerfectExtractor:
                 result = list()
                 result.append(document[:-1])
                 result.append(self.get_original_language(document))
-                result.append(pp_to_text(pp))
+                result.append(pp.verbs_to_string())
 
                 # Write the complete segment with mark-up
-                marked_sentence = get_marked_sentence(e.getparent().getprevious().text, pp)
+                marked_sentence = pp.mark_sentence(e.getparent().getprevious().text)
                 result.append(marked_sentence)
 
                 # Find the translated lines
