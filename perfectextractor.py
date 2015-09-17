@@ -127,7 +127,7 @@ class PerfectExtractor:
         else:
             return perfect.get('lemma') in self.aux_be_list[language]
 
-    def check_present_perfect(self, element, language, check_ppc=True):
+    def check_present_perfect(self, element, language, check_ppc=True, check_preceding=False):
         """
         Checks whether this element is the start of a present perfect (or pp continuous).
         If it is, the present perfect is returned as a list.
@@ -137,12 +137,13 @@ class PerfectExtractor:
         check_ppc = check_ppc and self.config.getboolean(language, 'ppc')
         ppc_lemma = self.config.get(language, 'ppc_lemma')
         stop_tags = tuple(self.config.get(language, 'stop_tags').split(','))
+        allow_reversed = self.config.getboolean(language, 'allow_reversed')
 
         # Collect all parts of the present perfect as tuples with text and whether it's verb
         pp = PresentPerfect(element.text)
 
         is_pp = False
-        for sibling in element.itersiblings():
+        for sibling in element.itersiblings(preceding=check_preceding):
             # If the tag of the sibling is the perfect tag, we found a present perfect! 
             if sibling.get('ana') == perfect_tag:
                 # Check if the sibling is lexically bound to the auxiliary verb
@@ -162,6 +163,11 @@ class PerfectExtractor:
             # No break? Then add as a non-verb part
             else: 
                 pp.add_word(sibling.text, False)
+
+        if not is_pp and allow_reversed and not check_preceding:
+            pp = self.check_present_perfect(element, language, check_ppc, True)
+            if pp:
+                is_pp = True
 
         return pp if is_pp else None
 
@@ -250,9 +256,9 @@ class PerfectExtractor:
 #process_folder('bal')
 
 if __name__ == "__main__":
-    en_extractor = PerfectExtractor('en', ['nl', 'fr'])
-    en_extractor.process_folder('data/bmm')
+    #en_extractor = PerfectExtractor('en', ['nl', 'fr'])
+    #en_extractor.process_folder('data/bmm')
     nl_extractor = PerfectExtractor('nl', ['en', 'fr'])
     nl_extractor.process_folder('data/bmm')
-    fr_extractor = PerfectExtractor('fr', ['nl', 'en'])
-    fr_extractor.process_folder('data/bmm')
+    #fr_extractor = PerfectExtractor('fr', ['nl', 'en'])
+    #fr_extractor.process_folder('data/bmm')
