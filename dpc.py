@@ -187,13 +187,11 @@ class PerfectExtractor:
 
         return pp if is_pp else None
 
-    def find_translated_present_perfects(self, document, language_to, translated_lines):
+    def find_translated_present_perfects(self, translated_tree, language_to, translated_lines):
         translated_pps = []
         lines = []
 
         if translated_lines:
-            # TODO: parse this only once for performance
-            translated_tree = etree.parse(document + language_to + '-tei.xml')
             for t in translated_lines:
                 #f.write(get_line_by_number(translated_tree, get_adjacent_line_number(t, -1)) + '\n')
                 translation, translated_pp = self.get_line_by_number(translated_tree, language_to, t)
@@ -240,11 +238,10 @@ class PerfectExtractor:
             pp = self.check_present_perfect(e, self.l_from)
 
             if pp:
-                result = [document[:-1], self.get_original_language(document)]
-
+                result = list()
+                result.append(document[:-1])
+                result.append(self.get_original_language(document))
                 result.append(pp_to_text(pp))
-                #words_between = [part for (part, is_verb) in pp if not is_verb]
-                #result.append(str(len(words_between)))
 
                 # Write the complete segment with mark-up
                 marked_sentence = get_marked_sentence(e.getparent().getprevious().text, pp)
@@ -253,16 +250,22 @@ class PerfectExtractor:
                 # Find the translated lines
                 segment_number = e.getparent().getparent().get('n')[4:]
                 for language_to in self.l_to:
-                    translated_lines = self.get_translated_lines(document, self.l_from, language_to, segment_number)
-                    translated_present_perfect, translated_marked_sentence = self.find_translated_present_perfects(document, language_to, translated_lines)
-                    result.append('\n'.join(translated_present_perfect))
-                    result.append('\n'.join(translated_marked_sentence))
+                    translation_file = document + language_to + '-tei.xml'
+                    if os.path.exists(translation_file):
+                        translated_tree = etree.parse(translation_file)
+                        translated_lines = self.get_translated_lines(document, self.l_from, language_to, segment_number)
+                        translated_present_perfect, translated_marked_sentence = \
+                            self.find_translated_present_perfects(translated_tree, language_to, translated_lines)
+                        result.append('\n'.join(translated_present_perfect))
+                        result.append('\n'.join(translated_marked_sentence))
 
                 results.append(result)
 
         return results
 
 
+#words_between = [part for (part, is_verb) in pp if not is_verb]
+#result.append(str(len(words_between)))
 #for root, dirs, files in os.walk(os.getcwd()):
 #    for d in dirs:
 #        process_folder(d)
