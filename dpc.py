@@ -56,6 +56,15 @@ class PerfectExtractor:
         config.readfp(codecs.open('dpc.cfg', 'r', 'utf8'))
         self.config = config
 
+        # Read the list of verbs that use 'to be' as auxiliary verb per language
+        self.aux_be_list = {}
+        for language in [language_from] + languages_to:
+            aux_be_list = []
+            if self.config.get(language, 'lexical_bound'):
+                with codecs.open(language + '_aux_be.txt', 'rb', 'utf-8') as lexicon:
+                    aux_be_list = lexicon.read().split()
+            self.aux_be_list[language] = aux_be_list
+
     def is_nl(self):
         """
         Returns whether the current from language is Dutch (as integer).
@@ -135,19 +144,12 @@ class PerfectExtractor:
         """
         aux_be = self.config.get(language, 'lexical_bound')
 
-        # Read the list of verbs that use 'to be' as auxiliary verb
-        # TODO: read this only once for performance
-        aux_be_list = []
-        if aux_be:
-            with codecs.open(language + '_aux_be.txt', 'rb', 'utf-8') as lexicon:
-                aux_be_list = lexicon.read().split()
-
         # If lexical bounds do not exist or we're dealing with an auxiliary verb that is unbound, return True
         if not aux_be or aux_verb.get('lemma') != aux_be:
             return True
         # Else, check whether the perfect is in the list of bound verbs
         else:
-            return perfect.get('lemma') in aux_be_list
+            return perfect.get('lemma') in self.aux_be_list[language]
 
     def check_present_perfect(self, element, language, check_ppc=True):
         """
