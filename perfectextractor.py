@@ -8,6 +8,7 @@ from lxml import etree
 
 from csv_utils import UnicodeWriter
 from presentperfect import PresentPerfect
+from wiktionary import get_translations
 
 TEI = {'ns': 'http://www.tei-c.org/ns/1.0'}
 NL = 'nl'
@@ -140,7 +141,7 @@ class PerfectExtractor:
         allow_reversed = self.config.getboolean(language, 'allow_reversed')
 
         # Collect all parts of the present perfect as tuples with text and whether it's verb
-        pp = PresentPerfect(element.text)
+        pp = PresentPerfect(element.text, element.get('lemma'))
 
         is_pp = False
         for sibling in element.itersiblings(preceding=check_preceding):
@@ -149,7 +150,7 @@ class PerfectExtractor:
                 # Check if the sibling is lexically bound to the auxiliary verb
                 if not self.is_lexically_bound(language, element, sibling):
                     break
-                pp.add_word(sibling.text, True)
+                pp.add_word(sibling.text, sibling.get('lemma'), True)
                 is_pp = True
                 # ... now check whether this is a present perfect continuous (by recursion)
                 if check_ppc and sibling.get('lemma') == ppc_lemma:
@@ -161,8 +162,8 @@ class PerfectExtractor:
             elif sibling.text in string.punctuation or sibling.get('ana').startswith(stop_tags):
                 break
             # No break? Then add as a non-verb part
-            else: 
-                pp.add_word(sibling.text, False)
+            else:
+                pp.add_word(sibling.text, sibling.get('lemma'), False)
 
         if not is_pp and allow_reversed and not check_preceding:
             pp = self.check_present_perfect(element, language, check_ppc, True)
@@ -173,19 +174,17 @@ class PerfectExtractor:
 
     def find_translated_present_perfects(self, translated_tree, language_to, translated_lines):
         translated_pps = []
-        lines = []
+        translated_sentences = []
 
         if translated_lines:
             for t in translated_lines:
                 #f.write(get_line_by_number(translated_tree, get_adjacent_line_number(t, -1)) + '\n')
                 translation, translated_pp = self.get_line_by_number(translated_tree, language_to, t)
-                translated_pp = translated_pp.verbs_to_string() if translated_pp else ''
-                
                 translated_pps.append(translated_pp)
-                lines.append(translation)
+                translated_sentences.append(translation)
                 #f.write(get_line_by_number(translated_tree, get_adjacent_line_number(t, 1)) + '\n')
 
-        return translated_pps, lines
+        return translated_pps, translated_sentences
 
     def process_folder(self, dir_name):
         """
@@ -203,12 +202,24 @@ class PerfectExtractor:
                 self.l_from]
             for language in self.l_to: 
                 header.append('present perfect ' + language)
+                header.append('is translation?')
                 header.append(language)
             csv_writer.writerow(header)
 
             for filename in glob.glob(dir_name + '/*[0-9]-' + self.l_from + '-tei.xml'):
                 results = self.process_file(filename)
                 csv_writer.writerows(results)
+
+    def check_translated_pps(self, pp, translated_present_perfects, language_to):
+        results = []
+        for tpp in translated_present_perfects:
+            if tpp:
+                translations = get_translations(pp.perfect_lemma(), self.l_from, language_to)
+                if tpp.perfect_lemma() in translations:
+                    results.append('yes')
+                else:
+                    results.append('unknown')
+        return results
 
     def process_file(self, filename):
         """
@@ -237,10 +248,11 @@ class PerfectExtractor:
                     if os.path.exists(translation_file):
                         translated_tree = etree.parse(translation_file)
                         translated_lines = self.get_translated_lines(document, self.l_from, language_to, segment_number)
-                        translated_present_perfect, translated_marked_sentence = \
+                        translated_present_perfects, translated_sentences = \
                             self.find_translated_present_perfects(translated_tree, language_to, translated_lines)
-                        result.append('\n'.join(translated_present_perfect))
-                        result.append('\n'.join(translated_marked_sentence))
+                        result.append('\n'.join([tpp.verbs_to_string() if tpp else '' for tpp in translated_present_perfects]))
+                        result.append('\n'.join(self.check_translated_pps(pp, translated_present_perfects, language_to)))
+                        result.append('\n'.join(translated_sentences))
 
                 results.append(result)
 
@@ -256,9 +268,9 @@ class PerfectExtractor:
 #process_folder('bal')
 
 if __name__ == "__main__":
-    #en_extractor = PerfectExtractor('en', ['nl', 'fr'])
-    #en_extractor.process_folder('data/bmm')
+    en_extractor = PerfectExtractor('en', ['nl', 'fr'])
+    en_extractor.process_folder('data/bmm')
     nl_extractor = PerfectExtractor('nl', ['en', 'fr'])
     nl_extractor.process_folder('data/bmm')
-    #fr_extractor = PerfectExtractor('fr', ['nl', 'en'])
-    #fr_extractor.process_folder('data/bmm')
+    fr_extractor = PerfectExtractor('fr', ['nl', 'en'])
+    fr_extractor.process_folder('data/bmm')
