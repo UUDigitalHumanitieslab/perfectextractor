@@ -6,21 +6,12 @@ import os
 
 from lxml import etree
 
-from csv_utils import UnicodeWriter
+from utils import UnicodeWriter, is_nl
 from presentperfect import PresentPerfect
 from wiktionary import get_translations
 
 TEI = {'ns': 'http://www.tei-c.org/ns/1.0'}
 NL = 'nl'
-
-
-def get_adjacent_line_number(segment_number, i):
-    """
-    Returns the next segment number + i.
-    """
-    split = segment_number.split('s')
-    adj = int(split[1]) + i
-    return split[0] + 's' + str(adj)
 
 
 class PerfectExtractor:
@@ -41,12 +32,6 @@ class PerfectExtractor:
                 with codecs.open(language + '_aux_be.txt', 'rb', 'utf-8') as lexicon:
                     aux_be_list = lexicon.read().split()
             self.aux_be_list[language] = aux_be_list
-
-    def is_nl(self):
-        """
-        Returns whether the current from language is Dutch (as integer).
-        """
-        return int(self.l_from == NL)
 
     def get_translated_lines(self, document, language_from, language_to, segment_number):
         """
@@ -76,8 +61,8 @@ class PerfectExtractor:
                 alignment_tree = etree.parse(alignment_file)
                 for link in alignment_tree.xpath('//ns:link', namespaces=TEI):
                     targets = link.get('targets').split('; ')
-                    if segment_number in targets[1 - int(language_from == NL)].split(' '):
-                        result = targets[int(language_from == NL)].split(' ')
+                    if segment_number in targets[is_nl(language_from)].split(' '):
+                        result = targets[is_nl(language_from)].split(' ')
                         break
         else:
             lookup = self.get_translated_lines(document, language_from, NL, segment_number)
@@ -173,6 +158,9 @@ class PerfectExtractor:
         return pp if is_pp else None
 
     def find_translated_present_perfects(self, translated_tree, language_to, translated_lines):
+        """
+        Finds present perfects in translated sentences.
+        """
         translated_pps = []
         translated_sentences = []
 
@@ -211,6 +199,9 @@ class PerfectExtractor:
                 csv_writer.writerows(results)
 
     def check_translated_pps(self, pp, translated_present_perfects, language_to):
+        """
+        Checks whether the translated present perfects found form an actual translation of the present perfect.
+        """
         results = []
         for tpp in translated_present_perfects:
             if tpp:
