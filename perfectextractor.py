@@ -10,6 +10,8 @@ from utils import UnicodeWriter, is_nl
 from presentperfect import PresentPerfect
 from wiktionary import get_translations
 
+DPC_CONFIG = 'config/dpc.cfg'
+AUX_BE_CONFIG = 'config/{language}_aux_be.txt'
 TEI = {'ns': 'http://www.tei-c.org/ns/1.0'}
 NL = 'nl'
 
@@ -21,7 +23,7 @@ class PerfectExtractor:
 
         # Read the config
         config = ConfigParser.RawConfigParser()
-        config.readfp(codecs.open('dpc.cfg', 'r', 'utf8'))
+        config.readfp(codecs.open(DPC_CONFIG, 'r', 'utf8'))
         self.config = config
 
         # Read the list of verbs that use 'to be' as auxiliary verb per language
@@ -29,7 +31,7 @@ class PerfectExtractor:
         for language in [language_from] + languages_to:
             aux_be_list = []
             if self.config.get(language, 'lexical_bound'):
-                with codecs.open(language + '_aux_be.txt', 'rb', 'utf-8') as lexicon:
+                with codecs.open(AUX_BE_CONFIG.format(language=language), 'rb', 'utf-8') as lexicon:
                     aux_be_list = lexicon.read().split()
             self.aux_be_list[language] = aux_be_list
 
@@ -250,7 +252,6 @@ class PerfectExtractor:
         return results
 
 
-#words_between = [part for (part, is_verb) in pp if not is_verb]
 #result.append(str(len(words_between)))
 #for root, dirs, files in os.walk(os.getcwd()):
 #    for d in dirs:
