@@ -10,8 +10,8 @@ from .utils import UnicodeWriter, is_nl
 from .models import PresentPerfect
 from .wiktionary import get_translations
 
-DPC_CONFIG = '../config/dpc.cfg'
-AUX_BE_CONFIG = '../config/{language}_aux_be.txt'
+DPC_CONFIG = os.path.join(os.path.dirname(__file__), '../config/dpc.cfg')
+AUX_BE_CONFIG = os.path.join(os.path.dirname(__file__), '../config/{language}_aux_be.txt')
 TEI = {'ns': 'http://www.tei-c.org/ns/1.0'}
 NL = 'nl'
 
@@ -196,7 +196,7 @@ class PerfectExtractor:
                 header.append(language)
             csv_writer.writerow(header)
 
-            for filename in glob.glob(dir_name + '/*[0-9]-' + self.l_from + '-tei.xml'):
+            for filename in glob.glob(os.path.join(dir_name, '*[0-9]-' + self.l_from + '-tei.xml')):
                 results = self.process_file(filename)
                 csv_writer.writerows(results)
 
@@ -250,19 +250,3 @@ class PerfectExtractor:
                 results.append(result)
 
         return results
-
-
-#result.append(str(len(words_between)))
-#for root, dirs, files in os.walk(os.getcwd()):
-#    for d in dirs:
-#        process_folder(d)
-        #break
-#process_folder('bal')
-
-if __name__ == "__main__":
-    en_extractor = PerfectExtractor('en', ['nl', 'fr'])
-    en_extractor.process_folder('../data/bmm')
-    nl_extractor = PerfectExtractor('nl', ['en', 'fr'])
-    nl_extractor.process_folder('../data/bmm')
-    fr_extractor = PerfectExtractor('fr', ['nl', 'en'])
-    fr_extractor.process_folder('../data/bmm')
