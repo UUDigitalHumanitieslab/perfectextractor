@@ -37,7 +37,7 @@ The extraction script should take care of these four issues, and be able to have
 
 The extraction script (`extractor\prefectextractor.py`) is implemented using the [lxml XML toolkit](http://lxml.de/). 
 
-The script looks for auxiliary verbs (using a XPath expression), and for each of these, 
+The script looks for auxiliary verbs (using a [XPath expression](https://en.wikipedia.org/wiki/XPath)), and for each of these, 
 it tries to find a past participle on the right hand side of the sentence (or left hand side in Dutch), allowing for words between the verbs, 
 though this lookup stops at the occurrence of other verbs, punctuation and coordinating conjunctions.
 
@@ -50,5 +50,6 @@ This function uses the [Requests: HTTP for Humans](http://docs.python-requests.o
 ## Dutch Parallel Corpus
 
 The script has been tested with the [Dutch Parallel Corpus](http://www.kuleuven-kulak.be/DPC). 
-This corpus consists of three languages: Dutch, French and English.
-The configuration can be found in `config\dpc.cfg`.
+This corpus consists of three languages: Dutch, French and English. 
+The configuration for this corpus can be found in `config\dpc.cfg`.
+An example document from this corpus is included in the `tests\data` directory.
