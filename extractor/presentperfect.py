@@ -68,3 +68,6 @@ class PresentPerfect:
             marked_pp = ' '.join([MARKUP.format(part) if is_verb else part for (part, _, is_verb) in self.words])
 
         return sentence.replace(pp_text, marked_pp)
+
+    def __str__(self):
+        return str(self.words)

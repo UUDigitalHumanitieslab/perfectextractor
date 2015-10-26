@@ -63,7 +63,7 @@ class PerfectExtractor:
                 alignment_tree = etree.parse(alignment_file)
                 for link in alignment_tree.xpath('//ns:link', namespaces=TEI):
                     targets = link.get('targets').split('; ')
-                    if segment_number in targets[is_nl(language_from)].split(' '):
+                    if segment_number in targets[1 - is_nl(language_from)].split(' '):
                         result = targets[is_nl(language_from)].split(' ')
                         break
         else:
@@ -76,7 +76,7 @@ class PerfectExtractor:
 
     def get_line_by_number(self, tree, language_to, segment_number):
         """
-        Returns the line for a segment number, as well as the PresentPerfect found (or None if none found).
+        Returns the full line for a segment number, as well as the PresentPerfect found (or None if none found).
         TODO: handle more than one here? => bug
         """
         sentence = '-'
@@ -89,7 +89,7 @@ class PerfectExtractor:
             for e in s.xpath(self.config.get(language_to, 'xpath'), namespaces=TEI):
                 pp = self.check_present_perfect(e, language_to)
                 if pp: 
-                    sentence = pp.mark_sentence(s.getprevious().text)
+                    sentence = pp.mark_sentence(sentence)
                     break
 
         return sentence, pp
