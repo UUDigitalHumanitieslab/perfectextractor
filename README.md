@@ -1,7 +1,7 @@
 # Time in Translation
 *Extracting present perfects from a multilingual corpus*
 
-This small set of scripts allows for extraction of present perfects from a POS-tagged, lemmatized and sentence-aligned multilingual corpus encoded in the TEI format.
+This small set of scripts allows for extraction of present perfects from a POS-tagged, lemmatized and sentence-aligned multilingual corpus encoded in the [TEI format](http://www.tei-c.org/).
  
 ## Recognizing Present Perfects 
 
@@ -23,7 +23,9 @@ The past participle governs which auxiliary verb is employed:
     (4) J'ai vu quelque chose [lit. I have seen something]
     (5) Elle est arrivé [lit. She is arrived]
     
-For French, this is a closed list (DR and MRS P. VANDERTRAMP), but for other languages, this might be a more open class.
+For French, this is a closed list 
+([DR and MRS P. VANDERTRAMP](https://en.wikipedia.org/wiki/Pass%C3%A9_compos%C3%A9#Auxiliary_.22.C3.8Atre.22)), 
+but for other languages, this might be a more open class.
 
 The last common issue with present perfects is that in e.g. Dutch, the present perfect might appear before the auxiliary verb in subordinate clauses. An example: 
 
@@ -33,7 +35,7 @@ The extraction script should take care of these four issues, and be able to have
 
 ## Implementation 
 
-The extraction script (`prefectextractor.py`) is implemented using the [lxml XML toolkit](http://lxml.de/). 
+The extraction script (`extractor\prefectextractor.py`) is implemented using the [lxml XML toolkit](http://lxml.de/). 
 
 The script looks for auxiliary verbs (using a XPath expression), and for each of these, 
 it tries to find a past participle on the right hand side of the sentence (or left hand side in Dutch), allowing for words between the verbs, 
@@ -42,10 +44,11 @@ though this lookup stops at the occurrence of other verbs, punctuation and coord
 The script allows for additional extraction of present perfect continuous forms. 
 
 The script handles these by a list of verbs that use 'to be' as auxiliary. 
-The function *get_ergative_verbs* in `wiktionary.py` extracts these verbs from [Wiktionary](https://en.wiktionary.org) for Dutch.
+The function *get_ergative_verbs* in `extractor\wiktionary.py` extracts these verbs from [Wiktionary](https://en.wiktionary.org) for Dutch.
+This function uses the [Requests: HTTP for Humans](http://docs.python-requests.org/) package. 
 
 ## Dutch Parallel Corpus
 
-The script has been tested with the Dutch Parallel Corpus (DPC). 
-This corpus consists of three languages: Dutch, French and English.  
-The configuration can be found in ""config/dpc.cfg"".
+The script has been tested with the [Dutch Parallel Corpus](http://www.kuleuven-kulak.be/DPC). 
+This corpus consists of three languages: Dutch, French and English.
+The configuration can be found in `config\dpc.cfg`.
