@@ -5,7 +5,7 @@ import unittest
 from lxml import etree
 
 from extractor.perfectextractor import PerfectExtractor
-from extractor.presentperfect import PresentPerfect
+from extractor.models import PresentPerfect
 
 
 class TestPerfectExtractor(unittest.TestCase):
@@ -37,7 +37,7 @@ class TestPerfectExtractor(unittest.TestCase):
         pp = PresentPerfect('have', 'have')
         pp.add_word('attained', 'attain', True)
         self.assertIn(u'**have attained**', line[0])
-        self.assertEqual(str(pp), str(line[1]))
+        self.assertEqual(pp.verbs_to_string(), line[1].verbs_to_string())
 
     def test_get_original_language(self):
         orig_lang = self.en_extractor.get_original_language(self.document)

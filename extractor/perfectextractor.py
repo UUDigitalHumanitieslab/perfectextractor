@@ -7,7 +7,7 @@ import os
 from lxml import etree
 
 from .utils import UnicodeWriter, is_nl
-from .presentperfect import PresentPerfect
+from .models import PresentPerfect
 from .wiktionary import get_translations
 
 DPC_CONFIG = '../config/dpc.cfg'

@@ -1,6 +1,6 @@
 import unittest
 
-from extractor.presentperfect import PresentPerfect
+from extractor.models import PresentPerfect
 
 
 class TestPresentPerfect(unittest.TestCase):
