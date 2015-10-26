@@ -6,12 +6,12 @@ import os
 
 from lxml import etree
 
-from utils import UnicodeWriter, is_nl
-from presentperfect import PresentPerfect
-from wiktionary import get_translations
+from .utils import UnicodeWriter, is_nl
+from .presentperfect import PresentPerfect
+from .wiktionary import get_translations
 
-DPC_CONFIG = 'config/dpc.cfg'
-AUX_BE_CONFIG = 'config/{language}_aux_be.txt'
+DPC_CONFIG = '../config/dpc.cfg'
+AUX_BE_CONFIG = '../config/{language}_aux_be.txt'
 TEI = {'ns': 'http://www.tei-c.org/ns/1.0'}
 NL = 'nl'
 
@@ -261,8 +261,8 @@ class PerfectExtractor:
 
 if __name__ == "__main__":
     en_extractor = PerfectExtractor('en', ['nl', 'fr'])
-    en_extractor.process_folder('data/bmm')
+    en_extractor.process_folder('../data/bmm')
     nl_extractor = PerfectExtractor('nl', ['en', 'fr'])
-    nl_extractor.process_folder('data/bmm')
+    nl_extractor.process_folder('../data/bmm')
     fr_extractor = PerfectExtractor('fr', ['nl', 'en'])
-    fr_extractor.process_folder('data/bmm')
+    fr_extractor.process_folder('../data/bmm')

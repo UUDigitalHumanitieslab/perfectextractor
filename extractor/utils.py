@@ -8,6 +8,7 @@ NL = 'nl'
 def get_adjacent_line_number(segment_number, i):
     """
     Returns the next segment number + i.
+    Segment numbers have the form "pN.sM", where N/M are positive integers.
     """
     split = segment_number.split('s')
     adj = int(split[1]) + i
