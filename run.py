@@ -16,9 +16,9 @@ def process_data_folders(extractors, path):
 
 
 def create_extractors():
-    en_extractor = PerfectExtractor('en', ['nl', 'fr'])
+    en_extractor = PerfectExtractor('en', ['fr', 'nl'])
     nl_extractor = PerfectExtractor('nl', ['en', 'fr'])
-    fr_extractor = PerfectExtractor('fr', ['nl', 'en'])
+    fr_extractor = PerfectExtractor('fr', ['en', 'nl'])
     return [en_extractor, nl_extractor, fr_extractor]
 
 if __name__ == "__main__":
