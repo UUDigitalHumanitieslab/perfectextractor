@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+import os
 import unittest
 
 from lxml import etree
@@ -11,25 +12,34 @@ from extractor.models import PresentPerfect
 class TestPerfectExtractor(unittest.TestCase):
     def setUp(self):
         self.en_extractor = PerfectExtractor('en', ['nl', 'fr'])
-        self.document = 'data/dpc-bmm-001071-'
+        self.document = os.path.join(os.path.dirname(__file__), 'data/dpc-bmm-001071-')
+        align_fr = etree.parse(os.path.join(os.path.dirname(__file__), 'data/dpc-bmm-001071-nl-fr-tei.xml'))
+        align_en = etree.parse(os.path.join(os.path.dirname(__file__), 'data/dpc-bmm-001071-nl-en-tei.xml'))
+        self.alignmenttrees = {'en': align_en, 'fr': align_fr}
 
     def test_init(self):
         self.assertEqual(self.en_extractor.config.get('en', 'perfect_tag'), 'VBN')
         self.assertIn('devenir', self.en_extractor.aux_be_list['fr'])
 
     def test_get_translated_lines(self):
-        lines = self.en_extractor.get_translated_lines(self.document, 'en', 'nl', 'p1.s3')
+        lines, alignment = self.en_extractor.get_translated_lines(self.alignmenttrees, 'en', 'nl', 'p1.s3')
         self.assertEqual(lines, set(['p1.s3']))
-        lines = self.en_extractor.get_translated_lines(self.document, 'nl', 'en', 'p1.s3')
+        self.assertEqual(alignment, '2=>1')
+        lines, alignment = self.en_extractor.get_translated_lines(self.alignmenttrees, 'nl', 'en', 'p1.s3')
         self.assertEqual(lines, set(['p1.s3', 'p1.s4']))
-        lines = self.en_extractor.get_translated_lines(self.document, 'fr', 'nl', 'p1.s13')
+        self.assertEqual(alignment, '1=>2')
+        lines, alignment = self.en_extractor.get_translated_lines(self.alignmenttrees, 'fr', 'nl', 'p1.s13')
         self.assertEqual(lines, set(['p1.s12']))
-        lines = self.en_extractor.get_translated_lines(self.document, 'nl', 'fr', 'p1.s13')
+        self.assertEqual(alignment, '1=>1')
+        lines, alignment = self.en_extractor.get_translated_lines(self.alignmenttrees, 'nl', 'fr', 'p1.s13')
         self.assertEqual(lines, set(['p1.s14']))
-        lines = self.en_extractor.get_translated_lines(self.document, 'en', 'fr', 'p1.s16')
+        self.assertEqual(alignment, '2=>1')
+        lines, alignment = self.en_extractor.get_translated_lines(self.alignmenttrees, 'en', 'fr', 'p1.s16')
         self.assertEqual(lines, set(['p1.s16']))
-        lines = self.en_extractor.get_translated_lines(self.document, 'fr', 'en', 'p1.s4')
+        self.assertEqual(alignment, '1=>1')
+        lines, alignment = self.en_extractor.get_translated_lines(self.alignmenttrees, 'fr', 'en', 'p1.s4')
         self.assertEqual(lines, set(['p1.s3', 'p1.s4']))
+        self.assertEqual(alignment, '2=>2')
 
     def test_get_line_by_number(self):
         tree = etree.parse(self.document + 'en-tei.xml')

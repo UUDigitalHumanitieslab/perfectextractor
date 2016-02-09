@@ -35,7 +35,7 @@ class PerfectExtractor:
                     aux_be_list = lexicon.read().split()
             self.aux_be_list[language] = aux_be_list
 
-    def get_translated_lines(self, document, alignment_trees, language_from, language_to, segment_number):
+    def get_translated_lines(self, alignment_trees, language_from, language_to, segment_number):
         """
         Returns the translated segment numbers (could be multiple) for a segment number in the original text.
 
@@ -70,14 +70,14 @@ class PerfectExtractor:
                     result = targets[is_nl(language_from)].split(' ')
                     break
         else:
-            lookup, t = self.get_translated_lines(document, alignment_trees, language_from, NL, segment_number)
+            lookup, t = self.get_translated_lines(alignment_trees, language_from, NL, segment_number)
             alignment_type = t.split('=>')[0]
             for lookup_number in lookup:
-                lines, _ = self.get_translated_lines(document, alignment_trees, NL, language_to, lookup_number)
+                lines, _ = self.get_translated_lines(alignment_trees, NL, language_to, lookup_number)
                 result.extend(lines)
 
             if result:
-                alignment_type += '=>' + str(len(result))
+                alignment_type += '=>' + str(len(set(result)))
             else:
                 alignment_type = ''
 
@@ -268,7 +268,7 @@ class PerfectExtractor:
                 segment_number = e.getparent().getparent().get('n')[4:]
                 for language_to in self.l_to:
                     if language_to in translation_trees:
-                        translated_lines, alignment_type = self.get_translated_lines(document, alignment_trees, self.l_from,
+                        translated_lines, alignment_type = self.get_translated_lines(alignment_trees, self.l_from,
                                                                                      language_to, segment_number)
                         translated_present_perfects, translated_sentences = \
                             self.find_translated_present_perfects(translation_trees[language_to], language_to, translated_lines)
