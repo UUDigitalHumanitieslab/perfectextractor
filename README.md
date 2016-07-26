@@ -45,7 +45,8 @@ The script allows for additional extraction of present perfect continuous forms.
 
 The script handles these by a list of verbs that use 'to be' as auxiliary. 
 The function *get_ergative_verbs* in `extractor\wiktionary.py` extracts these verbs from [Wiktionary](https://en.wiktionary.org) for Dutch.
-This function uses the [Requests: HTTP for Humans](http://docs.python-requests.org/) package. 
+This function uses the [Requests: HTTP for Humans](http://docs.python-requests.org/) package.
+For German, the list is compiled from https://deutsch.lingolia.com/en/grammar/verbs/sein-haben
 
 ## Dutch Parallel Corpus
 

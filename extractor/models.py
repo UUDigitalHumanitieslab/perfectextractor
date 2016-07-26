@@ -5,10 +5,11 @@ class Word:
     """
     Each Word consists of a word, its lemma, and a designation if this is a verb.
     """
-    def __init__(self, word, lemma, is_verb):
+    def __init__(self, word, lemma, is_verb, xml_id):
         self.word = word
         self.lemma = lemma
         self.is_verb = is_verb
+        self.xml_id = xml_id
 
 
 class PresentPerfect:
@@ -16,18 +17,19 @@ class PresentPerfect:
     A present perfect consists of a list of Words.
     """
 
-    def __init__(self, aux_verb, aux_lemma):
+    def __init__(self, aux_verb, aux_lemma, xml_id, xml_sentence):
         """
         A present perfect is initiated by an auxiliary verb.
         """
+        self.xml_sentence = xml_sentence
         self.words = []
-        self.add_word(aux_verb, aux_lemma, True)
+        self.add_word(aux_verb, aux_lemma, True, xml_id)
 
-    def add_word(self, word, lemma, is_verb):
+    def add_word(self, word, lemma, is_verb, xml_id):
         """
         Adds a word to the present perfect.
         """
-        self.words.append(Word(word, lemma, is_verb))
+        self.words.append(Word(word, lemma, is_verb, xml_id))
 
     def extend(self, present_perfect):
         """
@@ -36,7 +38,7 @@ class PresentPerfect:
         for i, w in enumerate(present_perfect.words):
             if i == 0:
                 continue
-            self.add_word(w.word, w.lemma, w.is_verb)
+            self.add_word(w.word, w.lemma, w.is_verb, w.xml_id)
 
     def perfect_lemma(self):
         """
@@ -56,13 +58,25 @@ class PresentPerfect:
         """
         return ' '.join(self.verbs())
 
+    def verb_ids(self):
+        return ' '.join([w.xml_id for w in self.words if w.is_verb])
+
     def words_between(self):
         """
         Returns the number of non-verbs in a present perfect construction.
         """
         return len([w.word for w in self.words if not w.is_verb])
 
-    def mark_sentence(self, sentence):
+    def get_sentence_words(self):
+        s = []
+        for w in self.xml_sentence.xpath('.//w'):
+            s.append(w.text)
+        return ' '.join(s)
+
+    def get_sentence_id(self):
+        return self.xml_sentence.get('id')
+
+    def mark_sentence(self):
         """
         Marks the present perfect in a full sentence.
         """
@@ -76,4 +90,4 @@ class PresentPerfect:
         else:
             marked_pp = ' '.join([MARKUP.format(w.word) if w.is_verb else w.word for w in self.words])
 
-        return sentence.replace(pp_text, marked_pp)
+        return self.get_sentence_words().replace(pp_text, marked_pp)
