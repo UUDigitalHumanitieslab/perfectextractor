@@ -5,13 +5,13 @@ import unittest
 
 from lxml import etree
 
-from extractor.perfectextractor import PerfectExtractor
+from extractor.dpc_extractor import DPCExtractor
 from extractor.models import PresentPerfect
 
 
 class TestPerfectExtractor(unittest.TestCase):
     def setUp(self):
-        self.en_extractor = PerfectExtractor('en', ['nl', 'fr'])
+        self.en_extractor = DPCExtractor('en', ['nl', 'fr'])
         self.document = os.path.join(os.path.dirname(__file__), 'data/dpc-bmm-001071-')
         align_fr = etree.parse(os.path.join(os.path.dirname(__file__), 'data/dpc-bmm-001071-nl-fr-tei.xml'))
         align_en = etree.parse(os.path.join(os.path.dirname(__file__), 'data/dpc-bmm-001071-nl-en-tei.xml'))

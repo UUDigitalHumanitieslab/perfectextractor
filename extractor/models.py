@@ -82,7 +82,7 @@ class PresentPerfect:
         Marks the present perfect in a full sentence.
         """
         # TODO: this doesn't work if no xml_sentence is given
-        if not self.xml_sentence:
+        if self.xml_sentence is None:
             return ''
 
         # TODO: this is a bit iffy, another idea could be to compose the sentence from the remaining siblings
