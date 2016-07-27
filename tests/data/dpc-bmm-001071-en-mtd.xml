@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../../lib/dpcmetaxml2html.xsl"?>
+<dpcMetaData>
+<metaText lang = "EN-UK">
+<Author />
+<TextUnitTitle>Mathematical models</TextUnitTitle>
+<PublishingInfo>
+<TitlePublication />
+<Publisher>BMM (The Management Unit of the North Sea Mathematical Models and the Scheldt estuary, MUMM)</Publisher>
+<ISBN_ISSN />
+<datePublication />
+<originalDatePublication />
+<placePublication />
+<originalPlacePublication />
+<infoPreviousEditions />
+<editor />
+<articleNumber />
+<articlePage />
+<keywords />
+<articleClass />
+</PublishingInfo>
+<Outcome>written to be read</Outcome>
+<TextType>External Communication</TextType>
+<TextSubType>Scientific texts</TextSubType>
+<Domain>Science</Domain>
+<Keywords1>Oceanography</Keywords1>
+<IPR>full version</IPR>
+<TypeOfInstitution>non-profit</TypeOfInstitution>
+<IntendedAudience>broad external audience</IntendedAudience>
+</metaText>
+<metaTrans>
+<Original lang= "unknown"/>
+<Translated>EN, FR, NL</Translated>
+<Intermediate>not applicable</Intermediate>
+<Mode>unknown</Mode>
+</metaTrans>
+<stat>
+<nrWords>308</nrWords>
+<nrSent />
+</stat>
+<extra>
+<subdoc />
+</extra>
+</dpcMetaData>

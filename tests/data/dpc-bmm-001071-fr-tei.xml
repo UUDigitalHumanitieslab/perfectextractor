@@ -1,0 +1,480 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xml:id="dpc-bmm-001071-fr" xml:lang="fr" xmlns="http://www.tei-c.org/ns/1.0">
+<teiHeader>
+<fileDesc>
+<titleStmt>
+<title>dpc-bmm-001071-fr</title>
+</titleStmt>
+<editionStmt>
+<edition>
+<title>DPC 1.0</title>
+<date>2010</date>
+</edition>
+<respStmt>
+<resp>Conversion to TEI</resp>
+<name>Hans Paulussen</name>
+</respStmt>
+</editionStmt>
+<publicationStmt>
+<idno>dpc-bmm-001071-fr</idno>
+<distributor>
+The Dutch HLT Agency (TST-Centrale – Centrale voor Taal- en Spraaktechnologie)
+</distributor>
+<authority>DPC Project</authority>
+<address>
+<addName type="ns">http://www.kuleuven-kortrijk.be/dpc</addName>
+</address>
+</publicationStmt>
+<sourceDesc>
+<bibl>
+DPC – Dutch Parallel Corpus,
+A Multifunctional and Multilingual corpus
+(Dutch – English, Dutch – French)
+STEVIN project STE-05-26
+</bibl>
+</sourceDesc>
+</fileDesc>
+<profileDesc>
+<creation>
+<date>2010-02-17</date>
+</creation>
+</profileDesc>
+<encodingDesc>
+<tagsDecl>
+<namespace name="http://www.tei-c.org/ns/1.0">
+<tagUsage gi="s" occurs="16">Used for sentences</tagUsage>
+<tagUsage gi="w" occurs="357">Used for words/tokens</tagUsage>
+</namespace>
+</tagsDecl>
+</encodingDesc>
+</teiHeader>
+<text xml:id="dpc-bmm-001071-fr." xml:lang="fr">
+<body>
+<div n="div1">
+<p n="p1">
+<seg type="sent" n="seg.p1.s1">
+<seg type="original">La modélisation mathématique</seg>
+<s n="p1.s1">
+<w ana="Da-fs-d" lemma="le">La</w> 
+<w ana="Ncfs" lemma="modélisation">modélisation</w> 
+<w ana="Afpfs" lemma="mathématique">mathématique</w></s>
+</seg>
+<seg type="sent" n="seg.p1.s2">
+<seg type="original">L'UGMM étudie l'écosystème de la mer du Nord par des techniques de modélisation mathématique.</seg>
+<s n="p1.s2">
+<w ana="Da-ms-d" lemma="le">L'</w> 
+<w ana="Npms" lemma="ugmm">UGMM</w> 
+<w ana="Vmip3s" lemma="étudier ">étudie</w> 
+<w ana="Da-ms-d" lemma="le">l'</w> 
+<w ana="Ncms" lemma="écosystème">écosystème</w> 
+<w ana="Sp" lemma="de">de</w> 
+<w ana="Da-fs-d" lemma="le">la</w> 
+<w ana="Ncfs" lemma="mer">mer</w> 
+<w ana="Sp+Da-ms-d" lemma="du">du</w> 
+<w ana="Ncms" lemma="nord">Nord</w> 
+<w ana="Sp" lemma="par">par</w> 
+<w ana="Da-fp-i" lemma="du">des</w> 
+<w ana="Ncfp" lemma="technique">techniques</w> 
+<w ana="Sp" lemma="de">de</w> 
+<w ana="Ncfs" lemma="modélisation">modélisation</w> 
+<w ana="Afpfs" lemma="mathématique">mathématique</w> 
+<w ana="F" lemma=".">.</w></s>
+</seg>
+<seg type="sent" n="seg.p1.s3">
+<seg type="original">Vous avez dit "modèles mathématiques"?</seg>
+<s n="p1.s3">
+<w ana="Pp2mpn" lemma="il">Vous</w> 
+<w ana="Vaip2p" lemma="avoir">avez</w> 
+<w ana="Vmps-sm" lemma="dire">dit</w> 
+<w ana="F" lemma="&quot;">&quot;</w> 
+<w ana="Ncmp" lemma="modèle">modèles</w> 
+<w ana="Afpmp" lemma="mathématique">mathématiques</w> 
+<w ana="F" lemma="&quot;">&quot;</w> 
+<w ana="F" lemma="?">?</w></s>
+</seg>
+<seg type="sent" n="seg.p1.s4">
+<seg type="original">Oui, il s'agit de bien comprendre les mécanismes qui gouvernent le fonctionnement de l'écosystème marin et les traduire en expressions mathématiques.</seg>
+<s n="p1.s4">
+<w ana="Rgp" lemma="oui">Oui</w> 
+<w ana="F" lemma=",">,</w> 
+<w ana="Pp3msn" lemma="il">il</w> 
+<w ana="Px3ms" lemma="se">s'</w> 
+<w ana="Vmip3s" lemma="agir ">agit</w> 
+<w ana="Sp" lemma="de">de</w> 
+<w ana="Rgp" lemma="bien">bien</w> 
+<w ana="Vmn" lemma="comprendre">comprendre</w> 
+<w ana="Da-mp-d" lemma="le">les</w> 
+<w ana="Ncmp" lemma="mécanisme">mécanismes</w> 
+<w ana="Pr-mp" lemma="qui">qui</w> 
+<w ana="Vmip3p" lemma="gouverner ">gouvernent</w> 
+<w ana="Da-ms-d" lemma="le">le</w> 
+<w ana="Ncms" lemma="fonctionnement">fonctionnement</w> 
+<w ana="Sp" lemma="de">de</w> 
+<w ana="Da-ms-d" lemma="le">l'</w> 
+<w ana="Ncms" lemma="écosystème">écosystème</w> 
+<w ana="Afpms" lemma="marin">marin</w> 
+<w ana="Cc" lemma="et">et</w> 
+<w ana="Pp3mpa" lemma="le">les</w> 
+<w ana="Vmn" lemma="traduire">traduire</w> 
+<w ana="Sp" lemma="en">en</w> 
+<w ana="Ncfp" lemma="expression">expressions</w> 
+<w ana="Afpfp" lemma="mathématique">mathématiques</w> 
+<w ana="F" lemma=".">.</w></s>
+</seg>
+<seg type="sent" n="seg.p1.s5">
+<seg type="original">Celles-ci sont rassemblées en un système d'équations... qui ne sont qu'une ré-écriture appropriée des vieilles lois de conservation de la masse et de l'énergie.</seg>
+<s n="p1.s5">
+<w ana="Pd-fp" lemma="celles-ci">Celles-ci</w> 
+<w ana="Vaip3p" lemma="être">sont</w> 
+<w ana="Vmps-pf" lemma="rassembler">rassemblées</w> 
+<w ana="Sp" lemma="en">en</w> 
+<w ana="Da-ms-i" lemma="un">un</w> 
+<w ana="Ncms" lemma="système">système</w> 
+<w ana="Sp" lemma="de">d'</w> 
+<w ana="Ncfp" lemma="équation">équations</w> 
+<w ana="F" lemma="...">...</w> 
+<w ana="Pr-ms" lemma="qui">qui</w> 
+<w ana="Rpn" lemma="ne">ne</w> 
+<w ana="Vmip3p" lemma="être">sont</w> 
+<w ana="Rgn" lemma="que">qu'</w> 
+<w ana="Da-fs-i" lemma="un">une</w> 
+<w ana="Ncfs" lemma="ré-écriture">ré-écriture</w> 
+<w ana="Afpfs" lemma="approprier">appropriée</w> 
+<w ana="Sp+Da-fp-d" lemma="du">des</w> 
+<w ana="Afpfp" lemma="vieux">vieilles</w> 
+<w ana="Ncfp" lemma="loi">lois</w> 
+<w ana="Sp" lemma="de">de</w> 
+<w ana="Ncfs" lemma="conservation">conservation</w> 
+<w ana="Sp" lemma="de">de</w> 
+<w ana="Da-fs-d" lemma="le">la</w> 
+<w ana="Ncfs" lemma="masse">masse</w> 
+<w ana="Cc" lemma="et">et</w> 
+<w ana="Sp" lemma="de">de</w> 
+<w ana="Da-fs-d" lemma="le">l'</w> 
+<w ana="Ncfs" lemma="énergie">énergie</w> 
+<w ana="F" lemma=".">.</w></s>
+</seg>
+<seg type="sent" n="seg.p1.s6">
+<seg type="original">Ces équations sont transformées en programmes informatiques et, à l'aide de diverses méthodes numériques, on s'efforce de les résoudre sur des ordinateurs ayant une puissance de calcul suffisante.</seg>
+<s n="p1.s6">
+<w ana="Dd-fp" lemma="ce">Ces</w> 
+<w ana="Ncfp" lemma="équation">équations</w> 
+<w ana="Vaip3p" lemma="être">sont</w> 
+<w ana="Vmps-pf" lemma="transformer">transformées</w> 
+<w ana="Sp" lemma="en">en</w> 
+<w ana="Ncmp" lemma="programme">programmes</w> 
+<w ana="Afpmp" lemma="informatique">informatiques</w> 
+<w ana="Cc" lemma="et">et</w> 
+<w ana="F" lemma=",">,</w> 
+<w ana="Sp" lemma="à">à</w> 
+<w ana="Da-fs-d" lemma="le">l'</w> 
+<w ana="Ncfs" lemma="aide">aide</w> 
+<w ana="Sp" lemma="de">de</w> 
+<w ana="Di-fp" lemma="divers">diverses</w> 
+<w ana="Ncfp" lemma="méthode">méthodes</w> 
+<w ana="Afpmp" lemma="numérique">numériques</w> 
+<w ana="F" lemma=",">,</w> 
+<w ana="Pp3msn" lemma="on">on</w> 
+<w ana="Px3ms" lemma="se">s'</w> 
+<w ana="Vmip3s" lemma="efforcer ">efforce</w> 
+<w ana="Sp" lemma="de">de</w> 
+<w ana="Pp3mpa" lemma="le">les</w> 
+<w ana="Vmn" lemma="résoudre">résoudre</w> 
+<w ana="Sp" lemma="sur">sur</w> 
+<w ana="Da-mp-i" lemma="du">des</w> 
+<w ana="Ncmp" lemma="ordinateur">ordinateurs</w> 
+<w ana="Vapp" lemma="avoir">ayant</w> 
+<w ana="Da-fs-i" lemma="un">une</w> 
+<w ana="Ncfs" lemma="puissance">puissance</w> 
+<w ana="Sp" lemma="de">de</w> 
+<w ana="Ncms" lemma="calcul">calcul</w> 
+<w ana="Afpfs" lemma="suffisant">suffisante</w> 
+<w ana="F" lemma=".">.</w></s>
+</seg>
+<seg type="sent" n="seg.p1.s7">
+<seg type="original">Les modèles de l'UGMM traitent actuellement de variables physiques (hauteurs d'eau, courants, vagues, température, salinité), chimiques (principalement des substances de type hydrocarbures) et biologiques (limitées aux premiers maillons de la chaîne alimentaire).</seg>
+<s n="p1.s7">
+<w ana="Da-mp-d" lemma="le">Les</w> 
+<w ana="Ncmp" lemma="modèle">modèles</w> 
+<w ana="Sp" lemma="de">de</w> 
+<w ana="Da-ms-d" lemma="le">l'</w> 
+<w ana="Npms" lemma="ugmm">UGMM</w> 
+<w ana="Vmip3p" lemma="traiter ">traitent</w> 
+<w ana="Rgp" lemma="actuellement">actuellement</w> 
+<w ana="Sp" lemma="de">de</w> 
+<w ana="Afpfp" lemma="variable">variables</w> 
+<w ana="Ncfp" lemma="physique">physiques</w> 
+<w ana="F" lemma="(">(</w> 
+<w ana="Ncfp" lemma="hauteur">hauteurs</w> 
+<w ana="Sp" lemma="de">d'</w> 
+<w ana="Ncfs" lemma="eau">eau</w> 
+<w ana="F" lemma=",">,</w> 
+<w ana="Ncmp" lemma="courant">courants</w> 
+<w ana="F" lemma=",">,</w> 
+<w ana="Afpmp" lemma="vague">vagues</w> 
+<w ana="F" lemma=",">,</w> 
+<w ana="Ncfs" lemma="température">température</w> 
+<w ana="F" lemma=",">,</w> 
+<w ana="Ncfs" lemma="salinité">salinité</w> 
+<w ana="F" lemma=")">)</w> 
+<w ana="F" lemma=",">,</w> 
+<w ana="Afpfp" lemma="chimique">chimiques</w> 
+<w ana="F" lemma="(">(</w> 
+<w ana="Rgp" lemma="principalement">principalement</w> 
+<w ana="Sp+Da-fp-d" lemma="du">des</w> 
+<w ana="Ncfp" lemma="substance">substances</w> 
+<w ana="Sp" lemma="de">de</w> 
+<w ana="Ncms" lemma="type">type</w> 
+<w ana="Ncmp" lemma="hydrocarbure">hydrocarbures</w> 
+<w ana="F" lemma=")">)</w> 
+<w ana="Cc" lemma="et">et</w> 
+<w ana="Afpmp" lemma="biologique">biologiques</w> 
+<w ana="F" lemma="(">(</w> 
+<w ana="Afpfp" lemma="limiter">limitées</w> 
+<w ana="Sp+Da-mp-d" lemma="au">aux</w> 
+<w ana="Ao-mp" lemma="premiers">premiers</w> 
+<w ana="Ncmp" lemma="maillon">maillons</w> 
+<w ana="Sp" lemma="de">de</w> 
+<w ana="Da-fs-d" lemma="le">la</w> 
+<w ana="Ncfs" lemma="chaîne">chaîne</w> 
+<w ana="Afpfs" lemma="alimentaire">alimentaire</w> 
+<w ana="F" lemma=")">)</w> 
+<w ana="F" lemma=".">.</w></s>
+</seg>
+<seg type="sent" n="seg.p1.s8">
+<seg type="original">Toutes ces variables sont liées les unes aux autres et le degré de complexité et d'incertitude va croissant de la physique à la biologie.</seg>
+<s n="p1.s8">
+<w ana="Di-fp" lemma="tout">Toutes</w> 
+<w ana="Dd-fp" lemma="ce">ces</w> 
+<w ana="Afpfp" lemma="variable">variables</w> 
+<w ana="Vaip3p" lemma="être">sont</w> 
+<w ana="Vmps-pf" lemma="lier">liées</w> 
+<w ana="Da-fp-d" lemma="le">les</w> 
+<w ana="Pi-fp" lemma="une">unes</w> 
+<w ana="Sp+Da-mp-d" lemma="au">aux</w> 
+<w ana="Ai-mp" lemma="autre">autres</w> 
+<w ana="Cc" lemma="et">et</w> 
+<w ana="Da-ms-d" lemma="le">le</w> 
+<w ana="Ncms" lemma="degré">degré</w> 
+<w ana="Sp" lemma="de">de</w> 
+<w ana="Ncfs" lemma="complexité">complexité</w> 
+<w ana="Cc" lemma="et">et</w> 
+<w ana="Sp" lemma="de">d'</w> 
+<w ana="Ncfs" lemma="incertitude">incertitude</w> 
+<w ana="Vmip3s" lemma="aller ">va</w> 
+<w ana="Afpms" lemma="croissant">croissant</w> 
+<w ana="Sp" lemma="de">de</w> 
+<w ana="Da-fs-d" lemma="le">la</w> 
+<w ana="Ncfs" lemma="physique">physique</w> 
+<w ana="Sp" lemma="à">à</w> 
+<w ana="Da-fs-d" lemma="le">la</w> 
+<w ana="Ncfs" lemma="biologie">biologie</w> 
+<w ana="F" lemma=".">.</w></s>
+</seg>
+<seg type="sent" n="seg.p1.s9">
+<seg type="original">Les résultats théoriques des modèles sont ensuite soigneusement comparés à toutes les observations disponibles.</seg>
+<s n="p1.s9">
+<w ana="Da-mp-d" lemma="le">Les</w> 
+<w ana="Ncmp" lemma="résultat">résultats</w> 
+<w ana="Afpmp" lemma="théorique">théoriques</w> 
+<w ana="Sp+Da-mp-d" lemma="du">des</w> 
+<w ana="Ncmp" lemma="modèle">modèles</w> 
+<w ana="Vaip3p" lemma="être">sont</w> 
+<w ana="Rgp" lemma="ensuite">ensuite</w> 
+<w ana="Rgp" lemma="soigneusement">soigneusement</w> 
+<w ana="Vmps-pm" lemma="comparer">comparés</w> 
+<w ana="Sp" lemma="à">à</w> 
+<w ana="Di-fp" lemma="tout">toutes</w> 
+<w ana="Da-fp-d" lemma="le">les</w> 
+<w ana="Ncfp" lemma="observation">observations</w> 
+<w ana="Afpfp" lemma="disponible">disponibles</w> 
+<w ana="F" lemma=".">.</w></s>
+</seg>
+<seg type="sent" n="seg.p1.s10">
+<seg type="original">C'est la phase de "validation".</seg>
+<s n="p1.s10">
+<w ana="Pd-ms" lemma="ce">C'</w> 
+<w ana="Vmip3s" lemma="être">est</w> 
+<w ana="Da-fs-d" lemma="le">la</w> 
+<w ana="Ncfs" lemma="phase">phase</w> 
+<w ana="Sp" lemma="de">de</w> 
+<w ana="F" lemma="&quot;">&quot;</w> 
+<w ana="Ncfs" lemma="validation">validation</w> 
+<w ana="F" lemma="&quot;">&quot;</w> 
+<w ana="F" lemma=".">.</w></s>
+</seg>
+<seg type="sent" n="seg.p1.s11">
+<seg type="original">Une validation insatisfaisante est un signal que les expressions mathématiques choisies pour décrire les processus physiques, chimiques et biologiques ne sont pas correctes.</seg>
+<s n="p1.s11">
+<w ana="Da-fs-i" lemma="un">Une</w> 
+<w ana="Ncfs" lemma="validation">validation</w> 
+<w ana="Afpfs" lemma="insatisfaisant">insatisfaisante</w> 
+<w ana="Vmip3s" lemma="être">est</w> 
+<w ana="Da-ms-i" lemma="un">un</w> 
+<w ana="Ncms" lemma="signal">signal</w> 
+<w ana="Pr-ms" lemma="que">que</w> 
+<w ana="Da-fp-d" lemma="le">les</w> 
+<w ana="Ncfp" lemma="expression">expressions</w> 
+<w ana="Afpfp" lemma="mathématique">mathématiques</w> 
+<w ana="Vmps-pf" lemma="choisir">choisies</w> 
+<w ana="Sp" lemma="pour">pour</w> 
+<w ana="Vmn" lemma="décrire">décrire</w> 
+<w ana="Da-mp-d" lemma="le">les</w> 
+<w ana="Ncmp" lemma="processus">processus</w> 
+<w ana="Afpmp" lemma="physique">physiques</w> 
+<w ana="F" lemma=",">,</w> 
+<w ana="Afpmp" lemma="chimique">chimiques</w> 
+<w ana="Cc" lemma="et">et</w> 
+<w ana="Afpmp" lemma="biologique">biologiques</w> 
+<w ana="Rpn" lemma="ne">ne</w> 
+<w ana="Vmip3p" lemma="être">sont</w> 
+<w ana="Rgn" lemma="pas">pas</w> 
+<w ana="Afpfp" lemma="correct">correctes</w> 
+<w ana="F" lemma=".">.</w></s>
+</seg>
+<seg type="sent" n="seg.p1.s12">
+<seg type="original">Cela constitue donc un bon outil pour canaliser les recherches vers une connaissance plus fine de l'écosystème marin.</seg>
+<s n="p1.s12">
+<w ana="Pd-ms" lemma="cela">Cela</w> 
+<w ana="Vmip3s" lemma="constituer ">constitue</w> 
+<w ana="Rgp" lemma="donc">donc</w> 
+<w ana="Da-ms-i" lemma="un">un</w> 
+<w ana="Afpms" lemma="bon">bon</w> 
+<w ana="Ncms" lemma="outil">outil</w> 
+<w ana="Sp" lemma="pour">pour</w> 
+<w ana="Vmn" lemma="canaliser">canaliser</w> 
+<w ana="Da-fp-d" lemma="le">les</w> 
+<w ana="Ncfp" lemma="recherche">recherches</w> 
+<w ana="Sp" lemma="vers">vers</w> 
+<w ana="Da-fs-i" lemma="un">une</w> 
+<w ana="Ncfs" lemma="connaissance">connaissance</w> 
+<w ana="Rgc" lemma="plus">plus</w> 
+<w ana="Afpfs" lemma="fin">fine</w> 
+<w ana="Sp" lemma="de">de</w> 
+<w ana="Da-ms-d" lemma="le">l'</w> 
+<w ana="Ncms" lemma="écosystème">écosystème</w> 
+<w ana="Afpms" lemma="marin">marin</w> 
+<w ana="F" lemma=".">.</w></s>
+</seg>
+<seg type="sent" n="seg.p1.s13">
+<seg type="original">Une validation satisfaisante indique que les modèles peuvent être utilisés à des fins de gestion et offrir certaines capacités prévisionnelles.</seg>
+<s n="p1.s13">
+<w ana="Da-fs-i" lemma="un">Une</w> 
+<w ana="Ncfs" lemma="validation">validation</w> 
+<w ana="Afpfs" lemma="satisfaisant">satisfaisante</w> 
+<w ana="Vmip3s" lemma="indique">indique</w> 
+<w ana="Cs" lemma="que">que</w> 
+<w ana="Da-mp-d" lemma="le">les</w> 
+<w ana="Ncmp" lemma="modèle">modèles</w> 
+<w ana="Vmip3p" lemma="pouvoir">peuvent</w> 
+<w ana="Van" lemma="être">être</w> 
+<w ana="Vmps-pm" lemma="utiliser">utilisés</w> 
+<w ana="Sp" lemma="à">à</w> 
+<w ana="Da-fp-i" lemma="du">des</w> 
+<w ana="Ncfp" lemma="fin">fins</w> 
+<w ana="Sp" lemma="de">de</w> 
+<w ana="Ncfs" lemma="gestion">gestion</w> 
+<w ana="Cc" lemma="et">et</w> 
+<w ana="Vmn" lemma="offrir">offrir</w> 
+<w ana="Di-fp" lemma="certain">certaines</w> 
+<w ana="Ncfp" lemma="capacité">capacités</w> 
+<w ana="Afpfp" lemma="prévisionnel">prévisionnelles</w> 
+<w ana="F" lemma=".">.</w></s>
+</seg>
+<seg type="sent" n="seg.p1.s14">
+<seg type="original">Ces modèles sont d'abord des instruments de recherche permettant de tester - virtuellement, c'est-à-dire sans devoir recourir à des expériences coûteuses - diverses hypothèses scientifiques.</seg>
+<s n="p1.s14">
+<w ana="Dd-mp" lemma="ce">Ces</w> 
+<w ana="Ncmp" lemma="modèle">modèles</w> 
+<w ana="Vmip3p" lemma="être">sont</w> 
+<w ana="Rgp" lemma="d'abord">d'abord</w> 
+<w ana="Da-mp-i" lemma="du">des</w> 
+<w ana="Ncmp" lemma="instrument">instruments</w> 
+<w ana="Sp" lemma="de">de</w> 
+<w ana="Ncfs" lemma="recherche">recherche</w> 
+<w ana="Vmpp" lemma="permettre">permettant</w> 
+<w ana="Sp" lemma="de">de</w> 
+<w ana="Vmn" lemma="tester">tester</w> 
+<w ana="F" lemma="-">-</w> 
+<w ana="Rgp" lemma="virtuellement">virtuellement</w> 
+<w ana="F" lemma=",">,</w> 
+<w ana="I" lemma="c'est-à-dire">c'est-à-dire</w> 
+<w ana="Sp" lemma="sans">sans</w> 
+<w ana="Vmn" lemma="devoir">devoir</w> 
+<w ana="Vmn" lemma="recourir">recourir</w> 
+<w ana="Sp" lemma="à">à</w> 
+<w ana="Da-fp-i" lemma="du">des</w> 
+<w ana="Ncfp" lemma="expérience">expériences</w> 
+<w ana="Afpfp" lemma="coûteux">coûteuses</w> 
+<w ana="F" lemma="-">-</w> 
+<w ana="Di-fp" lemma="divers">diverses</w> 
+<w ana="Ncfp" lemma="hypothèse">hypothèses</w> 
+<w ana="Afpfp" lemma="scientifique">scientifiques</w> 
+<w ana="F" lemma=".">.</w></s>
+</seg>
+<seg type="sent" n="seg.p1.s15">
+<seg type="original">On parle, dans ce cas, de modèles en développement.</seg>
+<s n="p1.s15">
+<w ana="Pp3msn" lemma="on">On</w> 
+<w ana="Vmip3s" lemma="parler ">parle</w> 
+<w ana="F" lemma=",">,</w> 
+<w ana="Sp" lemma="dans">dans</w> 
+<w ana="Dd-ms" lemma="ce">ce</w> 
+<w ana="Ncms" lemma="cas">cas</w> 
+<w ana="F" lemma=",">,</w> 
+<w ana="Sp" lemma="de">de</w> 
+<w ana="Ncmp" lemma="modèle">modèles</w> 
+<w ana="Sp" lemma="en">en</w> 
+<w ana="Ncms" lemma="développement">développement</w> 
+<w ana="F" lemma=".">.</w></s>
+</seg>
+<seg type="sent" n="seg.p1.s16">
+<seg type="original">Lorsque ces modèles ont atteint un niveau acceptable de maturité et de fiabilité, on parle alors de modèles opérationnels capables de fournir divers informations et services marins, de nature comparable à ce que la météorologie produit depuis longtemps.</seg>
+<s n="p1.s16">
+<w ana="Cs" lemma="lorsque">Lorsque</w> 
+<w ana="Dd-mp" lemma="ce">ces</w> 
+<w ana="Ncmp" lemma="modèle">modèles</w> 
+<w ana="Vaip3p" lemma="avoir">ont</w> 
+<w ana="Vmps-sm" lemma="atteindre">atteint</w> 
+<w ana="Da-ms-i" lemma="un">un</w> 
+<w ana="Ncms" lemma="niveau">niveau</w> 
+<w ana="Afpms" lemma="acceptable">acceptable</w> 
+<w ana="Sp" lemma="de">de</w> 
+<w ana="Ncfs" lemma="maturité">maturité</w> 
+<w ana="Cc" lemma="et">et</w> 
+<w ana="Sp" lemma="de">de</w> 
+<w ana="Ncfs" lemma="fiabilité">fiabilité</w> 
+<w ana="F" lemma=",">,</w> 
+<w ana="Pp3msn" lemma="on">on</w> 
+<w ana="Vmip3s" lemma="parler ">parle</w> 
+<w ana="Rgp" lemma="alors">alors</w> 
+<w ana="Sp" lemma="de">de</w> 
+<w ana="Ncmp" lemma="modèle">modèles</w> 
+<w ana="Ncmp" lemma="opérationnel">opérationnels</w> 
+<w ana="Afpmp" lemma="capable">capables</w> 
+<w ana="Sp" lemma="de">de</w> 
+<w ana="Vmn" lemma="fournir">fournir</w> 
+<w ana="Di-mp" lemma="divers">divers</w> 
+<w ana="Ncfp" lemma="information">informations</w> 
+<w ana="Cc" lemma="et">et</w> 
+<w ana="Ncmp" lemma="service">services</w> 
+<w ana="Afpmp" lemma="marin">marins</w> 
+<w ana="F" lemma=",">,</w> 
+<w ana="Sp" lemma="de">de</w> 
+<w ana="Ncfs" lemma="nature">nature</w> 
+<w ana="Afpfs" lemma="comparable">comparable</w> 
+<w ana="Sp" lemma="à">à</w> 
+<w ana="Pd-ms" lemma="ce">ce</w> 
+<w ana="Pr-ms" lemma="que">que</w> 
+<w ana="Da-fs-d" lemma="le">la</w> 
+<w ana="Ncfs" lemma="météorologie">météorologie</w> 
+<w ana="Vmip3s" lemma="produire">produit</w> 
+<w ana="Rgp" lemma="depuis">depuis</w> 
+<w ana="Rgp" lemma="longtemps">longtemps</w> 
+<w ana="F" lemma=".">.</w></s>
+</seg>
+</p>
+</div>
+</body>
+</text>
+</TEI>

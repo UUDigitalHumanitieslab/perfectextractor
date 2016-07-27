@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xml:id="dpc-bmm-001071-nl-fr" select="nl fr" xmlns="http://www.tei-c.org/ns/1.0">
+<teiHeader>
+<fileDesc>
+<titleStmt>
+<title>dpc-bmm-001071-nl-fr</title>
+</titleStmt>
+<editionStmt>
+<edition>
+<title>DPC 1.0</title>
+<date>2010</date>
+</edition>
+<respStmt>
+<resp>Conversion to TEI</resp>
+<name>Hans Paulussen</name>
+</respStmt>
+</editionStmt>
+<publicationStmt>
+<idno>dpc-bmm-001071-nl-fr</idno>
+<distributor>
+The Dutch HLT Agency (TST-Centrale – Centrale voor Taal- en Spraaktechnologie)
+</distributor>
+<authority>DPC Project</authority>
+<address>
+<addName type="ns">http://www.kuleuven-kortrijk.be/dpc</addName>
+</address>
+</publicationStmt>
+<sourceDesc>
+<bibl>
+DPC – Dutch Parallel Corpus,
+A Multifunctional and Multilingual corpus
+(Dutch – English, Dutch – French)
+STEVIN project STE-05-26
+</bibl>
+</sourceDesc>
+</fileDesc>
+<profileDesc>
+<creation>
+<date>2010-02-17</date>
+</creation>
+</profileDesc>
+<encodingDesc>
+<tagsDecl>
+<namespace name="http://www.tei-c.org/ns/1.0">
+<tagUsage gi="link" occurs="15">number of alignment links</tagUsage>
+</namespace>
+</tagsDecl>
+</encodingDesc>
+</teiHeader>
+<text xml:id="dpc-bmm-001071-nl-fr.">
+<body>
+<div n="div1">
+<linkGrp type="alignment">
+<link type="V: 1-1" targets="p1.s1; p1.s1"/>
+<link type="V: 1-1" targets="p1.s2; p1.s2"/>
+<link type="V: 1-2" targets="p1.s3; p1.s3 p1.s4"/>
+<link type="V: 1-1" targets="p1.s4; p1.s5"/>
+<link type="V: 1-1" targets="p1.s5; p1.s6"/>
+<link type="V: 1-1" targets="p1.s6; p1.s7"/>
+<link type="V: 1-1" targets="p1.s7; p1.s8"/>
+<link type="V: 1-1" targets="p1.s8; p1.s9"/>
+<link type="V: 1-1" targets="p1.s9; p1.s10"/>
+<link type="V: 1-1" targets="p1.s10; p1.s11"/>
+<link type="V: 1-1" targets="p1.s11; p1.s12"/>
+<link type="V: 1-1" targets="p1.s12; p1.s13"/>
+<link type="V: 2-1" targets="p1.s13 p1.s14; p1.s14"/>
+<link type="V: 1-1" targets="p1.s15; p1.s15"/>
+<link type="V: 2-1" targets="p1.s16 p1.s17; p1.s16"/>
+</linkGrp>
+</div>
+</body>
+</text>
+</TEI>

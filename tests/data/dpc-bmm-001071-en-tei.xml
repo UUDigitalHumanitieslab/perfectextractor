@@ -1,0 +1,470 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xml:id="dpc-bmm-001071-en" xml:lang="en" xmlns="http://www.tei-c.org/ns/1.0">
+<teiHeader>
+<fileDesc>
+<titleStmt>
+<title>dpc-bmm-001071-en</title>
+</titleStmt>
+<editionStmt>
+<edition>
+<title>DPC 1.0</title>
+<date>2010</date>
+</edition>
+<respStmt>
+<resp>Conversion to TEI</resp>
+<name>Hans Paulussen</name>
+</respStmt>
+</editionStmt>
+<publicationStmt>
+<idno>dpc-bmm-001071-en</idno>
+<distributor>
+The Dutch HLT Agency (TST-Centrale – Centrale voor Taal- en Spraaktechnologie)
+</distributor>
+<authority>DPC Project</authority>
+<address>
+<addName type="ns">http://www.kuleuven-kortrijk.be/dpc</addName>
+</address>
+</publicationStmt>
+<sourceDesc>
+<bibl>
+DPC – Dutch Parallel Corpus,
+A Multifunctional and Multilingual corpus
+(Dutch – English, Dutch – French)
+STEVIN project STE-05-26
+</bibl>
+</sourceDesc>
+</fileDesc>
+<profileDesc>
+<creation>
+<date>2010-02-17</date>
+</creation>
+</profileDesc>
+<encodingDesc>
+<tagsDecl>
+<namespace name="http://www.tei-c.org/ns/1.0">
+<tagUsage gi="s" occurs="16">Used for sentences</tagUsage>
+<tagUsage gi="w" occurs="347">Used for words/tokens</tagUsage>
+</namespace>
+</tagsDecl>
+</encodingDesc>
+</teiHeader>
+<text xml:id="dpc-bmm-001071-en." xml:lang="en">
+<body>
+<div n="div1">
+<p n="p1">
+<seg type="sent" n="seg.p1.s1">
+<seg type="original">Mathematical models</seg>
+<s n="p1.s1">
+<w ana="JJ" lemma="mathematical">Mathematical</w> 
+<w ana="NNS" lemma="model">models</w></s>
+</seg>
+<seg type="sent" n="seg.p1.s2">
+<seg type="original">MUMM studies the ecosystem of the North Sea using mathematical modelling techniques.</seg>
+<s n="p1.s2">
+<w ana="NNP" lemma="MUMM">MUMM</w> 
+<w ana="VBZ" lemma="study">studies</w> 
+<w ana="DT" lemma="the">the</w> 
+<w ana="NN" lemma="ecosystem">ecosystem</w> 
+<w ana="IN" lemma="of">of</w> 
+<w ana="DT" lemma="the">the</w> 
+<w ana="NNP" lemma="North">North</w> 
+<w ana="NNP" lemma="Sea">Sea</w> 
+<w ana="VBG" lemma="use">using</w> 
+<w ana="JJ" lemma="mathematical">mathematical</w> 
+<w ana="VBG" lemma="model">modelling</w> 
+<w ana="NNS" lemma="technique">techniques</w> 
+<w ana="." lemma=".">.</w></s>
+</seg>
+<seg type="sent" n="seg.p1.s3">
+<seg type="original">Did someone say 'mathematical models'?</seg>
+<s n="p1.s3">
+<w ana="VBD" lemma="do">Did</w> 
+<w ana="NN" lemma="someone">someone</w> 
+<w ana="VB" lemma="say">say</w> 
+<w ana="''" lemma="'">'</w> 
+<w ana="JJ" lemma="mathematical">mathematical</w> 
+<w ana="NNS" lemma="model">models</w> 
+<w ana="''" lemma="'">'</w> 
+<w ana="." lemma="?">?</w></s>
+</seg>
+<seg type="sent" n="seg.p1.s4">
+<seg type="original">Yes, this involves properly understanding the mechanisms that govern the way the marine ecosystem works and translating them into mathematical expressions.</seg>
+<s n="p1.s4">
+<w ana="UH" lemma="yes">Yes</w> 
+<w ana="," lemma=",">,</w> 
+<w ana="DT" lemma="this">this</w> 
+<w ana="VBZ" lemma="involve">involves</w> 
+<w ana="RB" lemma="properly">properly</w> 
+<w ana="VBG" lemma="understand">understanding</w> 
+<w ana="DT" lemma="the">the</w> 
+<w ana="NNS" lemma="mechanism">mechanisms</w> 
+<w ana="IN" lemma="that">that</w> 
+<w ana="VBP" lemma="govern">govern</w> 
+<w ana="DT" lemma="the">the</w> 
+<w ana="NN" lemma="way">way</w> 
+<w ana="DT" lemma="the">the</w> 
+<w ana="JJ" lemma="marine">marine</w> 
+<w ana="NN" lemma="ecosystem">ecosystem</w> 
+<w ana="VBZ" lemma="work">works</w> 
+<w ana="CC" lemma="and">and</w> 
+<w ana="VBG" lemma="translate">translating</w> 
+<w ana="PRP" lemma="them">them</w> 
+<w ana="IN" lemma="into">into</w> 
+<w ana="JJ" lemma="mathematical">mathematical</w> 
+<w ana="NNS" lemma="expression">expressions</w> 
+<w ana="." lemma=".">.</w></s>
+</seg>
+<seg type="sent" n="seg.p1.s5">
+<seg type="original">These are gathered together in a system of equations ... which are simply an appropriate way of rewriting the old laws on conserving mass and energy.</seg>
+<s n="p1.s5">
+<w ana="DT" lemma="these">These</w> 
+<w ana="VBP" lemma="be">are</w> 
+<w ana="VBN" lemma="gather">gathered</w> 
+<w ana="RB" lemma="together">together</w> 
+<w ana="IN" lemma="in">in</w> 
+<w ana="DT" lemma="a">a</w> 
+<w ana="NN" lemma="system">system</w> 
+<w ana="IN" lemma="of">of</w> 
+<w ana="NNS" lemma="equation">equations</w> 
+<w ana=":" lemma="...">...</w> 
+<w ana="WDT" lemma="which">which</w> 
+<w ana="VBP" lemma="be">are</w> 
+<w ana="RB" lemma="simply">simply</w> 
+<w ana="DT" lemma="an">an</w> 
+<w ana="JJ" lemma="appropriate">appropriate</w> 
+<w ana="NN" lemma="way">way</w> 
+<w ana="IN" lemma="of">of</w> 
+<w ana="VBG" lemma="rewrite">rewriting</w> 
+<w ana="DT" lemma="the">the</w> 
+<w ana="JJ" lemma="old">old</w> 
+<w ana="NNS" lemma="law">laws</w> 
+<w ana="IN" lemma="on">on</w> 
+<w ana="VBG" lemma="conserve">conserving</w> 
+<w ana="NN" lemma="mass">mass</w> 
+<w ana="CC" lemma="and">and</w> 
+<w ana="NN" lemma="energy">energy</w> 
+<w ana="." lemma=".">.</w></s>
+</seg>
+<seg type="sent" n="seg.p1.s6">
+<seg type="original">These equations are transformed into computing programs and, using various digital methods, attempts are made to resolve them using computers with an adequate calculating capability.</seg>
+<s n="p1.s6">
+<w ana="DT" lemma="these">These</w> 
+<w ana="NNS" lemma="equation">equations</w> 
+<w ana="VBP" lemma="be">are</w> 
+<w ana="VBN" lemma="transform">transformed</w> 
+<w ana="IN" lemma="into">into</w> 
+<w ana="VBG" lemma="compute">computing</w> 
+<w ana="NNS" lemma="program">programs</w> 
+<w ana="CC" lemma="and">and</w> 
+<w ana="," lemma=",">,</w> 
+<w ana="VBG" lemma="use">using</w> 
+<w ana="JJ" lemma="various">various</w> 
+<w ana="JJ" lemma="digital">digital</w> 
+<w ana="NNS" lemma="method">methods</w> 
+<w ana="," lemma=",">,</w> 
+<w ana="NNS" lemma="attempt">attempts</w> 
+<w ana="VBP" lemma="be">are</w> 
+<w ana="VBN" lemma="make">made</w> 
+<w ana="TO" lemma="to">to</w> 
+<w ana="VB" lemma="resolve">resolve</w> 
+<w ana="PRP" lemma="them">them</w> 
+<w ana="VBG" lemma="use">using</w> 
+<w ana="NNS" lemma="computer">computers</w> 
+<w ana="IN" lemma="with">with</w> 
+<w ana="DT" lemma="an">an</w> 
+<w ana="JJ" lemma="adequate">adequate</w> 
+<w ana="JJ" lemma="calculating">calculating</w> 
+<w ana="NN" lemma="capability">capability</w> 
+<w ana="." lemma=".">.</w></s>
+</seg>
+<seg type="sent" n="seg.p1.s7">
+<seg type="original">MUMM's models currently deal with physical variables (water levels, currents, waves, temperature, salinity), chemical variables (mainly substances such as hydrocarbons) and biological variables (confined to the first links in the food chain).</seg>
+<s n="p1.s7">
+<w ana="NNP" lemma="MUMM">MUMM</w> 
+<w ana="POS" lemma="'s">'s</w> 
+<w ana="NNS" lemma="model">models</w> 
+<w ana="RB" lemma="currently">currently</w> 
+<w ana="VBP" lemma="deal">deal</w> 
+<w ana="IN" lemma="with">with</w> 
+<w ana="JJ" lemma="physical">physical</w> 
+<w ana="NNS" lemma="variable">variables</w> 
+<w ana="(" lemma="(">(</w> 
+<w ana="NN" lemma="water">water</w> 
+<w ana="NNS" lemma="level">levels</w> 
+<w ana="," lemma=",">,</w> 
+<w ana="NNS" lemma="current">currents</w> 
+<w ana="," lemma=",">,</w> 
+<w ana="NNS" lemma="wave">waves</w> 
+<w ana="," lemma=",">,</w> 
+<w ana="NN" lemma="temperature">temperature</w> 
+<w ana="," lemma=",">,</w> 
+<w ana="NN" lemma="salinity">salinity</w> 
+<w ana=")" lemma=")">)</w> 
+<w ana="," lemma=",">,</w> 
+<w ana="JJ" lemma="chemical">chemical</w> 
+<w ana="NNS" lemma="variable">variables</w> 
+<w ana="(" lemma="(">(</w> 
+<w ana="RB" lemma="mainly">mainly</w> 
+<w ana="NNS" lemma="substance">substances</w> 
+<w ana="JJ" lemma="such">such</w> 
+<w ana="IN" lemma="as">as</w> 
+<w ana="NNS" lemma="hydrocarbon">hydrocarbons</w> 
+<w ana=")" lemma=")">)</w> 
+<w ana="CC" lemma="and">and</w> 
+<w ana="JJ" lemma="biological">biological</w> 
+<w ana="NNS" lemma="variable">variables</w> 
+<w ana="(" lemma="(">(</w> 
+<w ana="VBN" lemma="confine">confined</w> 
+<w ana="TO" lemma="to">to</w> 
+<w ana="DT" lemma="the">the</w> 
+<w ana="JJ" lemma="first">first</w> 
+<w ana="NNS" lemma="link">links</w> 
+<w ana="IN" lemma="in">in</w> 
+<w ana="DT" lemma="the">the</w> 
+<w ana="NN" lemma="food">food</w> 
+<w ana="NN" lemma="chain">chain</w> 
+<w ana=")" lemma=")">)</w> 
+<w ana="." lemma=".">.</w></s>
+</seg>
+<seg type="sent" n="seg.p1.s8">
+<seg type="original">All these variables are linked to one another and the degree of complexity and uncertainty increases from the physical to the biological variables.</seg>
+<s n="p1.s8">
+<w ana="PDT" lemma="all">All</w> 
+<w ana="DT" lemma="these">these</w> 
+<w ana="NNS" lemma="variable">variables</w> 
+<w ana="VBP" lemma="be">are</w> 
+<w ana="VBN" lemma="link">linked</w> 
+<w ana="TO" lemma="to">to</w> 
+<w ana="CD" lemma="one">one</w> 
+<w ana="DT" lemma="another">another</w> 
+<w ana="CC" lemma="and">and</w> 
+<w ana="DT" lemma="the">the</w> 
+<w ana="NN" lemma="degree">degree</w> 
+<w ana="IN" lemma="of">of</w> 
+<w ana="NN" lemma="complexity">complexity</w> 
+<w ana="CC" lemma="and">and</w> 
+<w ana="NN" lemma="uncertainty">uncertainty</w> 
+<w ana="VBZ" lemma="increase">increases</w> 
+<w ana="IN" lemma="from">from</w> 
+<w ana="DT" lemma="the">the</w> 
+<w ana="JJ" lemma="physical">physical</w> 
+<w ana="TO" lemma="to">to</w> 
+<w ana="DT" lemma="the">the</w> 
+<w ana="JJ" lemma="biological">biological</w> 
+<w ana="NNS" lemma="variable">variables</w> 
+<w ana="." lemma=".">.</w></s>
+</seg>
+<seg type="sent" n="seg.p1.s9">
+<seg type="original">The theoretical results produced from the models are then carefully compared with all the observations available.</seg>
+<s n="p1.s9">
+<w ana="DT" lemma="the">The</w> 
+<w ana="JJ" lemma="theoretical">theoretical</w> 
+<w ana="NNS" lemma="result">results</w> 
+<w ana="VBN" lemma="produce">produced</w> 
+<w ana="IN" lemma="from">from</w> 
+<w ana="DT" lemma="the">the</w> 
+<w ana="NNS" lemma="model">models</w> 
+<w ana="VBP" lemma="be">are</w> 
+<w ana="RB" lemma="then">then</w> 
+<w ana="RB" lemma="carefully">carefully</w> 
+<w ana="VBN" lemma="compare">compared</w> 
+<w ana="IN" lemma="with">with</w> 
+<w ana="PDT" lemma="all">all</w> 
+<w ana="DT" lemma="the">the</w> 
+<w ana="NNS" lemma="observation">observations</w> 
+<w ana="JJ" lemma="available">available</w> 
+<w ana="." lemma=".">.</w></s>
+</seg>
+<seg type="sent" n="seg.p1.s10">
+<seg type="original">This is the 'validation' phase.</seg>
+<s n="p1.s10">
+<w ana="DT" lemma="this">This</w> 
+<w ana="VBZ" lemma="be">is</w> 
+<w ana="DT" lemma="the">the</w> 
+<w ana="''" lemma="'">'</w> 
+<w ana="NN" lemma="validation">validation</w> 
+<w ana="''" lemma="'">'</w> 
+<w ana="NN" lemma="phase">phase</w> 
+<w ana="." lemma=".">.</w></s>
+</seg>
+<seg type="sent" n="seg.p1.s11">
+<seg type="original">An unsatisfactory validation is a sign that the mathematical expressions chosen to describe physical, chemical and biological processes are not correct.</seg>
+<s n="p1.s11">
+<w ana="DT" lemma="an">An</w> 
+<w ana="JJ" lemma="unsatisfactory">unsatisfactory</w> 
+<w ana="NN" lemma="validation">validation</w> 
+<w ana="VBZ" lemma="be">is</w> 
+<w ana="DT" lemma="a">a</w> 
+<w ana="NN" lemma="sign">sign</w> 
+<w ana="IN" lemma="that">that</w> 
+<w ana="DT" lemma="the">the</w> 
+<w ana="JJ" lemma="mathematical">mathematical</w> 
+<w ana="NNS" lemma="expression">expressions</w> 
+<w ana="VBN" lemma="choose">chosen</w> 
+<w ana="TO" lemma="to">to</w> 
+<w ana="VB" lemma="describe">describe</w> 
+<w ana="JJ" lemma="physical">physical</w> 
+<w ana="," lemma=",">,</w> 
+<w ana="JJ" lemma="chemical">chemical</w> 
+<w ana="CC" lemma="and">and</w> 
+<w ana="JJ" lemma="biological">biological</w> 
+<w ana="NNS" lemma="process">processes</w> 
+<w ana="VBP" lemma="be">are</w> 
+<w ana="RB" lemma="not">not</w> 
+<w ana="JJ" lemma="correct">correct</w> 
+<w ana="." lemma=".">.</w></s>
+</seg>
+<seg type="sent" n="seg.p1.s12">
+<seg type="original">Consequently this is a good tool for guiding research towards more detailed knowledge of the marine ecosystem.</seg>
+<s n="p1.s12">
+<w ana="RB" lemma="consequently">Consequently</w> 
+<w ana="DT" lemma="this">this</w> 
+<w ana="VBZ" lemma="be">is</w> 
+<w ana="DT" lemma="a">a</w> 
+<w ana="JJ" lemma="good">good</w> 
+<w ana="NN" lemma="tool">tool</w> 
+<w ana="IN" lemma="for">for</w> 
+<w ana="VBG" lemma="guide">guiding</w> 
+<w ana="NN" lemma="research">research</w> 
+<w ana="IN" lemma="towards">towards</w> 
+<w ana="RBR" lemma="more">more</w> 
+<w ana="JJ" lemma="detailed">detailed</w> 
+<w ana="NN" lemma="knowledge">knowledge</w> 
+<w ana="IN" lemma="of">of</w> 
+<w ana="DT" lemma="the">the</w> 
+<w ana="JJ" lemma="marine">marine</w> 
+<w ana="NN" lemma="ecosystem">ecosystem</w> 
+<w ana="." lemma=".">.</w></s>
+</seg>
+<seg type="sent" n="seg.p1.s13">
+<seg type="original">A satisfactory validation indicates that the models can be used for management purposes and to a certain extent for forecasting.</seg>
+<s n="p1.s13">
+<w ana="DT" lemma="a">A</w> 
+<w ana="JJ" lemma="satisfactory">satisfactory</w> 
+<w ana="NN" lemma="validation">validation</w> 
+<w ana="VBZ" lemma="indicate">indicates</w> 
+<w ana="IN" lemma="that">that</w> 
+<w ana="DT" lemma="the">the</w> 
+<w ana="NNS" lemma="model">models</w> 
+<w ana="MD" lemma="can">can</w> 
+<w ana="VB" lemma="be">be</w> 
+<w ana="VBN" lemma="use">used</w> 
+<w ana="IN" lemma="for">for</w> 
+<w ana="NN" lemma="management">management</w> 
+<w ana="NNS" lemma="purpose">purposes</w> 
+<w ana="CC" lemma="and">and</w> 
+<w ana="TO" lemma="to">to</w> 
+<w ana="DT" lemma="a">a</w> 
+<w ana="JJ" lemma="certain">certain</w> 
+<w ana="NN" lemma="extent">extent</w> 
+<w ana="IN" lemma="for">for</w> 
+<w ana="VBG" lemma="forecast">forecasting</w> 
+<w ana="." lemma=".">.</w></s>
+</seg>
+<seg type="sent" n="seg.p1.s14">
+<seg type="original">These models are first and foremost research instruments that can be used to test various scientific hypotheses virtually, that is without having to carry out costly experiments.</seg>
+<s n="p1.s14">
+<w ana="DT" lemma="these">These</w> 
+<w ana="NNS" lemma="model">models</w> 
+<w ana="VBP" lemma="be">are</w> 
+<w ana="RB" lemma="first">first</w> 
+<w ana="CC" lemma="and">and</w> 
+<w ana="RB" lemma="foremost">foremost</w> 
+<w ana="NN" lemma="research">research</w> 
+<w ana="NNS" lemma="instrument">instruments</w> 
+<w ana="WDT" lemma="that">that</w> 
+<w ana="MD" lemma="can">can</w> 
+<w ana="VB" lemma="be">be</w> 
+<w ana="VBN" lemma="use">used</w> 
+<w ana="TO" lemma="to">to</w> 
+<w ana="VB" lemma="test">test</w> 
+<w ana="JJ" lemma="various">various</w> 
+<w ana="JJ" lemma="scientific">scientific</w> 
+<w ana="NNS" lemma="hypothesis">hypotheses</w> 
+<w ana="RB" lemma="virtually">virtually</w> 
+<w ana="," lemma=",">,</w> 
+<w ana="DT" lemma="that">that</w> 
+<w ana="VBZ" lemma="be">is</w> 
+<w ana="IN" lemma="without">without</w> 
+<w ana="VBG" lemma="have">having</w> 
+<w ana="TO" lemma="to">to</w> 
+<w ana="VB" lemma="carry">carry</w> 
+<w ana="RP" lemma="out">out</w> 
+<w ana="JJ" lemma="costly">costly</w> 
+<w ana="NNS" lemma="experiment">experiments</w> 
+<w ana="." lemma=".">.</w></s>
+</seg>
+<seg type="sent" n="seg.p1.s15">
+<seg type="original">In this case, the term used is models under development.</seg>
+<s n="p1.s15">
+<w ana="IN" lemma="in">In</w> 
+<w ana="DT" lemma="this">this</w> 
+<w ana="NN" lemma="case">case</w> 
+<w ana="," lemma=",">,</w> 
+<w ana="DT" lemma="the">the</w> 
+<w ana="NN" lemma="term">term</w> 
+<w ana="VBN" lemma="use">used</w> 
+<w ana="VBZ" lemma="be">is</w> 
+<w ana="NNS" lemma="model">models</w> 
+<w ana="IN" lemma="under">under</w> 
+<w ana="NN" lemma="development">development</w> 
+<w ana="." lemma=".">.</w></s>
+</seg>
+<seg type="sent" n="seg.p1.s16">
+<seg type="original">When these models have attained an acceptable level of maturity and reliability, they are referred to as operational models capable of providing various items of marine information and a number of marine services, similar to those which have been provided by meteorology for many years now.</seg>
+<s n="p1.s16">
+<w ana="WRB" lemma="when">When</w> 
+<w ana="DT" lemma="these">these</w> 
+<w ana="NNS" lemma="model">models</w> 
+<w ana="VBP" lemma="have">have</w> 
+<w ana="VBN" lemma="attain">attained</w> 
+<w ana="DT" lemma="an">an</w> 
+<w ana="JJ" lemma="acceptable">acceptable</w> 
+<w ana="NN" lemma="level">level</w> 
+<w ana="IN" lemma="of">of</w> 
+<w ana="NN" lemma="maturity">maturity</w> 
+<w ana="CC" lemma="and">and</w> 
+<w ana="NN" lemma="reliability">reliability</w> 
+<w ana="," lemma=",">,</w> 
+<w ana="PRP" lemma="they">they</w> 
+<w ana="VBP" lemma="be">are</w> 
+<w ana="VBN" lemma="refer">referred</w> 
+<w ana="TO" lemma="to">to</w> 
+<w ana="IN" lemma="as">as</w> 
+<w ana="JJ" lemma="operational">operational</w> 
+<w ana="NNS" lemma="model">models</w> 
+<w ana="JJ" lemma="capable">capable</w> 
+<w ana="IN" lemma="of">of</w> 
+<w ana="VBG" lemma="provide">providing</w> 
+<w ana="JJ" lemma="various">various</w> 
+<w ana="NNS" lemma="item">items</w> 
+<w ana="IN" lemma="of">of</w> 
+<w ana="JJ" lemma="marine">marine</w> 
+<w ana="NN" lemma="information">information</w> 
+<w ana="CC" lemma="and">and</w> 
+<w ana="DT" lemma="a">a</w> 
+<w ana="NN" lemma="number">number</w> 
+<w ana="IN" lemma="of">of</w> 
+<w ana="NN" lemma="marine">marine</w> 
+<w ana="NNS" lemma="service">services</w> 
+<w ana="," lemma=",">,</w> 
+<w ana="JJ" lemma="similar">similar</w> 
+<w ana="TO" lemma="to">to</w> 
+<w ana="DT" lemma="those">those</w> 
+<w ana="WDT" lemma="which">which</w> 
+<w ana="VBP" lemma="have">have</w> 
+<w ana="VBN" lemma="be">been</w> 
+<w ana="VBN" lemma="provide">provided</w> 
+<w ana="IN" lemma="by">by</w> 
+<w ana="NN" lemma="meteorology">meteorology</w> 
+<w ana="IN" lemma="for">for</w> 
+<w ana="JJ" lemma="many">many</w> 
+<w ana="NNS" lemma="year">years</w> 
+<w ana="RB" lemma="now">now</w> 
+<w ana="." lemma=".">.</w></s>
+</seg>
+</p>
+</div>
+</body>
+</text>
+</TEI>
