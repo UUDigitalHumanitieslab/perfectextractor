@@ -1,0 +1,474 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xml:id="dpc-bmm-001071-nl" xml:lang="nl" xmlns="http://www.tei-c.org/ns/1.0">
+<teiHeader>
+<fileDesc>
+<titleStmt>
+<title>dpc-bmm-001071-nl</title>
+</titleStmt>
+<editionStmt>
+<edition>
+<title>DPC 1.0</title>
+<date>2010</date>
+</edition>
+<respStmt>
+<resp>Conversion to TEI</resp>
+<name>Hans Paulussen</name>
+</respStmt>
+</editionStmt>
+<publicationStmt>
+<idno>dpc-bmm-001071-nl</idno>
+<distributor>
+The Dutch HLT Agency (TST-Centrale – Centrale voor Taal- en Spraaktechnologie)
+</distributor>
+<authority>DPC Project</authority>
+<address>
+<addName type="ns">http://www.kuleuven-kortrijk.be/dpc</addName>
+</address>
+</publicationStmt>
+<sourceDesc>
+<bibl>
+DPC – Dutch Parallel Corpus,
+A Multifunctional and Multilingual corpus
+(Dutch – English, Dutch – French)
+STEVIN project STE-05-26
+</bibl>
+</sourceDesc>
+</fileDesc>
+<profileDesc>
+<creation>
+<date>2010-02-17</date>
+</creation>
+</profileDesc>
+<encodingDesc>
+<tagsDecl>
+<namespace name="http://www.tei-c.org/ns/1.0">
+<tagUsage gi="s" occurs="17">Used for sentences</tagUsage>
+<tagUsage gi="w" occurs="347">Used for words/tokens</tagUsage>
+</namespace>
+</tagsDecl>
+</encodingDesc>
+</teiHeader>
+<text xml:id="dpc-bmm-001071-nl." xml:lang="nl">
+<body>
+<div n="div1">
+<p n="p1">
+<seg type="sent" n="seg.p1.s1">
+<seg type="original">Mathematische modellen</seg>
+<s n="p1.s1">
+<w ana="ADJ(prenom,basis,met-e,stan)" lemma="mathematisch">Mathematische</w> 
+<w ana="N(soort,mv,basis)" lemma="model">modellen</w></s>
+</seg>
+<seg type="sent" n="seg.p1.s2">
+<seg type="original">De BMM bestudeert het ecosysteem van de Noordzee aan de hand van mathematische modellen.</seg>
+<s n="p1.s2">
+<w ana="LID(bep,stan,rest)" lemma="de">De</w> 
+<w ana="N(eigen,ev,basis,zijd,stan)" lemma="BMM">BMM</w> 
+<w ana="WW(pv,tgw,met-t)" lemma="bestuderen">bestudeert</w> 
+<w ana="LID(bep,stan,evon)" lemma="het">het</w> 
+<w ana="N(soort,ev,basis,onz,stan)" lemma="ecosysteem">ecosysteem</w> 
+<w ana="VZ(init)" lemma="van">van</w> 
+<w ana="LID(bep,stan,rest)" lemma="de">de</w> 
+<w ana="N(eigen,ev,basis,zijd,stan)" lemma="Noordzee">Noordzee</w> 
+<w ana="VZ(init)" lemma="aan">aan</w> 
+<w ana="LID(bep,stan,rest)" lemma="de">de</w> 
+<w ana="N(soort,ev,basis,zijd,stan)" lemma="hand">hand</w> 
+<w ana="VZ(init)" lemma="van">van</w> 
+<w ana="ADJ(prenom,basis,met-e,stan)" lemma="mathematisch">mathematische</w> 
+<w ana="N(soort,mv,basis)" lemma="model">modellen</w> 
+<w ana="LET()" lemma=".">.</w></s>
+</seg>
+<seg type="sent" n="seg.p1.s3">
+<seg type="original">Het komt erop aan een inzicht te verwerven in de mechanismen die de werking van het mariene ecosysteem regelen en deze te vertalen in wiskundige formules.</seg>
+<s n="p1.s3">
+<w ana="VNW(pers,pron,stan,red,3,ev,onz)" lemma="het">Het</w> 
+<w ana="WW(pv,tgw,met-t)" lemma="komen">komt</w> 
+<w ana="BW()" lemma="erop">erop</w> 
+<w ana="VZ(fin)" lemma="aan">aan</w> 
+<w ana="LID(onbep,stan,agr)" lemma="een">een</w> 
+<w ana="N(soort,ev,basis,onz,stan)" lemma="inzicht">inzicht</w> 
+<w ana="VZ(init)" lemma="te">te</w> 
+<w ana="WW(inf,vrij,zonder)" lemma="verwerven">verwerven</w> 
+<w ana="VZ(init)" lemma="in">in</w> 
+<w ana="LID(bep,stan,rest)" lemma="de">de</w> 
+<w ana="N(soort,mv,basis)" lemma="mechanisme">mechanismen</w> 
+<w ana="VNW(betr,pron,stan,vol,persoon,getal)" lemma="die">die</w> 
+<w ana="LID(bep,stan,rest)" lemma="de">de</w> 
+<w ana="N(soort,ev,basis,zijd,stan)" lemma="werking">werking</w> 
+<w ana="VZ(init)" lemma="van">van</w> 
+<w ana="LID(bep,stan,evon)" lemma="het">het</w> 
+<w ana="ADJ(prenom,basis,met-e,stan)" lemma="marien">mariene</w> 
+<w ana="N(soort,ev,basis,onz,stan)" lemma="ecosysteem">ecosysteem</w> 
+<w ana="WW(inf,vrij,zonder)" lemma="regelen">regelen</w> 
+<w ana="VG(neven)" lemma="en">en</w> 
+<w ana="VNW(aanw,det,stan,nom,met-e,zonder-n)" lemma="deze">deze</w> 
+<w ana="VZ(init)" lemma="te">te</w> 
+<w ana="WW(inf,vrij,zonder)" lemma="vertalen">vertalen</w> 
+<w ana="VZ(init)" lemma="in">in</w> 
+<w ana="ADJ(prenom,basis,met-e,stan)" lemma="wiskundig">wiskundige</w> 
+<w ana="N(soort,mv,basis)" lemma="formule">formules</w> 
+<w ana="LET()" lemma=".">.</w></s>
+</seg>
+<seg type="sent" n="seg.p1.s4">
+<seg type="original">Deze worden samengebracht in een systeem van vergelijkingen, die eigenlijk niet meer zijn dan een aangepast herschrijven van de aloude wetten van behoud van massa en energie.</seg>
+<s n="p1.s4">
+<w ana="VNW(aanw,det,stan,nom,met-e,zonder-n)" lemma="deze">Deze</w> 
+<w ana="WW(pv,tgw,mv)" lemma="worden">worden</w> 
+<w ana="WW(vd,vrij,zonder)" lemma="samenbrengen">samengebracht</w> 
+<w ana="VZ(init)" lemma="in">in</w> 
+<w ana="LID(onbep,stan,agr)" lemma="een">een</w> 
+<w ana="N(soort,ev,basis,onz,stan)" lemma="systeem">systeem</w> 
+<w ana="VZ(init)" lemma="van">van</w> 
+<w ana="N(soort,mv,basis)" lemma="vergelijking">vergelijkingen</w> 
+<w ana="LET()" lemma=",">,</w> 
+<w ana="VNW(betr,pron,stan,vol,persoon,getal)" lemma="die">die</w> 
+<w ana="ADJ(vrij,basis,zonder)" lemma="eigenlijk">eigenlijk</w> 
+<w ana="BW()" lemma="niet">niet</w> 
+<w ana="VNW(onbep,grad,stan,vrij,zonder,comp)" lemma="veel">meer</w> 
+<w ana="WW(pv,tgw,mv)" lemma="zijn">zijn</w> 
+<w ana="VG(onder)" lemma="dan">dan</w> 
+<w ana="LID(onbep,stan,agr)" lemma="een">een</w> 
+<w ana="WW(vd,prenom,zonder)" lemma="aanpassen">aangepast</w> 
+<w ana="WW(inf,nom,zonder,zonder-n)" lemma="herschrijven">herschrijven</w> 
+<w ana="VZ(init)" lemma="van">van</w> 
+<w ana="LID(bep,stan,rest)" lemma="de">de</w> 
+<w ana="ADJ(prenom,basis,met-e,stan)" lemma="aloud">aloude</w> 
+<w ana="N(soort,mv,basis)" lemma="wet">wetten</w> 
+<w ana="VZ(init)" lemma="van">van</w> 
+<w ana="N(soort,ev,basis,onz,stan)" lemma="behoud">behoud</w> 
+<w ana="VZ(init)" lemma="van">van</w> 
+<w ana="N(soort,ev,basis,zijd,stan)" lemma="massa">massa</w> 
+<w ana="VG(neven)" lemma="en">en</w> 
+<w ana="N(soort,ev,basis,zijd,stan)" lemma="energie">energie</w> 
+<w ana="LET()" lemma=".">.</w></s>
+</seg>
+<seg type="sent" n="seg.p1.s5">
+<seg type="original">De vergelijkingen worden omgezet in informaticaprogramma's, en men probeert ze met behulp van allerlei digitale methodes op zware computers op te lossen.</seg>
+<s n="p1.s5">
+<w ana="LID(bep,stan,rest)" lemma="de">De</w> 
+<w ana="N(soort,mv,basis)" lemma="vergelijking">vergelijkingen</w> 
+<w ana="WW(pv,tgw,mv)" lemma="worden">worden</w> 
+<w ana="WW(vd,vrij,zonder)" lemma="omzetten">omgezet</w> 
+<w ana="VZ(init)" lemma="in">in</w> 
+<w ana="N(soort,mv,basis)" lemma="informaticaprogramma">informaticaprogramma's</w> 
+<w ana="LET()" lemma=",">,</w> 
+<w ana="VG(neven)" lemma="en">en</w> 
+<w ana="VNW(pers,pron,nomin,red,3p,ev,masc)" lemma="men">men</w> 
+<w ana="WW(pv,tgw,met-t)" lemma="proberen">probeert</w> 
+<w ana="VNW(pers,pron,stan,red,3,mv)" lemma="ze">ze</w> 
+<w ana="VZ(init)" lemma="met">met</w> 
+<w ana="N(soort,ev,basis,onz,stan)" lemma="behulp">behulp</w> 
+<w ana="VZ(init)" lemma="van">van</w> 
+<w ana="ADJ(prenom,basis,zonder)" lemma="allerlei">allerlei</w> 
+<w ana="ADJ(prenom,basis,met-e,stan)" lemma="digitaal">digitale</w> 
+<w ana="N(soort,mv,basis)" lemma="methode">methodes</w> 
+<w ana="VZ(init)" lemma="op">op</w> 
+<w ana="ADJ(prenom,basis,met-e,stan)" lemma="zwaar">zware</w> 
+<w ana="N(soort,mv,basis)" lemma="computer">computers</w> 
+<w ana="VZ(init)" lemma="op">op</w> 
+<w ana="VZ(init)" lemma="te">te</w> 
+<w ana="WW(inf,vrij,zonder)" lemma="lossen">lossen</w> 
+<w ana="LET()" lemma=".">.</w></s>
+</seg>
+<seg type="sent" n="seg.p1.s6">
+<seg type="original">De BMM-modellen worden gemaakt voor fysische variabelen (waterhoogte, stromingen, golven, temperatuur, zoutgehalte), chemische variabelen (in hoofdzaak koolwaterstoffen) en biologische variabelen (beperkt tot de eerste schakels van de voedselketen) en sedimenttransport.</seg>
+<s n="p1.s6">
+<w ana="LID(bep,stan,rest)" lemma="de">De</w> 
+<w ana="N(soort,mv,basis)" lemma="BMM-model">BMM-modellen</w> 
+<w ana="WW(pv,tgw,mv)" lemma="worden">worden</w> 
+<w ana="WW(vd,vrij,zonder)" lemma="maken">gemaakt</w> 
+<w ana="VZ(init)" lemma="voor">voor</w> 
+<w ana="ADJ(prenom,basis,met-e,stan)" lemma="fysisch">fysische</w> 
+<w ana="N(soort,mv,basis)" lemma="variabele">variabelen</w> 
+<w ana="LET()" lemma="(">(</w> 
+<w ana="N(soort,ev,basis,zijd,stan)" lemma="waterhoogte">waterhoogte</w> 
+<w ana="LET()" lemma=",">,</w> 
+<w ana="N(soort,mv,basis)" lemma="stroming">stromingen</w> 
+<w ana="LET()" lemma=",">,</w> 
+<w ana="N(soort,mv,basis)" lemma="golf">golven</w> 
+<w ana="LET()" lemma=",">,</w> 
+<w ana="N(soort,ev,basis,zijd,stan)" lemma="temperatuur">temperatuur</w> 
+<w ana="LET()" lemma=",">,</w> 
+<w ana="N(soort,ev,basis,onz,stan)" lemma="zoutgehalte">zoutgehalte</w> 
+<w ana="LET()" lemma=")">)</w> 
+<w ana="LET()" lemma=",">,</w> 
+<w ana="ADJ(prenom,basis,met-e,stan)" lemma="chemisch">chemische</w> 
+<w ana="N(soort,mv,basis)" lemma="variabele">variabelen</w> 
+<w ana="LET()" lemma="(">(</w> 
+<w ana="VZ(init)" lemma="in">in</w> 
+<w ana="N(soort,ev,basis,zijd,stan)" lemma="hoofdzaak">hoofdzaak</w> 
+<w ana="N(soort,mv,basis)" lemma="koolwaterstof">koolwaterstoffen</w> 
+<w ana="LET()" lemma=")">)</w> 
+<w ana="VG(neven)" lemma="en">en</w> 
+<w ana="ADJ(prenom,basis,met-e,stan)" lemma="biologisch">biologische</w> 
+<w ana="N(soort,mv,basis)" lemma="variabele">variabelen</w> 
+<w ana="LET()" lemma="(">(</w> 
+<w ana="WW(vd,vrij,zonder)" lemma="beperken">beperkt</w> 
+<w ana="VZ(init)" lemma="tot">tot</w> 
+<w ana="LID(bep,stan,rest)" lemma="de">de</w> 
+<w ana="TW(rang,prenom,stan)" lemma="een">eerste</w> 
+<w ana="N(soort,mv,basis)" lemma="schakel">schakels</w> 
+<w ana="VZ(init)" lemma="van">van</w> 
+<w ana="LID(bep,stan,rest)" lemma="de">de</w> 
+<w ana="N(soort,ev,basis,zijd,stan)" lemma="voedselketen">voedselketen</w> 
+<w ana="LET()" lemma=")">)</w> 
+<w ana="VG(neven)" lemma="en">en</w> 
+<w ana="N(soort,ev,basis,onz,stan)" lemma="sedimenttransport">sedimenttransport</w> 
+<w ana="LET()" lemma=".">.</w></s>
+</seg>
+<seg type="sent" n="seg.p1.s7">
+<seg type="original">Al deze variabelen zijn onderling met elkaar verbonden en de graad van complexiteit en onzekerheid gaat in stijgende lijn van fysica tot biologie.</seg>
+<s n="p1.s7">
+<w ana="VNW(onbep,det,stan,vrij,zonder)" lemma="al">Al</w> 
+<w ana="VNW(aanw,det,stan,prenom,met-e,rest)" lemma="deze">deze</w> 
+<w ana="N(soort,mv,basis)" lemma="variabele">variabelen</w> 
+<w ana="WW(pv,tgw,mv)" lemma="zijn">zijn</w> 
+<w ana="ADJ(vrij,basis,zonder)" lemma="onderling">onderling</w> 
+<w ana="VZ(init)" lemma="met">met</w> 
+<w ana="VNW(recip,pron,obl,vol,persoon,mv)" lemma="elkaar">elkaar</w> 
+<w ana="WW(vd,vrij,zonder)" lemma="verbinden">verbonden</w> 
+<w ana="VG(neven)" lemma="en">en</w> 
+<w ana="LID(bep,stan,rest)" lemma="de">de</w> 
+<w ana="N(soort,ev,basis,zijd,stan)" lemma="graad">graad</w> 
+<w ana="VZ(init)" lemma="van">van</w> 
+<w ana="N(soort,ev,basis,zijd,stan)" lemma="complexiteit">complexiteit</w> 
+<w ana="VG(neven)" lemma="en">en</w> 
+<w ana="N(soort,ev,basis,zijd,stan)" lemma="onzekerheid">onzekerheid</w> 
+<w ana="WW(pv,tgw,met-t)" lemma="gaan">gaat</w> 
+<w ana="VZ(init)" lemma="in">in</w> 
+<w ana="WW(od,prenom,met-e)" lemma="stijgen">stijgende</w> 
+<w ana="N(soort,ev,basis,zijd,stan)" lemma="lijn">lijn</w> 
+<w ana="VZ(init)" lemma="van">van</w> 
+<w ana="N(soort,ev,basis,zijd,stan)" lemma="fysica">fysica</w> 
+<w ana="VZ(init)" lemma="tot">tot</w> 
+<w ana="N(soort,ev,basis,zijd,stan)" lemma="biologie">biologie</w> 
+<w ana="LET()" lemma=".">.</w></s>
+</seg>
+<seg type="sent" n="seg.p1.s8">
+<seg type="original">De resultaten van de modellen worden daarna zorgvuldig vergeleken met alle waarnemingen die gedaan werden.</seg>
+<s n="p1.s8">
+<w ana="LID(bep,stan,rest)" lemma="de">De</w> 
+<w ana="N(soort,mv,basis)" lemma="resultaat">resultaten</w> 
+<w ana="VZ(init)" lemma="van">van</w> 
+<w ana="LID(bep,stan,rest)" lemma="de">de</w> 
+<w ana="N(soort,mv,basis)" lemma="model">modellen</w> 
+<w ana="WW(pv,tgw,mv)" lemma="worden">worden</w> 
+<w ana="BW()" lemma="daarna">daarna</w> 
+<w ana="ADJ(vrij,basis,zonder)" lemma="zorgvuldig">zorgvuldig</w> 
+<w ana="WW(vd,vrij,zonder)" lemma="vergelijken">vergeleken</w> 
+<w ana="VZ(init)" lemma="met">met</w> 
+<w ana="VNW(onbep,det,stan,prenom,met-e,agr)" lemma="al">alle</w> 
+<w ana="N(soort,mv,basis)" lemma="waarneming">waarnemingen</w> 
+<w ana="VNW(betr,pron,stan,vol,persoon,getal)" lemma="die">die</w> 
+<w ana="WW(vd,vrij,zonder)" lemma="doen">gedaan</w> 
+<w ana="WW(pv,verl,mv)" lemma="worden">werden</w> 
+<w ana="LET()" lemma=".">.</w></s>
+</seg>
+<seg type="sent" n="seg.p1.s9">
+<seg type="original">Dit is de "valideringsfase".</seg>
+<s n="p1.s9">
+<w ana="VNW(aanw,pron,stan,vol,3o,ev)" lemma="dit">Dit</w> 
+<w ana="WW(pv,tgw,ev)" lemma="zijn">is</w> 
+<w ana="LID(bep,stan,rest)" lemma="de">de</w> 
+<w ana="LET()" lemma="&quot;">&quot;</w> 
+<w ana="N(soort,ev,basis,zijd,stan)" lemma="valideringsfase">valideringsfase</w> 
+<w ana="LET()" lemma="&quot;">&quot;</w> 
+<w ana="LET()" lemma=".">.</w></s>
+</seg>
+<seg type="sent" n="seg.p1.s10">
+<seg type="original">Als de resultaten van de validering onvoldoende zijn, betekent dit dat de wiskundige formules die gekozen werden ter beschrijving van de fysische, chemische en biologische processen, ontoereikend zijn.</seg>
+<s n="p1.s10">
+<w ana="VG(onder)" lemma="als">Als</w> 
+<w ana="LID(bep,stan,rest)" lemma="de">de</w> 
+<w ana="N(soort,mv,basis)" lemma="resultaat">resultaten</w> 
+<w ana="VZ(init)" lemma="van">van</w> 
+<w ana="LID(bep,stan,rest)" lemma="de">de</w> 
+<w ana="N(soort,ev,basis,zijd,stan)" lemma="validering">validering</w> 
+<w ana="ADJ(vrij,basis,met-e)" lemma="onvoldoend">onvoldoende</w> 
+<w ana="WW(pv,tgw,mv)" lemma="zijn">zijn</w> 
+<w ana="LET()" lemma=",">,</w> 
+<w ana="WW(pv,tgw,met-t)" lemma="betekenen">betekent</w> 
+<w ana="VNW(aanw,pron,stan,vol,3o,ev)" lemma="dit">dit</w> 
+<w ana="VG(onder)" lemma="dat">dat</w> 
+<w ana="LID(bep,stan,rest)" lemma="de">de</w> 
+<w ana="ADJ(prenom,basis,met-e,stan)" lemma="wiskundig">wiskundige</w> 
+<w ana="N(soort,mv,basis)" lemma="formule">formules</w> 
+<w ana="VNW(betr,pron,stan,vol,persoon,getal)" lemma="die">die</w> 
+<w ana="WW(vd,vrij,zonder)" lemma="kiezen">gekozen</w> 
+<w ana="WW(pv,verl,mv)" lemma="worden">werden</w> 
+<w ana="VZ(versm)" lemma="te">ter</w> 
+<w ana="N(soort,ev,basis,zijd,stan)" lemma="beschrijving">beschrijving</w> 
+<w ana="VZ(init)" lemma="van">van</w> 
+<w ana="LID(bep,stan,rest)" lemma="de">de</w> 
+<w ana="ADJ(prenom,basis,met-e,stan)" lemma="fysisch">fysische</w> 
+<w ana="LET()" lemma=",">,</w> 
+<w ana="ADJ(prenom,basis,met-e,stan)" lemma="chemisch">chemische</w> 
+<w ana="VG(neven)" lemma="en">en</w> 
+<w ana="ADJ(prenom,basis,met-e,stan)" lemma="biologisch">biologische</w> 
+<w ana="N(soort,mv,basis)" lemma="proces">processen</w> 
+<w ana="LET()" lemma=",">,</w> 
+<w ana="ADJ(vrij,basis,zonder)" lemma="ontoereikend">ontoereikend</w> 
+<w ana="WW(pv,tgw,mv)" lemma="zijn">zijn</w> 
+<w ana="LET()" lemma=".">.</w></s>
+</seg>
+<seg type="sent" n="seg.p1.s11">
+<seg type="original">Dit vormt dus een prima instrument om het onderzoek bij te sturen naar een betere kennis van het mariene ecosysteem.</seg>
+<s n="p1.s11">
+<w ana="VNW(aanw,pron,stan,vol,3o,ev)" lemma="dit">Dit</w> 
+<w ana="WW(pv,tgw,met-t)" lemma="vormen">vormt</w> 
+<w ana="BW()" lemma="dus">dus</w> 
+<w ana="LID(onbep,stan,agr)" lemma="een">een</w> 
+<w ana="ADJ(prenom,basis,zonder)" lemma="prima">prima</w> 
+<w ana="N(soort,ev,basis,onz,stan)" lemma="instrument">instrument</w> 
+<w ana="VZ(init)" lemma="om">om</w> 
+<w ana="LID(bep,stan,evon)" lemma="het">het</w> 
+<w ana="N(soort,ev,basis,onz,stan)" lemma="onderzoek">onderzoek</w> 
+<w ana="VZ(init)" lemma="bij">bij</w> 
+<w ana="VZ(init)" lemma="te">te</w> 
+<w ana="WW(inf,vrij,zonder)" lemma="sturen">sturen</w> 
+<w ana="VZ(init)" lemma="naar">naar</w> 
+<w ana="LID(onbep,stan,agr)" lemma="een">een</w> 
+<w ana="ADJ(prenom,comp,met-e,stan)" lemma="goed">betere</w> 
+<w ana="N(soort,ev,basis,zijd,stan)" lemma="kennis">kennis</w> 
+<w ana="VZ(init)" lemma="van">van</w> 
+<w ana="LID(bep,stan,evon)" lemma="het">het</w> 
+<w ana="ADJ(prenom,basis,met-e,stan)" lemma="marien">mariene</w> 
+<w ana="N(soort,ev,basis,onz,stan)" lemma="ecosysteem">ecosysteem</w> 
+<w ana="LET()" lemma=".">.</w></s>
+</seg>
+<seg type="sent" n="seg.p1.s12">
+<seg type="original">Als de resultaten van de validering voldoende zijn, betekent dit dat de modellen bruikbaar zijn voor beheersdoeleinden en bepaalde voorspellingsmogelijkheden in zich dragen.</seg>
+<s n="p1.s12">
+<w ana="VG(onder)" lemma="als">Als</w> 
+<w ana="LID(bep,stan,rest)" lemma="de">de</w> 
+<w ana="N(soort,mv,basis)" lemma="resultaat">resultaten</w> 
+<w ana="VZ(init)" lemma="van">van</w> 
+<w ana="LID(bep,stan,rest)" lemma="de">de</w> 
+<w ana="N(soort,ev,basis,zijd,stan)" lemma="validering">validering</w> 
+<w ana="ADJ(vrij,basis,met-e)" lemma="voldoend">voldoende</w> 
+<w ana="WW(pv,tgw,mv)" lemma="zijn">zijn</w> 
+<w ana="LET()" lemma=",">,</w> 
+<w ana="WW(pv,tgw,met-t)" lemma="betekenen">betekent</w> 
+<w ana="VNW(aanw,pron,stan,vol,3o,ev)" lemma="dit">dit</w> 
+<w ana="VG(onder)" lemma="dat">dat</w> 
+<w ana="LID(bep,stan,rest)" lemma="de">de</w> 
+<w ana="N(soort,mv,basis)" lemma="model">modellen</w> 
+<w ana="ADJ(vrij,basis,zonder)" lemma="bruikbaar">bruikbaar</w> 
+<w ana="WW(pv,tgw,mv)" lemma="zijn">zijn</w> 
+<w ana="VZ(init)" lemma="voor">voor</w> 
+<w ana="N(soort,mv,basis)" lemma="beheersdoeleinde">beheersdoeleinden</w> 
+<w ana="VG(neven)" lemma="en">en</w> 
+<w ana="WW(vd,prenom,met-e)" lemma="bepalen">bepaalde</w> 
+<w ana="N(soort,mv,basis)" lemma="voorspellingsmogelijkheid">voorspellingsmogelijkheden</w> 
+<w ana="VZ(init)" lemma="in">in</w> 
+<w ana="VNW(refl,pron,obl,red,3,getal)" lemma="zich">zich</w> 
+<w ana="WW(pv,tgw,mv)" lemma="dragen">dragen</w> 
+<w ana="LET()" lemma=".">.</w></s>
+</seg>
+<seg type="sent" n="seg.p1.s13">
+<seg type="original">De modellen zijn op de eerste plaats onderzoeksinstrumenten waarmee het mogelijk is om allerlei wetenschappelijke hypothesen te testen op een virtuele manier.</seg>
+<s n="p1.s13">
+<w ana="LID(bep,stan,rest)" lemma="de">De</w> 
+<w ana="N(soort,mv,basis)" lemma="model">modellen</w> 
+<w ana="WW(pv,tgw,mv)" lemma="zijn">zijn</w> 
+<w ana="VZ(init)" lemma="op">op</w> 
+<w ana="LID(bep,stan,rest)" lemma="de">de</w> 
+<w ana="TW(rang,prenom,stan)" lemma="een">eerste</w> 
+<w ana="N(soort,ev,basis,zijd,stan)" lemma="plaats">plaats</w> 
+<w ana="N(soort,mv,basis)" lemma="onderzoeksinstrument">onderzoeksinstrumenten</w> 
+<w ana="BW()" lemma="waarmee">waarmee</w> 
+<w ana="VNW(pers,pron,stan,red,3,ev,onz)" lemma="het">het</w> 
+<w ana="ADJ(vrij,basis,zonder)" lemma="mogelijk">mogelijk</w> 
+<w ana="WW(pv,tgw,ev)" lemma="zijn">is</w> 
+<w ana="VZ(init)" lemma="om">om</w> 
+<w ana="ADJ(prenom,basis,zonder)" lemma="allerlei">allerlei</w> 
+<w ana="ADJ(prenom,basis,met-e,stan)" lemma="wetenschappelijk">wetenschappelijke</w> 
+<w ana="N(soort,mv,basis)" lemma="hypothese">hypothesen</w> 
+<w ana="VZ(init)" lemma="te">te</w> 
+<w ana="WW(inf,vrij,zonder)" lemma="testen">testen</w> 
+<w ana="VZ(init)" lemma="op">op</w> 
+<w ana="LID(onbep,stan,agr)" lemma="een">een</w> 
+<w ana="ADJ(prenom,basis,met-e,stan)" lemma="virtueel">virtuele</w> 
+<w ana="N(soort,ev,basis,zijd,stan)" lemma="manier">manier</w> 
+<w ana="LET()" lemma=".">.</w></s>
+</seg>
+<seg type="sent" n="seg.p1.s14">
+<seg type="original">Dit wil zeggen: zonder omweg via dure experimenten.</seg>
+<s n="p1.s14">
+<w ana="VNW(aanw,pron,stan,vol,3o,ev)" lemma="dit">Dit</w> 
+<w ana="WW(pv,tgw,ev)" lemma="willen">wil</w> 
+<w ana="WW(inf,vrij,zonder)" lemma="zeggen">zeggen</w> 
+<w ana="LET()" lemma=":">:</w> 
+<w ana="VZ(init)" lemma="zonder">zonder</w> 
+<w ana="N(soort,ev,basis,zijd,stan)" lemma="omweg">omweg</w> 
+<w ana="VZ(init)" lemma="via">via</w> 
+<w ana="ADJ(prenom,basis,met-e,stan)" lemma="duur">dure</w> 
+<w ana="N(soort,mv,basis)" lemma="experiment">experimenten</w> 
+<w ana="LET()" lemma=".">.</w></s>
+</seg>
+<seg type="sent" n="seg.p1.s15">
+<seg type="original">In dat geval spreekt men over modellen in ontwikkeling.</seg>
+<s n="p1.s15">
+<w ana="VZ(init)" lemma="in">In</w> 
+<w ana="VNW(aanw,det,stan,prenom,zonder,evon)" lemma="dat">dat</w> 
+<w ana="N(soort,ev,basis,onz,stan)" lemma="geval">geval</w> 
+<w ana="WW(pv,tgw,met-t)" lemma="spreken">spreekt</w> 
+<w ana="VNW(pers,pron,nomin,red,3p,ev,masc)" lemma="men">men</w> 
+<w ana="VZ(init)" lemma="over">over</w> 
+<w ana="N(soort,mv,basis)" lemma="model">modellen</w> 
+<w ana="VZ(init)" lemma="in">in</w> 
+<w ana="N(soort,ev,basis,zijd,stan)" lemma="ontwikkeling">ontwikkeling</w> 
+<w ana="LET()" lemma=".">.</w></s>
+</seg>
+<seg type="sent" n="seg.p1.s16">
+<seg type="original">Van zodra deze modellen een aanvaardbare maturiteit en betrouwbaarheid bereikt hebben, spreekt men over operationele modellen.</seg>
+<s n="p1.s16">
+<w ana="VZ(init)" lemma="van">Van</w> 
+<w ana="VG(onder)" lemma="zodra">zodra</w> 
+<w ana="VNW(aanw,det,stan,prenom,met-e,rest)" lemma="deze">deze</w> 
+<w ana="N(soort,mv,basis)" lemma="model">modellen</w> 
+<w ana="LID(onbep,stan,agr)" lemma="een">een</w> 
+<w ana="ADJ(prenom,basis,met-e,stan)" lemma="aanvaardbaar">aanvaardbare</w> 
+<w ana="N(soort,ev,basis,zijd,stan)" lemma="maturiteit">maturiteit</w> 
+<w ana="VG(neven)" lemma="en">en</w> 
+<w ana="N(soort,ev,basis,zijd,stan)" lemma="betrouwbaarheid">betrouwbaarheid</w> 
+<w ana="WW(vd,vrij,zonder)" lemma="bereiken">bereikt</w> 
+<w ana="WW(pv,tgw,mv)" lemma="hebben">hebben</w> 
+<w ana="LET()" lemma=",">,</w> 
+<w ana="WW(pv,tgw,met-t)" lemma="spreken">spreekt</w> 
+<w ana="VNW(pers,pron,nomin,red,3p,ev,masc)" lemma="men">men</w> 
+<w ana="VZ(init)" lemma="over">over</w> 
+<w ana="ADJ(prenom,basis,met-e,stan)" lemma="operationeel">operationele</w> 
+<w ana="N(soort,mv,basis)" lemma="model">modellen</w> 
+<w ana="LET()" lemma=".">.</w></s>
+</seg>
+<seg type="sent" n="seg.p1.s17">
+<seg type="original">Deze zijn in staat allerlei mariene informatie en diensten te leveren, vergelijkbaar met wat de meteorologie al vele jaren aanreikt.</seg>
+<s n="p1.s17">
+<w ana="VNW(aanw,det,stan,nom,met-e,zonder-n)" lemma="deze">Deze</w> 
+<w ana="WW(pv,tgw,mv)" lemma="zijn">zijn</w> 
+<w ana="VZ(init)" lemma="in">in</w> 
+<w ana="N(soort,ev,basis,zijd,stan)" lemma="staat">staat</w> 
+<w ana="ADJ(prenom,basis,zonder)" lemma="allerlei">allerlei</w> 
+<w ana="ADJ(prenom,basis,met-e,stan)" lemma="marien">mariene</w> 
+<w ana="N(soort,ev,basis,zijd,stan)" lemma="informatie">informatie</w> 
+<w ana="VG(neven)" lemma="en">en</w> 
+<w ana="N(soort,mv,basis)" lemma="dienst">diensten</w> 
+<w ana="VZ(init)" lemma="te">te</w> 
+<w ana="WW(inf,vrij,zonder)" lemma="leveren">leveren</w> 
+<w ana="LET()" lemma=",">,</w> 
+<w ana="ADJ(vrij,basis,zonder)" lemma="vergelijkbaar">vergelijkbaar</w> 
+<w ana="VZ(init)" lemma="met">met</w> 
+<w ana="VNW(vb,pron,stan,vol,3o,ev)" lemma="wat">wat</w> 
+<w ana="LID(bep,stan,rest)" lemma="de">de</w> 
+<w ana="N(soort,ev,basis,zijd,stan)" lemma="meteorologie">meteorologie</w> 
+<w ana="BW()" lemma="al">al</w> 
+<w ana="VNW(onbep,grad,stan,prenom,met-e,agr,basis)" lemma="veel">vele</w> 
+<w ana="N(soort,mv,basis)" lemma="jaar">jaren</w> 
+<w ana="WW(pv,tgw,met-t)" lemma="aanreiken">aanreikt</w> 
+<w ana="LET()" lemma=".">.</w></s>
+</seg>
+</p>
+</div>
+</body>
+</text>
+</TEI>
