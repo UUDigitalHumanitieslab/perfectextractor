@@ -17,7 +17,7 @@ class PresentPerfect:
     A present perfect consists of a list of Words.
     """
 
-    def __init__(self, aux_verb, aux_lemma, xml_id, xml_sentence):
+    def __init__(self, aux_verb, aux_lemma, xml_id, xml_sentence=None):
         """
         A present perfect is initiated by an auxiliary verb.
         """
@@ -69,6 +69,7 @@ class PresentPerfect:
 
     def get_sentence_words(self):
         s = []
+        # TODO: this xPath-expression might be specific for a corpus
         for w in self.xml_sentence.xpath('.//w'):
             s.append(w.text)
         return ' '.join(s)
@@ -80,6 +81,10 @@ class PresentPerfect:
         """
         Marks the present perfect in a full sentence.
         """
+        # TODO: this doesn't work if no xml_sentence is given
+        if not self.xml_sentence:
+            return ''
+
         # TODO: this is a bit iffy, another idea could be to compose the sentence from the remaining siblings
         # To find the pp in the full text, simply join all the parts of the pp
         pp_text = ' '.join([w.word for w in self.words])

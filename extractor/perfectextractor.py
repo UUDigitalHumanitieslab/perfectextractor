@@ -101,7 +101,7 @@ class PerfectExtractor:
             for e in s.xpath(self.config.get(language_to, 'xpath'), namespaces=TEI):
                 pp = self.check_present_perfect(e, language_to)
                 if pp: 
-                    sentence = pp.mark_sentence(sentence)
+                    sentence = pp.mark_sentence()
                     break
 
         return sentence, pp
@@ -140,7 +140,7 @@ class PerfectExtractor:
         allow_reversed = self.config.getboolean(language, 'allow_reversed')
 
         # Collect all parts of the present perfect as tuples with text and whether it's verb
-        pp = PresentPerfect(element.text, element.get('lemma'))
+        pp = PresentPerfect(element.text, element.get('lemma'), element.get('id'))
 
         is_pp = False
         for sibling in element.itersiblings(preceding=check_preceding):
@@ -149,7 +149,7 @@ class PerfectExtractor:
                 # Check if the sibling is lexically bound to the auxiliary verb
                 if not self.is_lexically_bound(language, element, sibling):
                     break
-                pp.add_word(sibling.text, sibling.get('lemma'), True)
+                pp.add_word(sibling.text, sibling.get('lemma'), True, sibling.get('id'))
                 is_pp = True
                 # ... now check whether this is a present perfect continuous (by recursion)
                 if check_ppc and sibling.get('lemma') == ppc_lemma:
@@ -162,7 +162,7 @@ class PerfectExtractor:
                 break
             # No break? Then add as a non-verb part
             else:
-                pp.add_word(sibling.text, sibling.get('lemma'), False)
+                pp.add_word(sibling.text, sibling.get('lemma'), False, sibling.get('id'))
 
         if not is_pp and allow_reversed and not check_preceding:
             pp = self.check_present_perfect(element, language, check_ppc, True)
