@@ -9,12 +9,12 @@ from extractor.dpc_extractor import DPCExtractor
 from extractor.models import PresentPerfect
 
 
-class TestPerfectExtractor(unittest.TestCase):
+class TestDPCExtractor(unittest.TestCase):
     def setUp(self):
         self.en_extractor = DPCExtractor('en', ['nl', 'fr'])
-        self.document = os.path.join(os.path.dirname(__file__), 'data/dpc-bmm-001071-')
-        align_fr = etree.parse(os.path.join(os.path.dirname(__file__), 'data/dpc-bmm-001071-nl-fr-tei.xml'))
-        align_en = etree.parse(os.path.join(os.path.dirname(__file__), 'data/dpc-bmm-001071-nl-en-tei.xml'))
+        self.document = os.path.join(os.path.dirname(__file__), 'data/dpc/dpc-bmm-001071-')
+        align_fr = etree.parse(os.path.join(os.path.dirname(__file__), 'data/dpc/dpc-bmm-001071-nl-fr-tei.xml'))
+        align_en = etree.parse(os.path.join(os.path.dirname(__file__), 'data/dpc/dpc-bmm-001071-nl-en-tei.xml'))
         self.alignmenttrees = {'en': align_en, 'fr': align_fr}
 
     def test_init(self):
@@ -53,27 +53,6 @@ class TestPerfectExtractor(unittest.TestCase):
         orig_lang = self.en_extractor.get_original_language(self.document)
         self.assertEqual(orig_lang, 'unknown')
 
-    def test_is_lexically_bound(self):
-        mock_aux_verb = {'lemma': 'zijn'}
-        mock_perfect = {'lemma': 'botsen'}
-        self.assertTrue(self.en_extractor.is_lexically_bound('nl', mock_aux_verb, mock_perfect))
-
-        mock_aux_verb = {'lemma': 'zijn'}
-        mock_perfect = {'lemma': 'hebben'}
-        self.assertFalse(self.en_extractor.is_lexically_bound('nl', mock_aux_verb, mock_perfect))
-
-        mock_aux_verb = {'lemma': u'être'}
-        mock_perfect = {'lemma': 'regarder'}
-        self.assertFalse(self.en_extractor.is_lexically_bound('fr', mock_aux_verb, mock_perfect))
-
-        mock_aux_verb = {'lemma': u'être'}
-        mock_perfect = {'lemma': 'revenir'}
-        self.assertTrue(self.en_extractor.is_lexically_bound('fr', mock_aux_verb, mock_perfect))
-
-        mock_aux_verb = {'lemma': 'have'}
-        mock_perfect = {'lemma': 'collided'}
-        self.assertTrue(self.en_extractor.is_lexically_bound('en', mock_aux_verb, mock_perfect))
-
     def test_check_present_perfect(self):
         pass
 
@@ -86,4 +65,3 @@ class TestPerfectExtractor(unittest.TestCase):
     def test_process_file(self):
         pass
         #print self.en_extractor.process_file('data/dpc-bmm-001071-en-tei.xml')
-

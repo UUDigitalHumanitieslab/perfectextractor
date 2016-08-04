@@ -2,12 +2,14 @@ import unittest
 
 from extractor.models import PresentPerfect
 
+XML_ID = 'test_id'
+
 
 class TestPresentPerfect(unittest.TestCase):
     def setUp(self):
-        self.pp = PresentPerfect('has', 'have', 'test_id')
-        self.pp.add_word('always', 'always', False, 'test_id')
-        self.pp.add_word('loved', 'love', True, 'test_id')
+        self.pp = PresentPerfect('has', 'have', XML_ID)
+        self.pp.add_word('always', 'always', False, XML_ID)
+        self.pp.add_word('loved', 'love', True, XML_ID)
 
     def test_extractions(self):
         self.assertEqual(self.pp.perfect_lemma(), 'love')
@@ -16,10 +18,10 @@ class TestPresentPerfect(unittest.TestCase):
         self.assertEqual(self.pp.words_between(), 1)
 
     def test_extend(self):
-        ppc = PresentPerfect('has', 'have', 'test_id')
-        ppc.add_word('been', 'be', True, 'test_id')
-        pp_extend = PresentPerfect('been', 'be', 'test_id')
-        pp_extend.add_word('created', 'create', True, 'test_id')
+        ppc = PresentPerfect('has', 'have', XML_ID)
+        ppc.add_word('been', 'be', True, XML_ID)
+        pp_extend = PresentPerfect('been', 'be', XML_ID)
+        pp_extend.add_word('created', 'create', True, XML_ID)
         ppc.extend(pp_extend)
 
         self.assertEqual(ppc.perfect_lemma(), 'create')

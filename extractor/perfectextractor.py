@@ -17,6 +17,11 @@ class PerfectExtractor(object):
     __metaclass__ = ABCMeta
 
     def __init__(self, language_from, languages_to):
+        """
+        Initializes the extractor for the given source and target language(s).
+        Reads in the config for the source language,
+        as well as the list of verbs that use 'to be' as auxiliary verb for both source and target language(s).
+        """
         self.l_from = language_from
         self.l_to = languages_to
 
@@ -83,15 +88,17 @@ class PerfectExtractor(object):
         ppc_lemma = self.config.get(language, 'ppc_lemma')
         stop_tags = tuple(self.config.get(language, 'stop_tags').split(','))
         allow_reversed = self.config.getboolean(language, 'allow_reversed')
+        pos_tag = self.config.get(language, 'pos')
 
-        # Collect all parts of the present perfect as tuples with text and whether it's verb
+        # Start a potential present perfect
         s = self.get_sentence(element)
         pp = PresentPerfect(element.text, element.get(lemma_attr), element.get('id'), s)
-
         is_pp = False
+
+        # Loop over the siblings of the current element.
         for sibling in self.get_siblings(element, s.get('id'), check_preceding):
             # If the tag of the sibling is the perfect tag, we found a present perfect!
-            sibling_pos = sibling.get(self.config.get(language, 'pos'))
+            sibling_pos = sibling.get(pos_tag)
             if sibling_pos == perfect_tag:
                 # Check if the sibling is lexically bound to the auxiliary verb
                 # (only if we're not checking for present perfect continuous)
@@ -108,10 +115,12 @@ class PerfectExtractor(object):
             # Stop looking at punctuation or stop tags
             elif sibling.text in string.punctuation or (sibling_pos and sibling_pos.startswith(stop_tags)):
                 break
-            # No break? Then add as a non-verb part
+            # We didn't break yet? Then add this sibling as a potential non-verb part of the present perfect.
             else:
                 pp.add_word(sibling.text, sibling.get(lemma_attr), False, sibling.get('id'))
 
+        # If we haven't yet found a perfect, and we are allowed to look in the other direction,
+        # try to find a perfect by looking backwards in the sentence.
         if not is_pp and allow_reversed and not check_preceding:
             pp = self.check_present_perfect(element, language, check_ppc, True)
             if pp:
@@ -120,11 +129,18 @@ class PerfectExtractor(object):
         return pp if is_pp else None
 
     @abstractmethod
-    def get_sentence(self):
+    def get_sentence(self, element):
+        """
+        Returns the full sentence XML for the given element.
+        """
         raise NotImplementedError
 
     @abstractmethod
     def get_siblings(self, element, sentence_id, check_preceding):
+        """
+        Returns the siblings of the given element in the given sentence_id.
+        The check_preceding parameter allows to look either forwards or backwards.
+        """
         raise NotImplementedError
 
     def find_translated_present_perfects(self, translated_tree, language_to, translated_lines):
@@ -174,6 +190,9 @@ class PerfectExtractor(object):
 
     @abstractmethod
     def list_filenames(self, dir_name):
+        """
+        List all to be processed files in the given directory.
+        """
         raise NotImplementedError
 
     def check_translated_pps(self, pp, translated_present_perfects, language_to):
@@ -193,6 +212,6 @@ class PerfectExtractor(object):
     @abstractmethod
     def process_file(self, filename):
         """
-        Processes a single file.
+        Processes a single file, given by the filename.
         """
         raise NotImplementedError

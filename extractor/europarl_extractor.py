@@ -90,32 +90,17 @@ class EuroparlExtractor(PerfectExtractor):
         t0 = time.time()
         print 'Now processing ' + filename + '...'
 
-        document = os.path.basename(filename)
-        results = []
-
         # Parse the current tree
         tree = etree.parse(filename)
 
-        # Parse the trees with the translations
-        alignment_trees = dict()
-        translation_trees = dict()
-        for language_to in self.l_to:
-            sl = sorted([self.l_from, language_to])
-            alignment_file = os.path.join('data', '-'.join(sl) + '.xml')
-            if os.path.isfile(alignment_file):
-                alignment_tree = etree.parse(alignment_file)
-                sl = sorted([self.l_from, language_to])
-                doc = '{}/{}.gz'.format(sl[0], document)
-                links = [link.get('xtargets').split(';') for link in alignment_tree.xpath('//linkGrp[@fromDoc="' + doc + '"]/link')]
-                alignment_trees[language_to] = [[la.split(' '), lb.split(' ')] for la, lb in links]
-
-            translation_file = filename.replace(self.l_from, language_to)
-            if os.path.isfile(translation_file):
-                translation_trees[language_to] = etree.parse(translation_file)
+        # Parse the trees with the alignment and translations
+        alignment_trees = self.parse_alignment_trees(filename)
+        translation_trees = self.parse_translation_trees(filename)
 
         t1 = time.time()
-        print 'Finished alignment trees, took {:.3} seconds'.format(t1 - t0)
+        print 'Finished parsing trees, took {:.3} seconds'.format(t1 - t0)
 
+        results = []
         # Find potential present perfects
         for e in tree.xpath(self.config.get(self.l_from, 'xpath')):
             pp = self.check_present_perfect(e, self.l_from)
@@ -123,7 +108,7 @@ class EuroparlExtractor(PerfectExtractor):
             # If this is really a present perfect, add it to the result
             if pp:
                 result = list()
-                result.append(document)
+                result.append(os.path.basename(filename))
                 result.append(get_original_language(e))
                 result.append(pp.verbs_to_string())
                 result.append(pp.verb_ids())
@@ -158,3 +143,27 @@ class EuroparlExtractor(PerfectExtractor):
         print 'Finished finding present perfects, took {:.3} seconds'.format(time.time() - t1)
 
         return results
+
+    def parse_alignment_trees(self, filename):
+        document = os.path.basename(filename)
+
+        alignment_trees = dict()
+        for language_to in self.l_to:
+            sl = sorted([self.l_from, language_to])
+            alignment_file = os.path.join('data', '-'.join(sl) + '.xml')
+            if os.path.isfile(alignment_file):
+                alignment_tree = etree.parse(alignment_file)
+                sl = sorted([self.l_from, language_to])
+                doc = '{}/{}.gz'.format(sl[0], document)
+                links = [link.get('xtargets').split(';') for link in
+                         alignment_tree.xpath('//linkGrp[@fromDoc="' + doc + '"]/link')]
+                alignment_trees[language_to] = [[la.split(' '), lb.split(' ')] for la, lb in links]
+        return alignment_trees
+
+    def parse_translation_trees(self, filename):
+        translation_trees = dict()
+        for language_to in self.l_to:
+            translation_file = filename.replace(self.l_from, language_to)
+            if os.path.isfile(translation_file):
+                translation_trees[language_to] = etree.parse(translation_file)
+        return translation_trees
