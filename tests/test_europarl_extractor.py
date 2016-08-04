@@ -10,40 +10,81 @@ from extractor.europarl_extractor import EuroparlExtractor
 
 class TestEuroparlExtractor(unittest.TestCase):
     def setUp(self):
-        filename = os.path.join(os.path.dirname(__file__), 'data/europarl/nl/ep-00-12-15.xml')
+        nl_filename = os.path.join(os.path.dirname(__file__), 'data/europarl/nl/ep-00-12-15.xml')
+        self.nl_extractor = EuroparlExtractor('nl', ['en'])
+        self.nl_tree = etree.parse(nl_filename)
+        self.nl_alignmenttrees = self.nl_extractor.parse_alignment_trees(nl_filename)
+        self.nl_translationtrees = self.nl_extractor.parse_translation_trees(nl_filename)
 
-        self.extractor = EuroparlExtractor('nl', ['en'])
-        self.tree = etree.parse(filename)
-        self.alignmenttrees = self.extractor.parse_alignment_trees(filename)
-        self.translationtrees = self.extractor.parse_translation_trees(filename)
+        en_filename = os.path.join(os.path.dirname(__file__), 'data/europarl/en/ep-00-12-15.xml')
+        self.en_extractor = EuroparlExtractor('en', ['nl'])
+        self.en_tree = etree.parse(en_filename)
+        self.en_alignmenttrees = self.en_extractor.parse_alignment_trees(en_filename)
+        self.en_translationtrees = self.en_extractor.parse_translation_trees(en_filename)
 
     def test_init(self):
-        self.assertEqual(self.extractor.config.get('nl', 'perfect_tag'), 'verbpapa')
-        self.assertIn('dunken', self.extractor.aux_be_list['nl'])
+        self.assertEqual(self.nl_extractor.config.get('nl', 'perfect_tag'), 'verbpapa')
+        self.assertIn('dunken', self.nl_extractor.aux_be_list['nl'])
 
     def test_get_translated_lines(self):
-        from_lines, to_lines, alignment = self.extractor.get_translated_lines(self.alignmenttrees, 'nl', 'en', '17')
+        from_lines, to_lines, align = self.nl_extractor.get_translated_lines(self.nl_alignmenttrees, 'nl', 'en', '17')
         self.assertEqual(from_lines, ['17'])
         self.assertEqual(to_lines, ['11'])
-        self.assertEqual(alignment, '1 => 1')
+        self.assertEqual(align, '1 => 1')
 
-        from_lines, to_lines, alignment = self.extractor.get_translated_lines(self.alignmenttrees, 'nl', 'en', '18')
+        from_lines, to_lines, align = self.nl_extractor.get_translated_lines(self.nl_alignmenttrees, 'nl', 'en', '18')
         self.assertEqual(from_lines, ['18', '19'])
         self.assertEqual(to_lines, ['12'])
-        self.assertEqual(alignment, '2 => 1')
+        self.assertEqual(align, '2 => 1')
 
-        from_lines, to_lines, alignment = self.extractor.get_translated_lines(self.alignmenttrees, 'nl', 'en', '57')
+        from_lines, to_lines, align = self.nl_extractor.get_translated_lines(self.nl_alignmenttrees, 'nl', 'en', '57')
         self.assertEqual(from_lines, ['57'])
         self.assertEqual(to_lines, ['46', '47'])
-        self.assertEqual(alignment, '1 => 2')
+        self.assertEqual(align, '1 => 2')
+
+        from_lines, to_lines, align = self.nl_extractor.get_translated_lines(self.nl_alignmenttrees, 'nl', 'en', '9')
+        self.assertEqual(from_lines, ['9'])
+        self.assertEqual(to_lines, [])
+        self.assertEqual(align, '')
+
+        from_lines, to_lines, align = self.en_extractor.get_translated_lines(self.en_alignmenttrees, 'en', 'nl', '19')
+        self.assertEqual(from_lines, ['19'])
+        self.assertEqual(to_lines, ['27'])
+        self.assertEqual(align, '1 => 1')
+
+        from_lines, to_lines, align = self.en_extractor.get_translated_lines(self.en_alignmenttrees, 'en', 'nl', '8')
+        self.assertEqual(from_lines, ['8'])
+        self.assertEqual(to_lines, ['13', '14'])
+        self.assertEqual(align, '1 => 2')
+
+        from_lines, to_lines, align = self.en_extractor.get_translated_lines(self.en_alignmenttrees, 'en', 'nl', '234')
+        self.assertEqual(from_lines, ['234', '235'])
+        self.assertEqual(to_lines, ['290'])
+        self.assertEqual(align, '2 => 1')
 
     def test_get_line_by_number(self):
-        xml_sentence, full_sentence, pp = self.extractor.get_line_by_number(self.tree, 'nl', '4')
+        xml_sentence, _, pp = self.nl_extractor.get_line_by_number(self.nl_tree, 'nl', '4')
         self.assertEqual(etree.fromstring(xml_sentence).get('id'), '4')
+        self.assertEqual(pp.get_sentence_id(), '4')
         self.assertEqual(pp.verbs(), ['is', 'aangebroken'])
+        self.assertEqual(pp.verb_ids(), 'w4.9 w4.19')
         self.assertEqual(pp.words_between(), 9)
 
-        xml_sentence, full_sentence, pp = self.extractor.get_line_by_number(self.translationtrees['en'], 'en', '6')
+        xml_sentence, _, pp = self.nl_extractor.get_line_by_number(self.nl_tree, 'nl', '15')
+        self.assertEqual(etree.fromstring(xml_sentence).get('id'), '15')
+        self.assertEqual(pp.verbs(), ['heeft', 'bemoeid'])
+        self.assertEqual(pp.words_between(), 0)
+
+        xml_sentence, _, pp = self.nl_extractor.get_line_by_number(self.nl_translationtrees['en'], 'en', '6')
         self.assertEqual(etree.fromstring(xml_sentence).get('id'), '6')
         self.assertEqual(pp.verbs(), ['has', 'said'])
         self.assertEqual(pp.words_between(), 1)
+
+        xml_sentence, _, pp = self.en_extractor.get_line_by_number(self.en_tree, 'en', '89')
+        self.assertEqual(etree.fromstring(xml_sentence).get('id'), '89')
+        self.assertEqual(pp.verbs(), ['has', 'been', 'mentioned'])
+        self.assertEqual(pp.words_between(), 1)
+
+    def test_list_filenames(self):
+        files = self.nl_extractor.list_filenames(os.path.join(os.path.dirname(__file__), 'data/europarl/nl'))
+        self.assertEqual([os.path.basename(f) for f in files], ['ep-00-12-15.xml'])

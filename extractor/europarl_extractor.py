@@ -45,6 +45,9 @@ class EuroparlExtractor(PerfectExtractor):
                     to_lines = xtargets[0]
                     break
 
+        if not any(to_lines):
+            to_lines = []
+
         alignment = '{} => {}'.format(len(from_lines), len(to_lines)) if to_lines else ''
 
         return from_lines, to_lines, alignment
