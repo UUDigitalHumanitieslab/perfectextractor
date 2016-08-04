@@ -145,16 +145,16 @@ class EuroparlExtractor(PerfectExtractor):
         return results
 
     def parse_alignment_trees(self, filename):
-        document = os.path.basename(filename)
+        base_filename = os.path.basename(filename)
+        data_folder = os.path.dirname(os.path.dirname(filename))
 
         alignment_trees = dict()
         for language_to in self.l_to:
             sl = sorted([self.l_from, language_to])
-            alignment_file = os.path.join('data', '-'.join(sl) + '.xml')
+            alignment_file = os.path.join(data_folder, '-'.join(sl) + '.xml')
             if os.path.isfile(alignment_file):
                 alignment_tree = etree.parse(alignment_file)
-                sl = sorted([self.l_from, language_to])
-                doc = '{}/{}.gz'.format(sl[0], document)
+                doc = '{}/{}.gz'.format(sl[0], base_filename)
                 links = [link.get('xtargets').split(';') for link in
                          alignment_tree.xpath('//linkGrp[@fromDoc="' + doc + '"]/link')]
                 alignment_trees[language_to] = [[la.split(' '), lb.split(' ')] for la, lb in links]
