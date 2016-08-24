@@ -4,5 +4,5 @@
 #
 #    pip-compile requirements.in
 #
-lxml==3.6.1
-requests==2.11.0
+lxml==3.6.4
+requests==2.11.1
