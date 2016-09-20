@@ -83,7 +83,7 @@ class PerfectExtractor(object):
         If not, None is returned.
         """
         lemma_attr = self.config.get('all', 'lemma_attr')
-        perfect_tag = self.config.get(language, 'perfect_tag')
+        perfect_tags = self.config.get(language, 'perfect_tags').split(',')
         check_ppc = check_ppc and self.config.getboolean(language, 'ppc')
         ppc_lemma = self.config.get(language, 'ppc_lemma')
         stop_tags = tuple(self.config.get(language, 'stop_tags').split(','))
@@ -99,7 +99,7 @@ class PerfectExtractor(object):
         for sibling in self.get_siblings(element, s.get('id'), check_preceding):
             # If the tag of the sibling is the perfect tag, we found a present perfect!
             sibling_pos = sibling.get(pos_tag)
-            if sibling_pos == perfect_tag:
+            if sibling_pos in perfect_tags:
                 # Check if the sibling is lexically bound to the auxiliary verb
                 # (only if we're not checking for present perfect continuous)
                 if check_ppc and not self.is_lexically_bound(language, element, sibling):

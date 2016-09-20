@@ -112,7 +112,7 @@ class EuroparlExtractor(PerfectExtractor):
             if pp:
                 result = list()
                 result.append(os.path.basename(filename))
-                result.append(get_original_language(e))
+                result.append('')
                 result.append(pp.verbs_to_string())
                 result.append(pp.verb_ids())
 

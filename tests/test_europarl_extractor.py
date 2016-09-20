@@ -23,7 +23,7 @@ class TestEuroparlExtractor(unittest.TestCase):
         self.en_translationtrees = self.en_extractor.parse_translation_trees(en_filename)
 
     def test_init(self):
-        self.assertEqual(self.nl_extractor.config.get('nl', 'perfect_tag'), 'verbpapa')
+        self.assertEqual(self.nl_extractor.config.get('nl', 'perfect_tags'), 'verbpapa')
         self.assertIn('dunken', self.nl_extractor.aux_be_list['nl'])
 
     def test_get_translated_lines(self):

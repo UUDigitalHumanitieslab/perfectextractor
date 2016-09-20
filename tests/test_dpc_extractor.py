@@ -18,7 +18,7 @@ class TestDPCExtractor(unittest.TestCase):
         self.alignmenttrees = {'en': align_en, 'fr': align_fr}
 
     def test_init(self):
-        self.assertEqual(self.en_extractor.config.get('en', 'perfect_tag'), 'VBN')
+        self.assertEqual(self.en_extractor.config.get('en', 'perfect_tags'), 'VBN')
         self.assertIn('devenir', self.en_extractor.aux_be_list['fr'])
 
     def test_get_translated_lines(self):

@@ -22,7 +22,7 @@ def create_extractors():
     fr_extractor = EuroparlExtractor('fr', ['de', 'en', 'es', 'nl'])
     nl_extractor = EuroparlExtractor('nl', ['de', 'en', 'es', 'fr'])
     # return [de_extractor, en_extractor, es_extractor, nl_extractor, fr_extractor]
-    return [fr_extractor]
+    return [de_extractor]
 
 if __name__ == "__main__":
     process_data_folders(create_extractors(), 'data')
