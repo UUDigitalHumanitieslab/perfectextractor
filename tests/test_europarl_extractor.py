@@ -13,14 +13,12 @@ class TestEuroparlExtractor(unittest.TestCase):
         nl_filename = os.path.join(os.path.dirname(__file__), 'data/europarl/nl/ep-00-12-15.xml')
         self.nl_extractor = EuroparlExtractor('nl', ['en'])
         self.nl_tree = etree.parse(nl_filename)
-        self.nl_alignmenttrees = self.nl_extractor.parse_alignment_trees(nl_filename)
-        self.nl_translationtrees = self.nl_extractor.parse_translation_trees(nl_filename)
+        self.nl_alignmenttrees, self.nl_translationtrees = self.nl_extractor.parse_alignment_trees(nl_filename)
 
         en_filename = os.path.join(os.path.dirname(__file__), 'data/europarl/en/ep-00-12-15.xml')
         self.en_extractor = EuroparlExtractor('en', ['nl'])
         self.en_tree = etree.parse(en_filename)
-        self.en_alignmenttrees = self.en_extractor.parse_alignment_trees(en_filename)
-        self.en_translationtrees = self.en_extractor.parse_translation_trees(en_filename)
+        self.en_alignmenttrees, self.en_translationtrees = self.en_extractor.parse_alignment_trees(en_filename)
 
     def test_init(self):
         self.assertEqual(self.nl_extractor.config.get('nl', 'perfect_tags'), 'verbpapa')

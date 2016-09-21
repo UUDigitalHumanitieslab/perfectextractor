@@ -96,9 +96,8 @@ class EuroparlExtractor(PerfectExtractor):
         # Parse the current tree
         tree = etree.parse(filename)
 
-        # Parse the trees with the alignment and translations
-        alignment_trees = self.parse_alignment_trees(filename)
-        translation_trees = self.parse_translation_trees(filename)
+        # Parse the alignment and translation trees
+        alignment_trees, translation_trees = self.parse_alignment_trees(filename)
 
         t1 = time.time()
         print 'Finished parsing trees, took {:.3} seconds'.format(t1 - t0)
@@ -152,21 +151,28 @@ class EuroparlExtractor(PerfectExtractor):
         data_folder = os.path.dirname(os.path.dirname(filename))
 
         alignment_trees = dict()
+        translation_trees = dict()
         for language_to in self.l_to:
             sl = sorted([self.l_from, language_to])
             alignment_file = os.path.join(data_folder, '-'.join(sl) + '.xml')
             if os.path.isfile(alignment_file):
                 alignment_tree = etree.parse(alignment_file)
-                doc = '{}/{}.gz'.format(sl[0], base_filename)
-                links = [link.get('xtargets').split(';') for link in
-                         alignment_tree.xpath('//linkGrp[@fromDoc="' + doc + '"]/link')]
-                alignment_trees[language_to] = [[la.split(' '), lb.split(' ')] for la, lb in links]
-        return alignment_trees
+                doc = '{}/{}.gz'.format(self.l_from, base_filename)
+                path = '@fromDoc="{}"' if sl[0] == self.l_from else '@toDoc="{}"'
+                linkGrps = alignment_tree.xpath('//linkGrp[{}]'.format(path.format(doc)))
 
-    def parse_translation_trees(self, filename):
-        translation_trees = dict()
-        for language_to in self.l_to:
-            translation_file = filename.replace(self.l_from, language_to)
-            if os.path.isfile(translation_file):
-                translation_trees[language_to] = etree.parse(translation_file)
-        return translation_trees
+                if not linkGrps:
+                    print 'No translation found for {} to {}'.format(filename, language_to)
+                elif len(linkGrps) == 1:
+                    linkGrp = linkGrps[0]
+
+                    translation_link = linkGrp.get('toDoc') if sl[0] == self.l_from else linkGrp.get('fromDoc')
+                    translation_file = os.path.join(data_folder, translation_link[:-3])
+                    translation_trees[language_to] = etree.parse(translation_file)
+
+                    links = [link.get('xtargets').split(';') for link in linkGrp.xpath('./link')]
+                    alignment_trees[language_to] = [[la.split(' '), lb.split(' ')] for la, lb in links]
+                else:
+                    print 'Multiple translations found for {} to {}'.format(filename, language_to)
+
+        return alignment_trees, translation_trees
