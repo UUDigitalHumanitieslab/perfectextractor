@@ -23,6 +23,7 @@ class PresentPerfect:
         """
         self.xml_sentence = xml_sentence
         self.words = []
+        self.is_continuous = False
         self.add_word(aux_verb, aux_lemma, True, xml_id)
 
     def add_word(self, word, lemma, is_verb, xml_id):
@@ -33,12 +34,13 @@ class PresentPerfect:
 
     def extend(self, present_perfect):
         """
-        Extends a present perfect with another one (used to create a present perfect continuous).
+        Extends a present perfect with another one (used to create a present perfect passive or continuous).
         """
         for i, w in enumerate(present_perfect.words):
             if i == 0:
                 continue
             self.add_word(w.word, w.lemma, w.is_verb, w.xml_id)
+        self.is_continuous = present_perfect.is_continuous
 
     def perfect_lemma(self):
         """

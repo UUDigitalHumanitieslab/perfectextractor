@@ -76,7 +76,7 @@ class PerfectExtractor(object):
         else:
             return perfect.get(lemma_attr) in self.aux_be_list[language]
 
-    def check_present_perfect(self, element, language, check_ppc=True, check_preceding=False):
+    def check_present_perfect(self, element, language, check_ppp=True, check_ppc=False, check_preceding=False):
         """
         Checks whether this element is the start of a present perfect (or pp continuous).
         If it is, the present perfect is returned as a list.
@@ -84,8 +84,10 @@ class PerfectExtractor(object):
         """
         lemma_attr = self.config.get('all', 'lemma_attr')
         perfect_tags = self.config.get(language, 'perfect_tags').split(',')
+        check_ppp = check_ppp and self.config.getboolean(language, 'ppp')
+        ppp_lemma = self.config.get(language, 'ppp_lemma')
         check_ppc = check_ppc and self.config.getboolean(language, 'ppc')
-        ppc_lemma = self.config.get(language, 'ppc_lemma')
+        ppc_tag = self.config.get(language, 'ppc_tag')
         stop_tags = tuple(self.config.get(language, 'stop_tags').split(','))
         allow_reversed = self.config.getboolean(language, 'allow_reversed')
         pos_tag = self.config.get(language, 'pos')
@@ -101,16 +103,26 @@ class PerfectExtractor(object):
             sibling_pos = sibling.get(pos_tag)
             if sibling_pos in perfect_tags:
                 # Check if the sibling is lexically bound to the auxiliary verb
-                # (only if we're not checking for present perfect continuous)
-                if check_ppc and not self.is_lexically_bound(language, element, sibling):
+                # (only if we're not checking for passive present perfect)
+                if check_ppp and not self.is_lexically_bound(language, element, sibling):
                     break
                 pp.add_word(sibling.text, sibling.get(lemma_attr), True, sibling.get('id'))
                 is_pp = True
-                # ... now check whether this is a present perfect continuous (by recursion)
-                if check_ppc and sibling.get(lemma_attr) == ppc_lemma:
-                    ppc = self.check_present_perfect(sibling, language, False)
-                    if ppc:
-                        pp.extend(ppc)
+                # ... now check whether this is a passive present perfect or present perfect continuous (by recursion)
+                if check_ppp and sibling.get(lemma_attr) == ppp_lemma:
+                    ppp = self.check_present_perfect(sibling,
+                                                     language,
+                                                     check_ppp=False,
+                                                     check_ppc=True,
+                                                     check_preceding=check_preceding)
+                    if ppp:
+                        pp.extend(ppp)
+                break
+            # Check if this is a present perfect continuous (in the recursion step)
+            elif check_ppc and sibling_pos == ppc_tag:
+                pp.add_word(sibling.text, sibling.get(lemma_attr), True, sibling.get('id'))
+                pp.is_continuous = True
+                is_pp = True
                 break
             # Stop looking at punctuation or stop tags
             elif sibling.text in string.punctuation or (sibling_pos and sibling_pos.startswith(stop_tags)):
@@ -122,7 +134,7 @@ class PerfectExtractor(object):
         # If we haven't yet found a perfect, and we are allowed to look in the other direction,
         # try to find a perfect by looking backwards in the sentence.
         if not is_pp and allow_reversed and not check_preceding:
-            pp = self.check_present_perfect(element, language, check_ppc, True)
+            pp = self.check_present_perfect(element, language, check_ppp=check_ppp, check_preceding=True)
             if pp:
                 is_pp = True
 

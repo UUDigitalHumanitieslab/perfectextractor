@@ -18,13 +18,13 @@ class TestPresentPerfect(unittest.TestCase):
         self.assertEqual(self.pp.words_between(), 1)
 
     def test_extend(self):
-        ppc = PresentPerfect('has', 'have', XML_ID)
-        ppc.add_word('been', 'be', True, XML_ID)
+        ppp = PresentPerfect('has', 'have', XML_ID)
+        ppp.add_word('been', 'be', True, XML_ID)
         pp_extend = PresentPerfect('been', 'be', XML_ID)
         pp_extend.add_word('created', 'create', True, XML_ID)
-        ppc.extend(pp_extend)
+        ppp.extend(pp_extend)
 
-        self.assertEqual(ppc.perfect_lemma(), 'create')
-        self.assertEqual(ppc.verbs(), ['has', 'been', 'created'])
-        self.assertEqual(ppc.verbs_to_string(), 'has been created')
-        self.assertEqual(ppc.words_between(), 0)
+        self.assertEqual(ppp.perfect_lemma(), 'create')
+        self.assertEqual(ppp.verbs(), ['has', 'been', 'created'])
+        self.assertEqual(ppp.verbs_to_string(), 'has been created')
+        self.assertEqual(ppp.words_between(), 0)
