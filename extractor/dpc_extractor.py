@@ -78,11 +78,13 @@ class DPCExtractor(PerfectExtractor):
         if line:
             s = line[0]
             sentence = s.getprevious().text
-            for e in s.xpath(self.config.get(language_to, 'xpath'), namespaces=TEI):
-                pp = self.check_present_perfect(e, language_to)
-                if pp:
-                    sentence = pp.mark_sentence()
-                    break
+
+            if self.search_in_to:
+                for e in s.xpath(self.config.get(language_to, 'xpath'), namespaces=TEI):
+                    pp = self.check_present_perfect(e, language_to)
+                    if pp:
+                        sentence = pp.mark_sentence()
+                        break
 
         return sentence, pp
 

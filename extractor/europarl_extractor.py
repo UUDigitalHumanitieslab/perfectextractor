@@ -65,11 +65,13 @@ class EuroparlExtractor(PerfectExtractor):
             s = line[0]
             first_w = s.xpath('.//w')[0]
             sentence = get_sentence_from_element(first_w)
-            for e in s.xpath(self.config.get(language_to, 'xpath')):
-                pp = self.check_present_perfect(e, language_to)
-                if pp:
-                    sentence = pp.mark_sentence()
-                    break
+
+            if self.search_in_to:
+                for e in s.xpath(self.config.get(language_to, 'xpath')):
+                    pp = self.check_present_perfect(e, language_to)
+                    if pp:
+                        sentence = pp.mark_sentence()
+                        break
 
         return etree.tostring(s), sentence, pp
 
@@ -131,7 +133,6 @@ class EuroparlExtractor(PerfectExtractor):
                         translated_present_perfects, translated_sentences, translated_marked_sentences = \
                              self.find_translated_present_perfects(translation_trees[language_to], language_to, translated_lines)
                         result.append('\n'.join([tpp.verbs_to_string() if tpp else '' for tpp in translated_present_perfects]))
-                        # result.append('\n'.join(self.check_translated_pps(pp, translated_present_perfects, language_to)))
                         result.append('')
                         result.append(alignment_type)
                         result.append('<root>' + '\n'.join(translated_sentences) + '</root>' if translated_sentences else '')

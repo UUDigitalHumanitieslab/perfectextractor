@@ -16,14 +16,18 @@ NL = 'nl'
 class PerfectExtractor(object):
     __metaclass__ = ABCMeta
 
-    def __init__(self, language_from, languages_to):
+    def __init__(self, language_from, languages_to, search_in_to=True):
         """
         Initializes the extractor for the given source and target language(s).
         Reads in the config for the source language,
         as well as the list of verbs that use 'to be' as auxiliary verb for both source and target language(s).
+        :param language_from: the source language
+        :param languages_to: the target language(s)
+        :param search_in_to: whether to look for perfects in the target language
         """
         self.l_from = language_from
         self.l_to = languages_to
+        self.search_in_to = search_in_to
 
         # Read the config
         config = ConfigParser.RawConfigParser()
@@ -32,7 +36,10 @@ class PerfectExtractor(object):
 
         # Read the list of verbs that use 'to be' as auxiliary verb per language
         self.aux_be_list = {}
-        for language in [language_from] + languages_to:
+        languages = [language_from]
+        if search_in_to:
+            languages.extend(languages_to)
+        for language in languages:
             aux_be_list = []
             if self.config.get(language, 'lexical_bound'):
                 with codecs.open(AUX_BE_CONFIG.format(language=language), 'rb', 'utf-8') as lexicon:
