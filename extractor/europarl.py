@@ -12,6 +12,36 @@ EUROPARL_CONFIG = os.path.join(os.path.dirname(__file__), '../config/europarl.cf
 
 
 class EuroparlExtractor(BaseExtractor):
+    def list_filenames(self, dir_name):
+        return sorted(glob.glob(os.path.join(dir_name, '*.xml')))
+
+    def process_file(self, filename):
+        """
+        Processes a single file.
+        """
+        t0 = time.time()
+        print 'Now processing ' + filename + '...'
+
+        # Parse the current tree
+        tree = etree.parse(filename)
+
+        t1 = time.time()
+        print 'Finished parsing trees, took {:.3} seconds'.format(t1 - t0)
+
+        results = list()
+        # Loop over all sentences
+        for e in tree.xpath('.//s'):
+            result = list()
+            result.append(os.path.basename(filename))
+            result.append(self.l_from)
+            result.append('<root>' + etree.tostring(e) + '</root>')
+
+            results.append(result)
+
+        print 'Finished, took {:.3} seconds'.format(time.time() - t1)
+
+        return results
+
     def get_translated_lines(self, alignment_trees, language_from, language_to, segment_number):
         """
         Returns the translated segment numbers (could be multiple) for a segment number in the original text.
@@ -118,9 +148,6 @@ class EuroparlPerfectExtractor(PerfectExtractor, EuroparlExtractor):
         if check_preceding:
             siblings = siblings[::-1]
         return siblings
-
-    def list_filenames(self, dir_name):
-        return glob.glob(os.path.join(dir_name, '*.xml'))
 
     def process_file(self, filename):
         """

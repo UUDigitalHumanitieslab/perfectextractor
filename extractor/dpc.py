@@ -3,6 +3,7 @@ import glob
 
 from lxml import etree
 
+from .base import BaseExtractor
 from .perfectextractor import PerfectExtractor
 from .utils import is_nl
 
@@ -11,9 +12,9 @@ TEI = {'ns': 'http://www.tei-c.org/ns/1.0'}
 NL = 'nl'
 
 
-class DPCExtractor(PerfectExtractor):
-    def get_config(self):
-        return DPC_CONFIG
+class DPCExtractor(BaseExtractor):
+    def list_filenames(self, dir_name):
+        return sorted(glob.glob(os.path.join(dir_name, '*[0-9]-' + self.l_from + '-tei.xml')))
 
     def get_translated_lines(self, alignment_trees, language_from, language_to, segment_number):
         """
@@ -66,6 +67,11 @@ class DPCExtractor(PerfectExtractor):
 
         return set(result), alignment_type
 
+
+class DPCExtractor(PerfectExtractor, DPCExtractor):
+    def get_config(self):
+        return DPC_CONFIG
+
     def get_line_by_number(self, tree, language_to, segment_number):
         """
         Returns the full line for a segment number, as well as the PresentPerfect found (or None if none found).
@@ -100,9 +106,6 @@ class DPCExtractor(PerfectExtractor):
 
     def get_siblings(self, element, sentence_id, check_preceding):
         return element.itersiblings(preceding=check_preceding)
-
-    def list_filenames(self, dir_name):
-        return glob.glob(os.path.join(dir_name, '*[0-9]-' + self.l_from + '-tei.xml'))
 
     def process_file(self, filename):
         """

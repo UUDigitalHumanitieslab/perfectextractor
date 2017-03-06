@@ -200,13 +200,6 @@ class PerfectExtractor(object):
                 results = self.process_file(filename)
                 csv_writer.writerows(results)
 
-    @abstractmethod
-    def list_filenames(self, dir_name):
-        """
-        List all to be processed files in the given directory.
-        """
-        raise NotImplementedError
-
     def check_translated_pps(self, pp, translated_present_perfects, language_to):
         """
         Checks whether the translated present perfects found form an actual translation of the present perfect.
