@@ -54,13 +54,6 @@ class PerfectExtractor(object):
         raise NotImplementedError
 
     @abstractmethod
-    def get_translated_lines(self, alignment_trees, language_from, language_to, segment_number):
-        """
-        Returns the translated segment numbers (could be multiple) for a segment number in the original text.
-        """
-        raise NotImplementedError
-
-    @abstractmethod
     def get_line_by_number(self, tree, language_to, segment_number):
         """
         Returns the full line for a segment number, as well as the PresentPerfect found (or None if none found).

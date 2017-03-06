@@ -2,12 +2,12 @@
 
 import unittest
 
-from extractor.europarl_extractor import EuroparlExtractor
+from extractor.europarl import EuroparlPerfectExtractor
 
 
 class TestPerfectExtractor(unittest.TestCase):
     def test_is_lexically_bound(self):
-        extractor = EuroparlExtractor('en', ['de', 'es', 'fr', 'nl'])
+        extractor = EuroparlPerfectExtractor('en', ['de', 'es', 'fr', 'nl'])
         lemma_attr = extractor.config.get('all', 'lemma_attr')
         
         mock_aux_verb = {lemma_attr: 'zijn'}

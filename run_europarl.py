@@ -1,7 +1,7 @@
 import os
 import time
 
-from extractor.europarl_extractor import EuroparlExtractor
+from extractor.europarl import EuroparlPerfectExtractor
 
 
 def process_data_folders(extractors, path):
@@ -16,12 +16,8 @@ def process_data_folders(extractors, path):
 
 
 def create_extractors():
-    de_extractor = EuroparlExtractor('de', ['en', 'es', 'fr', 'nl'])
-    en_extractor = EuroparlExtractor('en', ['de', 'es', 'fr', 'nl'])
-    es_extractor = EuroparlExtractor('es', ['de', 'en', 'fr', 'nl'])
-    fr_extractor = EuroparlExtractor('fr', ['de', 'en', 'es', 'nl'])
-    nl_extractor = EuroparlExtractor('nl', ['de', 'en', 'es', 'fr'])
-    return [de_extractor, en_extractor, es_extractor, nl_extractor, fr_extractor]
+    en_extractor = EuroparlPerfectExtractor('en', ['pt'], False)
+    return [en_extractor]
     # return [de_extractor]
 
 if __name__ == "__main__":

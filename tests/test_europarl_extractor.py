@@ -5,18 +5,18 @@ import unittest
 
 from lxml import etree
 
-from extractor.europarl_extractor import EuroparlExtractor
+from extractor.europarl import EuroparlPerfectExtractor
 
 
-class TestEuroparlExtractor(unittest.TestCase):
+class TestEuroparlPerfectExtractor(unittest.TestCase):
     def setUp(self):
         nl_filename = os.path.join(os.path.dirname(__file__), 'data/europarl/nl/ep-00-12-15.xml')
-        self.nl_extractor = EuroparlExtractor('nl', ['en'])
+        self.nl_extractor = EuroparlPerfectExtractor('nl', ['en'])
         self.nl_tree = etree.parse(nl_filename)
         self.nl_alignmenttrees, self.nl_translationtrees = self.nl_extractor.parse_alignment_trees(nl_filename)
 
         en_filename = os.path.join(os.path.dirname(__file__), 'data/europarl/en/ep-00-12-15.xml')
-        self.en_extractor = EuroparlExtractor('en', ['nl'])
+        self.en_extractor = EuroparlPerfectExtractor('en', ['nl'])
         self.en_tree = etree.parse(en_filename)
         self.en_alignmenttrees, self.en_translationtrees = self.en_extractor.parse_alignment_trees(en_filename)
 

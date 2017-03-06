@@ -5,7 +5,7 @@ import unittest
 
 from lxml import etree
 
-from extractor.dpc_extractor import DPCExtractor
+from extractor.dpc import DPCExtractor
 from extractor.models import PresentPerfect
 
 
