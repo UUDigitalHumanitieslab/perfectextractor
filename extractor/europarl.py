@@ -25,6 +25,9 @@ class EuroparlExtractor(BaseExtractor):
         # Parse the current tree
         tree = etree.parse(filename)
 
+        # Parse the alignment and translation trees
+        alignment_trees, translation_trees = self.parse_alignment_trees(filename)
+
         t1 = time.time()
         print 'Finished parsing trees, took {:.3} seconds'.format(t1 - t0)
 
@@ -36,11 +39,33 @@ class EuroparlExtractor(BaseExtractor):
             result.append(self.l_from)
             result.append('<root>' + etree.tostring(e) + '</root>')
 
+            segment_number = e.get('id')
+            for language_to in self.l_to:
+                if language_to in translation_trees:
+                    # TODO: deal with source_lines
+                    source_lines, translated_lines, alignment_type = self.get_translated_lines(alignment_trees,
+                                                                                               self.l_from,
+                                                                                               language_to,
+                                                                                               segment_number)
+                    translated_sentences = [self.get_line(translation_trees[language_to], line) for line in translated_lines]
+                    result.append(alignment_type)
+                    result.append('<root>' + '\n'.join(translated_sentences) + '</root>' if translated_sentences else '')
+                else:
+                    # If no translation is available, add empty columns
+                    result.extend([''] * 2)
+
             results.append(result)
 
         print 'Finished, took {:.3} seconds'.format(time.time() - t1)
 
         return results
+
+    def get_line(self, tree, segment_number):
+        line = tree.xpath('//s[@id="' + segment_number + '"]')
+        if line:
+            return etree.tostring(line[0])
+        else:
+            return None
 
     def get_translated_lines(self, alignment_trees, language_from, language_to, segment_number):
         """
