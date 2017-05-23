@@ -4,19 +4,22 @@ import codecs
 import string
 import os
 
+from .base import BaseExtractor
 from .utils import UnicodeWriter
 from .models import PresentPerfect
 from .wiktionary import get_translations
 
 AUX_BE_CONFIG = os.path.join(os.path.dirname(__file__), '../config/{language}_aux_be.txt')
+LEMMATA_CONFIG = os.path.join(os.path.dirname(__file__), '../config/{language}_lemmata.txt')
+
 TEI = {'ns': 'http://www.tei-c.org/ns/1.0'}
 NL = 'nl'
 
 
-class PerfectExtractor(object):
+class PerfectExtractor(BaseExtractor):
     __metaclass__ = ABCMeta
 
-    def __init__(self, language_from, languages_to, search_in_to=True):
+    def __init__(self, language_from, languages_to, search_in_to=True, lemmata=False):
         """
         Initializes the extractor for the given source and target language(s).
         Reads in the config for the source language,
@@ -45,6 +48,11 @@ class PerfectExtractor(object):
                 with codecs.open(AUX_BE_CONFIG.format(language=language), 'rb', 'utf-8') as lexicon:
                     aux_be_list = lexicon.read().split()
             self.aux_be_list[language] = aux_be_list
+
+        self.lemmata_list = []
+        if lemmata:
+            with codecs.open(LEMMATA_CONFIG.format(language=language_from), 'rb', 'utf-8') as lexicon:
+                self.lemmata_list = lexicon.read().split()
 
     @abstractmethod
     def get_config(self):
@@ -105,6 +113,9 @@ class PerfectExtractor(object):
                 # Check if the sibling is lexically bound to the auxiliary verb
                 # (only if we're not checking for passive present perfect)
                 if check_ppp and not self.is_lexically_bound(language, element, sibling):
+                    break
+                # Check if the lemma is in the lemmata list
+                if self.lemmata_list and not sibling.get('lem') in self.lemmata_list:
                     break
                 pp.add_word(sibling.text, sibling.get(lemma_attr), True, sibling.get('id'))
                 is_pp = True

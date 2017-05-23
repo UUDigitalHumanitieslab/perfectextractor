@@ -6,6 +6,7 @@ from lxml import etree
 
 from .base import BaseExtractor
 from .perfectextractor import PerfectExtractor
+from .posextractor import PoSExtractor
 from .xml_utils import get_sentence_from_element
 
 EUROPARL_CONFIG = os.path.join(os.path.dirname(__file__), '../config/europarl.cfg')
@@ -135,6 +136,89 @@ class EuroparlExtractor(BaseExtractor):
                     print 'Multiple translations found for {} to {}'.format(filename, language_to)
 
         return alignment_trees, translation_trees
+
+
+class EuroParlPoSExtractor(PoSExtractor, EuroparlExtractor):
+    def process_file(self, filename):
+        """
+        Processes a single file.
+        """
+        t0 = time.time()
+        print 'Now processing ' + filename + '...'
+
+        # Parse the current tree
+        tree = etree.parse(filename)
+
+        # Parse the alignment and translation trees
+        alignment_trees, translation_trees = self.parse_alignment_trees(filename)
+
+        t1 = time.time()
+        print 'Finished parsing trees, took {:.3} seconds'.format(t1 - t0)
+
+        results = []
+        # Find potential present perfects
+        xpath = './/w[@pos="' + self.pos + '"]'
+        for e in tree.xpath(xpath):
+            if self.lemmata_list and e.get('lem') not in self.lemmata_list:
+                continue
+
+            result = list()
+            result.append(os.path.basename(filename))
+            result.append(e.text)
+            result.append(e.get('id'))
+
+            # Write the complete segment with mark-up
+            sentence = self.get_sentence(e)
+            result.append('<root>' + etree.tostring(sentence) + '</root>')
+
+            s = []
+            # TODO: this xPath-expression might be specific for a corpus
+            for w in sentence.xpath('.//w'):
+                s.append(w.text)
+            result.append(' '.join(s))
+
+            # Find the translated lines
+            segment_number = sentence.get('id')
+            for language_to in self.l_to:
+                if language_to in translation_trees:
+                    # TODO: deal with source_lines
+                    source_lines, translated_lines, alignment_type = self.get_translated_lines(alignment_trees,
+                                                                                               self.l_from,
+                                                                                               language_to,
+                                                                                               segment_number)
+                    if translated_lines:
+                        translated_sentences = [self.get_line_by_number(translation_trees[language_to], l) for l in translated_lines]
+                        result.append(alignment_type)
+                        result.append('<root>' + '\n'.join(translated_sentences) + '</root>' if translated_sentences else '')
+                    else:
+                        result.append('')
+                        result.append('')
+                else:
+                    # If no translation is available, add empty columns
+                    result.extend([''] * 2)
+
+            results.append(result)
+
+        print 'Finished finding PoS, took {:.3} seconds'.format(time.time() - t1)
+
+        return results
+
+    def get_sentence(self, element):
+        return element.xpath('ancestor::s')[0]
+
+    def get_line_by_number(self, tree, segment_number):
+        """
+        Returns the full line for a segment number, as well as the PresentPerfect found (or None if none found).
+        TODO: handle more than one here? => bug
+        """
+        result = None
+
+        line = tree.xpath('//s[@id="' + segment_number + '"]')
+        if line:
+            s = line[0]
+            result = etree.tostring(s)
+
+        return result
 
 
 class EuroparlPerfectExtractor(PerfectExtractor, EuroparlExtractor):
