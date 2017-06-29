@@ -246,7 +246,6 @@ class EuroparlFrenchArticleExtractor(EuroParlPoSExtractor):
         super(EuroparlFrenchArticleExtractor, self).__init__(language_from, languages_to, ['DET:ART', 'PRP:det'])
 
         self.lemmata_list = ['le', 'un', 'du']
-        self.has_particles = ['le']
         self.particles = ['de', 'du']
 
     def preprocess_found(self, word):
@@ -258,9 +257,8 @@ class EuroparlFrenchArticleExtractor(EuroParlPoSExtractor):
 
         for w in super(EuroparlFrenchArticleExtractor, self).preprocess_found(word):
             prev = w.getprevious()
-            if prev is not None:
-                if w.get('lem') in self.has_particles and prev.get('lem') in self.particles:
-                    result.append(prev)
+            if prev is not None and prev.get('lem') in self.particles:
+                result.append(prev)
 
             result.append(word)
 
@@ -271,16 +269,22 @@ class EuroparlFrenchArticleExtractor(EuroParlPoSExtractor):
         Return the type for a found article: definite, indefinite or partitive.
         For 'des', this is quite hard to decide, so we leave both options open.
         """
-        if words[0].text == 'des':
-            return 'indefinite/partitive'
-        elif words[0].get('lem') in self.particles:
-            return 'partitive'
-        elif words[-1].get('lem') == 'le':
-            return 'definite'
+        result = ''
+
+        if words[-1].get('lem') == 'le':
+            result = 'definite'
         elif words[-1].get('lem') == 'un':
-            return 'indefinite'
-        else:
-            return 'unknown'
+            result = 'indefinite'
+
+        if words[0].get('lem') in self.particles:
+            if result:
+                result += ' '
+            result += 'partitive'
+
+        if words[0].text == 'des':
+            result = 'indefinite/partitive'
+
+        return result
 
 
 class EuroparlPerfectExtractor(PerfectExtractor, EuroparlExtractor):
