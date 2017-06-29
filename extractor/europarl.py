@@ -156,26 +156,23 @@ class EuroParlPoSExtractor(PoSExtractor, EuroparlExtractor):
         print 'Finished parsing trees, took {:.3} seconds'.format(t1 - t0)
 
         results = []
-        # Find potential present perfects
-        xpath = './/w[@pos="' + self.pos + '"]'
-        for e in tree.xpath(xpath):
-            if self.lemmata_list and e.get('lem') not in self.lemmata_list:
+        # Find potential words matching the part-of-speech
+        xpath = './/w[contains("{value}", @{element})]'.format(element='pos', value=' '.join(self.pos))
+        for w in tree.xpath(xpath):
+            words = self.preprocess_found(w)
+
+            if not words:
                 continue
 
             result = list()
             result.append(os.path.basename(filename))
-            result.append(e.text)
-            result.append(e.get('id'))
+            result.append(' '.join([w.text for w in words]))
+            result.append(self.get_type(words))
+            result.append(' '.join([w.get('id') for w in words]))
 
             # Write the complete segment with mark-up
-            sentence = self.get_sentence(e)
+            sentence = self.get_sentence(words[0])
             result.append('<root>' + etree.tostring(sentence) + '</root>')
-
-            s = []
-            # TODO: this xPath-expression might be specific for a corpus
-            for w in sentence.xpath('.//w'):
-                s.append(w.text)
-            result.append(' '.join(s))
 
             # Find the translated lines
             segment_number = sentence.get('id')
@@ -219,6 +216,71 @@ class EuroParlPoSExtractor(PoSExtractor, EuroparlExtractor):
             result = etree.tostring(s)
 
         return result
+
+    def preprocess_found(self, word):
+        """
+        Removes a word if does not occur in the lemmata list
+        """
+        result = []
+
+        if self.lemmata_list and word.get('lem') in self.lemmata_list:
+            result.append(word)
+
+        return result
+
+    def get_type(self, words):
+        """
+        Returns the part-of-speech of the (first) found word
+        """
+        return words[0].get('pos')
+
+
+class EuroparlFrenchArticleExtractor(EuroParlPoSExtractor):
+    def __init__(self, language_from, languages_to):
+        """
+        Initializes the EuroparlFrenchArticleExtractor with a set of part-of-speeches and lemmata that the found
+        words should adhere to. Also initializes a list of particles that could appear before a determiner.
+        :param language_from: The language to find the specified part-of-speeches in.
+        :param languages_to: The languages to extract the aligned sentences from.
+        """
+        super(EuroparlFrenchArticleExtractor, self).__init__(language_from, languages_to, ['DET:ART', 'PRP:det'])
+
+        self.lemmata_list = ['le', 'un', 'du']
+        self.has_particles = ['le']
+        self.particles = ['de', 'du']
+
+    def preprocess_found(self, word):
+        """
+        Removes a word if does not occur in the lemmata list, and then checks if it might be preceded by a particle.
+        If so, add the particle to the found words.
+        """
+        result = []
+
+        for w in super(EuroparlFrenchArticleExtractor, self).preprocess_found(word):
+            prev = w.getprevious()
+            if prev is not None:
+                if w.get('lem') in self.has_particles and prev.get('lem') in self.particles:
+                    result.append(prev)
+
+            result.append(word)
+
+        return result
+
+    def get_type(self, words):
+        """
+        Return the type for a found article: definite, indefinite or partitive.
+        For 'des', this is quite hard to decide, so we leave both options open.
+        """
+        if words[0].text == 'des':
+            return 'indefinite/partitive'
+        elif words[0].get('lem') in self.particles:
+            return 'partitive'
+        elif words[-1].get('lem') == 'le':
+            return 'definite'
+        elif words[-1].get('lem') == 'un':
+            return 'indefinite'
+        else:
+            return 'unknown'
 
 
 class EuroparlPerfectExtractor(PerfectExtractor, EuroparlExtractor):

@@ -32,7 +32,8 @@ class PoSExtractor(BaseExtractor):
 
             header = [
                 'document',
-                self.pos + ' ' + self.l_from,
+                self.l_from,
+                'type' + ' ' + self.l_from,
                 'id' + ' ' + self.l_from,
                 self.l_from]
             for language in self.l_to:
@@ -50,3 +51,16 @@ class PoSExtractor(BaseExtractor):
         Processes a single file, given by the filename.
         """
         raise NotImplementedError
+
+    @abstractmethod
+    def preprocess_found(self, word):
+        """
+        Preprocesses the found word
+        """
+        raise NotImplementedError
+
+    @abstractmethod
+    def get_type(self, word):
+        """
+        Return the type for the found word. A sensible default is the part-of-speech.
+        """
