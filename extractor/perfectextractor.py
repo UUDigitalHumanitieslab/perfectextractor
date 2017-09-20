@@ -19,7 +19,7 @@ NL = 'nl'
 class PerfectExtractor(BaseExtractor):
     __metaclass__ = ABCMeta
 
-    def __init__(self, language_from, languages_to, search_in_to=True, lemmata=False):
+    def __init__(self, language_from, languages_to=[], search_in_to=True, lemmata=None):
         """
         Initializes the extractor for the given source and target language(s).
         Reads in the config for the source language,
@@ -27,6 +27,7 @@ class PerfectExtractor(BaseExtractor):
         :param language_from: the source language
         :param languages_to: the target language(s)
         :param search_in_to: whether to look for perfects in the target language
+        :param lemmata: whether to limit the search to certain lemmata (can be provided as a boolean or a list)
         """
         self.l_from = language_from
         self.l_to = languages_to
@@ -50,9 +51,14 @@ class PerfectExtractor(BaseExtractor):
             self.aux_be_list[language] = aux_be_list
 
         self.lemmata_list = []
-        if lemmata:
-            with codecs.open(LEMMATA_CONFIG.format(language=language_from), 'rb', 'utf-8') as lexicon:
-                self.lemmata_list = lexicon.read().split()
+        if lemmata is not None:
+            if type(lemmata) == list:
+                self.lemmata_list = lemmata
+            elif type(lemmata) == bool and lemmata:
+                with codecs.open(LEMMATA_CONFIG.format(language=language_from), 'rb', 'utf-8') as lexicon:
+                    self.lemmata_list = lexicon.read().split()
+            else:
+                raise ValueError('Unknown value for lemmata')
 
     @abstractmethod
     def get_config(self):
@@ -115,7 +121,7 @@ class PerfectExtractor(BaseExtractor):
                 if check_ppp and not self.is_lexically_bound(language, element, sibling):
                     break
                 # Check if the lemma is in the lemmata list
-                if self.lemmata_list and not sibling.get('lem') in self.lemmata_list:
+                if self.lemmata_list and not sibling.get(lemma_attr) in self.lemmata_list:
                     break
                 pp.add_word(sibling.text, sibling.get(lemma_attr), True, sibling.get('id'))
                 is_pp = True
