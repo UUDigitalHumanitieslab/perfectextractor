@@ -68,7 +68,7 @@ class DPCExtractor(BaseExtractor):
         return set(result), alignment_type
 
 
-class DPCExtractor(PerfectExtractor, DPCExtractor):
+class DPCPerfectExtractor(PerfectExtractor, DPCExtractor):
     def get_config(self):
         return DPC_CONFIG
 
@@ -142,7 +142,7 @@ class DPCExtractor(PerfectExtractor, DPCExtractor):
                 result.append(pp.verbs_to_string())
 
                 # Write the complete segment with mark-up
-                result.append(pp.mark_sentence(e.getparent().getprevious().text))
+                result.append(pp.mark_sentence())
 
                 # Find the translated lines
                 segment_number = e.getparent().getparent().get('n')[4:]

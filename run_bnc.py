@@ -1,7 +1,7 @@
 import os
 import time
 
-from extractor.dpc import DPCPerfectExtractor
+from extractor.bnc import BNCPerfectExtractor
 
 
 def process_data_folders(extractors, path):
@@ -16,10 +16,8 @@ def process_data_folders(extractors, path):
 
 
 def create_extractors():
-    en_extractor = DPCPerfectExtractor('en', ['fr', 'nl'])
-    nl_extractor = DPCPerfectExtractor('nl', ['en', 'fr'])
-    fr_extractor = DPCPerfectExtractor('fr', ['en', 'nl'])
-    return [en_extractor, nl_extractor, fr_extractor]
+    en_extractor = BNCPerfectExtractor('en', lemmata=['point'])
+    return [en_extractor]
 
 
 if __name__ == "__main__":
