@@ -92,8 +92,9 @@ class PerfectExtractor(BaseExtractor):
 
     def check_present_perfect(self, element, language, check_ppp=True, check_ppc=False, check_preceding=False):
         """
-        Checks whether this element is the start of a present perfect (or pp continuous).
-        If it is, the present perfect is returned as a list.
+        Checks whether this element is the start of a present perfect (pp),
+        a present perfect continuous (ppc) or passive present perfect (ppp).
+        If it is, the complete construction is returned as a PresentPerfect object.
         If not, None is returned.
         """
         lemma_attr = self.config.get('all', 'lemma_attr')
@@ -115,38 +116,46 @@ class PerfectExtractor(BaseExtractor):
         for sibling in self.get_siblings(element, s.get('id'), check_preceding):
             # If the tag of the sibling is the perfect tag, we found a present perfect!
             sibling_pos = sibling.get(pos_tag)
+            sibling_lemma = sibling.get(lemma_attr)
             if sibling_pos in perfect_tags:
                 # Check if the sibling is lexically bound to the auxiliary verb
                 # (only if we're not checking for passive present perfect)
                 if check_ppp and not self.is_lexically_bound(language, element, sibling):
                     break
-                # Check if the lemma is in the lemmata list
-                if self.lemmata_list and not sibling.get(lemma_attr) in self.lemmata_list:
-                    break
-                pp.add_word(sibling.text, sibling.get(lemma_attr), True, sibling.get('id'))
+
+                # Check if the lemma is not in the lemmata list, if so break, unless we found a potential ppp
+                if not self.in_lemmata_list(sibling_lemma):
+                    if not(check_ppp and sibling_lemma == ppp_lemma):
+                        break
+
+                pp.add_word(sibling.text, sibling_lemma, True, sibling.get('id'))
                 is_pp = True
+
                 # ... now check whether this is a passive present perfect or present perfect continuous (by recursion)
-                if check_ppp and sibling.get(lemma_attr) == ppp_lemma:
+                if check_ppp and sibling_lemma == ppp_lemma:
                     ppp = self.check_present_perfect(sibling,
                                                      language,
                                                      check_ppp=False,
                                                      check_ppc=True,
                                                      check_preceding=check_preceding)
                     if ppp:
+                        pp.is_passive = True
                         pp.extend(ppp)
+                    elif not self.in_lemmata_list(sibling_lemma):
+                        is_pp = False
                 break
             # Check if this is a present perfect continuous (in the recursion step)
-            elif check_ppc and sibling_pos == ppc_tag:
-                pp.add_word(sibling.text, sibling.get(lemma_attr), True, sibling.get('id'))
+            elif check_ppc and sibling_pos == ppc_tag and self.in_lemmata_list(sibling_lemma):
+                pp.add_word(sibling.text, sibling_lemma, True, sibling.get('id'))
                 pp.is_continuous = True
                 is_pp = True
                 break
             # Stop looking at punctuation or stop tags
-            elif sibling.text in string.punctuation or (sibling_pos and sibling_pos.startswith(stop_tags)):
+            elif (sibling.text and sibling.text in string.punctuation) or (sibling_pos and sibling_pos.startswith(stop_tags)):
                 break
             # We didn't break yet? Then add this sibling as a potential non-verb part of the present perfect.
             else:
-                pp.add_word(sibling.text, sibling.get(lemma_attr), False, sibling.get('id'))
+                pp.add_word(sibling.text, sibling_lemma, False, sibling.get('id'))
 
         # If we haven't yet found a perfect, and we are allowed to look in the other direction,
         # try to find a perfect by looking backwards in the sentence.
@@ -156,6 +165,13 @@ class PerfectExtractor(BaseExtractor):
                 is_pp = True
 
         return pp if is_pp else None
+
+    def in_lemmata_list(self, element):
+        """
+        Returns whether the given element is in the lemmata list.
+        Returns True when there is no lemmata list given.
+        """
+        return not self.lemmata_list or element in self.lemmata_list
 
     @abstractmethod
     def get_sentence(self, element):

@@ -6,8 +6,8 @@ class Word:
     Each Word consists of a word, its lemma, and a designation if this is a verb.
     """
     def __init__(self, word, lemma, is_verb, xml_id):
-        self.word = word.strip()
-        self.lemma = lemma.strip()
+        self.word = word.strip() if word else ' '
+        self.lemma = lemma.strip() if lemma else '?'
         self.is_verb = is_verb
         self.xml_id = xml_id
 
@@ -23,6 +23,7 @@ class PresentPerfect:
         """
         self.xml_sentence = xml_sentence
         self.words = []
+        self.is_passive = False
         self.is_continuous = False
         self.add_word(aux_verb, aux_lemma, True, xml_id)
 
@@ -73,7 +74,7 @@ class PresentPerfect:
         s = []
         # TODO: this xPath-expression might be specific for a corpus
         for w in self.xml_sentence.xpath('.//w'):
-            s.append(w.text.strip())
+            s.append(w.text.strip() if w.text else ' ')
         return ' '.join(s)
 
     def get_sentence_id(self):

@@ -16,7 +16,7 @@ def process_data_folders(extractors, path):
 
 
 def create_extractors():
-    en_extractor = BNCPerfectExtractor('en', lemmata=['point'])
+    en_extractor = BNCPerfectExtractor('en', lemmata=['see', 'hear', 'touch', 'feel', 'taste'])
     return [en_extractor]
 
 
