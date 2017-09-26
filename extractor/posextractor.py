@@ -46,13 +46,6 @@ class PoSExtractor(BaseExtractor):
                 csv_writer.writerows(results)
 
     @abstractmethod
-    def process_file(self, filename):
-        """
-        Processes a single file, given by the filename.
-        """
-        raise NotImplementedError
-
-    @abstractmethod
     def preprocess_found(self, word):
         """
         Preprocesses the found word

@@ -349,13 +349,10 @@ class EuroparlPerfectExtractor(PerfectExtractor, EuroparlExtractor):
             if pp:
                 result = list()
                 result.append(os.path.basename(filename))
-                result.append('')
                 result.append(pp.verbs_to_string())
+                result.append('present perfect')
                 result.append(pp.verb_ids())
-
-                # Write the complete segment with mark-up
                 result.append('<root>' + etree.tostring(pp.xml_sentence) + '</root>')
-                result.append(pp.mark_sentence())
 
                 # Find the translated lines
                 segment_number = pp.get_sentence_id()
@@ -368,14 +365,11 @@ class EuroparlPerfectExtractor(PerfectExtractor, EuroparlExtractor):
                                                                                                    segment_number)
                         translated_present_perfects, translated_sentences, translated_marked_sentences = \
                              self.find_translated_present_perfects(translation_trees[language_to], language_to, translated_lines)
-                        result.append('\n'.join([tpp.verbs_to_string() if tpp else '' for tpp in translated_present_perfects]))
-                        result.append('')
                         result.append(alignment_type)
                         result.append('<root>' + '\n'.join(translated_sentences) + '</root>' if translated_sentences else '')
-                        result.append('\n'.join(translated_marked_sentences))
                     else:
                         # If no translation is available, add empty columns
-                        result.extend([''] * 5)
+                        result.extend([''] * 2)
 
                 results.append(result)
 

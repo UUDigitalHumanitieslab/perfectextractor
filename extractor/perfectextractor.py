@@ -216,16 +216,12 @@ class PerfectExtractor(BaseExtractor):
 
             header = [
                 'document',
-                'original_language',
-                'present perfect ' + self.l_from,
-                'present perfect ids',
-                'xml',
+                self.l_from,
+                'type' + ' ' + self.l_from,
+                'id' + ' ' + self.l_from,
                 self.l_from]
             for language in self.l_to:
-                header.append('present perfect ' + language)
-                header.append('is translation?')
                 header.append('alignment type')
-                header.append('xml')
                 header.append(language)
             csv_writer.writerow(header)
 
@@ -246,10 +242,3 @@ class PerfectExtractor(BaseExtractor):
                 else:
                     results.append('unknown')
         return results
-
-    @abstractmethod
-    def process_file(self, filename):
-        """
-        Processes a single file, given by the filename.
-        """
-        raise NotImplementedError

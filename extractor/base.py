@@ -34,6 +34,13 @@ class BaseExtractor(object):
                 csv_writer.writerows(results)
 
     @abstractmethod
+    def process_file(self, filename):
+        """
+        Process a single file
+        """
+        raise NotImplementedError
+
+    @abstractmethod
     def list_filenames(self, dir_name):
         """
         List all to be processed files in the given directory.
