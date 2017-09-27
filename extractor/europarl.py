@@ -5,6 +5,7 @@ import time
 from lxml import etree
 
 from .base import BaseExtractor
+from .models import MultiWordExpression
 from .perfectextractor import PerfectExtractor
 from .posextractor import PoSExtractor
 from .xml_utils import get_sentence_from_element
@@ -60,6 +61,29 @@ class EuroparlExtractor(BaseExtractor):
         print 'Finished, took {:.3} seconds'.format(time.time() - t1)
 
         return results
+
+    def get_line_by_number(self, tree, segment_number):
+        """
+        Returns the full line for a segment number, as well as the PresentPerfect found (or None if none found).
+        TODO: handle more than one here? => bug
+        """
+        result = None
+
+        line = tree.xpath('//s[@id="' + segment_number + '"]')
+        if line:
+            result = line[0]
+
+        return result
+
+    def get_sentence(self, element):
+        return element.xpath('ancestor::s')[0]
+
+    def get_siblings(self, element, sentence_id, check_preceding):
+        path = ('preceding' if check_preceding else 'following') + '::w[ancestor::s[@id="' + sentence_id + '"]]'
+        siblings = element.xpath(path)
+        if check_preceding:
+            siblings = siblings[::-1]
+        return siblings
 
     def get_line(self, tree, segment_number):
         line = tree.xpath('//s[@id="' + segment_number + '"]')
@@ -200,23 +224,6 @@ class EuroParlPoSExtractor(PoSExtractor, EuroparlExtractor):
 
         return results
 
-    def get_sentence(self, element):
-        return element.xpath('ancestor::s')[0]
-
-    def get_line_by_number(self, tree, segment_number):
-        """
-        Returns the full line for a segment number, as well as the PresentPerfect found (or None if none found).
-        TODO: handle more than one here? => bug
-        """
-        result = None
-
-        line = tree.xpath('//s[@id="' + segment_number + '"]')
-        if line:
-            s = line[0]
-            result = etree.tostring(s)
-
-        return result
-
     def preprocess_found(self, word):
         """
         Removes a word if does not occur in the lemmata list
@@ -287,6 +294,80 @@ class EuroparlFrenchArticleExtractor(EuroParlPoSExtractor):
         return result
 
 
+class EuroParlRecentPastExtractor(EuroparlExtractor):
+    def process_file(self, filename):
+        """
+        Processes a single file.
+        """
+        t0 = time.time()
+        print 'Now processing ' + filename + '...'
+
+        # Parse the current tree
+        tree = etree.parse(filename)
+
+        # Parse the alignment and translation trees
+        alignment_trees, translation_trees = self.parse_alignment_trees(filename)
+
+        t1 = time.time()
+        print 'Finished parsing trees, took {:.3} seconds'.format(t1 - t0)
+
+        results = []
+        # Find potential words matching the part-of-speech
+        xpath = './/w[@{e1} = "{v1}" and @{e2} = "{v2}"]'.format(e1='lem', v1='venir', e2='pos', v2='VER:pres')
+        for w in tree.xpath(xpath):
+            is_recent_past = False
+
+            sentence = self.get_sentence(w)
+            mwe = MultiWordExpression(sentence)
+            mwe.add_word(w.text, w.get('lem'), True, w.get('id'))
+            w_next = w.getnext()
+            if w_next.get('pos') == 'PRP':
+                mwe.add_word(w_next.text, w_next.get('lem'), True, w_next.get('id'))
+                for s in self.get_siblings(w_next, sentence.get('id'), False):
+                    if s.get('pos') == 'VER:infi':
+                        is_recent_past = True
+                        mwe.add_word(s.text, s.get('lem'), True, s.get('id'))
+                        break
+                    else:
+                        mwe.add_word(s.text, s.get('lem'), False, s.get('id'))
+
+            if is_recent_past:
+                result = [mwe.verb_ids(), mwe.verbs_to_string(), mwe.mark_sentence()]
+
+                segment_number = sentence.get('id')
+                for language_to in self.l_to:
+                    if language_to in translation_trees:
+                        # TODO: deal with source_lines
+                        source_lines, translated_lines, alignment_type = self.get_translated_lines(alignment_trees,
+                                                                                                   self.l_from,
+                                                                                                   language_to,
+                                                                                                   segment_number)
+                        if translated_lines:
+                            translated_sentences = [self.get_line_by_number(translation_trees[language_to], l) for l in
+                                                    translated_lines]
+                            result.append(alignment_type)
+                            result.append('\n'.join([self.get_sentence_words(ts) for ts in translated_sentences]) if translated_sentences else '')
+                        else:
+                            result.append('')
+                            result.append('')
+                    else:
+                        # If no translation is available, add empty columns
+                        result.extend([''] * 2)
+
+                results.append(result)
+
+        print 'Finished finding recent pasts, took {:.3} seconds'.format(time.time() - t1)
+
+        return results
+
+    def get_sentence_words(self, xml_sentence):
+        s = []
+        # TODO: this xPath-expression might be specific for a corpus
+        for w in xml_sentence.xpath('.//w'):
+            s.append(w.text.strip() if w.text else ' ')
+        return ' '.join(s)
+
+
 class EuroparlPerfectExtractor(PerfectExtractor, EuroparlExtractor):
     def get_config(self):
         return EUROPARL_CONFIG
@@ -313,16 +394,6 @@ class EuroparlPerfectExtractor(PerfectExtractor, EuroparlExtractor):
                         break
 
         return etree.tostring(s), sentence, pp
-
-    def get_sentence(self, element):
-        return element.xpath('ancestor::s')[0]
-
-    def get_siblings(self, element, sentence_id, check_preceding):
-        path = ('preceding' if check_preceding else 'following') + '::w[ancestor::s[@id="' + sentence_id + '"]]'
-        siblings = element.xpath(path)
-        if check_preceding:
-            siblings = siblings[::-1]
-        return siblings
 
     def process_file(self, filename):
         """

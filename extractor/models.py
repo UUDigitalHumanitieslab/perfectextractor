@@ -1,7 +1,7 @@
 MARKUP = u'**{}**'
 
 
-class Word:
+class Word(object):
     """
     Each Word consists of a word, its lemma, and a designation if this is a verb.
     """
@@ -12,42 +12,16 @@ class Word:
         self.xml_id = xml_id
 
 
-class PresentPerfect:
-    """
-    A present perfect consists of a list of Words.
-    """
-
-    def __init__(self, aux_verb, aux_lemma, xml_id, xml_sentence=None):
-        """
-        A present perfect is initiated by an auxiliary verb.
-        """
+class MultiWordExpression(object):
+    def __init__(self, xml_sentence=None):
         self.xml_sentence = xml_sentence
         self.words = []
-        self.is_passive = False
-        self.is_continuous = False
-        self.add_word(aux_verb, aux_lemma, True, xml_id)
 
     def add_word(self, word, lemma, is_verb, xml_id):
         """
         Adds a word to the present perfect.
         """
         self.words.append(Word(word, lemma, is_verb, xml_id))
-
-    def extend(self, present_perfect):
-        """
-        Extends a present perfect with another one (used to create a present perfect passive or continuous).
-        """
-        for i, w in enumerate(present_perfect.words):
-            if i == 0:
-                continue
-            self.add_word(w.word, w.lemma, w.is_verb, w.xml_id)
-        self.is_continuous = present_perfect.is_continuous
-
-    def perfect_lemma(self):
-        """
-        Returns the lemma of the perfect: the lemma of the last word of the construction.
-        """
-        return self.words[-1].lemma
 
     def verbs(self):
         """
@@ -99,3 +73,34 @@ class PresentPerfect:
             marked_pp = ' '.join([MARKUP.format(w.word) if w.is_verb else w.word for w in self.words])
 
         return self.get_sentence_words().replace(pp_text, marked_pp)
+
+
+class PresentPerfect(MultiWordExpression):
+    """
+    A present perfect consists of a list of Words.
+    """
+
+    def __init__(self, aux_verb, aux_lemma, xml_id, xml_sentence=None):
+        """
+        A present perfect is initiated by an auxiliary verb.
+        """
+        super(PresentPerfect, self).__init__(xml_sentence)
+        self.is_passive = False
+        self.is_continuous = False
+        self.add_word(aux_verb, aux_lemma, True, xml_id)
+
+    def extend(self, present_perfect):
+        """
+        Extends a present perfect with another one (used to create a present perfect passive or continuous).
+        """
+        for i, w in enumerate(present_perfect.words):
+            if i == 0:
+                continue
+            self.add_word(w.word, w.lemma, w.is_verb, w.xml_id)
+        self.is_continuous = present_perfect.is_continuous
+
+    def perfect_lemma(self):
+        """
+        Returns the lemma of the perfect: the lemma of the last word of the construction.
+        """
+        return self.words[-1].lemma

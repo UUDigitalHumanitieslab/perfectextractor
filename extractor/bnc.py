@@ -16,6 +16,12 @@ class BNCExtractor(BaseExtractor):
     def get_translated_lines(self, alignment_trees, language_from, language_to, segment_number):
         return NotImplementedError
 
+    def get_sentence(self, element):
+        return element.xpath('ancestor::s')[0]
+
+    def get_siblings(self, element, sentence_id, check_preceding):
+        return element.itersiblings(tag='w', preceding=check_preceding)
+
 
 class BNCPerfectExtractor(PerfectExtractor, BNCExtractor):
     def get_config(self):
@@ -23,12 +29,6 @@ class BNCPerfectExtractor(PerfectExtractor, BNCExtractor):
 
     def get_line_by_number(self, tree, language_to, segment_number):
         return NotImplementedError
-
-    def get_sentence(self, element):
-        return element.xpath('ancestor::s')[0]
-
-    def get_siblings(self, element, sentence_id, check_preceding):
-        return element.itersiblings(tag='w', preceding=check_preceding)
 
     def process_file(self, filename):
         """

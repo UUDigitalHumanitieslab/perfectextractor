@@ -67,6 +67,12 @@ class DPCExtractor(BaseExtractor):
 
         return set(result), alignment_type
 
+    def get_sentence(self, element):
+        return element.xpath('ancestor::ns:s', namespaces=TEI)[0]
+
+    def get_siblings(self, element, sentence_id, check_preceding):
+        return element.itersiblings(preceding=check_preceding)
+
 
 class DPCPerfectExtractor(PerfectExtractor, DPCExtractor):
     def get_config(self):
@@ -100,12 +106,6 @@ class DPCPerfectExtractor(PerfectExtractor, DPCExtractor):
         """
         metadata_tree = etree.parse(document + self.l_from + '-mtd.xml')
         return metadata_tree.getroot().find('metaTrans').find('Original').get('lang')
-
-    def get_sentence(self, element):
-        return element.xpath('ancestor::ns:s', namespaces=TEI)[0]
-
-    def get_siblings(self, element, sentence_id, check_preceding):
-        return element.itersiblings(preceding=check_preceding)
 
     def process_file(self, filename):
         """

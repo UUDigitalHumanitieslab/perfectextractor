@@ -54,3 +54,17 @@ class BaseExtractor(object):
         """
         raise NotImplementedError
 
+    @abstractmethod
+    def get_sentence(self, element):
+        """
+        Returns the full sentence XML for the given element.
+        """
+        raise NotImplementedError
+
+    @abstractmethod
+    def get_siblings(self, element, sentence_id, check_preceding):
+        """
+        Returns the siblings of the given element in the given sentence_id.
+        The check_preceding parameter allows to look either forwards or backwards.
+        """
+        raise NotImplementedError
