@@ -332,7 +332,7 @@ class EuroParlRecentPastExtractor(EuroparlExtractor):
                         mwe.add_word(s.text, s.get('lem'), False, s.get('id'))
 
             if is_recent_past:
-                result = [mwe.verb_ids(), mwe.verbs_to_string(), mwe.mark_sentence()]
+                result = [os.path.basename(filename), mwe.verb_ids(), mwe.verbs_to_string(), mwe.mark_sentence()]
 
                 segment_number = sentence.get('id')
                 for language_to in self.l_to:
