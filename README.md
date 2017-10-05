@@ -88,5 +88,5 @@ The unit tests can be run using:
 
 A coverage report can be generated (after installing [coverage.py](https://coverage.readthedocs.io/en/coverage-4.2/)) using:
 
-    coverage run -m unittest discover
+    coverage run --source . -m unittest discover
     coverage html

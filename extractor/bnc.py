@@ -14,7 +14,10 @@ class BNCExtractor(BaseExtractor):
         return sorted(glob.glob(os.path.join(dir_name, '*.xml')))
 
     def get_translated_lines(self, alignment_trees, language_from, language_to, segment_number):
-        return NotImplementedError
+        raise NotImplementedError
+
+    def process_file(self, filename):
+        raise NotImplementedError
 
     def get_sentence(self, element):
         return element.xpath('ancestor::s')[0]
@@ -28,7 +31,7 @@ class BNCPerfectExtractor(PerfectExtractor, BNCExtractor):
         return BNC_CONFIG
 
     def get_line_by_number(self, tree, language_to, segment_number):
-        return NotImplementedError
+        raise NotImplementedError
 
     def process_file(self, filename):
         """
