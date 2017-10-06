@@ -1,6 +1,7 @@
-from abc import ABCMeta, abstractmethod
+from abc import ABCMeta
 import ConfigParser
 import codecs
+import string
 
 from .base import BaseExtractor
 from .models import MultiWordExpression
@@ -26,26 +27,54 @@ class RecentPastExtractor(BaseExtractor):
         self.config = config
 
     def check_recent_past(self, w):
+        """
+        Checks if the element w is the start of a recent past construction
+        :param w: the starting element
+        :return: if found, the recent past construction as a MultiWordExpression, otherwise None
+        """
         is_recent_past = False
 
+        # Retrieve the configuration variables
         lemma_attr = self.config.get('all', 'lemma_attr')
         pos_attr = self.config.get(self.l_from, 'pos')
         rp_pre_pos = self.config.get(self.l_from, 'rp_pre_pos').split(',')
         rp_pre_lem = self.config.get(self.l_from, 'rp_pre_lem')
         rp_inf_pos = self.config.get(self.l_from, 'rp_inf_pos')
+        check_ppp = self.config.get(self.l_from, 'ppp')
+        ppp_lemma = self.config.get(self.l_from, 'ppp_lemma')
+        perfect_tags = self.config.get(self.l_from, 'perfect_tags').split(',')
+        stop_tags = tuple(self.config.get(self.l_from, 'stop_tags').split(','))
 
         sentence = self.get_sentence(w)
 
+        # Start a new MWE at the first word
         mwe = MultiWordExpression(sentence)
         mwe.add_word(w.text, w.get(lemma_attr), True, w.get('id'))
+
+        # Check if the next word is a the preposition of the recent past construction
         w_next = w.getnext()
         if w_next.get(pos_attr) in rp_pre_pos and w_next.get(lemma_attr) == rp_pre_lem:
             mwe.add_word(w_next.text, w_next.get(lemma_attr), True, w_next.get('id'))
+
+            # Now look at the siblings to find an infinitive
             for s in self.get_siblings(w_next, sentence.get('id'), False):
-                if s.get(pos_attr) == rp_inf_pos:
+                s_pos = s.get(pos_attr)
+                if s_pos == rp_inf_pos:
                     is_recent_past = True
                     mwe.add_word(s.text, s.get(lemma_attr), True, s.get('id'))
+
+                    # If the language has passive recent pasts, check if this is followed by a perfect
+                    if check_ppp and s.get(lemma_attr) == ppp_lemma:
+                        s_next = s.getnext()
+                        if s_next.get(pos_attr) in perfect_tags:
+                            mwe.add_word(s_next.text, s_next.get(lemma_attr), True, s_next.get('id'))
+
+                    # Break out of the loop: we found our recent past construction
                     break
+                # Stop looking at punctuation or stop tags
+                elif (s.text and s.text in string.punctuation) or (s_pos and s_pos.startswith(stop_tags)):
+                    break
+                # Otherwise: add the word to the MWE
                 else:
                     mwe.add_word(s.text, s.get(lemma_attr), False, s.get('id'))
 

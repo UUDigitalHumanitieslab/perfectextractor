@@ -106,4 +106,4 @@ class TestEuroparlPerfectExtractor(unittest.TestCase):
         self.assertEqual(results[0][2], u'vient de dire')
         self.assertEqual(results[1][2], u'viens d\' aborder')
         self.assertEqual(results[2][2], u'viens d\' évoquer')
-        self.assertEqual(results[3][2], u'vient d\' être')
+        self.assertEqual(results[3][2], u'vient d\' être dit')
