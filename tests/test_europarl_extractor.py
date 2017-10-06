@@ -5,7 +5,7 @@ import unittest
 
 from lxml import etree
 
-from extractor.europarl import EuroparlPerfectExtractor
+from extractor.europarl import EuroparlPerfectExtractor, EuroParlRecentPastExtractor
 
 
 class TestEuroparlPerfectExtractor(unittest.TestCase):
@@ -96,3 +96,14 @@ class TestEuroparlPerfectExtractor(unittest.TestCase):
     def test_list_filenames(self):
         files = self.nl_extractor.list_filenames(os.path.join(os.path.dirname(__file__), 'data/europarl/nl'))
         self.assertEqual([os.path.basename(f) for f in files], ['ep-00-12-15.xml'])
+
+    def test_recent_past_extraction(self):
+        fr_filename = os.path.join(os.path.dirname(__file__), 'data/europarl/fr/ep-00-12-15.xml')
+        self.fr_extractor = EuroParlRecentPastExtractor('fr', ['en', 'nl'])
+
+        results = self.fr_extractor.process_file(fr_filename)
+        self.assertEqual(len(results), 4)
+        self.assertEqual(results[0][2], u'vient de dire')
+        self.assertEqual(results[1][2], u'viens d\' aborder')
+        self.assertEqual(results[2][2], u'viens d\' évoquer')
+        self.assertEqual(results[3][2], u'vient d\' être')

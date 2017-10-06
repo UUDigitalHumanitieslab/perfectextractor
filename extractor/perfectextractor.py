@@ -61,13 +61,6 @@ class PerfectExtractor(BaseExtractor):
                 raise ValueError('Unknown value for lemmata')
 
     @abstractmethod
-    def get_config(self):
-        """
-        Returns the location of the configuration file.
-        """
-        raise NotImplementedError
-
-    @abstractmethod
     def get_line_by_number(self, tree, language_to, segment_number):
         """
         Returns the full line for a segment number, as well as the PresentPerfect found (or None if none found).

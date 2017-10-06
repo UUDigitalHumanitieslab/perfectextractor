@@ -5,15 +5,18 @@ import time
 from lxml import etree
 
 from .base import BaseExtractor
-from .models import MultiWordExpression
 from .perfectextractor import PerfectExtractor
 from .posextractor import PoSExtractor
+from .recentpastextractor import RecentPastExtractor
 from .xml_utils import get_sentence_from_element
 
 EUROPARL_CONFIG = os.path.join(os.path.dirname(__file__), '../config/europarl.cfg')
 
 
 class EuroparlExtractor(BaseExtractor):
+    def get_config(self):
+        return EUROPARL_CONFIG
+
     def list_filenames(self, dir_name):
         return sorted(glob.glob(os.path.join(dir_name, '*.xml')))
 
@@ -294,7 +297,7 @@ class EuroparlFrenchArticleExtractor(EuroParlPoSExtractor):
         return result
 
 
-class EuroParlRecentPastExtractor(EuroparlExtractor):
+class EuroParlRecentPastExtractor(RecentPastExtractor, EuroparlExtractor):
     def process_file(self, filename):
         """
         Processes a single file.
@@ -313,28 +316,13 @@ class EuroParlRecentPastExtractor(EuroparlExtractor):
 
         results = []
         # Find potential words matching the part-of-speech
-        xpath = './/w[@{e1} = "{v1}" and @{e2} = "{v2}"]'.format(e1='lem', v1='venir', e2='pos', v2='VER:pres')
-        for w in tree.xpath(xpath):
-            is_recent_past = False
+        for w in tree.xpath(self.config.get(self.l_from, 'rp_xpath')):
+            rp = self.check_recent_past(w)
 
-            sentence = self.get_sentence(w)
-            mwe = MultiWordExpression(sentence)
-            mwe.add_word(w.text, w.get('lem'), True, w.get('id'))
-            w_next = w.getnext()
-            if w_next.get('pos') == 'PRP':
-                mwe.add_word(w_next.text, w_next.get('lem'), True, w_next.get('id'))
-                for s in self.get_siblings(w_next, sentence.get('id'), False):
-                    if s.get('pos') == 'VER:infi':
-                        is_recent_past = True
-                        mwe.add_word(s.text, s.get('lem'), True, s.get('id'))
-                        break
-                    else:
-                        mwe.add_word(s.text, s.get('lem'), False, s.get('id'))
+            if rp:
+                result = [os.path.basename(filename), rp.verb_ids(), rp.verbs_to_string(), rp.mark_sentence()]
 
-            if is_recent_past:
-                result = [os.path.basename(filename), mwe.verb_ids(), mwe.verbs_to_string(), mwe.mark_sentence()]
-
-                segment_number = sentence.get('id')
+                segment_number = self.get_sentence(w).get('id')
                 for language_to in self.l_to:
                     if language_to in translation_trees:
                         # TODO: deal with source_lines
@@ -369,9 +357,6 @@ class EuroParlRecentPastExtractor(EuroparlExtractor):
 
 
 class EuroparlPerfectExtractor(PerfectExtractor, EuroparlExtractor):
-    def get_config(self):
-        return EUROPARL_CONFIG
-
     def get_line_by_number(self, tree, language_to, segment_number):
         """
         Returns the full line for a segment number, as well as the PresentPerfect found (or None if none found).

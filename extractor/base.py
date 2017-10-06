@@ -34,6 +34,13 @@ class BaseExtractor(object):
                 csv_writer.writerows(results)
 
     @abstractmethod
+    def get_config(self):
+        """
+        Returns the location of the configuration file.
+        """
+        raise NotImplementedError
+
+    @abstractmethod
     def process_file(self, filename):
         """
         Process a single file
