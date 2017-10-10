@@ -29,8 +29,8 @@ class PerfectExtractor(BaseExtractor):
         :param search_in_to: whether to look for perfects in the target language
         :param lemmata: whether to limit the search to certain lemmata (can be provided as a boolean or a list)
         """
-        self.l_from = language_from
-        self.l_to = languages_to
+        super(PerfectExtractor, self).__init__(language_from, languages_to)
+
         self.search_in_to = search_in_to
 
         # Read the config
@@ -54,9 +54,10 @@ class PerfectExtractor(BaseExtractor):
         if lemmata is not None:
             if type(lemmata) == list:
                 self.lemmata_list = lemmata
-            elif type(lemmata) == bool and lemmata:
-                with codecs.open(LEMMATA_CONFIG.format(language=language_from), 'rb', 'utf-8') as lexicon:
-                    self.lemmata_list = lexicon.read().split()
+            elif type(lemmata) == bool:
+                if lemmata:
+                    with codecs.open(LEMMATA_CONFIG.format(language=language_from), 'rb', 'utf-8') as lexicon:
+                        self.lemmata_list = lexicon.read().split()
             else:
                 raise ValueError('Unknown value for lemmata')
 
