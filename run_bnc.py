@@ -1,6 +1,7 @@
 import os
 import time
 
+from counter.bnc import BNCCounter
 from extractor.bnc import BNCPerfectExtractor
 
 
@@ -16,9 +17,10 @@ def process_data_folders(extractors, path):
 
 
 def create_extractors():
-    en_extractor = BNCPerfectExtractor('en', lemmata=['see', 'hear', 'touch', 'feel', 'taste'])
-    return [en_extractor]
+    en_counter = BNCCounter('en')
+    en_extractor = BNCPerfectExtractor('en')
+    return [en_counter, en_extractor]
 
 
 if __name__ == "__main__":
-    process_data_folders(create_extractors(), 'data')
+    process_data_folders(create_extractors(), 'data/bnc/aca')
