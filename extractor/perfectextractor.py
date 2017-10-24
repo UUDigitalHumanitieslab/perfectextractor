@@ -96,7 +96,7 @@ class PerfectExtractor(BaseExtractor):
         check_ppp = check_ppp and self.config.getboolean(language, 'ppp')
         ppp_lemma = self.config.get(language, 'ppp_lemma')
         check_ppc = check_ppc and self.config.getboolean(language, 'ppc')
-        ppc_tag = self.config.get(language, 'ppc_tag')
+        ppc_tags = self.config.get(language, 'ppc_tags').split(',')
         stop_tags = tuple(self.config.get(language, 'stop_tags').split(','))
         allow_reversed = self.config.getboolean(language, 'allow_reversed')
         pos_tag = self.config.get(language, 'pos')
@@ -139,7 +139,7 @@ class PerfectExtractor(BaseExtractor):
                         is_pp = False
                 break
             # Check if this is a present perfect continuous (in the recursion step)
-            elif check_ppc and sibling_pos == ppc_tag and self.in_lemmata_list(sibling_lemma):
+            elif check_ppc and sibling_pos in ppc_tags and self.in_lemmata_list(sibling_lemma):
                 pp.add_word(sibling.text, sibling_lemma, True, sibling.get('id'))
                 pp.is_continuous = True
                 is_pp = True
