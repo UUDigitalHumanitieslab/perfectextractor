@@ -23,4 +23,4 @@ def create_extractors():
 
 
 if __name__ == "__main__":
-    process_data_folders(create_extractors(), 'data/bnc/aca')
+    process_data_folders(create_extractors(), 'data/bnc/all/A')

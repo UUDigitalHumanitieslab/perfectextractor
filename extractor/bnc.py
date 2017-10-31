@@ -25,6 +25,9 @@ class BNCExtractor(BaseExtractor):
     def get_siblings(self, element, sentence_id, check_preceding):
         return element.itersiblings(tag='w', preceding=check_preceding)
 
+    def get_genre(self, tree):
+        return tree.xpath('.//classCode')[0].text
+
 
 class BNCPerfectExtractor(PerfectExtractor, BNCExtractor):
     def get_config(self):
@@ -41,6 +44,7 @@ class BNCPerfectExtractor(PerfectExtractor, BNCExtractor):
 
         # Parse the current tree
         tree = etree.parse(filename)
+        genre = self.get_genre(tree)
 
         # Find potential present perfects
         for e in tree.xpath(self.config.get(self.l_from, 'xpath')):
@@ -50,9 +54,10 @@ class BNCPerfectExtractor(PerfectExtractor, BNCExtractor):
             if pp:
                 result = list()
                 result.append(filename)
-                result.append(self.l_from)
+                result.append(genre)
+                result.append(pp.perfect_type())
                 result.append(pp.verbs_to_string())
-                result.append(pp.mark_sentence())
+                result.append(pp.perfect_lemma())
 
                 results.append(result)
 

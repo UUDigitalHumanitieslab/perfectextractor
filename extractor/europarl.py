@@ -405,10 +405,9 @@ class EuroparlPerfectExtractor(PerfectExtractor, EuroparlExtractor):
             if pp:
                 result = list()
                 result.append(os.path.basename(filename))
+                result.append(pp.perfect_type())
                 result.append(pp.verbs_to_string())
-                result.append('present perfect')
-                result.append(pp.verb_ids())
-                result.append('<root>' + etree.tostring(pp.xml_sentence) + '</root>')
+                result.append(pp.perfect_lemma())
 
                 # Find the translated lines
                 segment_number = pp.get_sentence_id()
