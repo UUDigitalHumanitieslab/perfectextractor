@@ -1,21 +1,12 @@
 from collections import Counter
-import glob
-import os
 
-from .base import BaseCounter
 from lxml import etree
 
+from apps.counter.base import BaseCounter
+from .base import BaseEuroparl
 
-EUROPARL_CONFIG = os.path.join(os.path.dirname(__file__), '../config/europarl.cfg')
 
-
-class EuroparlCounter(BaseCounter):
-    def get_config(self):
-        return EUROPARL_CONFIG
-
-    def list_filenames(self, dir_name):
-        return sorted(glob.glob(os.path.join(dir_name, '*.xml')))
-
+class EuroparlCounter(BaseEuroparl, BaseCounter):
     def process_file(self, filename):
         """
         Processes a single file.

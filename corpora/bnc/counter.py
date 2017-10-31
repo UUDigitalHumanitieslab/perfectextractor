@@ -1,24 +1,12 @@
 from collections import Counter
-import glob
-import os
 
-from .base import BaseCounter
 from lxml import etree
 
+from apps.counter.base import BaseCounter
+from .base import BaseBNC
 
-BNC_CONFIG = os.path.join(os.path.dirname(__file__), '../config/bnc.cfg')
 
-
-class BNCCounter(BaseCounter):
-    def get_config(self):
-        return BNC_CONFIG
-
-    def get_genre(self, tree):
-        return tree.xpath('.//classCode')[0].text
-
-    def list_filenames(self, dir_name):
-        return sorted(glob.glob(os.path.join(dir_name, '*.xml')))
-
+class BNCCounter(BaseBNC, BaseCounter):
     def process_file(self, filename):
         """
         Processes a single file.

@@ -1,25 +1,18 @@
-import glob
 import os
 import time
 
 from lxml import etree
 
-from .base import BaseExtractor
-from .perfectextractor import PerfectExtractor
-from .posextractor import PoSExtractor
-from .recentpastextractor import RecentPastExtractor
-from .xml_utils import get_sentence_from_element
+from apps.extractor.base import BaseExtractor
+from apps.extractor.perfectextractor import PerfectExtractor
+from apps.extractor.posextractor import PoSExtractor
+from apps.extractor.recentpastextractor import RecentPastExtractor
+from apps.extractor.xml_utils import get_sentence_from_element
 
-EUROPARL_CONFIG = os.path.join(os.path.dirname(__file__), '../config/europarl.cfg')
+from .base import BaseEuroparl
 
 
-class EuroparlExtractor(BaseExtractor):
-    def get_config(self):
-        return EUROPARL_CONFIG
-
-    def list_filenames(self, dir_name):
-        return sorted(glob.glob(os.path.join(dir_name, '*.xml')))
-
+class EuroparlExtractor(BaseEuroparl, BaseExtractor):
     def process_file(self, filename):
         """
         Processes a single file.
@@ -165,7 +158,7 @@ class EuroparlExtractor(BaseExtractor):
         return alignment_trees, translation_trees
 
 
-class EuroParlPoSExtractor(PoSExtractor, EuroparlExtractor):
+class EuroParlPoSExtractor(EuroparlExtractor, PoSExtractor):
     def process_file(self, filename):
         """
         Processes a single file.
@@ -297,7 +290,7 @@ class EuroparlFrenchArticleExtractor(EuroParlPoSExtractor):
         return result
 
 
-class EuroParlRecentPastExtractor(RecentPastExtractor, EuroparlExtractor):
+class EuroParlRecentPastExtractor(EuroparlExtractor, RecentPastExtractor):
     def process_file(self, filename):
         """
         Processes a single file.
@@ -356,7 +349,7 @@ class EuroParlRecentPastExtractor(RecentPastExtractor, EuroparlExtractor):
         return ' '.join(s)
 
 
-class EuroparlPerfectExtractor(PerfectExtractor, EuroparlExtractor):
+class EuroparlPerfectExtractor(EuroparlExtractor, PerfectExtractor):
     def get_line_by_number(self, tree, language_to, segment_number):
         """
         Returns the full line for a segment number, as well as the PresentPerfect found (or None if none found).

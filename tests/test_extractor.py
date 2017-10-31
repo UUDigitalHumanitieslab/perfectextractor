@@ -2,7 +2,7 @@
 
 import unittest
 
-from extractor.europarl import EuroparlPerfectExtractor
+from corpora.europarl.extractor import EuroparlPerfectExtractor
 
 
 class TestPerfectExtractor(unittest.TestCase):

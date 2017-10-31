@@ -5,7 +5,7 @@ import unittest
 
 from lxml import etree
 
-from extractor.europarl import EuroparlPerfectExtractor, EuroParlRecentPastExtractor
+from corpora.europarl.extractor import EuroparlPerfectExtractor, EuroParlRecentPastExtractor
 
 
 class TestEuroparlPerfectExtractor(unittest.TestCase):

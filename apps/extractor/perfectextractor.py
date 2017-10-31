@@ -9,8 +9,8 @@ from .utils import UnicodeWriter
 from .models import PresentPerfect
 from .wiktionary import get_translations
 
-AUX_BE_CONFIG = os.path.join(os.path.dirname(__file__), '../config/{language}_aux_be.txt')
-LEMMATA_CONFIG = os.path.join(os.path.dirname(__file__), '../config/{language}_lemmata.txt')
+AUX_BE_CONFIG = os.path.join(os.path.dirname(__file__), 'config/{language}_aux_be.txt')
+LEMMATA_CONFIG = os.path.join(os.path.dirname(__file__), 'config/{language}_lemmata.txt')
 
 TEI = {'ns': 'http://www.tei-c.org/ns/1.0'}
 NL = 'nl'

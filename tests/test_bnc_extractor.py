@@ -3,9 +3,7 @@
 import os
 import unittest
 
-from lxml import etree
-
-from extractor.bnc import BNCPerfectExtractor
+from corpora.bnc.extractor import BNCPerfectExtractor
 
 
 class TestBNCPerfectExtractor(unittest.TestCase):
@@ -22,28 +20,30 @@ class TestBNCPerfectExtractor(unittest.TestCase):
         self.assertEqual(os.path.basename(filenames[0]), 'ALP-formatted.xml')
 
     def test_process(self):
+        VERBS_COLUMN = 3
+
         filename = os.path.join(os.path.dirname(__file__), 'data/bnc/ALP-formatted.xml')
         results = self.extractor.process_file(filename)
         self.assertEqual(len(results), 60)
-        self.assertEqual(results[0][2], 'has been presented')
-        self.assertEqual(results[1][2], 'has pointed')
-        self.assertEqual(results[2][2], 'has shown')
-        self.assertEqual(results[3][2], 'has been running')
-        self.assertEqual(results[4][2], 'has devoted')
+        self.assertEqual(results[0][VERBS_COLUMN], 'has been presented')
+        self.assertEqual(results[1][VERBS_COLUMN], 'has pointed')
+        self.assertEqual(results[2][VERBS_COLUMN], 'has shown')
+        self.assertEqual(results[3][VERBS_COLUMN], 'has been running')
+        self.assertEqual(results[4][VERBS_COLUMN], 'has devoted')
 
         # Test whether present perfect continuous are ignored when check_ppc is set to False
         self.extractor.config.set(self.language, 'check_ppc', False)
         results = self.extractor.process_file(filename)
-        self.assertEqual(results[3][2], 'has been running')
+        self.assertEqual(results[3][VERBS_COLUMN], 'has been running')
 
         # Test whether the lemmata_list will exclude
         self.extractor = BNCPerfectExtractor(self.language, lemmata=['show', 'run'])
         results = self.extractor.process_file(filename)
-        self.assertEqual(results[0][2], 'has shown')
-        self.assertEqual(results[1][2], 'has been running')
-        self.assertEqual(results[2][2], 'has shown')
-        self.assertEqual(results[3][2], 'have been shown')
-        self.assertEqual(results[4][2], 'has shown')
+        self.assertEqual(results[0][VERBS_COLUMN], 'has shown')
+        self.assertEqual(results[1][VERBS_COLUMN], 'has been running')
+        self.assertEqual(results[2][VERBS_COLUMN], 'has shown')
+        self.assertEqual(results[3][VERBS_COLUMN], 'have been shown')
+        self.assertEqual(results[4][VERBS_COLUMN], 'has shown')
 
     def test_not_implemented(self):
         self.assertRaises(NotImplementedError, self.extractor.get_line_by_number, None, None, None)

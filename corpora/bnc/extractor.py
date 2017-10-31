@@ -1,18 +1,12 @@
-import os
-import glob
-
 from lxml import etree
 
-from .base import BaseExtractor
-from .perfectextractor import PerfectExtractor
+from apps.extractor.base import BaseExtractor
+from apps.extractor.perfectextractor import PerfectExtractor
 
-BNC_CONFIG = os.path.join(os.path.dirname(__file__), '../config/bnc.cfg')
+from .base import BaseBNC
 
 
-class BNCExtractor(BaseExtractor):
-    def list_filenames(self, dir_name):
-        return sorted(glob.glob(os.path.join(dir_name, '*.xml')))
-
+class BNCExtractor(BaseBNC, BaseExtractor):
     def get_translated_lines(self, alignment_trees, language_from, language_to, segment_number):
         raise NotImplementedError
 
@@ -25,14 +19,8 @@ class BNCExtractor(BaseExtractor):
     def get_siblings(self, element, sentence_id, check_preceding):
         return element.itersiblings(tag='w', preceding=check_preceding)
 
-    def get_genre(self, tree):
-        return tree.xpath('.//classCode')[0].text
 
-
-class BNCPerfectExtractor(PerfectExtractor, BNCExtractor):
-    def get_config(self):
-        return BNC_CONFIG
-
+class BNCPerfectExtractor(BNCExtractor, PerfectExtractor):
     def get_line_by_number(self, tree, language_to, segment_number):
         raise NotImplementedError
 

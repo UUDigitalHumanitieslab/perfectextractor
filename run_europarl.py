@@ -1,8 +1,8 @@
 import os
 import time
 
-from counter.europarl import EuroparlCounter
-from extractor.europarl import EuroparlPerfectExtractor
+from corpora.europarl.counter import EuroparlCounter
+from corpora.europarl.extractor import EuroparlPerfectExtractor
 
 
 def process_data_folders(extractors, path):

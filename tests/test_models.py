@@ -1,6 +1,6 @@
 import unittest
 
-from extractor.models import PresentPerfect
+from apps.extractor.models import PresentPerfect
 
 XML_ID = 'test_id'
 

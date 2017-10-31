@@ -5,8 +5,8 @@ import unittest
 
 from lxml import etree
 
-from extractor.dpc import DPCPerfectExtractor
-from extractor.models import PresentPerfect
+from apps.extractor.models import PresentPerfect
+from corpora.dpc.extractor import DPCPerfectExtractor
 
 
 class TestDPCExtractor(unittest.TestCase):

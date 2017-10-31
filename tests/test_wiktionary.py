@@ -2,7 +2,7 @@
 
 import unittest
 
-from extractor.wiktionary import get_translations
+from apps.extractor.wiktionary import get_translations
 
 
 class TestWiktionary(unittest.TestCase):
