@@ -133,7 +133,6 @@ class PerfectExtractor(BaseExtractor):
                                                      check_ppc=True,
                                                      check_preceding=check_preceding)
                     if ppp:
-                        pp.is_passive = True
                         pp.extend(ppp)
                     elif not self.in_lemmata_list(sibling_lemma):
                         is_pp = False

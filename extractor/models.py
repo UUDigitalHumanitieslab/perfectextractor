@@ -97,6 +97,8 @@ class PresentPerfect(MultiWordExpression):
             if i == 0:
                 continue
             self.add_word(w.word, w.lemma, w.is_verb, w.xml_id)
+
+        self.is_passive = not present_perfect.is_continuous
         self.is_continuous = present_perfect.is_continuous
 
     def perfect_lemma(self):
@@ -104,3 +106,11 @@ class PresentPerfect(MultiWordExpression):
         Returns the lemma of the perfect: the lemma of the last word of the construction.
         """
         return self.words[-1].lemma
+
+    def perfect_type(self):
+        result = 'present perfect'
+        if self.is_passive:
+            result += ' passive'
+        if self.is_continuous:
+            result += ' continuous'
+        return result
