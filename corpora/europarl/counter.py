@@ -21,6 +21,6 @@ class EuroparlCounter(BaseEuroparl, BaseCounter):
             c[w.get('lem', '-')] += 1
 
         for k, v in c.most_common():
-            results.append([filename, k, str(v)])
+            results.append([filename, 'europarl', k, str(v)])
 
         return results

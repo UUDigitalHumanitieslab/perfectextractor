@@ -398,9 +398,11 @@ class EuroparlPerfectExtractor(EuroparlExtractor, PerfectExtractor):
             if pp:
                 result = list()
                 result.append(os.path.basename(filename))
+                result.append('europarl')
                 result.append(pp.perfect_type())
                 result.append(pp.verbs_to_string())
                 result.append(pp.perfect_lemma())
+                result.append(pp.mark_sentence())
 
                 # Find the translated lines
                 segment_number = pp.get_sentence_id()

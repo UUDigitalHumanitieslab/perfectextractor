@@ -23,4 +23,13 @@ def create_extractors():
 
 
 if __name__ == "__main__":
-    process_data_folders(create_extractors(), 'data/bnc/all/A')
+    process_data_folders(create_extractors(), '/home/martijn/Documents/Corpora/BNC/2554/download/Texts/A')
+    process_data_folders(create_extractors(), '/home/martijn/Documents/Corpora/BNC/2554/download/Texts/B')
+    process_data_folders(create_extractors(), '/home/martijn/Documents/Corpora/BNC/2554/download/Texts/C')
+    process_data_folders(create_extractors(), '/home/martijn/Documents/Corpora/BNC/2554/download/Texts/D')
+    process_data_folders(create_extractors(), '/home/martijn/Documents/Corpora/BNC/2554/download/Texts/E')
+    process_data_folders(create_extractors(), '/home/martijn/Documents/Corpora/BNC/2554/download/Texts/F')
+    process_data_folders(create_extractors(), '/home/martijn/Documents/Corpora/BNC/2554/download/Texts/G')
+    process_data_folders(create_extractors(), '/home/martijn/Documents/Corpora/BNC/2554/download/Texts/H')
+    process_data_folders(create_extractors(), '/home/martijn/Documents/Corpora/BNC/2554/download/Texts/J')
+    process_data_folders(create_extractors(), '/home/martijn/Documents/Corpora/BNC/2554/download/Texts/K')

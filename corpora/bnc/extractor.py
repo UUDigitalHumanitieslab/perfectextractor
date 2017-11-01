@@ -46,6 +46,7 @@ class BNCPerfectExtractor(BNCExtractor, PerfectExtractor):
                 result.append(pp.perfect_type())
                 result.append(pp.verbs_to_string())
                 result.append(pp.perfect_lemma())
+                result.append(pp.mark_sentence())
 
                 results.append(result)
 
