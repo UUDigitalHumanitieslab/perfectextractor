@@ -67,31 +67,43 @@ class TestEuroparlPerfectExtractor(unittest.TestCase):
         self.assertEqual(pp.verbs(), ['is', 'aangebroken'])
         self.assertEqual(pp.verb_ids(), 'w4.9 w4.19')
         self.assertEqual(pp.words_between(), 9)
+        self.assertFalse(pp.is_passive)
         self.assertFalse(pp.is_continuous)
 
         xml_sentence, _, pp = self.nl_extractor.get_line_by_number(self.nl_tree, 'nl', '15')
         self.assertEqual(etree.fromstring(xml_sentence).get('id'), '15')
         self.assertEqual(pp.verbs(), ['heeft', 'bemoeid'])
         self.assertEqual(pp.words_between(), 0)
+        self.assertFalse(pp.is_passive)
         self.assertFalse(pp.is_continuous)
 
         xml_sentence, _, pp = self.nl_extractor.get_line_by_number(self.nl_translationtrees['en'], 'en', '6')
         self.assertEqual(etree.fromstring(xml_sentence).get('id'), '6')
         self.assertEqual(pp.verbs(), ['has', 'said'])
         self.assertEqual(pp.words_between(), 1)
+        self.assertFalse(pp.is_passive)
         self.assertFalse(pp.is_continuous)
 
         xml_sentence, _, pp = self.en_extractor.get_line_by_number(self.en_tree, 'en', '89')
         self.assertEqual(etree.fromstring(xml_sentence).get('id'), '89')
         self.assertEqual(pp.verbs(), ['has', 'been', 'mentioned'])
         self.assertEqual(pp.words_between(), 1)
+        self.assertTrue(pp.is_passive)
         self.assertFalse(pp.is_continuous)
 
         xml_sentence, _, pp = self.en_extractor.get_line_by_number(self.en_tree, 'en', '121')
         self.assertEqual(etree.fromstring(xml_sentence).get('id'), '121')
         self.assertEqual(pp.verbs(), ['has', 'been', 'carrying'])
         self.assertEqual(pp.words_between(), 0)
+        self.assertFalse(pp.is_passive)
         self.assertTrue(pp.is_continuous)
+
+        xml_sentence, _, pp = self.en_extractor.get_line_by_number(self.en_tree, 'en', '180')
+        self.assertEqual(etree.fromstring(xml_sentence).get('id'), '180')
+        self.assertEqual(pp.verbs(), ['has', 'brought'])
+        self.assertEqual(pp.words_between(), 1)
+        self.assertFalse(pp.is_passive)
+        self.assertFalse(pp.is_continuous)
 
     def test_list_filenames(self):
         files = self.nl_extractor.list_filenames(os.path.join(os.path.dirname(__file__), 'data/europarl/nl'))
