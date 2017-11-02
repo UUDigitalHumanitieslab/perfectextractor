@@ -20,8 +20,8 @@ class EuroparlExtractor(BaseEuroparl, BaseExtractor):
         t0 = time.time()
         print 'Now processing ' + filename + '...'
 
-        # Parse the current tree
-        tree = etree.parse(filename)
+        # Parse the current tree (create a iterator over 's' elements)
+        s_trees = etree.iterparse(filename, tag='s')
 
         # Parse the alignment and translation trees
         alignment_trees, translation_trees = self.parse_alignment_trees(filename)
@@ -31,20 +31,19 @@ class EuroparlExtractor(BaseEuroparl, BaseExtractor):
 
         results = list()
         # Loop over all sentences
-        for e in tree.xpath('.//s'):
+        for _, s in s_trees:
             result = list()
             result.append(os.path.basename(filename))
             result.append(self.l_from)
-            result.append('<root>' + etree.tostring(e) + '</root>')
+            result.append('<root>' + etree.tostring(s) + '</root>')
 
-            segment_number = e.get('id')
             for language_to in self.l_to:
                 if language_to in translation_trees:
                     # TODO: deal with source_lines
                     source_lines, translated_lines, alignment_type = self.get_translated_lines(alignment_trees,
                                                                                                self.l_from,
                                                                                                language_to,
-                                                                                               segment_number)
+                                                                                               s.get('id'))
                     translated_sentences = [self.get_line(translation_trees[language_to], line) for line in translated_lines]
                     result.append(alignment_type)
                     result.append('<root>' + '\n'.join(translated_sentences) + '</root>' if translated_sentences else '')
@@ -166,8 +165,8 @@ class EuroParlPoSExtractor(EuroparlExtractor, PoSExtractor):
         t0 = time.time()
         print 'Now processing ' + filename + '...'
 
-        # Parse the current tree
-        tree = etree.parse(filename)
+        # Parse the current tree (create a iterator over 's' elements)
+        s_trees = etree.iterparse(filename, tag='s')
 
         # Parse the alignment and translation trees
         alignment_trees, translation_trees = self.parse_alignment_trees(filename)
@@ -178,43 +177,42 @@ class EuroParlPoSExtractor(EuroparlExtractor, PoSExtractor):
         results = []
         # Find potential words matching the part-of-speech
         xpath = './/w[contains("{value}", @{element})]'.format(element='pos', value=' '.join(self.pos))
-        for w in tree.xpath(xpath):
-            words = self.preprocess_found(w)
+        for _, s in s_trees:
+            for w in s.xpath(xpath):
+                words = self.preprocess_found(w)
 
-            if not words:
-                continue
+                if not words:
+                    continue
 
-            result = list()
-            result.append(os.path.basename(filename))
-            result.append(' '.join([w.text for w in words]))
-            result.append(self.get_type(words))
-            result.append(' '.join([w.get('id') for w in words]))
+                result = list()
+                result.append(os.path.basename(filename))
+                result.append(' '.join([w.text for w in words]))
+                result.append(self.get_type(words))
+                result.append(' '.join([w.get('id') for w in words]))
 
-            # Write the complete segment with mark-up
-            sentence = self.get_sentence(words[0])
-            result.append('<root>' + etree.tostring(sentence) + '</root>')
+                # Write the complete segment with mark-up
+                result.append('<root>' + etree.tostring(s) + '</root>')
 
-            # Find the translated lines
-            segment_number = sentence.get('id')
-            for language_to in self.l_to:
-                if language_to in translation_trees:
-                    # TODO: deal with source_lines
-                    source_lines, translated_lines, alignment_type = self.get_translated_lines(alignment_trees,
-                                                                                               self.l_from,
-                                                                                               language_to,
-                                                                                               segment_number)
-                    if translated_lines:
-                        translated_sentences = [self.get_line_by_number(translation_trees[language_to], l) for l in translated_lines]
-                        result.append(alignment_type)
-                        result.append('<root>' + '\n'.join(translated_sentences) + '</root>' if translated_sentences else '')
+                # Find the translated lines
+                for language_to in self.l_to:
+                    if language_to in translation_trees:
+                        # TODO: deal with source_lines
+                        source_lines, translated_lines, alignment_type = self.get_translated_lines(alignment_trees,
+                                                                                                   self.l_from,
+                                                                                                   language_to,
+                                                                                                   s.get('id'))
+                        if translated_lines:
+                            translated_sentences = [self.get_line_by_number(translation_trees[language_to], l) for l in translated_lines]
+                            result.append(alignment_type)
+                            result.append('<root>' + '\n'.join(translated_sentences) + '</root>' if translated_sentences else '')
+                        else:
+                            result.append('')
+                            result.append('')
                     else:
-                        result.append('')
-                        result.append('')
-                else:
-                    # If no translation is available, add empty columns
-                    result.extend([''] * 2)
+                        # If no translation is available, add empty columns
+                        result.extend([''] * 2)
 
-            results.append(result)
+                results.append(result)
 
         print 'Finished finding PoS, took {:.3} seconds'.format(time.time() - t1)
 
@@ -298,8 +296,8 @@ class EuroParlRecentPastExtractor(EuroparlExtractor, RecentPastExtractor):
         t0 = time.time()
         print 'Now processing ' + filename + '...'
 
-        # Parse the current tree
-        tree = etree.parse(filename)
+        # Parse the current tree (create a iterator over 's' elements)
+        s_trees = etree.iterparse(filename, tag='s')
 
         # Parse the alignment and translation trees
         alignment_trees, translation_trees = self.parse_alignment_trees(filename)
@@ -308,34 +306,35 @@ class EuroParlRecentPastExtractor(EuroparlExtractor, RecentPastExtractor):
         print 'Finished parsing trees, took {:.3} seconds'.format(t1 - t0)
 
         results = []
-        # Find potential words matching the part-of-speech
-        for w in tree.xpath(self.config.get(self.l_from, 'rp_xpath')):
-            rp = self.check_recent_past(w)
+        # Find potential recent pasts (per sentence)
+        for _, s in s_trees:
+            for w in s.xpath(self.config.get(self.l_from, 'rp_xpath')):
+                rp = self.check_recent_past(w)
 
-            if rp:
-                result = [os.path.basename(filename), rp.verb_ids(), rp.verbs_to_string(), rp.mark_sentence()]
+                if rp:
+                    result = [os.path.basename(filename), rp.verb_ids(), rp.verbs_to_string(), rp.mark_sentence()]
 
-                segment_number = self.get_sentence(w).get('id')
-                for language_to in self.l_to:
-                    if language_to in translation_trees:
-                        # TODO: deal with source_lines
-                        source_lines, translated_lines, alignment_type = self.get_translated_lines(alignment_trees,
-                                                                                                   self.l_from,
-                                                                                                   language_to,
-                                                                                                   segment_number)
-                        if translated_lines:
-                            translated_sentences = [self.get_line_by_number(translation_trees[language_to], l) for l in
-                                                    translated_lines]
-                            result.append(alignment_type)
-                            result.append('\n'.join([self.get_sentence_words(ts) for ts in translated_sentences]) if translated_sentences else '')
+                    segment_number = s.get('id')
+                    for language_to in self.l_to:
+                        if language_to in translation_trees:
+                            # TODO: deal with source_lines
+                            source_lines, translated_lines, alignment_type = self.get_translated_lines(alignment_trees,
+                                                                                                       self.l_from,
+                                                                                                       language_to,
+                                                                                                       segment_number)
+                            if translated_lines:
+                                translated_sentences = [self.get_line_by_number(translation_trees[language_to], l) for l in
+                                                        translated_lines]
+                                result.append(alignment_type)
+                                result.append('\n'.join([self.get_sentence_words(ts) for ts in translated_sentences]) if translated_sentences else '')
+                            else:
+                                result.append('')
+                                result.append('')
                         else:
-                            result.append('')
-                            result.append('')
-                    else:
-                        # If no translation is available, add empty columns
-                        result.extend([''] * 2)
+                            # If no translation is available, add empty columns
+                            result.extend([''] * 2)
 
-                results.append(result)
+                    results.append(result)
 
         print 'Finished finding recent pasts, took {:.3} seconds'.format(time.time() - t1)
 
@@ -380,8 +379,8 @@ class EuroparlPerfectExtractor(EuroparlExtractor, PerfectExtractor):
         t0 = time.time()
         print 'Now processing ' + filename + '...'
 
-        # Parse the current tree
-        tree = etree.parse(filename)
+        # Parse the current tree (create a iterator over 's' elements)
+        s_trees = etree.iterparse(filename, tag='s')
 
         # Parse the alignment and translation trees
         alignment_trees, translation_trees = self.parse_alignment_trees(filename)
@@ -390,38 +389,38 @@ class EuroparlPerfectExtractor(EuroparlExtractor, PerfectExtractor):
         print 'Finished parsing trees, took {:.3} seconds'.format(t1 - t0)
 
         results = []
-        # Find potential present perfects
-        for e in tree.xpath(self.config.get(self.l_from, 'xpath')):
-            pp = self.check_present_perfect(e, self.l_from)
+        # Find potential present perfects (per sentence)
+        for _, s in s_trees:
+            for e in s.xpath(self.config.get(self.l_from, 'xpath')):
+                pp = self.check_present_perfect(e, self.l_from)
 
-            # If this is really a present perfect, add it to the result
-            if pp:
-                result = list()
-                result.append(os.path.basename(filename))
-                result.append('europarl')
-                result.append(pp.perfect_type())
-                result.append(pp.verbs_to_string())
-                result.append(pp.perfect_lemma())
-                result.append(pp.mark_sentence())
+                # If this is really a present perfect, add it to the result
+                if pp:
+                    result = list()
+                    result.append(os.path.basename(filename))
+                    result.append('europarl')
+                    result.append(pp.perfect_type())
+                    result.append(pp.verbs_to_string())
+                    result.append(pp.perfect_lemma())
+                    result.append(pp.mark_sentence())
 
-                # Find the translated lines
-                segment_number = pp.get_sentence_id()
-                for language_to in self.l_to:
-                    if language_to in translation_trees:
-                        # TODO: deal with source_lines
-                        source_lines, translated_lines, alignment_type = self.get_translated_lines(alignment_trees,
-                                                                                                   self.l_from,
-                                                                                                   language_to,
-                                                                                                   segment_number)
-                        translated_present_perfects, translated_sentences, translated_marked_sentences = \
-                             self.find_translated_present_perfects(translation_trees[language_to], language_to, translated_lines)
-                        result.append(alignment_type)
-                        result.append('<root>' + '\n'.join(translated_sentences) + '</root>' if translated_sentences else '')
-                    else:
-                        # If no translation is available, add empty columns
-                        result.extend([''] * 2)
+                    # Find the translated lines
+                    for language_to in self.l_to:
+                        if language_to in translation_trees:
+                            # TODO: deal with source_lines
+                            source_lines, translated_lines, alignment_type = self.get_translated_lines(alignment_trees,
+                                                                                                       self.l_from,
+                                                                                                       language_to,
+                                                                                                       s.get('id'))
+                            translated_present_perfects, translated_sentences, translated_marked_sentences = \
+                                 self.find_translated_present_perfects(translation_trees[language_to], language_to, translated_lines)
+                            result.append(alignment_type)
+                            result.append('<root>' + '\n'.join(translated_sentences) + '</root>' if translated_sentences else '')
+                        else:
+                            # If no translation is available, add empty columns
+                            result.extend([''] * 2)
 
-                results.append(result)
+                    results.append(result)
 
         print 'Finished finding present perfects, took {:.3} seconds'.format(time.time() - t1)
 

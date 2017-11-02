@@ -30,24 +30,28 @@ class BNCPerfectExtractor(BNCExtractor, PerfectExtractor):
         """
         results = []
 
-        # Parse the current tree
+        # Retrieve the genre
         tree = etree.parse(filename)
         genre = self.get_genre(tree)
 
+        # Parse the current tree (create a iterator over 's' elements)
+        s_trees = etree.iterparse(filename, tag='s')
+
         # Find potential present perfects
-        for e in tree.xpath(self.config.get(self.l_from, 'xpath')):
-            pp = self.check_present_perfect(e, self.l_from)
+        for _, s in s_trees:
+            for e in s.xpath(self.config.get(self.l_from, 'xpath')):
+                pp = self.check_present_perfect(e, self.l_from)
 
-            # If this is really a present perfect, add it to the result
-            if pp:
-                result = list()
-                result.append(filename)
-                result.append(genre)
-                result.append(pp.perfect_type())
-                result.append(pp.verbs_to_string())
-                result.append(pp.perfect_lemma())
-                result.append(pp.mark_sentence())
+                # If this is really a present perfect, add it to the result
+                if pp:
+                    result = list()
+                    result.append(filename)
+                    result.append(genre)
+                    result.append(pp.perfect_type())
+                    result.append(pp.verbs_to_string())
+                    result.append(pp.perfect_lemma())
+                    result.append(pp.mark_sentence())
 
-                results.append(result)
+                    results.append(result)
 
         return results

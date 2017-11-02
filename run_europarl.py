@@ -17,9 +17,9 @@ def process_data_folders(extractors, path):
 
 
 def create_extractors():
-    en_counter = EuroparlCounter('en')
+    #en_counter = EuroparlCounter('en')
     en_extractor = EuroparlPerfectExtractor('en')
-    return [en_counter, en_extractor]
+    return [en_extractor]
     # return [de_extractor]
 
 
