@@ -1,6 +1,10 @@
 from abc import ABCMeta, abstractmethod
+import codecs
+import os
 
 from .utils import UnicodeWriter
+
+LEMMATA_CONFIG = os.path.join(os.path.dirname(__file__), 'config/{language}_lemmata.txt')
 
 
 class BaseExtractor(object):
@@ -32,6 +36,18 @@ class BaseExtractor(object):
             for filename in self.list_filenames(dir_name):
                 results = self.process_file(filename)
                 csv_writer.writerows(results)
+
+    def read_lemmata(self, lemmata):
+        self.lemmata_list = []
+        if lemmata is not None:
+            if type(lemmata) == list:
+                self.lemmata_list = lemmata
+            elif type(lemmata) == bool:
+                if lemmata:
+                    with codecs.open(LEMMATA_CONFIG.format(language=self.l_from), 'rb', 'utf-8') as lexicon:
+                        self.lemmata_list = lexicon.read().split()
+            else:
+                raise ValueError('Unknown value for lemmata')
 
     @abstractmethod
     def get_config(self):

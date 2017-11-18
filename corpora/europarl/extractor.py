@@ -176,7 +176,12 @@ class EuroParlPoSExtractor(EuroparlExtractor, PoSExtractor):
 
         results = []
         # Find potential words matching the part-of-speech
-        xpath = './/w[contains("{value}", @{element})]'.format(element='pos', value=' '.join(self.pos))
+        xp = './/w[contains(" {value} ", concat(" ", @{element}, " "))]'
+        if self.pos:
+            xpath = xp.format(element='pos', value=' '.join(self.pos))
+        else:
+            xpath = xp.format(element='lem', value=' '.join(self.lemmata_list))
+
         for _, s in s_trees:
             for w in s.xpath(xpath):
                 words = self.preprocess_found(w)
@@ -202,7 +207,7 @@ class EuroParlPoSExtractor(EuroparlExtractor, PoSExtractor):
                                                                                                    language_to,
                                                                                                    s.get('id'))
                         if translated_lines:
-                            translated_sentences = [self.get_line_by_number(translation_trees[language_to], l) for l in translated_lines]
+                            translated_sentences = [self.get_line(translation_trees[language_to], line) for line in translated_lines]
                             result.append(alignment_type)
                             result.append('<root>' + '\n'.join(translated_sentences) + '</root>' if translated_sentences else '')
                         else:

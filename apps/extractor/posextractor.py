@@ -16,10 +16,8 @@ class PoSExtractor(BaseExtractor):
         self.l_to = languages_to
         self.pos = pos
 
-        self.lemmata_list = []
-        if lemmata:
-            with codecs.open(LEMMATA_CONFIG.format(language=language_from), 'rb', 'utf-8') as lexicon:
-                self.lemmata_list = lexicon.read().split()
+        # Read in the lemmata list (if provided)
+        self.read_lemmata(lemmata)
 
     def process_folder(self, dir_name):
         """

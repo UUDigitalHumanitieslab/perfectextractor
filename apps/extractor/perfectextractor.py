@@ -10,7 +10,6 @@ from .models import PresentPerfect
 from .wiktionary import get_translations
 
 AUX_BE_CONFIG = os.path.join(os.path.dirname(__file__), 'config/{language}_aux_be.txt')
-LEMMATA_CONFIG = os.path.join(os.path.dirname(__file__), 'config/{language}_lemmata.txt')
 
 TEI = {'ns': 'http://www.tei-c.org/ns/1.0'}
 NL = 'nl'
@@ -50,16 +49,8 @@ class PerfectExtractor(BaseExtractor):
                     aux_be_list = lexicon.read().split()
             self.aux_be_list[language] = aux_be_list
 
-        self.lemmata_list = []
-        if lemmata is not None:
-            if type(lemmata) == list:
-                self.lemmata_list = lemmata
-            elif type(lemmata) == bool:
-                if lemmata:
-                    with codecs.open(LEMMATA_CONFIG.format(language=language_from), 'rb', 'utf-8') as lexicon:
-                        self.lemmata_list = lexicon.read().split()
-            else:
-                raise ValueError('Unknown value for lemmata')
+        # Read in the lemmata list (if provided)
+        self.read_lemmata(lemmata)
 
     @abstractmethod
     def get_line_by_number(self, tree, language_to, segment_number):
