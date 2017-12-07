@@ -403,11 +403,10 @@ class EuroparlPerfectExtractor(EuroparlExtractor, PerfectExtractor):
                 if pp:
                     result = list()
                     result.append(os.path.basename(filename))
-                    result.append('europarl')
                     result.append(pp.perfect_type())
                     result.append(pp.verbs_to_string())
-                    result.append(pp.perfect_lemma())
-                    result.append(pp.mark_sentence())
+                    result.append(pp.verb_ids())
+                    result.append('<root>' + etree.tostring(pp.xml_sentence) + '</root>')
 
                     # Find the translated lines
                     for language_to in self.l_to:
