@@ -1,9 +1,9 @@
-# Time in Translation
-*Extracting present perfects from a multilingual corpus*
+# PefectExtractor
+*Extracting present perfects (and related forms) from multilingual corpora*
 
-This small set of scripts allows for extraction of present perfects from a POS-tagged, lemmatized and sentence-aligned multilingual corpus encoded in XML.
+This small set of scripts allows for extraction of present perfects (and related forms, like the recent past construction in French and Spanish) from POS-tagged, lemmatized and sentence-aligned multilingual corpora encoded in XML.
  
-## Recognizing Present Perfects 
+## Recognizing Perfects 
 
 In English, a present perfect is easily recognizable as has/have plus a past participle:
 
@@ -35,7 +35,7 @@ The extraction script should take care of these four issues, and be able to have
 
 ## Implementation 
 
-The extraction script (`extractor/prefectextractor.py`) is implemented using the [lxml XML toolkit](http://lxml.de/). 
+The extraction script (`apps/extractor/prefectextractor.py`) is implemented using the [lxml XML toolkit](http://lxml.de/). 
 
 The script looks for auxiliary verbs (using a [XPath expression](https://en.wikipedia.org/wiki/XPath)), and for each of these, 
 it tries to find a past participle on the right hand side of the sentence (or left hand side in Dutch/German), allowing for words between the verbs, 
@@ -54,7 +54,7 @@ For German, the list is compiled from [this list](https://deutsch.lingolia.com/e
 
 The extraction was first tested with the [Dutch Parallel Corpus](http://www.kuleuven-kulak.be/DPC).
 This corpus (that uses the [TEI format](http://www.tei-c.org/)) consists of three languages: Dutch, French and English. 
-The configuration for this corpus can be found in `config/dpc.cfg`.
+The configuration for this corpus can be found in `corpora/dpc/dpc.cfg`.
 Example documents from this corpus are included in the `tests/data/dpc` directory.
 The data for this corpus is **closed source**, to retrieve the corpus, you'll have to contact the authors on the cited website.
 After you've obtained the data, you can place these in the `data` directory, and then run:
@@ -65,12 +65,16 @@ After you've obtained the data, you can place these in the `data` directory, and
 
 The extraction has also been implemented for the [Europarl Corpus](http://opus.lingfil.uu.se/Europarl.php).
 This corpus (that uses the [XCES format](http://www.tei-c.org/) for alignment) consists of a wide variety of languages. 
-The configuration for this corpus can be found in `config/europarl.cfg`: implementations have been made for Dutch, English, French, German and Spanish. 
+The configuration for this corpus can be found in `corpora/europarl/europarl.cfg`: implementations have been made for Dutch, English, French, German and Spanish. 
 Example documents from this corpus are included in the `tests/data/europarl` directory.
 The data for this corpus is **open source**: you can download the corpus and the alignment files from the cited website.
 After you've obtained the data, you can place these in the `data` directory, and then run:
 
     python run_europarl.py
+
+### BNC Corpus
+
+The extraction has also been implemented for the monolingual BNC Corpus. More info to follow. 
 
 ### Implementing your own corpus
 
