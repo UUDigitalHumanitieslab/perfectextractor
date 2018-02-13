@@ -175,12 +175,15 @@ class EuroParlPoSExtractor(EuroparlExtractor, PoSExtractor):
         print 'Finished parsing trees, took {:.3} seconds'.format(t1 - t0)
 
         results = []
+
         # Find potential words matching the part-of-speech
+        pos_attr = self.config.get(self.l_from, 'pos')
+        lemma_attr = self.config.get('all', 'lemma_attr')
         xp = './/w[contains(" {value} ", concat(" ", @{element}, " "))]'
         if self.pos:
-            xpath = xp.format(element='pos', value=' '.join(self.pos))
+            xpath = xp.format(element=pos_attr, value=' '.join(self.pos))
         else:
-            xpath = xp.format(element='lem', value=' '.join(self.lemmata_list))
+            xpath = xp.format(element=lemma_attr, value=' '.join(self.lemmata_list))
 
         for _, s in s_trees:
             for w in s.xpath(xpath):
@@ -229,7 +232,8 @@ class EuroParlPoSExtractor(EuroparlExtractor, PoSExtractor):
         """
         result = []
 
-        if self.lemmata_list and word.get('lem') in self.lemmata_list:
+        lemma_attr = self.config.get('all', 'lemma_attr')
+        if self.lemmata_list and word.get(lemma_attr) in self.lemmata_list:
             result.append(word)
 
         return result
@@ -238,7 +242,8 @@ class EuroParlPoSExtractor(EuroparlExtractor, PoSExtractor):
         """
         Returns the part-of-speech of the (first) found word
         """
-        return words[0].get('pos')
+        pos_attr = self.config.get(self.l_from, 'pos')
+        return words[0].get(pos_attr)
 
 
 class EuroparlFrenchArticleExtractor(EuroParlPoSExtractor):
