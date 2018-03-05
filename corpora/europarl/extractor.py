@@ -1,3 +1,5 @@
+# -*- encoding: utf-8 -*-
+
 import os
 import time
 
@@ -322,21 +324,26 @@ class EuroParlRecentPastExtractor(EuroparlExtractor, RecentPastExtractor):
                 rp = self.check_recent_past(w)
 
                 if rp:
-                    result = [os.path.basename(filename), rp.verb_ids(), rp.verbs_to_string(), rp.mark_sentence()]
+                    result = list()
+                    result.append(os.path.basename(filename))
+                    result.append(u'passé récent')
+                    result.append(rp.verbs_to_string())
+                    result.append(rp.verb_ids())
+                    result.append('<root>' + etree.tostring(rp.xml_sentence) + '</root>')
 
-                    segment_number = s.get('id')
                     for language_to in self.l_to:
                         if language_to in translation_trees:
                             # TODO: deal with source_lines
                             source_lines, translated_lines, alignment_type = self.get_translated_lines(alignment_trees,
                                                                                                        self.l_from,
                                                                                                        language_to,
-                                                                                                       segment_number)
+                                                                                                       s.get('id'))
                             if translated_lines:
-                                translated_sentences = [self.get_line_by_number(translation_trees[language_to], l) for l in
+                                translated_sentences = [self.get_line(translation_trees[language_to], line) for line in
                                                         translated_lines]
                                 result.append(alignment_type)
-                                result.append('\n'.join([self.get_sentence_words(ts) for ts in translated_sentences]) if translated_sentences else '')
+                                result.append('<root>' + '\n'.join(
+                                    translated_sentences) + '</root>' if translated_sentences else '')
                             else:
                                 result.append('')
                                 result.append('')
