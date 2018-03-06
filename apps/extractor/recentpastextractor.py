@@ -26,24 +26,25 @@ class RecentPastExtractor(BaseExtractor):
         config.readfp(codecs.open(self.get_config(), 'r', 'utf8'))
         self.config = config
 
-    def check_recent_past(self, w):
+    def check_recent_past(self, w, language):
         """
         Checks if the element w is the start of a recent past construction
         :param w: the starting element
+        :param language: the language
         :return: if found, the recent past construction as a MultiWordExpression, otherwise None
         """
         is_recent_past = False
 
         # Retrieve the configuration variables
         lemma_attr = self.config.get('all', 'lemma_attr')
-        pos_attr = self.config.get(self.l_from, 'pos')
-        rp_pre_pos = self.config.get(self.l_from, 'rp_pre_pos').split(',')
-        rp_pre_lem = self.config.get(self.l_from, 'rp_pre_lem')
-        rp_inf_pos = self.config.get(self.l_from, 'rp_inf_pos')
-        check_ppp = self.config.get(self.l_from, 'ppp')
-        ppp_lemma = self.config.get(self.l_from, 'ppp_lemma')
-        perfect_tags = self.config.get(self.l_from, 'perfect_tags').split(',')
-        stop_tags = tuple(self.config.get(self.l_from, 'stop_tags').split(','))
+        pos_attr = self.config.get(language, 'pos')
+        rp_pre_pos = self.config.get(language, 'rp_pre_pos').split(',')
+        rp_pre_lem = self.config.get(language, 'rp_pre_lem')
+        rp_inf_pos = self.config.get(language, 'rp_inf_pos')
+        check_ppp = self.config.get(language, 'ppp')
+        ppp_lemma = self.config.get(language, 'ppp_lemma')
+        perfect_tags = self.config.get(language, 'perfect_tags').split(',')
+        stop_tags = tuple(self.config.get(language, 'stop_tags').split(','))
 
         sentence = self.get_sentence(w)
 

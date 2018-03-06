@@ -82,6 +82,13 @@ class EuroparlExtractor(BaseEuroparl, BaseExtractor):
             siblings = siblings[::-1]
         return siblings
 
+    def get_line_as_xml(self, tree, segment_number):
+        line = tree.xpath('//s[@id="' + segment_number + '"]')
+        if line:
+            return line[0]
+        else:
+            return None
+
     def get_line(self, tree, segment_number):
         line = tree.xpath('//s[@id="' + segment_number + '"]')
         if line:
@@ -321,16 +328,17 @@ class EuroParlRecentPastExtractor(EuroparlExtractor, RecentPastExtractor):
         # Find potential recent pasts (per sentence)
         for _, s in s_trees:
             for w in s.xpath(self.config.get(self.l_from, 'rp_xpath')):
-                rp = self.check_recent_past(w)
+                rp = self.check_recent_past(w, self.l_from)
 
                 if rp:
                     result = list()
                     result.append(os.path.basename(filename))
-                    result.append(u'passé récent')
+                    result.append(u'pasado reciente')
                     result.append(rp.verbs_to_string())
                     result.append(rp.verb_ids())
                     result.append('<root>' + etree.tostring(rp.xml_sentence) + '</root>')
 
+                    found_trans = False
                     for language_to in self.l_to:
                         if language_to in translation_trees:
                             # TODO: deal with source_lines
@@ -341,6 +349,17 @@ class EuroParlRecentPastExtractor(EuroparlExtractor, RecentPastExtractor):
                             if translated_lines:
                                 translated_sentences = [self.get_line(translation_trees[language_to], line) for line in
                                                         translated_lines]
+                                translated_sentences_xml = [self.get_line_as_xml(translation_trees[language_to], line) for line in
+                                                            translated_lines]
+
+                                if language_to == 'fr':
+                                    for ts in translated_sentences_xml:
+                                        for e in ts.xpath(self.config.get(language_to, 'rp_xpath')):
+                                            rp = self.check_recent_past(e, language_to)
+                                            if rp:
+                                                print 'found recent past in French'
+                                                found_trans = True
+
                                 result.append(alignment_type)
                                 result.append('<root>' + '\n'.join(
                                     translated_sentences) + '</root>' if translated_sentences else '')
@@ -351,7 +370,8 @@ class EuroParlRecentPastExtractor(EuroparlExtractor, RecentPastExtractor):
                             # If no translation is available, add empty columns
                             result.extend([''] * 2)
 
-                    results.append(result)
+                    if not found_trans:
+                        results.append(result)
 
         print 'Finished finding recent pasts, took {:.3} seconds'.format(time.time() - t1)
 
