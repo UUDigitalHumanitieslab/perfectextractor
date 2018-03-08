@@ -19,19 +19,19 @@ class MultiWordExpression(object):
 
     def add_word(self, word, lemma, is_verb, xml_id):
         """
-        Adds a word to the present perfect.
+        Adds a word to the MultiWordExpression.
         """
         self.words.append(Word(word, lemma, is_verb, xml_id))
 
     def verbs(self):
         """
-        Extracts the verbs from the present perfect.
+        Extracts the verbs from the MultiWordExpression.
         """
         return [w.word for w in self.words if w.is_verb]
 
     def verbs_to_string(self):
         """
-        Returns the verbs from the present perfect as a string.
+        Returns the verbs from the MultiWordExpression as a string.
         """
         return ' '.join(self.verbs())
 
@@ -40,9 +40,24 @@ class MultiWordExpression(object):
 
     def words_between(self):
         """
-        Returns the number of non-verbs in a present perfect construction.
+        Returns the total number of non-verbs in a MultiWordExpression.
         """
         return len([w.word for w in self.words if not w.is_verb])
+
+    def words_between_verbs(self):
+        """
+        Returns the number of non-verbs in a MultiWordExpression between the verbs.
+        """
+        result = []
+        current_count = 0
+        for w in self.words:
+            if w.is_verb:
+                result.append(current_count)
+                current_count = 0
+            else:
+                current_count += 1
+
+        return result
 
     def get_sentence_words(self):
         s = []
@@ -56,7 +71,7 @@ class MultiWordExpression(object):
 
     def mark_sentence(self):
         """
-        Marks the present perfect in a full sentence.
+        Marks the MultiWordExpression in a full sentence.
         """
         # TODO: this doesn't work if no xml_sentence is given
         if self.xml_sentence is None:

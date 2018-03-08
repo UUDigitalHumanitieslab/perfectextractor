@@ -333,7 +333,7 @@ class EuroParlRecentPastExtractor(EuroparlExtractor, RecentPastExtractor):
                 if rp:
                     result = list()
                     result.append(os.path.basename(filename))
-                    result.append(u'pasado reciente')
+                    result.append(u'passé récent')
                     result.append(rp.verbs_to_string())
                     result.append(rp.verb_ids())
                     result.append('<root>' + etree.tostring(rp.xml_sentence) + '</root>')
