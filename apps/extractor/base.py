@@ -28,15 +28,9 @@ class BaseExtractor(object):
             f.write(u'\uFEFF'.encode('utf-8'))  # the UTF-8 BOM to hint Excel we are using that...
             csv_writer = UnicodeWriter(f, delimiter=';')
 
-            header = [
-                'document',
-                self.l_from,
-                'type' + ' ' + self.l_from,
-                'id' + ' ' + self.l_from,
-                self.l_from]
+            header = ['document', self.l_from, 'xml']
             for language in self.l_to:
-                header.append('alignment type')
-                header.append(language)
+                header.extend([language, 'xml'])
             csv_writer.writerow(header)
 
             for filename in self.list_filenames(dir_name):
