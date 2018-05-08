@@ -34,6 +34,9 @@ class EuroparlExtractor(BaseEuroparl, BaseExtractor):
         results = list()
         # Loop over all sentences
         for _, s in s_trees:
+            if self.sentence_ids and s.get('id') not in self.sentence_ids:
+                continue
+
             result = list()
             result.append(os.path.basename(filename))
             result.append(self.l_from)
@@ -195,6 +198,9 @@ class EuroParlPoSExtractor(EuroparlExtractor, PoSExtractor):
             xpath = xp.format(element=lemma_attr, value=' '.join(self.lemmata_list))
 
         for _, s in s_trees:
+            if self.sentence_ids and s.get('id') not in self.sentence_ids:
+                continue
+
             for w in s.xpath(xpath):
                 words = self.preprocess_found(w)
 
@@ -327,6 +333,9 @@ class EuroParlRecentPastExtractor(EuroparlExtractor, RecentPastExtractor):
         results = []
         # Find potential recent pasts (per sentence)
         for _, s in s_trees:
+            if self.sentence_ids and s.get('id') not in self.sentence_ids:
+                continue
+
             for w in s.xpath(self.config.get(self.l_from, 'rp_xpath')):
                 rp = self.check_recent_past(w, self.l_from)
 
@@ -428,6 +437,9 @@ class EuroparlPerfectExtractor(EuroparlExtractor, PerfectExtractor):
         results = []
         # Find potential present perfects (per sentence)
         for _, s in s_trees:
+            if self.sentence_ids and s.get('id') not in self.sentence_ids:
+                continue
+
             for e in s.xpath(self.config.get(self.l_from, 'xpath')):
                 pp = self.check_present_perfect(e, self.l_from)
 

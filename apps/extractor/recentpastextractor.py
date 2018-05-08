@@ -10,7 +10,7 @@ from .models import MultiWordExpression
 class RecentPastExtractor(BaseExtractor):
     __metaclass__ = ABCMeta
 
-    def __init__(self, language_from, languages_to=[]):
+    def __init__(self, language_from, languages_to=None, sentence_ids=None):
         """
         Initializes the extractor for the given source and target language(s).
         Reads in the config for the source language,
@@ -18,8 +18,7 @@ class RecentPastExtractor(BaseExtractor):
         :param language_from: the source language
         :param languages_to: the target language(s)
         """
-        self.l_from = language_from
-        self.l_to = languages_to
+        super(RecentPastExtractor, self).__init__(language_from, languages_to, sentence_ids=sentence_ids)
 
         # Read the config
         config = ConfigParser.RawConfigParser()

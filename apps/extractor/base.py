@@ -10,14 +10,15 @@ LEMMATA_CONFIG = os.path.join(os.path.dirname(__file__), 'config/{language}_lemm
 class BaseExtractor(object):
     __metaclass__ = ABCMeta
 
-    def __init__(self, language_from, languages_to):
+    def __init__(self, language_from, languages_to=None, sentence_ids=None):
         """
         Initializes the extractor for the given source and target language(s).
         :param language_from: the source language
         :param languages_to: the target language(s)
         """
         self.l_from = language_from
-        self.l_to = languages_to
+        self.l_to = languages_to or []
+        self.sentence_ids = sentence_ids
 
     def process_folder(self, dir_name):
         """
@@ -28,9 +29,15 @@ class BaseExtractor(object):
             f.write(u'\uFEFF'.encode('utf-8'))  # the UTF-8 BOM to hint Excel we are using that...
             csv_writer = UnicodeWriter(f, delimiter=';')
 
-            header = ['document', self.l_from, 'xml']
+            header = [
+                'document',
+                self.l_from,
+                'type' + ' ' + self.l_from,
+                'id' + ' ' + self.l_from,
+                self.l_from]
             for language in self.l_to:
-                header.extend([language, 'xml'])
+                header.append('alignment type')
+                header.append(language)
             csv_writer.writerow(header)
 
             for filename in self.list_filenames(dir_name):
