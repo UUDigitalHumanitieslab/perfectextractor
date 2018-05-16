@@ -39,7 +39,9 @@ class EuroparlExtractor(BaseEuroparl, BaseExtractor):
 
             result = list()
             result.append(os.path.basename(filename))
-            result.append(self.l_from)
+            result.append('')
+            result.append('')
+            result.append('')
             result.append('<root>' + etree.tostring(s) + '</root>')
 
             for language_to in self.l_to:
