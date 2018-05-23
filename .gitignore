@@ -12,3 +12,10 @@ __pycache__/
 # Unit test / coverage reports
 .coverage
 htmlcov/
+
+# Setuptools distribution folder.
+/dist/
+
+# Python egg metadata, regenerated from source files by setuptools.
+/*.egg-info
+/*.egg
