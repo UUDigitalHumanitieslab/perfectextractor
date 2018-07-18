@@ -8,13 +8,18 @@ from lxml import etree
 from apps.extractor.models import PresentPerfect
 from corpora.dpc.extractor import DPCPerfectExtractor
 
+DATA_FOLDER = os.path.join(os.path.dirname(__file__), 'data/dpc')
+
 
 class TestDPCExtractor(unittest.TestCase):
     def setUp(self):
         self.en_extractor = DPCPerfectExtractor('en', ['nl', 'fr'])
-        self.document = os.path.join(os.path.dirname(__file__), 'data/dpc/dpc-bmm-001071-')
-        align_fr = etree.parse(os.path.join(os.path.dirname(__file__), 'data/dpc/dpc-bmm-001071-nl-fr-tei.xml'))
-        align_en = etree.parse(os.path.join(os.path.dirname(__file__), 'data/dpc/dpc-bmm-001071-nl-en-tei.xml'))
+        self.nl_extractor = DPCPerfectExtractor('nl', ['en', 'fr'])
+        self.fr_extractor = DPCPerfectExtractor('fr', ['en', 'nl'])
+
+        self.document = os.path.join(DATA_FOLDER, 'dpc-bmm-001071-')
+        align_fr = etree.parse(os.path.join(DATA_FOLDER, 'dpc-bmm-001071-nl-fr-tei.xml'))
+        align_en = etree.parse(os.path.join(DATA_FOLDER, 'dpc-bmm-001071-nl-en-tei.xml'))
         self.alignmenttrees = {'en': align_en, 'fr': align_fr}
 
     def test_init(self):

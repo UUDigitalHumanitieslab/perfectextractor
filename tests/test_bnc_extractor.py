@@ -5,6 +5,8 @@ import unittest
 
 from corpora.bnc.extractor import BNCPerfectExtractor
 
+DATA_FOLDER = os.path.join(os.path.dirname(__file__), 'data/bnc')
+
 
 class TestBNCPerfectExtractor(unittest.TestCase):
     def setUp(self):
@@ -16,13 +18,13 @@ class TestBNCPerfectExtractor(unittest.TestCase):
         self.assertEqual(self.extractor.config.get(self.language, 'pos'), 'c5')
 
     def test_list_filenames(self):
-        filenames = self.extractor.list_filenames(os.path.join(os.path.dirname(__file__), 'data/bnc/'))
+        filenames = self.extractor.list_filenames(DATA_FOLDER)
         self.assertEqual(os.path.basename(filenames[0]), 'ALP-formatted.xml')
 
     def test_process(self):
         VERBS_COLUMN = 3
 
-        filename = os.path.join(os.path.dirname(__file__), 'data/bnc/ALP-formatted.xml')
+        filename = os.path.join(DATA_FOLDER, 'ALP-formatted.xml')
         results = self.extractor.process_file(filename)
         self.assertEqual(len(results), 60)
         self.assertEqual(results[0][VERBS_COLUMN], 'has been presented')

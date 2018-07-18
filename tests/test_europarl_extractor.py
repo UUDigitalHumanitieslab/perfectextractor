@@ -92,6 +92,7 @@ class TestEuroparlPerfectExtractor(unittest.TestCase):
         self.assertEqual(etree.fromstring(xml_sentence).get('id'), '89')
         self.assertEqual(pp.verbs(), ['has', 'been', 'mentioned'])
         self.assertEqual(pp.words_between(), 1)
+        self.assertEqual(pp.words_between_verbs(), [0, 1, 0])
         self.assertTrue(pp.is_passive)
         self.assertFalse(pp.is_continuous)
 
@@ -99,6 +100,7 @@ class TestEuroparlPerfectExtractor(unittest.TestCase):
         self.assertEqual(etree.fromstring(xml_sentence).get('id'), '121')
         self.assertEqual(pp.verbs(), ['has', 'been', 'carrying'])
         self.assertEqual(pp.words_between(), 0)
+        self.assertEqual(pp.words_between_verbs(), [0, 0, 0])
         self.assertFalse(pp.is_passive)
         self.assertTrue(pp.is_continuous)
 
