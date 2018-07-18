@@ -39,6 +39,7 @@ class EuroparlExtractor(BaseEuroparl, BaseExtractor):
 
             result = list()
             result.append(os.path.basename(filename))
+            result.append(s.get('id'))
             result.append('')
             result.append('')
             result.append('')
@@ -211,11 +212,10 @@ class EuroParlPoSExtractor(EuroparlExtractor, PoSExtractor):
 
                 result = list()
                 result.append(os.path.basename(filename))
-                result.append(' '.join([w.text for w in words]))
+                result.append(s.get('id'))
                 result.append(self.get_type(words))
+                result.append(' '.join([w.text for w in words]))
                 result.append(' '.join([w.get('id') for w in words]))
-
-                # Write the complete segment with mark-up
                 result.append('<root>' + etree.tostring(s) + '</root>')
 
                 # Find the translated lines
@@ -344,6 +344,7 @@ class EuroParlRecentPastExtractor(EuroparlExtractor, RecentPastExtractor):
                 if rp:
                     result = list()
                     result.append(os.path.basename(filename))
+                    result.append(s.get('id'))
                     result.append(u'passé récent')
                     result.append(rp.verbs_to_string())
                     result.append(rp.verb_ids())
@@ -449,6 +450,7 @@ class EuroparlPerfectExtractor(EuroparlExtractor, PerfectExtractor):
                 if pp:
                     result = list()
                     result.append(os.path.basename(filename))
+                    result.append(s.get('id'))
                     result.append(pp.perfect_type())
                     result.append(pp.verbs_to_string())
                     result.append(pp.verb_ids())

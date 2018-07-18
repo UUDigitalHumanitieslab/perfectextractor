@@ -19,6 +19,8 @@ class BaseExtractor(object):
         self.l_from = language_from
         self.l_to = languages_to or []
         self.sentence_ids = sentence_ids
+        self.other_extractors = []
+        self.lemmata_list = []
 
     def process_folder(self, dir_name):
         """
@@ -28,24 +30,36 @@ class BaseExtractor(object):
         with open(result_file, 'wb') as f:
             f.write(u'\uFEFF'.encode('utf-8'))  # the UTF-8 BOM to hint Excel we are using that...
             csv_writer = UnicodeWriter(f, delimiter=';')
+            csv_writer.writerow(self.generate_header())
+            csv_writer.writerows(self.generate_results(dir_name))
 
-            header = [
-                'document',
-                self.l_from,
-                'type' + ' ' + self.l_from,
-                'id' + ' ' + self.l_from,
-                self.l_from]
-            for language in self.l_to:
-                header.append('alignment type')
-                header.append(language)
-            csv_writer.writerow(header)
+    def generate_results(self, dir_name):
+        results = []
 
-            for filename in self.list_filenames(dir_name):
-                results = self.process_file(filename)
-                csv_writer.writerows(results)
+        for filename in self.list_filenames(dir_name):
+            result = self.process_file(filename)
+
+            for extractor in self.other_extractors:
+                extractor.sentence_ids = [r[1] for r in result]
+                result = extractor.process_file(filename)
+
+            results.extend(result)
+
+        return results
+
+    def generate_header(self):
+        header = [
+            'document',
+            self.l_from,
+            'type' + ' ' + self.l_from,
+            'id' + ' ' + self.l_from,
+            self.l_from]
+        for language in self.l_to:
+            header.append('alignment type')
+            header.append(language)
+        return header
 
     def read_lemmata(self, lemmata):
-        self.lemmata_list = []
         if lemmata is not None:
             if type(lemmata) == list:
                 self.lemmata_list = lemmata
@@ -55,6 +69,13 @@ class BaseExtractor(object):
                         self.lemmata_list = lexicon.read().split()
             else:
                 raise ValueError('Unknown value for lemmata')
+
+    def add_extractor(self, extractor):
+        """
+        Adds another Extractor to this Extractor. This allows to combine Extractors.
+        The last added Extractor determines the output.
+        """
+        self.other_extractors.append(extractor)
 
     @abstractmethod
     def get_config(self):
