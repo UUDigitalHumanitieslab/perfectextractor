@@ -50,9 +50,10 @@ class BaseExtractor(object):
     def generate_header(self):
         header = [
             'document',
-            self.l_from,
-            'type' + ' ' + self.l_from,
-            'id' + ' ' + self.l_from,
+            'sentence',
+            'type {}'.format(self.l_from),
+            'words {}'.format(self.l_from),
+            'ids {}'.format(self.l_from),
             self.l_from]
         for language in self.l_to:
             header.append('alignment type')

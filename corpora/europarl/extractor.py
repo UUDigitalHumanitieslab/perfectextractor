@@ -67,7 +67,7 @@ class EuroparlExtractor(BaseEuroparl, BaseExtractor):
 
     def get_line_by_number(self, tree, segment_number):
         """
-        Returns the full line for a segment number, as well as the PresentPerfect found (or None if none found).
+        Returns the full line for a segment number.
         TODO: handle more than one here? => bug
         """
         result = None
