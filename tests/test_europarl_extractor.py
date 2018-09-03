@@ -5,20 +5,24 @@ import unittest
 
 from lxml import etree
 
-from corpora.europarl.extractor import EuroparlPerfectExtractor, EuroParlRecentPastExtractor
+from corpora.europarl.extractor import EuroparlPerfectExtractor, EuroParlRecentPastExtractor, EuroParlPoSExtractor
+
+DATA_FOLDER = os.path.join(os.path.dirname(__file__), 'data/europarl')
 
 
 class TestEuroparlPerfectExtractor(unittest.TestCase):
     def setUp(self):
-        nl_filename = os.path.join(os.path.dirname(__file__), 'data/europarl/nl/ep-00-12-15.xml')
-        self.nl_extractor = EuroparlPerfectExtractor('nl', ['en'])
-        self.nl_tree = etree.parse(nl_filename)
-        self.nl_alignmenttrees, self.nl_translationtrees = self.nl_extractor.parse_alignment_trees(nl_filename)
+        self.nl_filename = os.path.join(DATA_FOLDER, 'nl/ep-00-12-15.xml')
+        self.en_filename = os.path.join(DATA_FOLDER, 'en/ep-00-12-15.xml')
+        self.fr_filename = os.path.join(DATA_FOLDER, 'fr/ep-00-12-15.xml')
 
-        en_filename = os.path.join(os.path.dirname(__file__), 'data/europarl/en/ep-00-12-15.xml')
+        self.nl_extractor = EuroparlPerfectExtractor('nl', ['en'])
+        self.nl_tree = etree.parse(self.nl_filename)
+        self.nl_alignmenttrees, self.nl_translationtrees = self.nl_extractor.parse_alignment_trees(self.nl_filename)
+
         self.en_extractor = EuroparlPerfectExtractor('en', ['nl'])
-        self.en_tree = etree.parse(en_filename)
-        self.en_alignmenttrees, self.en_translationtrees = self.en_extractor.parse_alignment_trees(en_filename)
+        self.en_tree = etree.parse(self.en_filename)
+        self.en_alignmenttrees, self.en_translationtrees = self.en_extractor.parse_alignment_trees(self.en_filename)
 
     def test_init(self):
         self.assertEqual(self.nl_extractor.config.get('nl', 'perfect_tags'), 'verbpapa')
@@ -88,6 +92,7 @@ class TestEuroparlPerfectExtractor(unittest.TestCase):
         self.assertEqual(etree.fromstring(xml_sentence).get('id'), '89')
         self.assertEqual(pp.verbs(), ['has', 'been', 'mentioned'])
         self.assertEqual(pp.words_between(), 1)
+        self.assertEqual(pp.words_between_verbs(), [0, 1, 0])
         self.assertTrue(pp.is_passive)
         self.assertFalse(pp.is_continuous)
 
@@ -95,6 +100,7 @@ class TestEuroparlPerfectExtractor(unittest.TestCase):
         self.assertEqual(etree.fromstring(xml_sentence).get('id'), '121')
         self.assertEqual(pp.verbs(), ['has', 'been', 'carrying'])
         self.assertEqual(pp.words_between(), 0)
+        self.assertEqual(pp.words_between_verbs(), [0, 0, 0])
         self.assertFalse(pp.is_passive)
         self.assertTrue(pp.is_continuous)
 
@@ -106,16 +112,32 @@ class TestEuroparlPerfectExtractor(unittest.TestCase):
         self.assertFalse(pp.is_continuous)
 
     def test_list_filenames(self):
-        files = self.nl_extractor.list_filenames(os.path.join(os.path.dirname(__file__), 'data/europarl/nl'))
+        files = self.nl_extractor.list_filenames(os.path.join(DATA_FOLDER, 'nl'))
         self.assertEqual([os.path.basename(f) for f in files], ['ep-00-12-15.xml'])
 
     def test_recent_past_extraction(self):
-        fr_filename = os.path.join(os.path.dirname(__file__), 'data/europarl/fr/ep-00-12-15.xml')
-        self.fr_extractor = EuroParlRecentPastExtractor('fr', ['en', 'nl'])
+        fr_extractor = EuroParlRecentPastExtractor('fr', ['en', 'nl'])
 
-        results = self.fr_extractor.process_file(fr_filename)
+        results = fr_extractor.process_file(self.fr_filename)
         self.assertEqual(len(results), 4)
-        self.assertEqual(results[0][2], u'vient de dire')
-        self.assertEqual(results[1][2], u'viens d\' aborder')
-        self.assertEqual(results[2][2], u'viens d\' évoquer')
-        self.assertEqual(results[3][2], u'vient d\' être dit')
+        self.assertEqual(results[0][3], u'vient de dire')
+        self.assertEqual(results[1][3], u'viens d\' aborder')
+        self.assertEqual(results[2][3], u'viens d\' évoquer')
+        self.assertEqual(results[3][3], u'vient d\' être dit')
+
+    def test_append_extractor(self):
+        perfect_extractor = EuroparlPerfectExtractor('en', ['nl'], search_in_to=False)
+        for_extractor = EuroParlPoSExtractor('en', ['nl'], lemmata=['for'])
+        year_extractor = EuroParlPoSExtractor('en', ['nl'], lemmata=['year'])
+
+        results = for_extractor.generate_results(os.path.join(DATA_FOLDER, 'en'))
+        self.assertEqual(len(results), 177)
+
+        for_extractor.add_extractor(year_extractor)
+        results = for_extractor.generate_results(os.path.join(DATA_FOLDER, 'en'))
+        self.assertEqual(len(results), 14)
+
+        for_extractor.add_extractor(perfect_extractor)
+        results = for_extractor.generate_results(os.path.join(DATA_FOLDER, 'en'))
+        self.assertEqual(len(results), 7)
+        self.assertEqual(results[0][3], u'has been focused')
