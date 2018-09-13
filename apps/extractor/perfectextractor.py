@@ -82,6 +82,7 @@ class PerfectExtractor(BaseExtractor):
         If not, None is returned.
         """
         lemma_attr = self.config.get('all', 'lemma_attr')
+        aux_words = self.config.get(language, 'aux_words').split(',')
         perfect_tags = self.config.get(language, 'perfect_tags').split(',')
         check_ppp = check_ppp and self.config.getboolean(language, 'ppp')
         ppp_lemma = self.config.get(language, 'ppp_lemma')
@@ -95,6 +96,10 @@ class PerfectExtractor(BaseExtractor):
         s = self.get_sentence(element)
         pp = PresentPerfect(element.text, element.get(lemma_attr), element.get('id'), s)
         is_pp = False
+
+        # Check if the starting auxiliary is actually allowed
+        if any(aux_words) and element.text not in aux_words:
+            return None
 
         # Loop over the siblings of the current element.
         for sibling in self.get_siblings(element, s.get('id'), check_preceding):
