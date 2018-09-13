@@ -5,7 +5,6 @@ import string
 import os
 
 from .base import BaseExtractor
-from .utils import UnicodeWriter
 from .models import PresentPerfect
 from .wiktionary import get_translations
 

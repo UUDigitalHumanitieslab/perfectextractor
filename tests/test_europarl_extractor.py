@@ -141,3 +141,8 @@ class TestEuroparlPerfectExtractor(unittest.TestCase):
         results = for_extractor.generate_results(os.path.join(DATA_FOLDER, 'en'))
         self.assertEqual(len(results), 7)
         self.assertEqual(results[0][3], u'has been focused')
+
+    def test_position(self):
+        when_extractor = EuroParlPoSExtractor('en', ['nl'], lemmata=['when'], position=1)
+        results = when_extractor.generate_results(os.path.join(DATA_FOLDER, 'en'))
+        self.assertEqual(len(results), 3)

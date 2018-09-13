@@ -207,7 +207,7 @@ class EuroParlPoSExtractor(EuroparlExtractor, PoSExtractor):
             for w in s.xpath(xpath):
                 words = self.preprocess_found(w)
 
-                if not words:
+                if words is None:
                     continue
 
                 result = list()
@@ -245,22 +245,22 @@ class EuroParlPoSExtractor(EuroparlExtractor, PoSExtractor):
 
     def preprocess_found(self, word):
         """
-        Removes a word if does not occur in the lemmata list
+        Preprocesses the found word:
+        - removes a word if it does not occur in the lemmata list
+        - removes a word if it is not in the correct position in the sentence
+        Returns the found word as a list, as it might be interesting to include words before and after
+        (see e.g. EuroparlFrenchArticleExtractor)
         """
-        result = []
+        result = [word]
 
         lemma_attr = self.config.get('all', 'lemma_attr')
-        if self.lemmata_list and word.get(lemma_attr) in self.lemmata_list:
-            result.append(word)
+        if self.lemmata_list and word.get(lemma_attr) not in self.lemmata_list:
+            result = None
+
+        if self.position and not word.get('id').endswith('.' + str(self.position)):
+            result = None
 
         return result
-
-    def get_type(self, words):
-        """
-        Returns the part-of-speech of the (first) found word
-        """
-        pos_attr = self.config.get(self.l_from, 'pos')
-        return words[0].get(pos_attr)
 
 
 class EuroparlFrenchArticleExtractor(EuroParlPoSExtractor):

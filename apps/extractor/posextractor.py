@@ -12,17 +12,19 @@ LEMMATA_CONFIG = os.path.join(os.path.dirname(__file__), '../config/{language}_l
 class PoSExtractor(BaseExtractor):
     __metaclass__ = ABCMeta
 
-    def __init__(self, language_from, languages_to=None, pos=None, sentence_ids=None, lemmata=False):
+    def __init__(self, language_from, languages_to=None, sentence_ids=None, lemmata=False, position=None, pos=None):
         """
         Initializes the extractor for the given source and target language(s).
         Reads in the config for the source language,
         as well as a list of lemmata.
         :param language_from: the source language
         :param languages_to: the target language(s)
-        :param pos: A list of part-of-speech tags
+        :param sentence_ids: whether to limit the search to certain sentence IDs
         :param lemmata: whether to limit the search to certain lemmata (can be provided as a boolean or a list)
+        :param position: whether to limit the search to a certain position (e.g. only sentence-initial)
+        :param pos: A list of part-of-speech tags
         """
-        super(PoSExtractor, self).__init__(language_from, languages_to, sentence_ids=sentence_ids)
+        super(PoSExtractor, self).__init__(language_from, languages_to, sentence_ids=sentence_ids, position=position)
 
         self.pos = pos
 
@@ -37,12 +39,12 @@ class PoSExtractor(BaseExtractor):
     @abstractmethod
     def preprocess_found(self, word):
         """
-        Preprocesses the found word
+        Preprocesses the found word: potentially add more words to the found words, or filter based on lemmata.
         """
         raise NotImplementedError
 
-    @abstractmethod
-    def get_type(self, word):
+    def get_type(self, words):
         """
-        Return the type for the found word. A sensible default is the part-of-speech.
+        Return the type for the found word(s). A sensible default is the part-of-speech of the first found word.
         """
+        return words[0].get(self.config.get(self.l_from, 'pos'))
