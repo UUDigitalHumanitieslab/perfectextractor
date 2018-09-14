@@ -1,15 +1,14 @@
 import glob
 import os
 
-from apps.extractor.base import BaseExtractor
-from apps.extractor.utils import is_nl
 from lxml import etree
 
+from apps.extractor.base import BaseExtractor
 from apps.extractor.perfectextractor import PerfectExtractor
+from .utils import is_nl, NL
 
 DPC_CONFIG = os.path.join(os.path.dirname(__file__), 'dpc.cfg')
 TEI = {'ns': 'http://www.tei-c.org/ns/1.0'}
-NL = 'nl'
 
 
 class DPCExtractor(BaseExtractor):

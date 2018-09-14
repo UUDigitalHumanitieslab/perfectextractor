@@ -7,7 +7,7 @@ from corpora.europarl.extractor import EuroparlPerfectExtractor
 
 class TestPerfectExtractor(unittest.TestCase):
     def test_is_lexically_bound(self):
-        extractor = EuroparlPerfectExtractor('en', ['de', 'es', 'fr', 'nl'])
+        extractor = EuroparlPerfectExtractor('en', ['de', 'es', 'fr', 'nl'], search_in_to=True)
         lemma_attr = extractor.config.get('all', 'lemma_attr')
         
         mock_aux_verb = {lemma_attr: 'zijn'}

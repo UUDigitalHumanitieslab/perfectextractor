@@ -1,6 +1,7 @@
 import unittest
 
-from apps.extractor.utils import get_adjacent_line_number, is_nl
+from apps.extractor.utils import get_adjacent_line_number
+from corpora.dpc.utils import is_nl
 
 
 class TestUtils(unittest.TestCase):

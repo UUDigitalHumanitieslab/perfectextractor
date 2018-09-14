@@ -6,18 +6,18 @@ import os
 
 from .base import BaseExtractor
 from .models import PresentPerfect
+from .utils import TXT
 from .wiktionary import get_translations
 
 AUX_BE_CONFIG = os.path.join(os.path.dirname(__file__), 'config/{language}_aux_be.txt')
 
 TEI = {'ns': 'http://www.tei-c.org/ns/1.0'}
-NL = 'nl'
 
 
 class PerfectExtractor(BaseExtractor):
     __metaclass__ = ABCMeta
 
-    def __init__(self, language_from, languages_to=None, search_in_to=True, sentence_ids=None, lemmata=None):
+    def __init__(self, language_from, languages_to=None, search_in_to=False, sentence_ids=None, output=TXT, lemmata=None):
         """
         Initializes the extractor for the given source and target language(s).
         Reads in the config for the source language,
@@ -27,7 +27,7 @@ class PerfectExtractor(BaseExtractor):
         :param search_in_to: whether to look for perfects in the target language
         :param lemmata: whether to limit the search to certain lemmata (can be provided as a boolean or a list)
         """
-        super(PerfectExtractor, self).__init__(language_from, languages_to, sentence_ids=sentence_ids)
+        super(PerfectExtractor, self).__init__(language_from, languages_to, sentence_ids=sentence_ids, output=output)
 
         self.search_in_to = search_in_to
 

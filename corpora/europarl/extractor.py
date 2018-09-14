@@ -10,6 +10,7 @@ from apps.extractor.perfectextractor import PerfectExtractor
 from apps.extractor.posextractor import PoSExtractor
 from apps.extractor.recentpastextractor import RecentPastExtractor
 from apps.extractor.xml_utils import get_sentence_from_element
+from apps.extractor.utils import XML
 
 from .base import BaseEuroparl
 
@@ -454,7 +455,10 @@ class EuroparlPerfectExtractor(EuroparlExtractor, PerfectExtractor):
                     result.append(pp.perfect_type())
                     result.append(pp.verbs_to_string())
                     result.append(pp.verb_ids())
-                    result.append('<root>' + etree.tostring(pp.xml_sentence) + '</root>')
+                    if self.output == XML:
+                        result.append('<root>' + etree.tostring(pp.xml_sentence) + '</root>')
+                    else:
+                        result.append(pp.mark_sentence())
 
                     # Find the translated lines
                     for language_to in self.l_to:
@@ -467,7 +471,10 @@ class EuroparlPerfectExtractor(EuroparlExtractor, PerfectExtractor):
                             translated_present_perfects, translated_sentences, translated_marked_sentences = \
                                  self.find_translated_present_perfects(translation_trees[language_to], language_to, translated_lines)
                             result.append(alignment_type)
-                            result.append('<root>' + '\n'.join(translated_sentences) + '</root>' if translated_sentences else '')
+                            if self.output == XML:
+                                result.append('<root>' + '\n'.join(translated_sentences) + '</root>' if translated_sentences else '')
+                            else:
+                                result.append('\n'.join(translated_marked_sentences) if translated_marked_sentences else '')
                         else:
                             # If no translation is available, add empty columns
                             result.extend([''] * 2)

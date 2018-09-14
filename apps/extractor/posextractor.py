@@ -4,7 +4,6 @@ import ConfigParser
 import os
 
 from .base import BaseExtractor
-from .utils import UnicodeWriter
 
 LEMMATA_CONFIG = os.path.join(os.path.dirname(__file__), '../config/{language}_lemmata.txt')
 

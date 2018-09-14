@@ -16,11 +16,11 @@ class TestEuroparlPerfectExtractor(unittest.TestCase):
         self.en_filename = os.path.join(DATA_FOLDER, 'en/ep-00-12-15.xml')
         self.fr_filename = os.path.join(DATA_FOLDER, 'fr/ep-00-12-15.xml')
 
-        self.nl_extractor = EuroparlPerfectExtractor('nl', ['en'])
+        self.nl_extractor = EuroparlPerfectExtractor('nl', ['en'], search_in_to=True)
         self.nl_tree = etree.parse(self.nl_filename)
         self.nl_alignmenttrees, self.nl_translationtrees = self.nl_extractor.parse_alignment_trees(self.nl_filename)
 
-        self.en_extractor = EuroparlPerfectExtractor('en', ['nl'])
+        self.en_extractor = EuroparlPerfectExtractor('en', ['nl'], search_in_to=True)
         self.en_tree = etree.parse(self.en_filename)
         self.en_alignmenttrees, self.en_translationtrees = self.en_extractor.parse_alignment_trees(self.en_filename)
 

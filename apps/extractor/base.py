@@ -2,7 +2,7 @@ from abc import ABCMeta, abstractmethod
 import codecs
 import os
 
-from .utils import UnicodeWriter
+from .utils import TXT, UnicodeWriter
 
 LEMMATA_CONFIG = os.path.join(os.path.dirname(__file__), 'config/{language}_lemmata.txt')
 
@@ -10,22 +10,22 @@ LEMMATA_CONFIG = os.path.join(os.path.dirname(__file__), 'config/{language}_lemm
 class BaseExtractor(object):
     __metaclass__ = ABCMeta
 
-    def __init__(self, language_from, languages_to=None, sentence_ids=None, position=None):
+    def __init__(self, language_from, languages_to=None, sentence_ids=None, position=None, output=TXT):
         """
         Initializes the extractor for the given source and target language(s).
         :param language_from: the source language
         :param languages_to: the target language(s)
         :param sentence_ids: whether to limit the search to certain sentence IDs
         :param position: whether to limit the search to a certain position (e.g. only sentence-initial)
+        :param output: whether to output the results in text or XML format
         """
         self.l_from = language_from
         self.l_to = languages_to or []
         self.sentence_ids = sentence_ids
         self.other_extractors = []
         self.lemmata_list = []
-
-        # Set the position at which to find the word
         self.position = position
+        self.output = output
 
     def process_folder(self, dir_name):
         """

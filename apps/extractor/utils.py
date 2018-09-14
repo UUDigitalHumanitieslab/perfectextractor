@@ -2,7 +2,9 @@ import codecs
 import csv
 import cStringIO
 
-NL = 'nl'
+# Output formats
+TXT = 'txt'
+XML = "xml"
 
 
 def get_adjacent_line_number(segment_number, i):
@@ -13,13 +15,6 @@ def get_adjacent_line_number(segment_number, i):
     split = segment_number.split('s')
     adj = int(split[1]) + i
     return split[0] + 's' + str(adj)
-
-
-def is_nl(language):
-    """
-    Returns whether the language is Dutch (as integer).
-    """
-    return int(language == NL)
 
 
 class UnicodeWriter:
