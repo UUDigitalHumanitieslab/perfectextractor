@@ -1,0 +1,74 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE cesAlign PUBLIC "-//CES//DTD XML cesAlign//EN" "dtd/xcesAlign.dtd">
+<cesAlign version="1.0" fromDoc="de" toDoc="en">
+  <linkGrp toDoc="en/16609396__IM-PRESS__20060905-STO-10339__EN.xml.gz" fromDoc="de/16607912__IM-PRESS__20060905-STO-10339__DE.xml.gz" targType="s">
+    <link xtargets="s1.1;s1.1" certainty="0.426471" id="SL1"/>
+    <link id="SL2" certainty="0.0248918" xtargets="s1.2;s1.2 s1.3"/>
+    <link certainty="0.590434" xtargets="s1.3;s2.1" id="SL3"/>
+    <link certainty="0.368449" xtargets="s1.4;s2.2" id="SL4"/>
+    <link id="SL5" xtargets="s1.5;s2.3" certainty="0.489231"/>
+    <link xtargets="s2.1;s2.4" certainty="0.174697" id="SL6"/>
+    <link xtargets="s2.2;s2.5" certainty="0.508333" id="SL7"/>
+    <link xtargets="s2.3;s2.6 s2.7" certainty="0.0777168" id="SL8"/>
+    <link id="SL9" xtargets="s2.4;s2.8 s2.9" certainty="0.101519"/>
+    <link certainty="0.606042" xtargets="s3.1;s3.1" id="SL10"/>
+    <link id="SL11" xtargets="s3.2;s3.2 s3.3 s3.4" certainty="0.05"/>
+    <link xtargets=";s4.1" certainty="-0.3" id="SL12"/>
+    <link id="SL13" xtargets="s3.3;s5.1" certainty="0.560224"/>
+  </linkGrp>
+  <linkGrp targType="s" toDoc="en/20764633__IM-PRESS__20081211-STO-44307__EN.xml.gz" fromDoc="de/20771384__IM-PRESS__20081211-STO-44307__DE.xml.gz">
+    <link id="SL1" certainty="-0.3" xtargets="s1.1;"/>
+    <link certainty="-0.3" xtargets="s1.2;" id="SL2"/>
+    <link xtargets="s1.3 s1.4;s1.1" certainty="0.207105" id="SL3"/>
+    <link certainty="2.01365" xtargets="s1.5;s1.2" id="SL4"/>
+    <link certainty="0.415152" xtargets="s1.6;s1.3" id="SL5"/>
+    <link id="SL6" xtargets="s1.7;s1.4" certainty="0.358333"/>
+    <link xtargets="s1.8;s1.5" certainty="0.457923" id="SL7"/>
+    <link xtargets="s1.9;" certainty="-0.3" id="SL8"/>
+    <link xtargets="s1.10;" certainty="-0.3" id="SL9"/>
+    <link certainty="0.343509" xtargets="s2.1;s2.1" id="SL10"/>
+    <link id="SL11" certainty="0.382258" xtargets="s2.2;s2.2"/>
+    <link id="SL12" xtargets="s2.3;s2.3" certainty="0.541071"/>
+    <link certainty="0.573333" xtargets="s2.4;s2.4" id="SL13"/>
+    <link id="SL14" certainty="0.699983" xtargets="s2.5;s2.5"/>
+    <link certainty="0.55625" xtargets="s2.6;s2.6" id="SL15"/>
+    <link certainty="-0.3" xtargets="s2.7;" id="SL16"/>
+    <link xtargets="s2.8;s2.7" certainty="1.17343" id="SL17"/>
+    <link id="SL18" xtargets="s2.9;s2.8" certainty="0.420455"/>
+    <link xtargets="s2.10;s2.9" certainty="0.263725" id="SL19"/>
+    <link xtargets="s2.11;s2.10 s2.11" certainty="0.135366" id="SL20"/>
+    <link xtargets="s3.1;" certainty="-0.3" id="SL21"/>
+    <link xtargets="s3.2;s3.1" certainty="0.366494" id="SL22"/>
+    <link id="SL23" certainty="0.447619" xtargets="s3.3;s3.2"/>
+    <link id="SL24" certainty="1.12156" xtargets="s3.4 s3.5 s3.6;s3.3"/>
+    <link id="SL25" xtargets="s3.7;" certainty="-0.3"/>
+    <link id="SL26" certainty="0.400957" xtargets="s4.1;s4.1"/>
+  </linkGrp>
+  <linkGrp fromDoc="de/16450803__IM-PRESS__20060131-IPR-04891__DE.xml.gz" toDoc="en/16451293__IM-PRESS__20060131-IPR-04891__EN.xml.gz" targType="s">
+    <link certainty="-0.3" xtargets=";s1.1" id="SL1"/>
+    <link id="SL2" certainty="-0.3" xtargets=";s1.2"/>
+    <link xtargets=";s1.3" certainty="-0.3" id="SL3"/>
+    <link certainty="0.0180478" id="SL4" xtargets="s1.1 s1.2;s1.4 s1.5"/>
+    <link certainty="0.528984" id="SL5" xtargets="s1.3;s1.6"/>
+    <link certainty="-0.3" id="SL6" xtargets=";s1.7"/>
+    <link xtargets="s1.4;s1.8 s1.9 s1.10" certainty="-0.027193" id="SL7"/>
+    <link certainty="-0.0642308" xtargets="s1.5;s1.11 s1.12 s1.13" id="SL8"/>
+    <link certainty="-0.3" id="SL9" xtargets=";s1.14"/>
+    <link xtargets="s1.6;s1.15 s1.16" certainty="0.169395" id="SL10"/>
+    <link certainty="-0.162267" xtargets="s1.7;s1.17 s1.18 s1.19 s1.20 s1.21" id="SL11"/>
+    <link certainty="0.433459" id="SL12" xtargets="s1.8;s1.22"/>
+    <link xtargets=";s1.23" certainty="-0.3" id="SL13"/>
+    <link certainty="0.175312" id="SL14" xtargets="s1.9;s1.24 s1.25"/>
+    <link id="SL15" certainty="-0.3" xtargets=";s1.26"/>
+    <link xtargets=";s1.27" certainty="-0.3" id="SL16"/>
+    <link certainty="-0.3" xtargets=";s1.28" id="SL17"/>
+    <link id="SL18" certainty="-0.0547428" xtargets="s1.10;s1.29 s1.30 s1.31"/>
+    <link id="SL19" certainty="0.615029" xtargets="s1.11;s1.32"/>
+    <link certainty="0.528046" xtargets="s1.12;s1.33" id="SL20"/>
+    <link certainty="-0.3" xtargets=";s1.34" id="SL21"/>
+    <link id="SL22" certainty="-0.3" xtargets=";s1.35"/>
+    <link certainty="-0.3" xtargets=";s1.36" id="SL23"/>
+    <link xtargets=";s1.37" certainty="-0.3" id="SL24"/>
+  </linkGrp>
+</cesAlign>
+

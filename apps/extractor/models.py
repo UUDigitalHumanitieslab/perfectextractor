@@ -129,3 +129,10 @@ class PresentPerfect(MultiWordExpression):
         if self.is_continuous:
             result += ' continuous'
         return result
+
+
+class Alignment(object):
+    def __init__(self, sources, targets, certainty=None):
+        self.sources = sources
+        self.targets = targets
+        self.certainty = certainty

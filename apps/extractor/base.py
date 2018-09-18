@@ -2,6 +2,8 @@ from abc import ABCMeta, abstractmethod
 import codecs
 import os
 
+import click
+
 from .utils import TXT, UnicodeWriter
 
 LEMMATA_CONFIG = os.path.join(os.path.dirname(__file__), 'config/{language}_lemmata.txt')
@@ -10,22 +12,34 @@ LEMMATA_CONFIG = os.path.join(os.path.dirname(__file__), 'config/{language}_lemm
 class BaseExtractor(object):
     __metaclass__ = ABCMeta
 
-    def __init__(self, language_from, languages_to=None, sentence_ids=None, position=None, output=TXT):
+    def __init__(self, language_from, languages_to=None, sentence_ids=None, lemmata=None, position=None, output=TXT,
+                 sort_by_certainty=False, file_limit=0):
         """
         Initializes the extractor for the given source and target language(s).
         :param language_from: the source language
         :param languages_to: the target language(s)
         :param sentence_ids: whether to limit the search to certain sentence IDs
+        :param lemmata: whether to limit the search to certain lemmata (can be provided as a boolean or a list)
         :param position: whether to limit the search to a certain position (e.g. only sentence-initial)
         :param output: whether to output the results in text or XML format
+        :param sort_by_certainty: whether to sort the files by average alignment certainty
+        :param file_limit: whether to limit the number of files searched in
         """
         self.l_from = language_from
         self.l_to = languages_to or []
         self.sentence_ids = sentence_ids
-        self.other_extractors = []
-        self.lemmata_list = []
         self.position = position
         self.output = output
+        self.sort_by_certainty = sort_by_certainty
+        self.file_limit = file_limit
+
+        # Read in the lemmata list (if provided)
+        self.lemmata_list = []
+        self.read_lemmata(lemmata)
+
+        # Other variables
+        self.other_extractors = []
+        self.alignment_xmls = dict()
 
     def process_folder(self, dir_name):
         """
@@ -38,15 +52,28 @@ class BaseExtractor(object):
             csv_writer.writerow(self.generate_header())
             csv_writer.writerows(self.generate_results(dir_name))
 
+    def collect_file_names(self, dir_name):
+        click.echo('Collecting file names...')
+
+        if self.sort_by_certainty:
+            file_names = self.sort_by_alignment_certainty(dir_name)
+        else:
+            file_names = self.list_filenames(dir_name)
+        if self.file_limit:
+            file_names = file_names[:self.file_limit]
+
+        click.echo('Finished collecting file names, starting progressing...')
+        return file_names
+
     def generate_results(self, dir_name):
         results = []
 
-        for filename in self.list_filenames(dir_name):
-            result = self.process_file(filename)
+        for file_name in self.collect_file_names(dir_name):
+            result = self.process_file(file_name)
 
             for extractor in self.other_extractors:
                 extractor.sentence_ids = [r[1] for r in result]
-                result = extractor.process_file(filename)
+                result = extractor.process_file(file_name)
 
             results.extend(result)
 
@@ -124,4 +151,8 @@ class BaseExtractor(object):
         Returns the siblings of the given element in the given sentence_id.
         The check_preceding parameter allows to look either forwards or backwards.
         """
+        raise NotImplementedError
+
+    @abstractmethod
+    def sort_by_alignment_certainty(self, dir_name):
         raise NotImplementedError

@@ -1,0 +1,400 @@
+<?xml version='1.0' encoding='utf-8'?>
+<text>
+<p id="1">
+<s id="s1.1">
+ <w id="w1.1.1" tree="det__art" lem="het">Het</w>
+ <w id="w1.1.2" tree="adj" lem="Europees">Europees</w>
+ <w id="w1.1.3" tree="nounsg" lem="parlement">Parlement</w>
+ <w id="w1.1.4" tree="verbpressg" lem="eerbiedigen">eerbiedigt</w>
+ <w id="w1.1.5" tree="det__art" lem="de">de</w>
+ <w id="w1.1.6" tree="nounsg" lem="verkiezingsuitslag">verkiezingsuitslag</w>
+ <w id="w1.1.7" tree="prep" lem="in">in</w>
+ <w id="w1.1.8" tree="det__art" lem="de">de</w>
+ <w id="w1.1.9" tree="adj" lem="Palestijns">Palestijnse</w>
+ <w id="w1.1.10" tree="nounpl" lem="gebied">gebieden</w>
+ <w id="w1.1.11" tree="punc" lem=",">,</w>
+ <w id="w1.1.12" tree="conjcoord" lem="maar">maar</w>
+ <w id="w1.1.13" tree="verbpressg" lem="waarschuwen">waarschuwt</w>
+ <w id="w1.1.14" tree="adv" lem="Hamas">Hamas</w>
+ <w id="w1.1.15" tree="conjsubo" lem="dat">dat</w>
+ <w id="w1.1.16" tree="det__poss" lem="zijn">zijn</w>
+ <w id="w1.1.17" tree="nounsg" lem="bereidheid">bereidheid</w>
+ <w id="w1.1.18" tree="prep" lem="om">om</w>
+ <w id="w1.1.19" tree="adj" lem="geldelijk">geldelijke</w>
+ <w id="w1.1.20" tree="nounsg" lem="steun">steun</w>
+ <w id="w1.1.21" tree="prep" lem="aan">aan</w>
+ <w id="w1.1.22" tree="nounprop" lem="Palestina">Palestina</w>
+ <w id="w1.1.23" tree="partte" lem="te">te</w>
+ <w id="w1.1.24" tree="verbinf" lem="blijven">blijven</w>
+ <w id="w1.1.25" tree="verbinf" lem="verlenen">verlenen</w>
+ <w id="w1.1.26" tree="verbpressg" lem="afhangen">afhangt</w>
+ <w id="w1.1.27" tree="prep" lem="van">van</w>
+ <w id="w1.1.28" tree="det__art" lem="een">een</w>
+ <w id="w1.1.29" tree="nounsg" lem="verklaring">verklaring</w>
+ <w id="w1.1.30" tree="prep" lem="van">van</w>
+ <w id="w1.1.31" tree="nounsg" lem="Hamas">Hamas</w>
+ <w id="w1.1.32" tree="conjsubo" lem="dat">dat</w>
+ <w id="w1.1.33" tree="pronpers" lem="hij">hij</w>
+ <w id="w1.1.34" tree="verbpapa" lem="wellen">geweld</w>
+ <w id="w1.1.35" tree="verbpressg" lem="afwijzen">afwijst</w>
+ <w id="w1.1.36" tree="conjcoord" lem="en">en</w>
+ <w id="w1.1.37" tree="det__art" lem="de">de</w>
+ <w id="w1.1.38" tree="nounsg" lem="staat">staat</w>
+ <w id="w1.1.39" tree="nounprop" lem="Israël">Israël</w>
+ <w id="w1.1.40" tree="verbpressg" lem="erkennen">erkent</w>
+ <w id="w1.1.41" tree="$." lem=".">.</w>
+</s> 
+ 
+
+<s id="s1.2">
+ <w id="w1.2.1" tree="det__art" lem="het">Het</w>
+ <w id="w1.2.2" tree="nounsg" lem="EP">EP</w>
+ <w id="w1.2.3" tree="verbpressg" lem="roepen">roept</w>
+ <w id="w1.2.4" tree="det__art" lem="de">de</w>
+ <w id="w1.2.5" tree="adj" lem="nieuw">nieuwe</w>
+ <w id="w1.2.6" tree="adj" lem="Palestijns">Palestijnse</w>
+ <w id="w1.2.7" tree="nounsg" lem="wetgevende">Wetgevende</w>
+ <w id="w1.2.8" tree="nounsg" lem="raad">Raad</w>
+ <w id="w1.2.9" tree="conjcoord" lem="en">en</w>
+ <w id="w1.2.10" tree="det__art" lem="de">de</w>
+ <w id="w1.2.11" tree="adj" lem="toekomstig">toekomstige</w>
+ <w id="w1.2.12" tree="nounsg" lem="regering">regering</w>
+ <w id="w1.2.13" tree="prep" lem="op">op</w>
+ <w id="w1.2.14" tree="det__art" lem="het">het</w>
+ <w id="w1.2.15" tree="nounsg" lem="bestaansrecht">bestaansrecht</w>
+ <w id="w1.2.16" tree="prep" lem="van">van</w>
+ <w id="w1.2.17" tree="det__art" lem="de">de</w>
+ <w id="w1.2.18" tree="nounsg" lem="staat">staat</w>
+ <w id="w1.2.19" tree="nounprop" lem="Israël">Israël</w>
+ <w id="w1.2.20" tree="adj" lem="ondubbelzinnig">ondubbelzinnig</w>
+ <w id="w1.2.21" tree="partte" lem="te">te</w>
+ <w id="w1.2.22" tree="verbinf" lem="erkennen">erkennen</w>
+ <w id="w1.2.23" tree="punc" lem=",">,</w>
+ <w id="w1.2.24" tree="adv" lem="af">af</w>
+ <w id="w1.2.25" tree="partte" lem="te">te</w>
+ <w id="w1.2.26" tree="verbinf" lem="zien">zien</w>
+ <w id="w1.2.27" tree="prep" lem="van">van</w>
+ <w id="w1.2.28" tree="det__indef" lem="alle">alle</w>
+ <w id="w1.2.29" tree="nounpl" lem="vorm">vormen</w>
+ <w id="w1.2.30" tree="prep" lem="van">van</w>
+ <w id="w1.2.31" tree="nounsg" lem="terrorisme">terrorisme</w>
+ <w id="w1.2.32" tree="punc" lem=",">,</w>
+ <w id="w1.2.33" tree="pronrefl" lem="zich">zich</w>
+ <w id="w1.2.34" tree="partte" lem="te">te</w>
+ <w id="w1.2.35" tree="verbinf" lem="committeren">committeren</w>
+ <w id="w1.2.36" tree="prep" lem="aan">aan</w>
+ <w id="w1.2.37" tree="det__art" lem="de">de</w>
+ <w id="w1.2.38" tree="nounsg" lem="routekaart">routekaart</w>
+ <w id="w1.2.39" tree="prep" lem="voor">voor</w>
+ <w id="w1.2.40" tree="det__art" lem="de">de</w>
+ <w id="w1.2.41" tree="nounsg" lem="vrede">vrede</w>
+ <w id="w1.2.42" tree="punc" lem=",">,</w>
+ <w id="w1.2.43" tree="det__art" lem="het">het</w>
+ <w id="w1.2.44" tree="nounsg" lem="beginsel">beginsel</w>
+ <w id="w1.2.45" tree="partte" lem="te">te</w>
+ <w id="w1.2.46" tree="verbinf" lem="onderschrijven">onderschrijven</w>
+ <w id="w1.2.47" tree="prep" lem="van">van</w>
+ <w id="w1.2.48" tree="adj" lem="vreedzaam">vreedzame</w>
+ <w id="w1.2.49" tree="nounpl" lem="onderhandeling">onderhandelingen</w>
+ <w id="w1.2.50" tree="pronrel" lem="die">die</w>
+ <w id="w1.2.51" tree="verbpapa" lem="richten">gericht</w>
+ <w id="w1.2.52" tree="verbprespl" lem="zijn">zijn</w>
+ <w id="w1.2.53" tree="prep" lem="op">op</w>
+ <w id="w1.2.54" tree="det__art" lem="een">een</w>
+ <w id="w1.2.55" tree="nounsg" lem="tweestatenoplossing">tweestatenoplossing</w>
+ <w id="w1.2.56" tree="punc" lem=",">,</w>
+ <w id="w1.2.57" tree="conjcoord" lem="en">en</w>
+ <w id="w1.2.58" tree="prep" lem="met">met</w>
+ <w id="w1.2.59" tree="det__art" lem="het">het</w>
+ <w id="w1.2.60" tree="nounsg" lem="kwartet">Kwartet</w>
+ <w id="w1.2.61" tree="adv" lem="samen">samen</w>
+ <w id="w1.2.62" tree="partte" lem="te">te</w>
+ <w id="w1.2.63" tree="verbinf" lem="werken">werken</w>
+ <w id="w1.2.64" tree="$." lem=".">.</w>
+</s> 
+ 
+
+<s id="s1.3">
+ <w id="w1.3.1" tree="det__art" lem="het">Het</w>
+ <w id="w1.3.2" tree="nounsg" lem="parlement">Parlement</w>
+ <w id="w1.3.3" tree="verbpressg" lem="wijzen">wijst</w>
+ <w id="w1.3.4" tree="pronadv" lem="erop">erop</w>
+ <w id="w1.3.5" tree="conjsubo" lem="dat">dat</w>
+ <w id="w1.3.6" tree="det__art" lem="de">de</w>
+ <w id="w1.3.7" tree="nounsg" lem="verkiezingsuitslag">verkiezingsuitslag</w>
+ <w id="w1.3.8" tree="punc" lem=",">,</w>
+ <w id="w1.3.9" tree="pronrel" lem="die">die</w>
+ <w id="w1.3.10" tree="det__art" lem="het">het</w>
+ <w id="w1.3.11" tree="adj" lem="politiek">politieke</w>
+ <w id="w1.3.12" tree="nounsg" lem="landschap">landschap</w>
+ <w id="w1.3.13" tree="prep" lem="in">in</w>
+ <w id="w1.3.14" tree="nounprop" lem="Palestina">Palestina</w>
+ <w id="w1.3.15" tree="adj" lem="diepgaand">diepgaand</w>
+ <w id="w1.3.16" tree="verbpressg" lem="hebben">heeft</w>
+ <w id="w1.3.17" tree="verbpapa" lem="veranderen">veranderd</w>
+ <w id="w1.3.18" tree="conjcoord" lem="en">en</w>
+ <w id="w1.3.19" tree="verbpapa" lem="radicaliseren">geradicaliseerd</w>
+ <w id="w1.3.20" tree="punc" lem=",">,</w>
+ <w id="w1.3.21" tree="prep" lem="in">in</w>
+ <w id="w1.3.22" tree="det__art" lem="de">de</w>
+ <w id="w1.3.23" tree="num__ord" lem="een">eerste</w>
+ <w id="w1.3.24" tree="nounsg" lem="plaats">plaats</w>
+ <w id="w1.3.25" tree="verbpressg" lem="aangeven">aangeeft</w>
+ <w id="w1.3.26" tree="conjsubo" lem="dat">dat</w>
+ <w id="w1.3.27" tree="det__art" lem="het">het</w>
+ <w id="w1.3.28" tree="adj" lem="Palestijns">Palestijnse</w>
+ <w id="w1.3.29" tree="nounsg" lem="volk">volk</w>
+ <w id="w1.3.30" tree="det__art" lem="een">een</w>
+ <w id="w1.3.31" tree="adj" lem="ingrijpend">ingrijpende</w>
+ <w id="w1.3.32" tree="nounsg" lem="hervorming">hervorming</w>
+ <w id="w1.3.33" tree="verbpressg" lem="wensen">wenst</w>
+ <w id="w1.3.34" tree="$." lem=".">.</w>
+</s> 
+ 
+
+<s id="s1.4">
+ <w id="w1.4.1" tree="det__art" lem="de">De</w>
+ <w id="w1.4.2" tree="nounsg" lem="uitslag">uitslag</w>
+ <w id="w1.4.3" tree="verbpressg" lem="zijn">is</w>
+ <w id="w1.4.4" tree="adv" lem="ook">ook</w>
+ <w id="w1.4.5" tree="det__art" lem="de">de</w>
+ <w id="w1.4.6" tree="nounsg" lem="weerslag">weerslag</w>
+ <w id="w1.4.7" tree="prep" lem="van">van</w>
+ <w id="w1.4.8" tree="det__art" lem="de">de</w>
+ <w id="w1.4.9" tree="adj" lem="moeilijk">moeilijke</w>
+ <w id="w1.4.10" tree="nounpl" lem="levensomstandigheden">levensomstandigheden</w>
+ <w id="w1.4.11" tree="prep" lem="onder">onder</w>
+ <w id="w1.4.12" tree="det__art" lem="de">de</w>
+ <w id="w1.4.13" tree="nounsg" lem="bezetting">bezetting</w>
+ <w id="w1.4.14" tree="conjcoord" lem="en">en</w>
+ <w id="w1.4.15" tree="prep" lem="van">van</w>
+ <w id="w1.4.16" tree="det__art" lem="de">de</w>
+ <w id="w1.4.17" tree="nounsg" lem="kritiek">kritiek</w>
+ <w id="w1.4.18" tree="prep" lem="op">op</w>
+ <w id="w1.4.19" tree="det__art" lem="het">het</w>
+ <w id="w1.4.20" tree="adj" lem="vorig">vorige</w>
+ <w id="w1.4.21" tree="adj" lem="Palestijns">Palestijnse</w>
+ <w id="w1.4.22" tree="nounsg" lem="bestuur">bestuur</w>
+ <w id="w1.4.23" tree="$." lem=".">.</w>
+</s> 
+ 
+
+<s id="s1.5">
+ <w id="w1.5.1" tree="det__art" lem="de">De</w>
+ <w id="w1.5.2" tree="nounpl" lem="lid">leden</w>
+ <w id="w1.5.3" tree="verbprespl" lem="wijzen">wijzen</w>
+ <w id="w1.5.4" tree="pronadv" lem="erop">erop</w>
+ <w id="w1.5.5" tree="conjsubo" lem="dat">dat</w>
+ <w id="w1.5.6" tree="det__art" lem="de">de</w>
+ <w id="w1.5.7" tree="nounsg" lem="bereidheid">bereidheid</w>
+ <w id="w1.5.8" tree="prep" lem="van">van</w>
+ <w id="w1.5.9" tree="det__art" lem="het">het</w>
+ <w id="w1.5.10" tree="nounsg" lem="EP">EP</w>
+ <w id="w1.5.11" tree="prep" lem="om">om</w>
+ <w id="w1.5.12" tree="det__art" lem="de">de</w>
+ <w id="w1.5.13" tree="adj" lem="groot|groots">grootste</w>
+ <w id="w1.5.14" tree="nounsg" lem="steundonor">steundonor</w>
+ <w id="w1.5.15" tree="partte" lem="te">te</w>
+ <w id="w1.5.16" tree="verbinf" lem="blijven">blijven</w>
+ <w id="w1.5.17" tree="prep" lem="voor">voor</w>
+ <w id="w1.5.18" tree="det__art" lem="de">de</w>
+ <w id="w1.5.19" tree="adj" lem="Palestijns">Palestijnse</w>
+ <w id="w1.5.20" tree="adj" lem="nationaal">Nationale</w>
+ <w id="w1.5.21" tree="nounsg" lem="autoriteit">Autoriteit</w>
+ <w id="w1.5.22" tree="conjcoord" lem="en">en</w>
+ <w id="w1.5.23" tree="nounsg" lem="steun">steun</w>
+ <w id="w1.5.24" tree="partte" lem="te">te</w>
+ <w id="w1.5.25" tree="verbinf" lem="blijven">blijven</w>
+ <w id="w1.5.26" tree="verbinf" lem="verlenen">verlenen</w>
+ <w id="w1.5.27" tree="prep" lem="voor">voor</w>
+ <w id="w1.5.28" tree="det__art" lem="de">de</w>
+ <w id="w1.5.29" tree="adj" lem="Palestijns">Palestijnse</w>
+ <w id="w1.5.30" tree="adj" lem="economisch">economische</w>
+ <w id="w1.5.31" tree="nounsg" lem="ontwikkeling">ontwikkeling</w>
+ <w id="w1.5.32" tree="punc" lem=",">,</w>
+ <w id="w1.5.33" tree="verbpressg" lem="zullen">zal</w>
+ <w id="w1.5.34" tree="verbinf" lem="afhangen">afhangen</w>
+ <w id="w1.5.35" tree="prep" lem="van">van</w>
+ <w id="w1.5.36" tree="det__art" lem="een">een</w>
+ <w id="w1.5.37" tree="adj" lem="duidelijk">duidelijke</w>
+ <w id="w1.5.38" tree="nounsg" lem="verklaring">verklaring</w>
+ <w id="w1.5.39" tree="prep" lem="van">van</w>
+ <w id="w1.5.40" tree="det__art" lem="de">de</w>
+ <w id="w1.5.41" tree="adj" lem="nieuw">nieuwe</w>
+ <w id="w1.5.42" tree="nounsg" lem="regering">regering</w>
+ <w id="w1.5.43" tree="conjsubo" lem="dat">dat</w>
+ <w id="w1.5.44" tree="pronpers" lem="zij">zij</w>
+ <w id="w1.5.45" tree="verbpapa" lem="wellen">geweld</w>
+ <w id="w1.5.46" tree="verbpressg" lem="afwijzen">afwijst</w>
+ <w id="w1.5.47" tree="conjcoord" lem="en">en</w>
+ <w id="w1.5.48" tree="nounprop" lem="Israël">Israël</w>
+ <w id="w1.5.49" tree="verbpressg" lem="erkennen">erkent</w>
+ <w id="w1.5.50" tree="$." lem=".">.</w>
+</s> 
+ 
+
+<s id="s1.6">
+ <w id="w1.6.1" tree="adj" lem="ver|verder">Verder</w>
+ <w id="w1.6.2" tree="verbpressg" lem="nemen">neemt</w>
+ <w id="w1.6.3" tree="det__art" lem="het">het</w>
+ <w id="w1.6.4" tree="nounsg" lem="parlement">Parlement</w>
+ <w id="w1.6.5" tree="nounsg" lem="kennis">kennis</w>
+ <w id="w1.6.6" tree="prep" lem="van">van</w>
+ <w id="w1.6.7" tree="det__art" lem="de">de</w>
+ <w id="w1.6.8" tree="nounpl" lem="conclusie">conclusies</w>
+ <w id="w1.6.9" tree="prep" lem="in">in</w>
+ <w id="w1.6.10" tree="det__art" lem="het">het</w>
+ <w id="w1.6.11" tree="prep" lem="door">door</w>
+ <w id="w1.6.12" tree="det__art" lem="de">de</w>
+ <w id="w1.6.13" tree="nounpl" lem="hoofd">hoofden</w>
+ <w id="w1.6.14" tree="prep" lem="van">van</w>
+ <w id="w1.6.15" tree="det__art" lem="de">de</w>
+ <w id="w1.6.16" tree="nounpl" lem="EU-missies">EU-missies</w>
+ <w id="w1.6.17" tree="prep" lem="in">in</w>
+ <w id="w1.6.18" tree="nounprop" lem="Jeruzalem">Jeruzalem</w>
+ <w id="w1.6.19" tree="conjcoord" lem="en">en</w>
+ <w id="w1.6.20" tree="nounsg" lem="Ramallah">Ramallah</w>
+ <w id="w1.6.21" tree="verbpapa" lem="opstellen">opgestelde</w>
+ <w id="w1.6.22" tree="nounsg" lem="rapport">rapport</w>
+ <w id="w1.6.23" tree="prep" lem="over">over</w>
+ <w id="w1.6.24" tree="nounprop" lem="Oost-Jeruzalem">Oost-Jeruzalem</w>
+ <w id="w1.6.25" tree="$." lem=".">.</w>
+</s> 
+ 
+
+<s id="s1.7">
+ <w id="w1.7.1" tree="prep" lem="in">In</w>
+ <w id="w1.7.2" tree="det__demo" lem="dat">dat</w>
+ <w id="w1.7.3" tree="nounsg" lem="rapport">rapport</w>
+ <w id="w1.7.4" tree="verbpressg" lem="worden">wordt</w>
+ <w id="w1.7.5" tree="det__art" lem="de">de</w>
+ <w id="w1.7.6" tree="nounsg" lem="situatie">situatie</w>
+ <w id="w1.7.7" tree="prep" lem="in">in</w>
+ <w id="w1.7.8" tree="nounprop" lem="Oost-Jeruzalem">Oost-Jeruzalem</w>
+ <w id="w1.7.9" tree="punc" lem=",">,</w>
+ <w id="w1.7.10" tree="conjcoord" lem="en">en</w>
+ <w id="w1.7.11" tree="prep" lem="met">met</w>
+ <w id="w1.7.12" tree="nounsg" lem="naam|name">name</w>
+ <w id="w1.7.13" tree="det__art" lem="de">de</w>
+ <w id="w1.7.14" tree="nounpl" lem="gevolg">gevolgen</w>
+ <w id="w1.7.15" tree="prep" lem="van">van</w>
+ <w id="w1.7.16" tree="det__art" lem="de">de</w>
+ <w id="w1.7.17" tree="nounsg" lem="bouw">bouw</w>
+ <w id="w1.7.18" tree="prep" lem="van">van</w>
+ <w id="w1.7.19" tree="det__art" lem="de">de</w>
+ <w id="w1.7.20" tree="nounsg" lem="muur">muur</w>
+ <w id="w1.7.21" tree="punc" lem=",">,</w>
+ <w id="w1.7.22" tree="verbpapa" lem="beschrijven">beschreven</w>
+ <w id="w1.7.23" tree="conjcoord" lem="en">en</w>
+ <w id="w1.7.24" tree="verbprespl" lem="worden">worden</w>
+ <w id="w1.7.25" tree="adj" lem="concreet">concrete</w>
+ <w id="w1.7.26" tree="nounpl" lem="aanbeveling">aanbevelingen</w>
+ <w id="w1.7.27" tree="verbpapa" lem="doen">gedaan</w>
+ <w id="w1.7.28" tree="prep" lem="voor">voor</w>
+ <w id="w1.7.29" tree="det__art" lem="de">de</w>
+ <w id="w1.7.30" tree="nounsg" lem="aanpak">aanpak</w>
+ <w id="w1.7.31" tree="prep" lem="van">van</w>
+ <w id="w1.7.32" tree="det__art" lem="de">de</w>
+ <w id="w1.7.33" tree="adj" lem="huidig">huidige</w>
+ <w id="w1.7.34" tree="nounpl" lem="probleem">problemen</w>
+ <w id="w1.7.35" tree="$." lem=".">.</w>
+</s> 
+ 
+
+<s id="s1.8">
+ <w id="w1.8.1" tree="det__art" lem="het">Het</w>
+ <w id="w1.8.2" tree="nounsg" lem="EP">EP</w>
+ <w id="w1.8.3" tree="verbpressg" lem="betreuren">betreurt</w>
+ <w id="w1.8.4" tree="conjsubo" lem="dat">dat</w>
+ <w id="w1.8.5" tree="pronpers" lem="het">het</w>
+ <w id="w1.8.6" tree="adv" lem="niet">niet</w>
+ <w id="w1.8.7" tree="verbpressg" lem="zijn">is</w>
+ <w id="w1.8.8" tree="verbpapa" lem="inlichten">ingelicht</w>
+ <w id="w1.8.9" tree="prep" lem="over">over</w>
+ <w id="w1.8.10" tree="det__art" lem="de">de</w>
+ <w id="w1.8.11" tree="nounsg" lem="inhoud">inhoud</w>
+ <w id="w1.8.12" tree="prep" lem="van">van</w>
+ <w id="w1.8.13" tree="det__art" lem="het">het</w>
+ <w id="w1.8.14" tree="nounsg" lem="rapport">rapport</w>
+ <w id="w1.8.15" tree="$." lem=".">.</w>
+</s> 
+ 
+
+<s id="s1.9">
+ <w id="w1.9.1" tree="adv" lem="tenslotte">Tenslotte</w>
+ <w id="w1.9.2" tree="verbpressg" lem="wijzen">wijst</w>
+ <w id="w1.9.3" tree="det__art" lem="de">de</w>
+ <w id="w1.9.4" tree="nounsg" lem="vergadering">Vergadering</w>
+ <w id="w1.9.5" tree="pronadv" lem="er">er</w>
+ <w id="w1.9.6" tree="adv" lem="opnieuw">opnieuw</w>
+ <w id="w1.9.7" tree="prep" lem="op">op</w>
+ <w id="w1.9.8" tree="conjsubo" lem="dat">dat</w>
+ <w id="w1.9.9" tree="det__art" lem="de">de</w>
+ <w id="w1.9.10" tree="nounsg" lem="situatie">situatie</w>
+ <w id="w1.9.11" tree="prep" lem="in">in</w>
+ <w id="w1.9.12" tree="nounprop" lem="Oost-Jeruzalem">Oost-Jeruzalem</w>
+ <w id="w1.9.13" tree="nounsg" lem="deel">deel</w>
+ <w id="w1.9.14" tree="verbpressg" lem="uitmaken">uitmaakt</w>
+ <w id="w1.9.15" tree="prep" lem="van">van</w>
+ <w id="w1.9.16" tree="det__art" lem="het">het</w>
+ <w id="w1.9.17" tree="nounsg" lem="conflict">conflict</w>
+ <w id="w1.9.18" tree="conjsubo" lem="als">als</w>
+ <w id="w1.9.19" tree="nounsg" lem="geheel">geheel</w>
+ <w id="w1.9.20" tree="conjcoord" lem="en">en</w>
+ <w id="w1.9.21" tree="det__art" lem="een">een</w>
+ <w id="w1.9.22" tree="nounsg" lem="punt">punt</w>
+ <w id="w1.9.23" tree="prep" lem="van">van</w>
+ <w id="w1.9.24" tree="nounsg" lem="onderhandeling">onderhandeling</w>
+ <w id="w1.9.25" tree="verbpressg" lem="blijven">blijft</w>
+ <w id="w1.9.26" tree="$." lem=".">.</w>
+</s> 
+ 
+
+<s id="s1.10">
+ <w id="w1.10.1" tree="det__art" lem="het">Het</w>
+ <w id="w1.10.2" tree="nounsg" lem="EP">EP</w>
+ <w id="w1.10.3" tree="verbpressg" lem="dringen">dringt</w>
+ <w id="w1.10.4" tree="adv" lem="aan">aan</w>
+ <w id="w1.10.5" tree="prep" lem="op">op</w>
+ <w id="w1.10.6" tree="nounsg" lem="beëindiging">beëindiging</w>
+ <w id="w1.10.7" tree="prep" lem="van">van</w>
+ <w id="w1.10.8" tree="det__art" lem="de">de</w>
+ <w id="w1.10.9" tree="verbpresp" lem="discrimineren">discriminerende</w>
+ <w id="w1.10.10" tree="nounsg" lem="behandeling">behandeling</w>
+ <w id="w1.10.11" tree="prep" lem="van">van</w>
+ <w id="w1.10.12" tree="adj" lem="Palestijns">Palestijnse</w>
+ <w id="w1.10.13" tree="nounpl" lem="bewoner">bewoners</w>
+ <w id="w1.10.14" tree="conjcoord" lem="en">en</w>
+ <w id="w1.10.15" tree="prep" lem="op">op</w>
+ <w id="w1.10.16" tree="nounsg" lem="heropening">heropening</w>
+ <w id="w1.10.17" tree="prep" lem="van">van</w>
+ <w id="w1.10.18" tree="det__art" lem="de">de</w>
+ <w id="w1.10.19" tree="adj" lem="Palestijns">Palestijnse</w>
+ <w id="w1.10.20" tree="nounpl" lem="instelling">instellingen</w>
+ <w id="w1.10.21" tree="prep" lem="in">in</w>
+ <w id="w1.10.22" tree="nounprop" lem="Oost-Jeruzalem">Oost-Jeruzalem</w>
+ <w id="w1.10.23" tree="$." lem=".">.</w>
+</s></p>
+
+<p id="2">
+<s id="s2.1">
+ <w id="w2.1.1" tree="nounsg" lem="procedure">Procedure</w>
+ <w id="w2.1.2" tree="$." lem=":">:</w>
+ <w id="w2.1.3" tree="adj" lem="gezamenlijk">Gezamenlijke</w>
+ <w id="w2.1.4" tree="nounsg" lem="ontwerpresolutie">ontwerpresolutie</w>
+ <w id="w2.1.5" tree="punc" lem="/">/</w>
+ <w id="w2.1.6" tree="nounsg" lem="debat">Debat</w>
+ <w id="w2.1.7" tree="$." lem=":">:</w>
+ <w id="w2.1.8" tree="num__card" lem="@card@">1</w>
+ <w id="w2.1.9" tree="nounprop" lem="februari">februari</w>
+ <w id="w2.1.10" tree="num__card" lem="@card@">2006</w>
+ <w id="w2.1.11" tree="punc" lem="/">/</w>
+ <w id="w2.1.12" tree="nounsg" lem="stemming">Stemming</w>
+ <w id="w2.1.13" tree="$." lem=":">:</w>
+ <w id="w2.1.14" tree="num__card" lem="@card@">2</w>
+ <w id="w2.1.15" tree="nounprop" lem="februari">februari</w>
+ <w id="w2.1.16" tree="num__card" lem="@card@">2006</w>
+ <w id="w2.1.17" tree="punc" lem="/">/</w>
+ <w id="w2.1.18" tree="nounabbr" lem="Ontwerpresolutie">Ontwerpresolutie</w>
+ <w id="w2.1.19" tree="verbpapa" lem="aannemen">aangenomen</w>
+</s></p></text>

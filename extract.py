@@ -21,10 +21,13 @@ def process_data_folders(extractor, path):
 @click.argument('folder')
 @click.argument('language_from')
 @click.argument('languages_to', nargs=-1)  # nargs=-1 eats up all remaining arguments
-@click.option('--search_in_to', default=False, help='Search in to?')
+@click.option('--search_in_to', is_flag=True, help='Search in to?')
 @click.option('--output', default=TXT, type=click.Choice([TXT, XML]), help='Output in text or XML format')
-def extract(folder, language_from, languages_to, search_in_to=False, output=TXT):
-    extractor = EuroparlPerfectExtractor(language_from, languages_to, search_in_to=search_in_to, output=output)
+@click.option('--sort_by_certainty', is_flag=True, help='Sort by certainty?')
+@click.option('--file_limit', default=0, help='Limit number of files searched')
+def extract(folder, language_from, languages_to, search_in_to=False, output=TXT, sort_by_certainty=False, file_limit=0):
+    extractor = EuroparlPerfectExtractor(language_from, languages_to, search_in_to=search_in_to,
+                                         output=output, sort_by_certainty=sort_by_certainty, file_limit=file_limit)
     process_data_folders(extractor, folder)
 
 

@@ -10,15 +10,14 @@ from .models import MultiWordExpression
 class RecentPastExtractor(BaseExtractor):
     __metaclass__ = ABCMeta
 
-    def __init__(self, language_from, languages_to=None, sentence_ids=None):
+    def __init__(self, language_from, languages_to=None, **kwargs):
         """
         Initializes the extractor for the given source and target language(s).
-        Reads in the config for the source language,
-        as well as the list of verbs that use 'to be' as auxiliary verb for both source and target language(s).
+        Reads in the config for the source language.
         :param language_from: the source language
         :param languages_to: the target language(s)
         """
-        super(RecentPastExtractor, self).__init__(language_from, languages_to, sentence_ids=sentence_ids)
+        super(RecentPastExtractor, self).__init__(language_from, languages_to, **kwargs)
 
         # Read the config
         config = ConfigParser.RawConfigParser()

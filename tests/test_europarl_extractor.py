@@ -5,16 +5,17 @@ import unittest
 
 from lxml import etree
 
-from corpora.europarl.extractor import EuroparlPerfectExtractor, EuroParlRecentPastExtractor, EuroParlPoSExtractor
+from corpora.europarl.extractor import EuroparlExtractor, EuroparlPerfectExtractor, EuroparlRecentPastExtractor, EuroparlPoSExtractor
 
-DATA_FOLDER = os.path.join(os.path.dirname(__file__), 'data/europarl')
+EUROPARL_DATA = os.path.join(os.path.dirname(__file__), 'data/europarl')
+DCEP_DATA = os.path.join(os.path.dirname(__file__), 'data/dcep')
 
 
 class TestEuroparlPerfectExtractor(unittest.TestCase):
     def setUp(self):
-        self.nl_filename = os.path.join(DATA_FOLDER, 'nl/ep-00-12-15.xml')
-        self.en_filename = os.path.join(DATA_FOLDER, 'en/ep-00-12-15.xml')
-        self.fr_filename = os.path.join(DATA_FOLDER, 'fr/ep-00-12-15.xml')
+        self.nl_filename = os.path.join(EUROPARL_DATA, 'nl/ep-00-12-15.xml')
+        self.en_filename = os.path.join(EUROPARL_DATA, 'en/ep-00-12-15.xml')
+        self.fr_filename = os.path.join(EUROPARL_DATA, 'fr/ep-00-12-15.xml')
 
         self.nl_extractor = EuroparlPerfectExtractor('nl', ['en'], search_in_to=True)
         self.nl_tree = etree.parse(self.nl_filename)
@@ -112,11 +113,11 @@ class TestEuroparlPerfectExtractor(unittest.TestCase):
         self.assertFalse(pp.is_continuous)
 
     def test_list_filenames(self):
-        files = self.nl_extractor.list_filenames(os.path.join(DATA_FOLDER, 'nl'))
+        files = self.nl_extractor.list_filenames(os.path.join(EUROPARL_DATA, 'nl'))
         self.assertEqual([os.path.basename(f) for f in files], ['ep-00-12-15.xml'])
 
     def test_recent_past_extraction(self):
-        fr_extractor = EuroParlRecentPastExtractor('fr', ['en', 'nl'])
+        fr_extractor = EuroparlRecentPastExtractor('fr', ['en', 'nl'])
 
         results = fr_extractor.process_file(self.fr_filename)
         self.assertEqual(len(results), 4)
@@ -127,22 +128,40 @@ class TestEuroparlPerfectExtractor(unittest.TestCase):
 
     def test_append_extractor(self):
         perfect_extractor = EuroparlPerfectExtractor('en', ['nl'], search_in_to=False)
-        for_extractor = EuroParlPoSExtractor('en', ['nl'], lemmata=['for'])
-        year_extractor = EuroParlPoSExtractor('en', ['nl'], lemmata=['year'])
+        for_extractor = EuroparlPoSExtractor('en', ['nl'], lemmata=['for'])
+        year_extractor = EuroparlPoSExtractor('en', ['nl'], lemmata=['year'])
 
-        results = for_extractor.generate_results(os.path.join(DATA_FOLDER, 'en'))
+        results = for_extractor.generate_results(os.path.join(EUROPARL_DATA, 'en'))
         self.assertEqual(len(results), 177)
 
         for_extractor.add_extractor(year_extractor)
-        results = for_extractor.generate_results(os.path.join(DATA_FOLDER, 'en'))
+        results = for_extractor.generate_results(os.path.join(EUROPARL_DATA, 'en'))
         self.assertEqual(len(results), 14)
 
         for_extractor.add_extractor(perfect_extractor)
-        results = for_extractor.generate_results(os.path.join(DATA_FOLDER, 'en'))
+        results = for_extractor.generate_results(os.path.join(EUROPARL_DATA, 'en'))
         self.assertEqual(len(results), 7)
         self.assertEqual(results[0][3], u'has been focused')
 
     def test_position(self):
-        when_extractor = EuroParlPoSExtractor('en', ['nl'], lemmata=['when'], position=1)
-        results = when_extractor.generate_results(os.path.join(DATA_FOLDER, 'en'))
+        when_extractor = EuroparlPoSExtractor('en', ['nl'], lemmata=['when'], position=1)
+        results = when_extractor.generate_results(os.path.join(EUROPARL_DATA, 'en'))
         self.assertEqual(len(results), 3)
+
+    def test_average_alignment_certainty(self):
+        extractor = EuroparlExtractor('en', ['nl', 'de'])
+
+        file_names = extractor.sort_by_alignment_certainty(os.path.join(DCEP_DATA, 'en'))
+        file_names = [os.path.basename(f) for f in file_names]
+        self.assertEqual(file_names[0], '20764633__IM-PRESS__20081211-STO-44307__EN.xml')
+        self.assertEqual(file_names[1], '16609396__IM-PRESS__20060905-STO-10339__EN.xml')
+        self.assertEqual(file_names[2], '16451293__IM-PRESS__20060131-IPR-04891__EN.xml')
+
+    def test_file_limit(self):
+        extractor = EuroparlExtractor('en', ['nl', 'de'], file_limit=2)
+        results = extractor.generate_results(os.path.join(DCEP_DATA, 'en'))
+        self.assertEqual(len(results), 55)
+
+        extractor = EuroparlExtractor('en', ['nl', 'de'], file_limit=1)
+        results = extractor.generate_results(os.path.join(DCEP_DATA, 'en'))
+        self.assertEqual(len(results), 37)

@@ -88,11 +88,11 @@ If you want to implement the extraction for another corpus, you'll have to creat
 
 The unit tests can be run using: 
 
-    python -m unittest discover
+    python -m unittest discover -b
 
 A coverage report can be generated (after installing [coverage.py](https://coverage.readthedocs.io/en/coverage-4.2/)) using:
 
-    coverage run --source . -m unittest discover
+    coverage run --source . -m unittest discover -b
     coverage html
 
 ## Citing

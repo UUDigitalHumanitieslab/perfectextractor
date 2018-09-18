@@ -19,6 +19,9 @@ class BNCExtractor(BaseBNC, BaseExtractor):
     def get_siblings(self, element, sentence_id, check_preceding):
         return element.itersiblings(tag='w', preceding=check_preceding)
 
+    def sort_by_alignment_certainty(self, dir_name):
+        raise NotImplementedError
+
 
 class BNCPerfectExtractor(BNCExtractor, PerfectExtractor):
     def get_line_by_number(self, tree, language_to, segment_number):

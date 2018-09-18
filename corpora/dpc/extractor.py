@@ -21,7 +21,7 @@ class DPCExtractor(BaseExtractor):
 
         The translation document file format either ends with nl-en-tei.xml or nl-fr-tei.xml.
 
-        Alignment line look like this:
+        Alignment lines look like this:
             <link type="A: 1-1" targets="p1.s1; p1.s1"/>
             <link type="A: 1-2" targets="p1.s9; p1.s9 p1.s10"/>
             <link type="B: 2-1" targets="p1.s24 p1.s25; p1.s25"/>
@@ -71,6 +71,9 @@ class DPCExtractor(BaseExtractor):
 
     def get_siblings(self, element, sentence_id, check_preceding):
         return element.itersiblings(preceding=check_preceding)
+
+    def sort_by_alignment_certainty(self, dir_name):
+        raise NotImplementedError
 
 
 class DPCPerfectExtractor(PerfectExtractor, DPCExtractor):

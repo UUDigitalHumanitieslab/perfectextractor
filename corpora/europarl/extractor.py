@@ -3,9 +3,11 @@
 import os
 import time
 
+import click
 from lxml import etree
 
 from apps.extractor.base import BaseExtractor
+from apps.extractor.models import Alignment
 from apps.extractor.perfectextractor import PerfectExtractor
 from apps.extractor.posextractor import PoSExtractor
 from apps.extractor.recentpastextractor import RecentPastExtractor
@@ -21,7 +23,7 @@ class EuroparlExtractor(BaseEuroparl, BaseExtractor):
         Processes a single file.
         """
         t0 = time.time()
-        print 'Now processing ' + filename + '...'
+        click.echo('Now processing {}...'.format(filename))
 
         # Parse the current tree (create a iterator over 's' elements)
         s_trees = etree.iterparse(filename, tag='s')
@@ -30,8 +32,24 @@ class EuroparlExtractor(BaseEuroparl, BaseExtractor):
         alignment_trees, translation_trees = self.parse_alignment_trees(filename)
 
         t1 = time.time()
-        print 'Finished parsing trees, took {:.3} seconds'.format(t1 - t0)
+        click.echo('Finished parsing trees, took {:.3} seconds'.format(t1 - t0))
 
+        # Fetch the results
+        results = self.fetch_results(filename, s_trees, alignment_trees, translation_trees)
+
+        click.echo('Finished fetching results, took {:.3} seconds'.format(time.time() - t1))
+
+        return results
+
+    def fetch_results(self, filename, s_trees, alignment_trees, translation_trees):
+        """
+        Fetches the results for a file
+        :param filename: The current filename
+        :param s_trees: The XML trees for all 's' elements in the file
+        :param alignment_trees: The alignment XML trees, per target language
+        :param translation_trees: The translation XML trees, per target language
+        :return: All results in a list
+        """
         results = list()
         # Loop over all sentences
         for _, s in s_trees:
@@ -53,17 +71,16 @@ class EuroparlExtractor(BaseEuroparl, BaseExtractor):
                                                                                                self.l_from,
                                                                                                language_to,
                                                                                                s.get('id'))
-                    translated_sentences = [self.get_line(translation_trees[language_to], line) for line in translated_lines]
+                    translated_sentences = [self.get_line(translation_trees[language_to], line) for line in
+                                            translated_lines]
                     result.append(alignment_type)
-                    result.append('<root>' + '\n'.join(translated_sentences) + '</root>' if translated_sentences else '')
+                    result.append(
+                        '<root>' + '\n'.join(translated_sentences) + '</root>' if translated_sentences else '')
                 else:
                     # If no translation is available, add empty columns
                     result.extend([''] * 2)
 
             results.append(result)
-
-        print 'Finished, took {:.3} seconds'.format(time.time() - t1)
-
         return results
 
     def get_line_by_number(self, tree, segment_number):
@@ -120,76 +137,101 @@ class EuroparlExtractor(BaseEuroparl, BaseExtractor):
         """
         from_lines = []
         to_lines = []
+        certainty = None
 
         sl = sorted([language_from, language_to])
-        for xtargets in alignment_trees[language_to]:
+        for alignment in alignment_trees[language_to]:
             if sl[0] == language_from:
-                if segment_number in xtargets[0]:
-                    from_lines = xtargets[0]
-                    to_lines = xtargets[1]
+                if segment_number in alignment.sources:
+                    from_lines = alignment.sources
+                    to_lines = alignment.targets
+                    certainty = alignment.certainty
                     break
             else:
-                if segment_number in xtargets[1]:
-                    from_lines = xtargets[1]
-                    to_lines = xtargets[0]
+                if segment_number in alignment.targets:
+                    from_lines = alignment.targets
+                    to_lines = alignment.sources
+                    certainty = alignment.certainty
                     break
 
         if not any(to_lines):
             to_lines = []
 
-        alignment = '{} => {}'.format(len(from_lines), len(to_lines)) if to_lines else ''
+        alignment_str = '{} => {}'.format(len(from_lines), len(to_lines)) if to_lines else ''
 
-        return from_lines, to_lines, alignment
+        return from_lines, to_lines, alignment_str
 
-    def parse_alignment_trees(self, filename):
-        base_filename = os.path.basename(filename)
+    def parse_alignment_trees(self, filename, include_translations=True):
         data_folder = os.path.dirname(os.path.dirname(filename))
+
+        # Cache the alignment XMLs on the first run
+        if not self.alignment_xmls:
+            for language_to in self.l_to:
+                sl = sorted([self.l_from, language_to])
+                alignment_file = os.path.join(data_folder, '-'.join(sl) + '.xml')
+                if os.path.isfile(alignment_file):
+                    alignment_tree = etree.parse(alignment_file)
+                    self.alignment_xmls[language_to] = alignment_tree
 
         alignment_trees = dict()
         translation_trees = dict()
         for language_to in self.l_to:
             sl = sorted([self.l_from, language_to])
-            alignment_file = os.path.join(data_folder, '-'.join(sl) + '.xml')
-            if os.path.isfile(alignment_file):
-                alignment_tree = etree.parse(alignment_file)
-                doc = '{}/{}.gz'.format(self.l_from, base_filename)
-                path = '@fromDoc="{}"' if sl[0] == self.l_from else '@toDoc="{}"'
-                linkGrps = alignment_tree.xpath('//linkGrp[{}]'.format(path.format(doc)))
+            alignment_tree = self.alignment_xmls[language_to]
+            base_filename = os.path.basename(filename)
+            doc = '{}/{}.gz'.format(self.l_from, base_filename)
+            path = '@fromDoc="{}"' if sl[0] == self.l_from else '@toDoc="{}"'
+            linkGrps = alignment_tree.xpath('//linkGrp[{}]'.format(path.format(doc)))
 
-                if not linkGrps:
-                    print 'No translation found for {} to {}'.format(filename, language_to)
-                elif len(linkGrps) == 1:
-                    linkGrp = linkGrps[0]
+            if not linkGrps:
+                click.echo('No translation found for {} to {}'.format(filename, language_to))
+            elif len(linkGrps) == 1:
+                linkGrp = linkGrps[0]
 
+                if include_translations:
                     translation_link = linkGrp.get('toDoc') if sl[0] == self.l_from else linkGrp.get('fromDoc')
                     translation_file = os.path.join(data_folder, translation_link[:-3])
                     translation_trees[language_to] = etree.parse(translation_file)
 
-                    links = [link.get('xtargets').split(';') for link in linkGrp.xpath('./link')]
-                    alignment_trees[language_to] = [[la.split(' '), lb.split(' ')] for la, lb in links]
-                else:
-                    print 'Multiple translations found for {} to {}'.format(filename, language_to)
+                alignments = []
+                for link in linkGrp.xpath('./link'):
+                    xtargets = link.get('xtargets').split(';')
+                    sources = xtargets[0].split(' ')
+                    targets = xtargets[1].split(' ')
+                    certainty = link.get('certainty', None)
+                    alignments.append(Alignment(sources, targets, certainty))
+
+                alignment_trees[language_to] = alignments
+            else:
+                click.echo('Multiple translations found for {} to {}'.format(filename, language_to))
 
         return alignment_trees, translation_trees
 
+    def average_alignment_certainty(self, alignment_trees):
+        certainties_sum = 0
+        certainties_len = 0
+        for language, alignments in alignment_trees.items():
+            certainties = [float(a.certainty) if a.certainty else 0 for a in alignments]
+            certainties_sum += sum(certainties)
+            certainties_len += len(certainties)
 
-class EuroParlPoSExtractor(EuroparlExtractor, PoSExtractor):
-    def process_file(self, filename):
+        return certainties_sum / float(certainties_len) if certainties_len > 0 else 0
+
+    def sort_by_alignment_certainty(self, dir_name):
+        filenames = dict()
+        for filename in self.list_filenames(dir_name):
+            alignment_trees, _ = self.parse_alignment_trees(filename, include_translations=False)
+            filenames[filename] = self.average_alignment_certainty(alignment_trees)
+
+        sorted_by_value = sorted(filenames.items(), key=lambda kv: kv[1], reverse=True)
+        return [f[0] for f in sorted_by_value]
+
+
+class EuroparlPoSExtractor(EuroparlExtractor, PoSExtractor):
+    def fetch_results(self, filename, s_trees, alignment_trees, translation_trees):
         """
         Processes a single file.
         """
-        t0 = time.time()
-        print 'Now processing ' + filename + '...'
-
-        # Parse the current tree (create a iterator over 's' elements)
-        s_trees = etree.iterparse(filename, tag='s')
-
-        # Parse the alignment and translation trees
-        alignment_trees, translation_trees = self.parse_alignment_trees(filename)
-
-        t1 = time.time()
-        print 'Finished parsing trees, took {:.3} seconds'.format(t1 - t0)
-
         results = []
 
         # Find potential words matching the part-of-speech
@@ -240,8 +282,6 @@ class EuroParlPoSExtractor(EuroparlExtractor, PoSExtractor):
 
                 results.append(result)
 
-        print 'Finished finding PoS, took {:.3} seconds'.format(time.time() - t1)
-
         return results
 
     def preprocess_found(self, word):
@@ -264,7 +304,7 @@ class EuroParlPoSExtractor(EuroparlExtractor, PoSExtractor):
         return result
 
 
-class EuroparlFrenchArticleExtractor(EuroParlPoSExtractor):
+class EuroparlFrenchArticleExtractor(EuroparlPoSExtractor):
     def __init__(self, language_from, languages_to):
         """
         Initializes the EuroparlFrenchArticleExtractor with a set of part-of-speeches and lemmata that the found
@@ -316,23 +356,11 @@ class EuroparlFrenchArticleExtractor(EuroParlPoSExtractor):
         return result
 
 
-class EuroParlRecentPastExtractor(EuroparlExtractor, RecentPastExtractor):
-    def process_file(self, filename):
+class EuroparlRecentPastExtractor(EuroparlExtractor, RecentPastExtractor):
+    def fetch_results(self, filename, s_trees, alignment_trees, translation_trees):
         """
         Processes a single file.
         """
-        t0 = time.time()
-        print 'Now processing ' + filename + '...'
-
-        # Parse the current tree (create a iterator over 's' elements)
-        s_trees = etree.iterparse(filename, tag='s')
-
-        # Parse the alignment and translation trees
-        alignment_trees, translation_trees = self.parse_alignment_trees(filename)
-
-        t1 = time.time()
-        print 'Finished parsing trees, took {:.3} seconds'.format(t1 - t0)
-
         results = []
         # Find potential recent pasts (per sentence)
         for _, s in s_trees:
@@ -386,8 +414,6 @@ class EuroParlRecentPastExtractor(EuroparlExtractor, RecentPastExtractor):
                     if not found_trans:
                         results.append(result)
 
-        print 'Finished finding recent pasts, took {:.3} seconds'.format(time.time() - t1)
-
         return results
 
     def get_sentence_words(self, xml_sentence):
@@ -422,22 +448,10 @@ class EuroparlPerfectExtractor(EuroparlExtractor, PerfectExtractor):
 
         return etree.tostring(s), sentence, pp
 
-    def process_file(self, filename):
+    def fetch_results(self, filename, s_trees, alignment_trees, translation_trees):
         """
         Processes a single file.
         """
-        t0 = time.time()
-        print 'Now processing ' + filename + '...'
-
-        # Parse the current tree (create a iterator over 's' elements)
-        s_trees = etree.iterparse(filename, tag='s')
-
-        # Parse the alignment and translation trees
-        alignment_trees, translation_trees = self.parse_alignment_trees(filename)
-
-        t1 = time.time()
-        print 'Finished parsing trees, took {:.3} seconds'.format(t1 - t0)
-
         results = []
         # Find potential present perfects (per sentence)
         for _, s in s_trees:
@@ -480,7 +494,5 @@ class EuroparlPerfectExtractor(EuroparlExtractor, PerfectExtractor):
                             result.extend([''] * 2)
 
                     results.append(result)
-
-        print 'Finished finding present perfects, took {:.3} seconds'.format(time.time() - t1)
 
         return results

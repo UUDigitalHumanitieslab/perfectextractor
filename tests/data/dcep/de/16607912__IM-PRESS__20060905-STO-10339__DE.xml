@@ -1,0 +1,392 @@
+<?xml version='1.0' encoding='utf-8'?>
+<text>
+<p id="1">
+<s id="s1.1">
+ <w id="w1.1.1" tree="CARD" lem="60">60</w> 
+ <w id="w1.1.2" tree="NN" lem="Sekunde">Sekunden</w> 
+ <w id="w1.1.3" tree="ADJD" lem="frei">frei</w> 
+ <w id="w1.1.4" tree="ADJA" lem="verfügbar">verfügbare</w> 
+ <w id="w1.1.5" tree="NN" lem="Redezeit">Redezeit</w> 
+ <w id="w1.1.6" tree="APPR" lem="für">Für</w> 
+ <w id="w1.1.7" tree="CARD" lem="60">60</w> 
+ <w id="w1.1.8" tree="NN" lem="Sekunde">Sekunden</w> 
+ <w id="w1.1.9" tree="VMFIN" lem="können">können</w> 
+ <w id="w1.1.10" tree="ART" lem="die">die</w> 
+ <w id="w1.1.11" tree="NN" lem="Europa-Abgeordnete">Europa-Abgeordneten</w> 
+ <w id="w1.1.12" tree="PPOSAT" lem="ihr">ihr</w> 
+ <w id="w1.1.13" tree="NN" lem="Rede-Thema">Rede-Thema</w> 
+ <w id="w1.1.14" tree="ADJD" lem="frei">frei</w> 
+ <w id="w1.1.15" tree="VVINF" lem="wählen">wählen</w>
+ <w id="w1.1.16" tree="$." lem=".">.</w>
+</s> 
+ 
+<s id="s1.2">
+ <w id="w1.2.1" tree="PPER" lem="es">Es</w> 
+ <w id="w1.2.2" tree="VAFIN" lem="haben">hat</w> 
+ <w id="w1.2.3" tree="PRF" lem="sich">sich</w> 
+ <w id="w1.2.4" tree="APPRART" lem="in">im</w> 
+ <w id="w1.2.5" tree="NN" lem="Parlament">Parlament</w> 
+ <w id="w1.2.6" tree="VVPP" lem="einbürgern">eingebürgert</w>
+ <w id="w1.2.7" tree="$," lem=",">,</w> 
+ <w id="w1.2.8" tree="KOUS" lem="dass">dass</w> 
+ <w id="w1.2.9" tree="APPR" lem="nach">nach</w> 
+ <w id="w1.2.10" tree="ART" lem="die">der</w> 
+ <w id="w1.2.11" tree="NN" lem="Eröffnung">Eröffnung</w> 
+ <w id="w1.2.12" tree="ART" lem="die">der</w> 
+ <w id="w1.2.13" tree="NN" lem="Plenartagung">Plenartagung</w> 
+ <w id="w1.2.14" tree="APPR" lem="durch">durch</w> 
+ <w id="w1.2.15" tree="ART" lem="die">den</w> 
+ <w id="w1.2.16" tree="NN" lem="Präsident">Präsidenten</w> 
+ <w id="w1.2.17" tree="APPR" lem="für">für</w> 
+ <w id="w1.2.18" tree="ART" lem="eine">eine</w> 
+ <w id="w1.2.19" tree="ADJA" lem="halb">halbe</w> 
+ <w id="w1.2.20" tree="NN" lem="Stunde">Stunde</w> 
+ <w id="w1.2.21" tree="NN" lem="Rede|Reden">Reden</w> 
+ <w id="w1.2.22" tree="VVFIN" lem="stattfinden">stattfinden</w>
+ <w id="w1.2.23" tree="$," lem=",">,</w> 
+ <w id="w1.2.24" tree="APPR" lem="in">in</w> 
+ <w id="w1.2.25" tree="PRELS" lem="die">denen</w> 
+ <w id="w1.2.26" tree="ART" lem="die">die</w> 
+ <w id="w1.2.27" tree="NN" lem="Abgeordnete">Abgeordneten</w> 
+ <w id="w1.2.28" tree="VVINF" lem="thematisieren">thematisieren</w> 
+ <w id="w1.2.29" tree="VMINF" lem="können">können</w>
+ <w id="w1.2.30" tree="$," lem=",">,</w> 
+ <w id="w1.2.31" tree="PRELS" lem="was">was</w> 
+ <w id="w1.2.32" tree="PPER" lem="sie">sie</w> 
+ <w id="w1.2.33" tree="APPR" lem="für">für</w> 
+ <w id="w1.2.34" tree="ADV" lem="besonders">besonders</w> 
+ <w id="w1.2.35" tree="ADJD" lem="aktuell">aktuell</w> 
+ <w id="w1.2.36" tree="KON" lem="und">und</w> 
+ <w id="w1.2.37" tree="ADJD" lem="relevant">relevant</w> 
+ <w id="w1.2.38" tree="VVINF" lem="halten">halten</w>
+ <w id="w1.2.39" tree="$." lem=".">.</w>
+</s> 
+ 
+<s id="s1.3">
+ <w id="w1.3.1" tree="APPR" lem="über">Über</w> 
+ <w id="w1.3.2" tree="ART" lem="die">die</w> 
+ <w id="w1.3.3" tree="NN" lem="Rednerliste">Rednerliste</w> 
+ <w id="w1.3.4" tree="VVFIN" lem="entscheiden">entscheidet</w> 
+ <w id="w1.3.5" tree="ART" lem="die">der</w> 
+ <w id="w1.3.6" tree="NN" lem="Präsident">Präsident</w>
+ <w id="w1.3.7" tree="$," lem=",">,</w> 
+ <w id="w1.3.8" tree="PWAV" lem="wobei">wobei</w> 
+ <w id="w1.3.9" tree="PPER" lem="er">er</w> 
+ <w id="w1.3.10" tree="ART" lem="eine">eine</w> 
+ <w id="w1.3.11" tree="NN" lem="Balance">Balance</w> 
+ <w id="w1.3.12" tree="ADJD" lem="entsprechend">entsprechend</w> 
+ <w id="w1.3.13" tree="ART" lem="die">den</w> 
+ <w id="w1.3.14" tree="NN" lem="Herkunftsland">Herkunftsländern</w> 
+ <w id="w1.3.15" tree="ART" lem="die">der</w> 
+ <w id="w1.3.16" tree="NN" lem="Abgeordnete">Abgeordneten</w> 
+ <w id="w1.3.17" tree="KON" lem="und">und</w> 
+ <w id="w1.3.18" tree="PPOSAT" lem="ihr">ihren</w> 
+ <w id="w1.3.19" tree="NN" lem="Fraktion">Fraktionen</w> 
+ <w id="w1.3.20" tree="VVFIN" lem="wahren">wahrt</w>
+ <w id="w1.3.21" tree="$." lem=".">.</w>
+</s> 
+ 
+<s id="s1.4">
+ <w id="w1.4.1" tree="ART" lem="die">Die</w> 
+ <w id="w1.4.2" tree="NN" lem="Chance">Chance</w> 
+ <w id="w1.4.3" tree="ART" lem="die">der</w> 
+ <w id="w1.4.4" tree="NN" lem="Abgeordnete">Abgeordneten</w>
+ <w id="w1.4.5" tree="$," lem=",">,</w> 
+ <w id="w1.4.6" tree="ART" lem="die">die</w> 
+ <w id="w1.4.7" tree="NN" lem="Aufmerksamkeit">Aufmerksamkeit</w> 
+ <w id="w1.4.8" tree="ART" lem="die">des</w> 
+ <w id="w1.4.9" tree="NN" lem="Plenum">Plenums</w> 
+ <w id="w1.4.10" tree="APPR" lem="für">für</w> 
+ <w id="w1.4.11" tree="ART" lem="eine">eine</w> 
+ <w id="w1.4.12" tree="NN" lem="Minute">Minute</w> 
+ <w id="w1.4.13" tree="ADJD" lem="„">„</w>
+ <w id="w1.4.14" tree="APPR" lem="auf">auf</w> 
+ <w id="w1.4.15" tree="ART" lem="eine">ein</w> 
+ <w id="w1.4.16" tree="NN" lem="Thema">Thema</w> 
+ <w id="w1.4.17" tree="APPR" lem="von">von</w> 
+ <w id="w1.4.18" tree="ADJA" lem="politisch">politischer</w> 
+ <w id="w1.4.19" tree="NN" lem="Bedeutung">Bedeutung</w>
+ <w id="w1.4.20" tree="ADJD" lem="“">“</w> 
+ <w id="w1.4.21" tree="PTKZU" lem="zu">zu</w> 
+ <w id="w1.4.22" tree="VVINF" lem="lenken">lenken</w>
+ <w id="w1.4.23" tree="$," lem=",">,</w> 
+ <w id="w1.4.24" tree="VAFIN" lem="sein">ist</w> 
+ <w id="w1.4.25" tree="APPRART" lem="in">im</w> 
+ <w id="w1.4.26" tree="NN" lem="Artikel">Artikel</w> 
+ <w id="w1.4.27" tree="CARD" lem="@card@">144</w> 
+ <w id="w1.4.28" tree="ART" lem="die">der</w> 
+ <w id="w1.4.29" tree="NN" lem="Geschäftsordnung">Geschäftsordnung</w> 
+ <w id="w1.4.30" tree="ART" lem="die">des</w> 
+ <w id="w1.4.31" tree="NN" lem="Europaparlament">Europaparlaments</w> 
+ <w id="w1.4.32" tree="VVPP" lem="verankern">verankert</w>
+ <w id="w1.4.33" tree="$." lem=".">.</w>
+</s> 
+ 
+<s id="s1.5">
+ <w id="w1.5.1" tree="ART" lem="die">Die</w> 
+ <w id="w1.5.2" tree="NN" lem="Bandbreite">Bandbreite</w> 
+ <w id="w1.5.3" tree="ART" lem="die">der</w> 
+ <w id="w1.5.4" tree="ADJA" lem="gewählt">gewählten</w> 
+ <w id="w1.5.5" tree="NN" lem="Thema">Themen</w> 
+ <w id="w1.5.6" tree="PIAT" lem="solche">solcher</w> 
+ <w id="w1.5.7" tree="NN" lem="Kurz-Reden">Kurz-Reden</w> 
+ <w id="w1.5.8" tree="VMFIN" lem="können">könnte</w> 
+ <w id="w1.5.9" tree="ADV" lem="kaum">kaum</w> 
+ <w id="w1.5.10" tree="ADJD" lem="groß">größer</w> 
+ <w id="w1.5.11" tree="VAINF" lem="sein">sein</w>
+ <w id="w1.5.12" tree="$." lem=".">.</w>
+</s></p>
+
+<p id="2">
+<s id="s2.1">
+ <w id="w2.1.1" tree="CARD" lem="30">30</w> 
+ <w id="w2.1.2" tree="NN" lem="Minute">Minuten</w> 
+ <w id="w2.1.3" tree="NN" lem="Themenvielfalt">Themenvielfalt</w> 
+ <w id="w2.1.4" tree="APPR" lem="in">In</w> 
+ <w id="w2.1.5" tree="ART" lem="die">der</w> 
+ <w id="w2.1.6" tree="NN" lem="Vergangenheit">Vergangenheit</w> 
+ <w id="w2.1.7" tree="VVFIN" lem="gehören">gehörten</w> 
+ <w id="w2.1.8" tree="PAV" lem="dazu">dazu</w> 
+ <w id="w2.1.9" tree="ADV" lem="immer">immer</w> 
+ <w id="w2.1.10" tree="ADV" lem="wieder">wieder</w> 
+ <w id="w2.1.11" tree="NN" lem="Menschenrechtsverletzung">Menschenrechtsverletzungen</w> 
+ <w id="w2.1.12" tree="APPR" lem="in">in</w> 
+ <w id="w2.1.13" tree="PIAT" lem="alle">aller</w> 
+ <w id="w2.1.14" tree="NN" lem="Welt">Welt</w>
+ <w id="w2.1.15" tree="$," lem=",">,</w> 
+ <w id="w2.1.16" tree="NN" lem="Rassismus">Rassismus</w>
+ <w id="w2.1.17" tree="$," lem=",">,</w> 
+ <w id="w2.1.18" tree="TRUNC" lem="Lesben-">Lesben-</w> 
+ <w id="w2.1.19" tree="KON" lem="und">und</w> 
+ <w id="w2.1.20" tree="NN" lem="Schwulenfeindlichkeit">Schwulenfeindlichkeit</w>
+ <w id="w2.1.21" tree="$," lem=",">,</w> 
+ <w id="w2.1.22" tree="ADJA" lem="kulturell">kulturelle</w> 
+ <w id="w2.1.23" tree="NN" lem="Vielfalt">Vielfalt</w>
+ <w id="w2.1.24" tree="$," lem=",">,</w> 
+ <w id="w2.1.25" tree="NN" lem="Religionsfreiheit">Religionsfreiheit</w>
+ <w id="w2.1.26" tree="$," lem=",">,</w> 
+ <w id="w2.1.27" tree="NN" lem="Umweltbelastung">Umweltbelastung</w>
+ <w id="w2.1.28" tree="$," lem=",">,</w> 
+ <w id="w2.1.29" tree="NN" lem="Gesundheitspolitik">Gesundheitspolitik</w>
+ <w id="w2.1.30" tree="$," lem=",">,</w> 
+ <w id="w2.1.31" tree="NN" lem="Energie">Energie</w>
+ <w id="w2.1.32" tree="$," lem=",">,</w> 
+ <w id="w2.1.33" tree="ART" lem="die">die</w> 
+ <w id="w2.1.34" tree="NN" lem="Abwanderung">Abwanderung</w> 
+ <w id="w2.1.35" tree="APPR" lem="von">von</w> 
+ <w id="w2.1.36" tree="NN" lem="Firma">Firmen</w>
+ <w id="w2.1.37" tree="$," lem=",">,</w> 
+ <w id="w2.1.38" tree="ART" lem="die">der</w> 
+ <w id="w2.1.39" tree="NN" lem="Gebrauch">Gebrauch</w> 
+ <w id="w2.1.40" tree="APPR" lem="von">von</w> 
+ <w id="w2.1.41" tree="NN" lem="Minderheitensprache">Minderheitensprachen</w>
+ <w id="w2.1.42" tree="$," lem=",">,</w> 
+ <w id="w2.1.43" tree="NN" lem="Nothilfe">Nothilfe</w> 
+ <w id="w2.1.44" tree="APPR" lem="bei">bei</w> 
+ <w id="w2.1.45" tree="NN" lem="Naturkatastrophe">Naturkatastrophen</w>
+ <w id="w2.1.46" tree="$," lem=",">,</w> 
+ <w id="w2.1.47" tree="NN" lem="Arbeitslosigkeit">Arbeitslosigkeit</w> 
+ <w id="w2.1.48" tree="KON" lem="und">und</w> 
+ <w id="w2.1.49" tree="PIS" lem="andere">anderes</w> 
+ <w id="w2.1.50" tree="ADV" lem="mehr">mehr</w>
+ <w id="w2.1.51" tree="$." lem=".">.</w>
+</s> 
+ 
+<s id="s2.2">
+ <w id="w2.2.1" tree="ART" lem="die">Die</w> 
+ <w id="w2.2.2" tree="NN" lem="Liste">Liste</w> 
+ <w id="w2.2.3" tree="VVFIN" lem="lassen">ließe</w> 
+ <w id="w2.2.4" tree="PRF" lem="sich">sich</w> 
+ <w id="w2.2.5" tree="VVINF" lem="fortsetzen">fortsetzen</w> 
+ <w id="w2.2.6" tree="KON" lem="und">und</w> 
+ <w id="w2.2.7" tree="ADV" lem="weiter">weiter</w> 
+ <w id="w2.2.8" tree="VVINF" lem="detaillieren">detaillieren</w>
+ <w id="w2.2.9" tree="$." lem=".">.</w>
+</s> 
+ 
+<s id="s2.3">
+ <w id="w2.3.1" tree="NN" lem="Artikel">Artikel</w> 
+ <w id="w2.3.2" tree="CARD" lem="@card@">144</w> 
+ <w id="w2.3.3" tree="VVFIN" lem="bieten">bietet</w> 
+ <w id="w2.3.4" tree="ART" lem="die">den</w> 
+ <w id="w2.3.5" tree="NN" lem="Abgeordnete">Abgeordneten</w> 
+ <w id="w2.3.6" tree="ART" lem="eine">eine</w> 
+ <w id="w2.3.7" tree="NN" lem="Möglichkeit">Möglichkeit</w>
+ <w id="w2.3.8" tree="$," lem=",">,</w> 
+ <w id="w2.3.9" tree="PRELS" lem="die">die</w> 
+ <w id="w2.3.10" tree="ART" lem="die">der</w> 
+ <w id="w2.3.11" tree="ADV" lem="ansonsten">ansonsten</w> 
+ <w id="w2.3.12" tree="ADJD" lem="stark">stark</w> 
+ <w id="w2.3.13" tree="ADJA" lem="reglementiert">reglementierte</w> 
+ <w id="w2.3.14" tree="NN" lem="Parlamentsalltag">Parlamentsalltag</w> 
+ <w id="w2.3.15" tree="ADV" lem="sonst">sonst</w> 
+ <w id="w2.3.16" tree="ADV" lem="kaum">kaum</w> 
+ <w id="w2.3.17" tree="VVFIN" lem="bieten">bietet</w>
+ <w id="w2.3.18" tree="$." lem=":">:</w> 
+ <w id="w2.3.19" tree="ADV" lem="nämlich">Nämlich</w> 
+ <w id="w2.3.20" tree="ART" lem="eine">ein</w> 
+ <w id="w2.3.21" tree="NN" lem="Thema">Thema</w> 
+ <w id="w2.3.22" tree="PTKZU" lem="zu">zu</w> 
+ <w id="w2.3.23" tree="VVINF" lem="wählen">wählen</w>
+ <w id="w2.3.24" tree="$," lem=",">,</w> 
+ <w id="w2.3.25" tree="PRELS" lem="die">das</w> 
+ <w id="w2.3.26" tree="ART" lem="die">dem</w> 
+ <w id="w2.3.27" tree="NN" lem="Abgeordnete">Abgeordneten</w> 
+ <w id="w2.3.28" tree="ADV" lem="besonders">besonders</w> 
+ <w id="w2.3.29" tree="ADJD" lem="wichtig">wichtig</w> 
+ <w id="w2.3.30" tree="VAFIN" lem="sein">ist</w> 
+ <w id="w2.3.31" tree="KON" lem="und">und</w> 
+ <w id="w2.3.32" tree="APPR" lem="zu">zu</w> 
+ <w id="w2.3.33" tree="PPER" lem="er">ihm</w> 
+ <w id="w2.3.34" tree="PTKZU" lem="zu">zu</w> 
+ <w id="w2.3.35" tree="VVINF" lem="sprechen">sprechen</w>
+ <w id="w2.3.36" tree="$," lem=",">,</w> 
+ <w id="w2.3.37" tree="KOUS" lem="obwohl">obwohl</w> 
+ <w id="w2.3.38" tree="PPER" lem="es">es</w> 
+ <w id="w2.3.39" tree="PTKNEG" lem="nicht">nicht</w> 
+ <w id="w2.3.40" tree="APPR" lem="auf">auf</w> 
+ <w id="w2.3.41" tree="ART" lem="die">der</w> 
+ <w id="w2.3.42" tree="NN" lem="Tagesordnung">Tagesordnung</w> 
+ <w id="w2.3.43" tree="ART" lem="die">der</w> 
+ <w id="w2.3.44" tree="NN" lem="Sitzung">Sitzung</w> 
+ <w id="w2.3.45" tree="VVFIN" lem="stehen">steht</w>
+ <w id="w2.3.46" tree="$." lem=".">.</w>
+</s> 
+ 
+<s id="s2.4">
+ <w id="w2.4.1" tree="ADV" lem="mitunter">Mitunter</w> 
+ <w id="w2.4.2" tree="VAFIN" lem="werden">wird</w> 
+ <w id="w2.4.3" tree="ART" lem="eine">ein</w> 
+ <w id="w2.4.4" tree="NN" lem="Thema">Thema</w>
+ <w id="w2.4.5" tree="$," lem=",">,</w> 
+ <w id="w2.4.6" tree="PRELS" lem="die">das</w> 
+ <w id="w2.4.7" tree="ADJD" lem="spät">später</w> 
+ <w id="w2.4.8" tree="APPR" lem="für">für</w> 
+ <w id="w2.4.9" tree="ART" lem="die">die</w> 
+ <w id="w2.4.10" tree="NN" lem="Öffentlichkeit">Öffentlichkeit</w> 
+ <w id="w2.4.11" tree="KON" lem="und">und</w> 
+ <w id="w2.4.12" tree="ART" lem="die">das</w> 
+ <w id="w2.4.13" tree="NN" lem="Parlament">Parlament</w> 
+ <w id="w2.4.14" tree="APPR" lem="von">von</w> 
+ <w id="w2.4.15" tree="NN" lem="Bedeutung">Bedeutung</w> 
+ <w id="w2.4.16" tree="VAFIN" lem="werden">wird</w> 
+ <w id="w2.4.17" tree="KON" lem="und">und</w> 
+ <w id="w2.4.18" tree="PRF" lem="sich">sich</w> 
+ <w id="w2.4.19" tree="ADV" lem="dann">dann</w> 
+ <w id="w2.4.20" tree="ADV" lem="auch">auch</w> 
+ <w id="w2.4.21" tree="APPR" lem="in">in</w> 
+ <w id="w2.4.22" tree="ART" lem="die">der</w> 
+ <w id="w2.4.23" tree="NN" lem="Tagesordnung">Tagesordnung</w> 
+ <w id="w2.4.24" tree="VVFIN" lem="niederschlagen">niederschlägt</w>
+ <w id="w2.4.25" tree="$," lem=",">,</w> 
+ <w id="w2.4.26" tree="ADV" lem="zunächst">zunächst</w> 
+ <w id="w2.4.27" tree="APPR" lem="von">von</w> 
+ <w id="w2.4.28" tree="ART" lem="eine">einem</w> 
+ <w id="w2.4.29" tree="NN" lem="Parlamentarier">Parlamentarier</w> 
+ <w id="w2.4.30" tree="ADJD" lem="„">„</w>
+ <w id="w2.4.31" tree="APPR" lem="in">in</w> 
+ <w id="w2.4.32" tree="PPOSAT" lem="sein">seinen</w> 
+ <w id="w2.4.33" tree="CARD" lem="60">60</w> 
+ <w id="w2.4.34" tree="NN" lem="Sekunde">Sekunden</w>
+ <w id="w2.4.35" tree="$(" lem="&quot;">"</w> 
+ <w id="w2.4.36" tree="VVPP" lem="ansprechen">angesprochen</w>
+ <w id="w2.4.37" tree="$." lem=".">.</w>
+</s></p>
+
+<p id="3">
+<s id="s3.1">
+ <w id="w3.1.1" tree="ART" lem="die">Das</w> 
+ <w id="w3.1.2" tree="NN" lem="Reden-Karussell">Reden-Karussell</w> 
+ <w id="w3.1.3" tree="VVFIN" lem="verfolgen">verfolgen</w> 
+ <w id="w3.1.4" tree="NN" lem="Live">Live</w> 
+ <w id="w3.1.5" tree="VMFIN" lem="können">kann</w> 
+ <w id="w3.1.6" tree="PIS" lem="man">man</w> 
+ <w id="w3.1.7" tree="ART" lem="die">die</w> 
+ <w id="w3.1.8" tree="NN" lem="Kurzreden">Kurzreden</w> 
+ <w id="w3.1.9" tree="ADV" lem="jeweils">jeweils</w> 
+ <w id="w3.1.10" tree="APPR" lem="zu">zu</w> 
+ <w id="w3.1.11" tree="NN" lem="Beginn">Beginn</w> 
+ <w id="w3.1.12" tree="ART" lem="die">der</w> 
+ <w id="w3.1.13" tree="NN" lem="Plenarsitzung">Plenarsitzung</w>
+ <w id="w3.1.14" tree="$," lem=",">,</w> 
+ <w id="w3.1.15" tree="ART" lem="die">das</w> 
+ <w id="w3.1.16" tree="ADJA" lem="nah">nächste</w> 
+ <w id="w3.1.17" tree="NN" lem="Mal">Mal</w> 
+ <w id="w3.1.18" tree="APPRART" lem="an">am</w> 
+ <w id="w3.1.19" tree="ADJA" lem="25.">25.</w> 
+ <w id="w3.1.20" tree="NN" lem="September">September</w>
+ <w id="w3.1.21" tree="$," lem=",">,</w> 
+ <w id="w3.1.22" tree="KOUI" lem="um">um</w> 
+ <w id="w3.1.23" tree="ADJD" lem="kurz">kurz</w> 
+ <w id="w3.1.24" tree="APPR" lem="nach">nach</w> 
+ <w id="w3.1.25" tree="CARD" lem="17">17</w> 
+ <w id="w3.1.26" tree="NN" lem="Uhr">Uhr</w> 
+ <w id="w3.1.27" tree="APPR" lem="per">per</w> 
+ <w id="w3.1.28" tree="NN" lem="webstream">webstream</w> 
+ <w id="w3.1.29" tree="VVFIN" lem="verfolgen">verfolgen</w> 
+ <w id="w3.1.30" tree="NN" lem="–">–</w> 
+ <w id="w3.1.31" tree="ART" lem="die">der</w> 
+ <w id="w3.1.32" tree="NN" lem="Service">Service</w> 
+ <w id="w3.1.33" tree="ADJA" lem="„">„</w>
+ <w id="w3.1.34" tree="NN" lem="EP-Live">EP-Live</w>
+ <w id="w3.1.35" tree="$(" lem="&quot;">"</w> 
+ <w id="w3.1.36" tree="ART" lem="die">der</w> 
+ <w id="w3.1.37" tree="NN" lem="Europarl-Website">Europarl-Website</w> 
+ <w id="w3.1.38" tree="VVFIN" lem="machen">macht</w>
+ <w id="w3.1.39" tree="ADJA" lem="’">’</w>
+ <w id="w3.1.40" tree="NN" lem="s">s</w> 
+ <w id="w3.1.41" tree="ADJD" lem="möglich">möglich</w>
+ <w id="w3.1.42" tree="$." lem=".">.</w>
+</s> 
+ 
+<s id="s3.2">
+ <w id="w3.2.1" tree="ADV" lem="außerdem">Außerdem</w> 
+ <w id="w3.2.2" tree="VVFIN" lem="bieten">bieten</w> 
+ <w id="w3.2.3" tree="PPER" lem="wir">wir</w> 
+ <w id="w3.2.4" tree="ADV" lem="nun">nun</w> 
+ <w id="w3.2.5" tree="ADV" lem="auch">auch</w> 
+ <w id="w3.2.6" tree="NN" lem="Videomitschnitte">Videomitschnitte</w> 
+ <w id="w3.2.7" tree="APPR" lem="auf">auf</w> 
+ <w id="w3.2.8" tree="NN" lem="Abruf">Abruf</w>
+ <w id="w3.2.9" tree="$," lem=",">,</w> 
+ <w id="w3.2.10" tree="APPR" lem="in">in</w> 
+ <w id="w3.2.11" tree="PRELS" lem="die">der</w> 
+ <w id="w3.2.12" tree="ART" lem="die">die</w> 
+ <w id="w3.2.13" tree="ADV" lem="jeweils">jeweils</w> 
+ <w id="w3.2.14" tree="ADJA" lem="letzt">letzte</w> 
+ <w id="w3.2.15" tree="ADJA" lem="abgelaufen">abgelaufene</w> 
+ <w id="w3.2.16" tree="NN" lem="Plenartagung">Plenartagung</w> 
+ <w id="w3.2.17" tree="APPRART" lem="zu">zur</w> 
+ <w id="w3.2.18" tree="NN" lem="Verfügung">Verfügung</w> 
+ <w id="w3.2.19" tree="VVFIN" lem="stehen">steht</w> 
+ <w id="w3.2.20" tree="$(" lem="(">(</w>
+ <w id="w3.2.21" tree="ADJA" lem="„">„</w>
+ <w id="w3.2.22" tree="NN" lem="Video">Video</w> 
+ <w id="w3.2.23" tree="APPR" lem="auf">auf</w> 
+ <w id="w3.2.24" tree="NN" lem="Abruf">Abruf</w>
+ <w id="w3.2.25" tree="ADJD" lem="“">“</w> 
+ <w id="w3.2.26" tree="APPR" lem="unter">unter</w> 
+ <w id="w3.2.27" tree="NN" lem="EP-Live">EP-Live</w>
+ <w id="w3.2.28" tree="$(" lem=")">)</w>
+ <w id="w3.2.29" tree="$." lem=".">.</w>
+</s> 
+ 
+<s id="s3.3">
+ <w id="w3.3.1" tree="KON" lem="und">Und</w> 
+ <w id="w3.3.2" tree="ADV" lem="schließlich">schließlich</w> 
+ <w id="w3.3.3" tree="VAFIN" lem="werden">werden</w> 
+ <w id="w3.3.4" tree="PIAT" lem="alle">alle</w> 
+ <w id="w3.3.5" tree="NN" lem="Rede|Reden">Reden</w> 
+ <w id="w3.3.6" tree="ADJD" lem="schnellstmöglich">schnellstmöglich</w> 
+ <w id="w3.3.7" tree="APPRART" lem="in">im</w> 
+ <w id="w3.3.8" tree="NN" lem="Wortlaut-Protokoll">Wortlaut-Protokoll</w> 
+ <w id="w3.3.9" tree="ART" lem="die">des</w> 
+ <w id="w3.3.10" tree="NN" lem="Parlament">Parlaments</w> 
+ <w id="w3.3.11" tree="$(" lem="(">(</w>
+ <w id="w3.3.12" tree="APPR" lem="in">in</w> 
+ <w id="w3.3.13" tree="ART" lem="die">der</w> 
+ <w id="w3.3.14" tree="NN" lem="Originalsprache">Originalsprache</w>
+ <w id="w3.3.15" tree="$(" lem=")">)</w> 
+ <w id="w3.3.16" tree="VVPP" lem="veröffentlichen">veröffentlicht</w>
+ <w id="w3.3.17" tree="$." lem=".">.</w>
+</s></p></text>
