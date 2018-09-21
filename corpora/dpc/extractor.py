@@ -72,7 +72,10 @@ class DPCExtractor(BaseExtractor):
     def get_siblings(self, element, sentence_id, check_preceding):
         return element.itersiblings(preceding=check_preceding)
 
-    def sort_by_alignment_certainty(self, dir_name):
+    def sort_by_alignment_certainty(self, file_names):
+        raise NotImplementedError
+
+    def filter_by_file_size(self, file_names):
         raise NotImplementedError
 
 

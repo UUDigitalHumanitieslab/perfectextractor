@@ -151,7 +151,7 @@ class TestEuroparlPerfectExtractor(unittest.TestCase):
     def test_average_alignment_certainty(self):
         extractor = EuroparlExtractor('en', ['nl', 'de'])
 
-        file_names = extractor.sort_by_alignment_certainty(os.path.join(DCEP_DATA, 'en'))
+        file_names = extractor.sort_by_alignment_certainty(extractor.list_filenames(os.path.join(DCEP_DATA, 'en')))
         file_names = [os.path.basename(f) for f in file_names]
         self.assertEqual(file_names[0], '20764633__IM-PRESS__20081211-STO-44307__EN.xml')
         self.assertEqual(file_names[1], '16609396__IM-PRESS__20060905-STO-10339__EN.xml')

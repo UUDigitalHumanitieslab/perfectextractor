@@ -13,7 +13,7 @@ class BaseExtractor(object):
     __metaclass__ = ABCMeta
 
     def __init__(self, language_from, languages_to=None, sentence_ids=None, lemmata=None, position=None, output=TXT,
-                 sort_by_certainty=False, file_limit=0):
+                 sort_by_certainty=False, file_limit=0, max_file_size=0):
         """
         Initializes the extractor for the given source and target language(s).
         :param language_from: the source language
@@ -24,6 +24,7 @@ class BaseExtractor(object):
         :param output: whether to output the results in text or XML format
         :param sort_by_certainty: whether to sort the files by average alignment certainty
         :param file_limit: whether to limit the number of files searched in
+        :param max_file_size: whether to only use files smaller than a certain size
         """
         self.l_from = language_from
         self.l_to = languages_to or []
@@ -32,6 +33,7 @@ class BaseExtractor(object):
         self.output = output
         self.sort_by_certainty = sort_by_certainty
         self.file_limit = file_limit
+        self.max_file_size = max_file_size
 
         # Read in the lemmata list (if provided)
         self.lemmata_list = []
@@ -55,10 +57,14 @@ class BaseExtractor(object):
     def collect_file_names(self, dir_name):
         click.echo('Collecting file names...')
 
+        file_names = self.list_filenames(dir_name)
+
+        if self.max_file_size:
+            file_names = self.filter_by_file_size(file_names)
+
         if self.sort_by_certainty:
-            file_names = self.sort_by_alignment_certainty(dir_name)
-        else:
-            file_names = self.list_filenames(dir_name)
+            file_names = self.sort_by_alignment_certainty(file_names)
+
         if self.file_limit:
             file_names = file_names[:self.file_limit]
 
@@ -154,5 +160,9 @@ class BaseExtractor(object):
         raise NotImplementedError
 
     @abstractmethod
-    def sort_by_alignment_certainty(self, dir_name):
+    def sort_by_alignment_certainty(self, file_names):
+        raise NotImplementedError
+
+    @abstractmethod
+    def filter_by_file_size(self, file_names):
         raise NotImplementedError

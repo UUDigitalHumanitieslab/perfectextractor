@@ -62,7 +62,10 @@ class EuroparlExtractor(BaseEuroparl, BaseExtractor):
             result.append('')
             result.append('')
             result.append('')
-            result.append('<root>' + etree.tostring(s) + '</root>')
+            if self.output == XML:
+                result.append('<root>' + etree.tostring(s) + '</root>')
+            else:
+                result.append(self.get_sentence_words(s))
 
             for language_to in self.l_to:
                 if language_to in translation_trees:
@@ -71,17 +74,27 @@ class EuroparlExtractor(BaseEuroparl, BaseExtractor):
                                                                                                self.l_from,
                                                                                                language_to,
                                                                                                s.get('id'))
-                    translated_sentences = [self.get_line(translation_trees[language_to], line) for line in
-                                            translated_lines]
                     result.append(alignment_type)
-                    result.append(
-                        '<root>' + '\n'.join(translated_sentences) + '</root>' if translated_sentences else '')
+                    if self.output == XML:
+                        translated_sentences = [self.get_line(translation_trees[language_to], line) for line in translated_lines]
+                        result.append('<root>' + '\n'.join(translated_sentences) + '</root>' if translated_sentences else '')
+                    else:
+                        translated_sentences = [self.get_line_as_xml(translation_trees[language_to], line) for line in translated_lines]
+                        result.append('\n'.join([self.get_sentence_words(s) for s in translated_sentences]) if translated_sentences else '')
                 else:
                     # If no translation is available, add empty columns
                     result.extend([''] * 2)
 
             results.append(result)
         return results
+
+    def get_sentence_words(self, sentence):
+        # TODO: this is copied from apps/models.py. Consider refactoring!
+        s = []
+        # TODO: this xPath-expression might be specific for a corpus
+        for w in sentence.xpath('.//w'):
+            s.append(w.text.strip() if w.text else ' ')
+        return ' '.join(s)
 
     def get_line_by_number(self, tree, segment_number):
         """
@@ -184,7 +197,8 @@ class EuroparlExtractor(BaseEuroparl, BaseExtractor):
             linkGrps = alignment_tree.xpath('//linkGrp[{}]'.format(path.format(doc)))
 
             if not linkGrps:
-                click.echo('No translation found for {} to {}'.format(filename, language_to))
+                if include_translations:
+                    click.echo('No translation found for {} to {}'.format(filename, language_to))
             elif len(linkGrps) == 1:
                 linkGrp = linkGrps[0]
 
@@ -217,14 +231,24 @@ class EuroparlExtractor(BaseEuroparl, BaseExtractor):
 
         return certainties_sum / float(certainties_len) if certainties_len > 0 else 0
 
-    def sort_by_alignment_certainty(self, dir_name):
-        filenames = dict()
-        for filename in self.list_filenames(dir_name):
-            alignment_trees, _ = self.parse_alignment_trees(filename, include_translations=False)
-            filenames[filename] = self.average_alignment_certainty(alignment_trees)
+    def sort_by_alignment_certainty(self, file_names):
+        certainties = dict()
+        for file_name in file_names:
+            alignment_trees, _ = self.parse_alignment_trees(file_name, include_translations=False)
+            if len(alignment_trees) == len(self.l_to):  # Only add files that have translations in all languages
+                certainties[file_name] = self.average_alignment_certainty(alignment_trees)
 
-        sorted_by_value = sorted(filenames.items(), key=lambda kv: kv[1], reverse=True)
+        sorted_by_value = sorted(certainties.items(), key=lambda kv: kv[1], reverse=True)
         return [f[0] for f in sorted_by_value]
+
+    def filter_by_file_size(self, file_names):
+        results = []
+        for file_name in file_names:
+            file_size = etree.parse(file_name).xpath('count(//s)')
+            if file_size <= self.max_file_size:
+                results.append(file_name)
+
+        return results
 
 
 class EuroparlPoSExtractor(EuroparlExtractor, PoSExtractor):
