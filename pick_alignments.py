@@ -18,4 +18,7 @@ if __name__ == "__main__":
 
     in_tree = etree.parse(args.file_in)
     out_tree = remove_alignments(in_tree, args.search_string)
-    out_tree.write(args.file_out, pretty_print=True, xml_declaration=True, encoding='utf-8')
+    doctype = in_tree.docinfo.doctype.replace('>', ' "">')  # Re-add the space that lxml deletes during parsing.
+    out_tree.write(args.file_out, pretty_print=True, xml_declaration=True,
+                   encoding=in_tree.docinfo.encoding,
+                   doctype=doctype)
