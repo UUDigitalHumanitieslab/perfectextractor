@@ -26,11 +26,13 @@ def process_data_folders(extractor, path):
 @click.option('--output', default=TXT, type=click.Choice([TXT, XML]), help='Output in text or XML format')
 @click.option('--sort_by_certainty', is_flag=True, help='Sort by certainty?')
 @click.option('--file_limit', default=0, help='Limit number of files searched')
-@click.option('--max_file_size', default=0, help='Limit the size of the files searched')
+@click.option('--min_file_size', default=0, help='Limits the minimal size of the files searched')
+@click.option('--max_file_size', default=0, help='Limits the maximal size of the files searched')
 def extract(folder, language_from, languages_to, extractor='base', search_in_to=False,
-            output=TXT, sort_by_certainty=False, file_limit=0, max_file_size=0):
+            output=TXT, sort_by_certainty=False, file_limit=0, min_file_size=0, max_file_size=0):
     # Set the default arguments
-    kwargs = dict(output=output, sort_by_certainty=sort_by_certainty, file_limit=file_limit, max_file_size=max_file_size)
+    kwargs = dict(output=output, sort_by_certainty=sort_by_certainty, file_limit=file_limit,
+                  min_file_size=min_file_size, max_file_size=max_file_size)
 
     # Determine the extractor to be used
     # TODO: add more varieties

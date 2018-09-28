@@ -245,7 +245,7 @@ class EuroparlExtractor(BaseEuroparl, BaseExtractor):
         results = []
         for file_name in file_names:
             file_size = etree.parse(file_name).xpath('count(//s)')
-            if file_size <= self.max_file_size:
+            if self.min_file_size <= file_size <= self.max_file_size:
                 results.append(file_name)
 
         return results
