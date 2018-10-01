@@ -38,7 +38,7 @@ def extract(folder, language_from, languages_to, extractor='base', search_in_to=
     # TODO: add more varieties
     e = EuroparlPerfectExtractor if extractor == 'perfect' else EuroparlExtractor
     if extractor == 'perfect':
-        kwargs[search_in_to] = search_in_to
+        kwargs['search_in_to'] = search_in_to
 
     # Start the extraction!
     extractor = e(language_from, languages_to, **kwargs)
