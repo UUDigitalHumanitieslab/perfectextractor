@@ -185,10 +185,12 @@ class EuroparlExtractor(BaseEuroparl, BaseExtractor):
                 if os.path.isfile(alignment_file):
                     alignment_tree = etree.parse(alignment_file)
                     self.alignment_xmls[language_to] = alignment_tree
+                elif include_translations:
+                    click.echo('No alignment file found for {} to {}'.format(filename, language_to))
 
         alignment_trees = dict()
         translation_trees = dict()
-        for language_to in self.l_to:
+        for language_to in self.alignment_xmls.keys():
             sl = sorted([self.l_from, language_to])
             alignment_tree = self.alignment_xmls[language_to]
             base_filename = os.path.basename(filename)
