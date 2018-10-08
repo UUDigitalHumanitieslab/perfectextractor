@@ -12,12 +12,15 @@ LEMMATA_CONFIG = os.path.join(os.path.dirname(__file__), 'config/{language}_lemm
 class BaseExtractor(object):
     __metaclass__ = ABCMeta
 
-    def __init__(self, language_from, languages_to=None, sentence_ids=None, lemmata=None, position=None, output=TXT,
+    def __init__(self, language_from, languages_to=None,
+                 file_names=None, sentence_ids=None,
+                 lemmata=None, position=None, output=TXT,
                  sort_by_certainty=False, file_limit=0, min_file_size=0, max_file_size=0):
         """
         Initializes the extractor for the given source and target language(s).
         :param language_from: the source language
         :param languages_to: the target language(s)
+        :param file_names: whether to limit the search to certain file names
         :param sentence_ids: whether to limit the search to certain sentence IDs
         :param lemmata: whether to limit the search to certain lemmata (can be provided as a boolean or a list)
         :param position: whether to limit the search to a certain position (e.g. only sentence-initial)
@@ -29,6 +32,7 @@ class BaseExtractor(object):
         """
         self.l_from = language_from
         self.l_to = languages_to or []
+        self.file_names = file_names
         self.sentence_ids = sentence_ids
         self.position = position
         self.output = output
@@ -57,9 +61,18 @@ class BaseExtractor(object):
             csv_writer.writerows(self.generate_results(dir_name))
 
     def collect_file_names(self, dir_name):
+        """
+        Collects the file names in a given directory and (potentially) filters these based on file size,
+        alignment certainty or a limited number of files.
+        :param dir_name: The current directory
+        :return: A list of files to consider.
+        """
         click.echo('Collecting file names...')
 
-        file_names = self.list_filenames(dir_name)
+        if self.file_names:
+            file_names = [os.path.join(dir_name, f) for f in self.file_names]
+        else:
+            file_names = self.list_filenames(dir_name)
 
         if self.min_file_size or self.max_file_size:
             file_names = self.filter_by_file_size(file_names)

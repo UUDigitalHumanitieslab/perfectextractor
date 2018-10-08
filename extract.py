@@ -22,16 +22,19 @@ def process_data_folders(extractor, path):
 @click.argument('language_from')
 @click.argument('languages_to', nargs=-1)  # nargs=-1 eats up all remaining arguments
 @click.option('--extractor', default='base', type=click.Choice(['base', 'perfect']), help='Which kind of extractor to use')
+@click.option('--file_names', '-f', multiple=True, help='Limits the file names searched into')
+@click.option('--sentence_ids', '-s', multiple=True, help='Limits the sentence IDs searched into')
 @click.option('--search_in_to', is_flag=True, help='Search in to?')
 @click.option('--output', default=TXT, type=click.Choice([TXT, XML]), help='Output in text or XML format')
 @click.option('--sort_by_certainty', is_flag=True, help='Sort by certainty?')
 @click.option('--file_limit', default=0, help='Limit number of files searched')
 @click.option('--min_file_size', default=0, help='Limits the minimal size of the files searched')
 @click.option('--max_file_size', default=0, help='Limits the maximal size of the files searched')
-def extract(folder, language_from, languages_to, extractor='base', search_in_to=False,
-            output=TXT, sort_by_certainty=False, file_limit=0, min_file_size=0, max_file_size=0):
+def extract(folder, language_from, languages_to, extractor='base', file_names=None, sentence_ids=None,
+            search_in_to=False, output=TXT, sort_by_certainty=False, file_limit=0, min_file_size=0, max_file_size=0):
     # Set the default arguments
-    kwargs = dict(output=output, sort_by_certainty=sort_by_certainty, file_limit=file_limit,
+    kwargs = dict(output=output, file_names=file_names, sentence_ids=sentence_ids,
+                  sort_by_certainty=sort_by_certainty, file_limit=file_limit,
                   min_file_size=min_file_size, max_file_size=max_file_size)
 
     # Determine the extractor to be used
