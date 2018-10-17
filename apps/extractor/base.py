@@ -131,6 +131,10 @@ class BaseExtractor(object):
         """
         self.other_extractors.append(extractor)
 
+    def list_directories(self, path):
+        directories = [os.path.join(path, directory) for directory in os.listdir(path)]
+        return filter(os.path.isdir, directories)
+
     @abstractmethod
     def get_config(self):
         """

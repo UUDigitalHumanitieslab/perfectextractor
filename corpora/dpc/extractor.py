@@ -12,6 +12,12 @@ TEI = {'ns': 'http://www.tei-c.org/ns/1.0'}
 
 
 class DPCExtractor(BaseExtractor):
+    def get_config(self):
+        return DPC_CONFIG
+
+    def process_file(self, filename):
+        raise NotImplementedError
+
     def list_filenames(self, dir_name):
         return sorted(glob.glob(os.path.join(dir_name, '*[0-9]-' + self.l_from + '-tei.xml')))
 
@@ -80,9 +86,6 @@ class DPCExtractor(BaseExtractor):
 
 
 class DPCPerfectExtractor(PerfectExtractor, DPCExtractor):
-    def get_config(self):
-        return DPC_CONFIG
-
     def get_line_by_number(self, tree, language_to, segment_number):
         """
         Returns the full line for a segment number, as well as the PresentPerfect found (or None if none found).

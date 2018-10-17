@@ -4,6 +4,12 @@ from lxml import etree
 
 
 def remove_alignments(tree, search_string):
+    """
+    Removes all linkGrp-tags that do not contain the provided search string.
+    :param tree: the current XML tree
+    :param search_string: the search string
+    :return: The tree with linkGrp-tags removed that do not contain the search string
+    """
     for linkGrp in tree.xpath('//linkGrp[not(contains(@fromDoc, "{}"))]'.format(search_string)):
         linkGrp.getparent().remove(linkGrp)
     return tree
@@ -11,9 +17,9 @@ def remove_alignments(tree, search_string):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument('file_in', type=str, help='Input file')
-    parser.add_argument('file_out', type=str, help='Output file')
-    parser.add_argument('search_string', type=str, help='Search string')
+    parser.add_argument('file_in', help='Input file')
+    parser.add_argument('file_out', help='Output file')
+    parser.add_argument('search_string', help='Search string')
     args = parser.parse_args()
 
     in_tree = etree.parse(args.file_in)

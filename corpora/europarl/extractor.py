@@ -252,6 +252,9 @@ class EuroparlExtractor(BaseEuroparl, BaseExtractor):
 
         return results
 
+    def list_directories(self, path):
+        return filter(lambda x: x.endswith(self.l_from), super(EuroparlExtractor, self).list_directories(path))
+
 
 class EuroparlPoSExtractor(EuroparlExtractor, PoSExtractor):
     def fetch_results(self, filename, s_trees, alignment_trees, translation_trees):

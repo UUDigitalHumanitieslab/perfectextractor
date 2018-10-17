@@ -123,7 +123,7 @@ class PresentPerfect(MultiWordExpression):
         return self.words[-1].lemma
 
     def perfect_type(self):
-        result = 'Perfekt'
+        result = 'present perfect'
         if self.is_passive:
             result += ' passive'
         if self.is_continuous:
