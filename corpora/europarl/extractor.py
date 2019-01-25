@@ -288,7 +288,10 @@ class EuroparlPoSExtractor(EuroparlExtractor, PoSExtractor):
                 result.append(self.get_type(words))
                 result.append(' '.join([w.text for w in words]))
                 result.append(' '.join([w.get('id') for w in words]))
-                result.append('<root>' + etree.tostring(s) + '</root>')
+                if self.output == XML:
+                    result.append('<root>' + etree.tostring(s) + '</root>')
+                else:
+                    result.append(self.get_sentence_words(s))
 
                 # Find the translated lines
                 for language_to in self.l_to:
@@ -298,13 +301,13 @@ class EuroparlPoSExtractor(EuroparlExtractor, PoSExtractor):
                                                                                                    self.l_from,
                                                                                                    language_to,
                                                                                                    s.get('id'))
-                        if translated_lines:
+                        result.append(alignment_type)
+                        if self.output == XML:
                             translated_sentences = [self.get_line(translation_trees[language_to], line) for line in translated_lines]
-                            result.append(alignment_type)
                             result.append('<root>' + '\n'.join(translated_sentences) + '</root>' if translated_sentences else '')
                         else:
-                            result.append('')
-                            result.append('')
+                            translated_sentences = [self.get_line_as_xml(translation_trees[language_to], line) for line in translated_lines]
+                            result.append('\n'.join([self.get_sentence_words(s) for s in translated_sentences]) if translated_sentences else '')
                     else:
                         # If no translation is available, add empty columns
                         result.extend([''] * 2)

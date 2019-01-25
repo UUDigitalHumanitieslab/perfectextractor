@@ -115,8 +115,8 @@ class BaseExtractor(object):
 
     def read_lemmata(self, lemmata):
         if lemmata is not None:
-            if type(lemmata) == list:
-                self.lemmata_list = lemmata
+            if type(lemmata) in (list, tuple):
+                self.lemmata_list = list(lemmata)
             elif type(lemmata) == bool:
                 if lemmata:
                     with codecs.open(LEMMATA_CONFIG.format(language=self.l_from), 'rb', 'utf-8') as lexicon:
