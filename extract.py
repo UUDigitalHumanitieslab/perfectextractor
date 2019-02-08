@@ -6,7 +6,7 @@ import click
 from corpora.bnc.extractor import BNCExtractor, BNCPerfectExtractor
 from corpora.dpc.extractor import DPCExtractor, DPCPerfectExtractor
 from corpora.europarl.extractor import EuroparlExtractor, EuroparlPoSExtractor, EuroparlPerfectExtractor, \
-    EuroparlRecentPastExtractor
+    EuroparlRecentPastExtractor, EuroparlSinceDurationExtractor
 from apps.extractor.utils import TXT, XML
 
 # Corpora
@@ -19,6 +19,7 @@ BASE = 'base'
 POS = 'pos'
 PERFECT = 'perfect'
 RECENT_PAST = 'recent_past'
+SINCE_DURATION = 'since_duration'
 
 
 def process_data_folders(extractor, path):
@@ -34,7 +35,7 @@ def process_data_folders(extractor, path):
 @click.argument('language_from')
 @click.argument('languages_to', nargs=-1)  # nargs=-1 eats up all remaining arguments
 @click.option('--corpus', default=EUROPARL, type=click.Choice([EUROPARL, DPC, BNC]), help='Which type of corpus to use')
-@click.option('--extractor', default=BASE, type=click.Choice([BASE, POS, PERFECT, RECENT_PAST]), help='Which kind of extractor to use')
+@click.option('--extractor', default=BASE, type=click.Choice([BASE, POS, PERFECT, RECENT_PAST, SINCE_DURATION]), help='Which kind of extractor to use')
 @click.option('--file_names', '-f', multiple=True, help='Limits the file names searched into')
 @click.option('--sentence_ids', '-s', multiple=True, help='Limits the sentence IDs searched into')
 @click.option('--lemmata', '-l', multiple=True, help='Limits the lemmata searched for')
@@ -62,6 +63,8 @@ def extract(folder, language_from, languages_to, corpus='europarl', extractor='b
             resulting_extractor = EuroparlPerfectExtractor
         elif extractor == RECENT_PAST:
             resulting_extractor = EuroparlRecentPastExtractor
+        elif extractor == SINCE_DURATION:
+            resulting_extractor = EuroparlSinceDurationExtractor
         else:
             resulting_extractor = EuroparlExtractor
     elif corpus == DPC:
@@ -71,6 +74,8 @@ def extract(folder, language_from, languages_to, corpus='europarl', extractor='b
             resulting_extractor = DPCPerfectExtractor
         elif extractor == RECENT_PAST:
             raise click.ClickException('Corpus or extractor type not implemented!')
+        elif extractor == SINCE_DURATION:
+            raise click.ClickException('Corpus or extractor type not implemented!')
         else:
             resulting_extractor = DPCExtractor
     elif corpus == BNC:
@@ -79,6 +84,8 @@ def extract(folder, language_from, languages_to, corpus='europarl', extractor='b
         elif extractor == PERFECT:
             resulting_extractor = BNCPerfectExtractor
         elif extractor == RECENT_PAST:
+            raise click.ClickException('Corpus or extractor type not implemented!')
+        elif extractor == SINCE_DURATION:
             raise click.ClickException('Corpus or extractor type not implemented!')
         else:
             resulting_extractor = BNCExtractor
