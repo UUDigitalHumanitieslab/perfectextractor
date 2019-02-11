@@ -80,7 +80,7 @@ class EuroparlExtractor(BaseEuroparl, BaseExtractor):
                         result.append('<root>' + '\n'.join(translated_sentences) + '</root>' if translated_sentences else '')
                     else:
                         translated_sentences = [self.get_line_as_xml(translation_trees[language_to], line) for line in translated_lines]
-                        result.append('\n'.join([self.get_sentence_words(s) for s in translated_sentences]) if translated_sentences else '')
+                        result.append('\n'.join([self.get_sentence_words(ts) for ts in translated_sentences]) if translated_sentences else '')
                 else:
                     # If no translation is available, add empty columns
                     result.extend([''] * 2)
@@ -307,7 +307,7 @@ class EuroparlPoSExtractor(EuroparlExtractor, PoSExtractor):
                             result.append('<root>' + '\n'.join(translated_sentences) + '</root>' if translated_sentences else '')
                         else:
                             translated_sentences = [self.get_line_as_xml(translation_trees[language_to], line) for line in translated_lines]
-                            result.append('\n'.join([self.get_sentence_words(s) for s in translated_sentences]) if translated_sentences else '')
+                            result.append('\n'.join([self.get_sentence_words(ts) for ts in translated_sentences]) if translated_sentences else '')
                     else:
                         # If no translation is available, add empty columns
                         result.extend([''] * 2)
