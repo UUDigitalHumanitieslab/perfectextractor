@@ -39,7 +39,9 @@ def process_data_folders(extractor, path):
 @click.option('--file_names', '-f', multiple=True, help='Limits the file names searched into')
 @click.option('--sentence_ids', '-s', multiple=True, help='Limits the sentence IDs searched into')
 @click.option('--lemmata', '-l', multiple=True, help='Limits the lemmata searched for')
+@click.option('--pos', '-p', multiple=True, help='Limits the POS-tags searched for')
 @click.option('--tokens', '-t', multiple=True, type=click.Tuple([str, str]), help='Limits the tokens searched for')
+@click.option('--position', default=0, help='The position of the searched item')
 @click.option('--search_in_to', is_flag=True, help='Search in to?')
 @click.option('--output', default=TXT, type=click.Choice([TXT, XML]), help='Output in text or XML format')
 @click.option('--sort_by_certainty', is_flag=True, help='Sort by certainty?')
@@ -47,10 +49,11 @@ def process_data_folders(extractor, path):
 @click.option('--min_file_size', default=0, help='Limits the minimal size of the files searched')
 @click.option('--max_file_size', default=0, help='Limits the maximal size of the files searched')
 def extract(folder, language_from, languages_to, corpus='europarl', extractor='base',
-            file_names=None, sentence_ids=None, lemmata=None, tokens=None,
+            file_names=None, sentence_ids=None, lemmata=None, pos=None, position=None, tokens=None,
             search_in_to=False, output=TXT, sort_by_certainty=False, file_limit=0, min_file_size=0, max_file_size=0):
     # Set the default arguments
-    kwargs = dict(output=output, file_names=file_names, sentence_ids=sentence_ids, lemmata=lemmata, tokens=tokens,
+    kwargs = dict(output=output, file_names=file_names, sentence_ids=sentence_ids,
+                  lemmata=lemmata, position=position, tokens=tokens,
                   sort_by_certainty=sort_by_certainty, file_limit=file_limit,
                   min_file_size=min_file_size, max_file_size=max_file_size)
 
@@ -93,6 +96,9 @@ def extract(folder, language_from, languages_to, corpus='europarl', extractor='b
 
     if extractor == PERFECT:
         kwargs['search_in_to'] = search_in_to
+
+    if extractor == POS:
+        kwargs['pos'] = pos
 
     if not resulting_extractor:
         raise click.ClickException('Unknown value for either corpus or extractor type')
