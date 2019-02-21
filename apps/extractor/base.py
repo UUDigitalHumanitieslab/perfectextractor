@@ -14,7 +14,7 @@ class BaseExtractor(object):
 
     def __init__(self, language_from, languages_to=None,
                  file_names=None, sentence_ids=None,
-                 lemmata=None, position=None, output=TXT,
+                 lemmata=None, tokens=None, position=None, output=TXT,
                  sort_by_certainty=False, file_limit=0, min_file_size=0, max_file_size=0):
         """
         Initializes the extractor for the given source and target language(s).
@@ -23,6 +23,7 @@ class BaseExtractor(object):
         :param file_names: whether to limit the search to certain file names
         :param sentence_ids: whether to limit the search to certain sentence IDs
         :param lemmata: whether to limit the search to certain lemmata (can be provided as a boolean or a list)
+        :param tokens: whether to limit the search to certain tokens (list of tuples (from-to))
         :param position: whether to limit the search to a certain position (e.g. only sentence-initial)
         :param output: whether to output the results in text or XML format
         :param sort_by_certainty: whether to sort the files by average alignment certainty
@@ -34,6 +35,8 @@ class BaseExtractor(object):
         self.l_to = languages_to or []
         self.file_names = file_names
         self.sentence_ids = sentence_ids
+        self.start_tokens = [t[0] for t in tokens] if tokens else None
+        self.end_tokens = [t[1] for t in tokens] if tokens else None
         self.position = position
         self.output = output
         self.sort_by_certainty = sort_by_certainty

@@ -165,3 +165,13 @@ class TestEuroparlPerfectExtractor(unittest.TestCase):
         extractor = EuroparlExtractor('en', ['nl', 'de'], file_limit=1)
         results = extractor.generate_results(os.path.join(DCEP_DATA, 'en'))
         self.assertEqual(len(results), 37)
+
+    def test_tokens(self):
+        tokens_extractor = EuroparlPoSExtractor('en', ['nl'], tokens=[('w1.13', 'w1.15'), ('w2.5', 'w2.8')])
+        results = tokens_extractor.generate_results(os.path.join(EUROPARL_DATA, 'en'))
+        self.assertEqual(len(results), 2)
+        self.assertEqual(results[0][3], u'a historic sitting')
+        self.assertEqual(results[1][3], u'my very great pleasure')
+
+        tokens_extractor = EuroparlPoSExtractor('en', ['nl'], tokens=[('w1.19', 'w1.17')])
+        self.assertRaises(ValueError, tokens_extractor.generate_results, os.path.join(EUROPARL_DATA, 'en'))
