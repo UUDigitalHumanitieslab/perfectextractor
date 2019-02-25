@@ -269,8 +269,8 @@ class EuroparlPoSExtractor(EuroparlExtractor, PoSExtractor):
         xp = './/w[contains(" {value} ", concat(" ", @{element}, " "))]'
         if self.pos:
             xpath = xp.format(element=pos_attr, value=' '.join(self.pos))
-        elif self.start_tokens:
-            xpath = xp.format(element='id', value=' '.join(self.start_tokens))
+        elif self.tokens:
+            xpath = xp.format(element='id', value=' '.join(self.tokens.keys()))
         else:
             xpath = xp.format(element=lemma_attr, value=' '.join(self.lemmata_list))
 
@@ -335,8 +335,8 @@ class EuroparlPoSExtractor(EuroparlExtractor, PoSExtractor):
         if self.position and not word.get('id').endswith('.' + str(self.position)):
             result = None
 
-        if self.end_tokens:
-            end_token = self.end_tokens.pop(0)
+        if self.tokens:
+            end_token = self.tokens.get(word.get('id'))
             next_word = word.getnext()
             if next_word is None:
                 raise ValueError('End token {} not found'.format(end_token))

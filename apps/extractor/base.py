@@ -35,8 +35,7 @@ class BaseExtractor(object):
         self.l_to = languages_to or []
         self.file_names = file_names
         self.sentence_ids = sentence_ids
-        self.start_tokens = [t[0] for t in tokens] if tokens else None
-        self.end_tokens = [t[1] for t in tokens] if tokens else None
+        self.tokens = dict(tokens) if tokens else None
         self.position = position
         self.output = output
         self.sort_by_certainty = sort_by_certainty
