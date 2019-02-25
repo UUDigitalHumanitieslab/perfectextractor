@@ -14,7 +14,7 @@ class BaseExtractor(object):
 
     def __init__(self, language_from, languages_to=None,
                  file_names=None, sentence_ids=None,
-                 lemmata=None, tokens=None, position=None, output=TXT,
+                 lemmata=None, tokens=None, outfile=None, position=None, output=TXT,
                  sort_by_certainty=False, file_limit=0, min_file_size=0, max_file_size=0):
         """
         Initializes the extractor for the given source and target language(s).
@@ -24,6 +24,7 @@ class BaseExtractor(object):
         :param sentence_ids: whether to limit the search to certain sentence IDs
         :param lemmata: whether to limit the search to certain lemmata (can be provided as a boolean or a list)
         :param tokens: whether to limit the search to certain tokens (list of tuples (from-to))
+        :param outfile: the filename to output the results to
         :param position: whether to limit the search to a certain position (e.g. only sentence-initial)
         :param output: whether to output the results in text or XML format
         :param sort_by_certainty: whether to sort the files by average alignment certainty
@@ -36,6 +37,7 @@ class BaseExtractor(object):
         self.file_names = file_names
         self.sentence_ids = sentence_ids
         self.tokens = dict(tokens) if tokens else None
+        self.outfile = outfile
         self.position = position
         self.output = output
         self.sort_by_certainty = sort_by_certainty
@@ -55,7 +57,7 @@ class BaseExtractor(object):
         """
         Creates a result file and processes each file in a folder.
         """
-        result_file = '-'.join([dir_name, self.l_from]) + '.csv'
+        result_file = self.outfile or '-'.join([dir_name, self.l_from]) + '.csv'
         with open(result_file, 'wb') as f:
             f.write(u'\uFEFF'.encode('utf-8'))  # the UTF-8 BOM to hint Excel we are using that...
             csv_writer = UnicodeWriter(f, delimiter=';')
