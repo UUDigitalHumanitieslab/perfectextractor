@@ -14,4 +14,5 @@ class TestWiktionary(unittest.TestCase):
             self.assertIn('blijken', get_translations('prove', 'en', 'nl'))
             self.assertIn('arriver', get_translations('arriveren', 'nl', 'fr'))
         except ConnectionError as e:
-            print 'No connection available, skipping tests'
+            # No connection available, skipping tests
+            pass

@@ -6,12 +6,14 @@ import unittest
 from corpora.bnc.extractor import BNCPerfectExtractor
 
 DATA_FOLDER = os.path.join(os.path.dirname(__file__), 'data/bnc')
+VERBS_COLUMN = 3
 
 
 class TestBNCPerfectExtractor(unittest.TestCase):
     def setUp(self):
         self.language = 'en'
         self.extractor = BNCPerfectExtractor(self.language)
+        self.filename = os.path.join(DATA_FOLDER, 'ALP-formatted.xml')
 
     def test_init(self):
         self.assertEqual(self.extractor.config.get(self.language, 'perfect_tags'), 'VBN,VDN,VHN,VVN')
@@ -22,10 +24,7 @@ class TestBNCPerfectExtractor(unittest.TestCase):
         self.assertEqual(os.path.basename(filenames[0]), 'ALP-formatted.xml')
 
     def test_process(self):
-        VERBS_COLUMN = 3
-
-        filename = os.path.join(DATA_FOLDER, 'ALP-formatted.xml')
-        results = self.extractor.process_file(filename)
+        results = self.extractor.process_file(self.filename)
         self.assertEqual(len(results), 60)
         self.assertEqual(results[0][VERBS_COLUMN], 'has been presented')
         self.assertEqual(results[1][VERBS_COLUMN], 'has pointed')
@@ -33,14 +32,16 @@ class TestBNCPerfectExtractor(unittest.TestCase):
         self.assertEqual(results[3][VERBS_COLUMN], 'has been running')
         self.assertEqual(results[4][VERBS_COLUMN], 'has devoted')
 
+    def test_ppc(self):
         # Test whether present perfect continuous are ignored when check_ppc is set to False
-        self.extractor.config.set(self.language, 'check_ppc', False)
-        results = self.extractor.process_file(filename)
-        self.assertEqual(results[3][VERBS_COLUMN], 'has been running')
+        self.extractor.config[self.language]['ppc'] = 'false'
+        results = self.extractor.process_file(self.filename)
+        self.assertEqual(results[3][VERBS_COLUMN], 'has been')
 
-        # Test whether the lemmata_list will exclude
+    def test_lemmata_list(self):
+        # Test whether the lemmata_list will exclude the listed verbs
         self.extractor = BNCPerfectExtractor(self.language, lemmata=['show', 'run'])
-        results = self.extractor.process_file(filename)
+        results = self.extractor.process_file(self.filename)
         self.assertEqual(results[0][VERBS_COLUMN], 'has shown')
         self.assertEqual(results[1][VERBS_COLUMN], 'has been running')
         self.assertEqual(results[2][VERBS_COLUMN], 'has shown')

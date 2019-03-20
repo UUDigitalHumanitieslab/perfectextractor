@@ -470,7 +470,7 @@ class EuroparlRecentPastExtractor(EuroparlExtractor, RecentPastExtractor):
                     result.append(u'passé récent')
                     result.append(rp.verbs_to_string())
                     result.append(rp.verb_ids())
-                    result.append('<root>' + etree.tostring(rp.xml_sentence) + '</root>')
+                    result.append('<root>' + str(etree.tostring(rp.xml_sentence)) + '</root>')
 
                     found_trans = False
                     for language_to in self.l_to:
@@ -491,12 +491,10 @@ class EuroparlRecentPastExtractor(EuroparlExtractor, RecentPastExtractor):
                                         for e in ts.xpath(self.config.get(language_to, 'rp_xpath')):
                                             rp = self.check_recent_past(e, language_to)
                                             if rp:
-                                                print 'found recent past in French'
                                                 found_trans = True
 
                                 result.append(alignment_type)
-                                result.append('<root>' + '\n'.join(
-                                    translated_sentences) + '</root>' if translated_sentences else '')
+                                result.append('<root>' + str(b'\n'.join(translated_sentences)) + '</root>' if translated_sentences else '')
                             else:
                                 result.append('')
                                 result.append('')

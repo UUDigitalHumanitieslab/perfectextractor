@@ -1,5 +1,4 @@
 from abc import ABCMeta, abstractmethod
-import ConfigParser
 import codecs
 import string
 import os
@@ -7,6 +6,11 @@ import os
 from .base import BaseExtractor
 from .models import PresentPerfect
 from .wiktionary import get_translations
+
+try:
+    import ConfigParser
+except ImportError:
+    import configparser as ConfigParser
 
 AUX_BE_CONFIG = os.path.join(os.path.dirname(__file__), 'config/{language}_aux_be.txt')
 
@@ -30,8 +34,8 @@ class PerfectExtractor(BaseExtractor):
         self.search_in_to = search_in_to
 
         # Read the config
-        config = ConfigParser.RawConfigParser()
-        config.readfp(codecs.open(self.get_config(), 'r', 'utf8'))
+        config = ConfigParser.ConfigParser()
+        config.read(self.get_config())
         self.config = config
 
         # Read the list of verbs that use 'to be' as auxiliary verb per language
@@ -42,7 +46,7 @@ class PerfectExtractor(BaseExtractor):
         for language in languages:
             aux_be_list = []
             if self.config.get(language, 'lexical_bound'):
-                with codecs.open(AUX_BE_CONFIG.format(language=language), 'rb', 'utf-8') as lexicon:
+                with codecs.open(AUX_BE_CONFIG.format(language=language), 'r', 'utf-8') as lexicon:
                     aux_be_list = lexicon.read().split()
             self.aux_be_list[language] = aux_be_list
 

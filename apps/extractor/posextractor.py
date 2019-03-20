@@ -1,7 +1,10 @@
 from abc import ABCMeta, abstractmethod
-import codecs
-import ConfigParser
 import os
+
+try:
+    import ConfigParser
+except ImportError:
+    import configparser as ConfigParser
 
 from .base import BaseExtractor
 
@@ -24,8 +27,8 @@ class PoSExtractor(BaseExtractor):
         self.pos = pos
 
         # Read the config
-        config = ConfigParser.RawConfigParser()
-        config.readfp(codecs.open(self.get_config(), 'r', 'utf8'))
+        config = ConfigParser.ConfigParser()
+        config.read(self.get_config())
         self.config = config
 
     @abstractmethod

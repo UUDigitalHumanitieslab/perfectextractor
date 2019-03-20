@@ -18,7 +18,7 @@ class BaseCounter(object):
         Creates a result file and processes each file in a folder.
         """
         result_file = '-counts-'.join([dir_name, self.l_from]) + '.csv'
-        with open(result_file, 'wb') as f:
+        with open(result_file, 'w') as f:
             f.write(u'\uFEFF'.encode('utf-8'))  # the UTF-8 BOM to hint Excel we are using that...
             csv_writer = UnicodeWriter(f, delimiter=';')
 

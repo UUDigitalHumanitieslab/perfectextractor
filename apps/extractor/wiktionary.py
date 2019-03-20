@@ -19,7 +19,7 @@ def get_translations(word, language_from, language_to):
 
 def get_ergative_verbs():
     title = 'Category:Ergatief_werkwoord_in_het_Nederlands'
-    with codecs.open('../data/nl_aux_be.txt', 'wb', 'utf-8') as f:
+    with codecs.open('../data/nl_aux_be.txt', 'w', 'utf-8') as f:
         continue_url = ''
 
         params = dict({'action': 'query', 'list': 'categorymembers', 'cmtitle': title, 'format': 'json'})

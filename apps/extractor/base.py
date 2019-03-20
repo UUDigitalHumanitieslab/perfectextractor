@@ -1,10 +1,11 @@
 from abc import ABCMeta, abstractmethod
 import codecs
+import csv
 import os
 
 import click
 
-from .utils import TXT, UnicodeWriter
+from .utils import TXT
 
 LEMMATA_CONFIG = os.path.join(os.path.dirname(__file__), 'config/{language}_lemmata.txt')
 
@@ -58,9 +59,9 @@ class BaseExtractor(object):
         Creates a result file and processes each file in a folder.
         """
         result_file = self.outfile or '-'.join([dir_name, self.l_from]) + '.csv'
-        with open(result_file, 'wb') as f:
-            f.write(u'\uFEFF'.encode('utf-8'))  # the UTF-8 BOM to hint Excel we are using that...
-            csv_writer = UnicodeWriter(f, delimiter=';')
+        with open(result_file, 'w') as f:
+            f.write('\uFEFF')  # the UTF-8 BOM to hint Excel we are using that...
+            csv_writer = csv.writer(f, delimiter=';')
             csv_writer.writerow(self.generate_header())
             csv_writer.writerows(self.generate_results(dir_name))
 
@@ -123,7 +124,7 @@ class BaseExtractor(object):
                 self.lemmata_list = list(lemmata)
             elif type(lemmata) == bool:
                 if lemmata:
-                    with codecs.open(LEMMATA_CONFIG.format(language=self.l_from), 'rb', 'utf-8') as lexicon:
+                    with codecs.open(LEMMATA_CONFIG.format(language=self.l_from), 'r', 'utf-8') as lexicon:
                         self.lemmata_list = lexicon.read().split()
             else:
                 raise ValueError('Unknown value for lemmata')

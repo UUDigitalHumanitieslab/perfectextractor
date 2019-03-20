@@ -1,10 +1,13 @@
 from abc import ABCMeta
-import ConfigParser
-import codecs
 import string
 
 from .base import BaseExtractor
 from .models import MultiWordExpression
+
+try:
+    import ConfigParser
+except ImportError:
+    import configparser as ConfigParser
 
 
 class RecentPastExtractor(BaseExtractor):
@@ -20,8 +23,8 @@ class RecentPastExtractor(BaseExtractor):
         super(RecentPastExtractor, self).__init__(language_from, languages_to, **kwargs)
 
         # Read the config
-        config = ConfigParser.RawConfigParser()
-        config.readfp(codecs.open(self.get_config(), 'r', 'utf8'))
+        config = ConfigParser.ConfigParser()
+        config.read(self.get_config())
         self.config = config
 
     def check_recent_past(self, w, language):
