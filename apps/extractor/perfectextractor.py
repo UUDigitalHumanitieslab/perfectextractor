@@ -1,3 +1,5 @@
+# -*- encoding: utf-8 -*-
+
 from abc import ABCMeta, abstractmethod
 import ConfigParser
 import codecs
@@ -63,7 +65,8 @@ class PerfectExtractor(BaseExtractor):
         aux_be = self.config.get(language, 'lexical_bound')
 
         # If lexical bounds do not exist or we're dealing with an auxiliary verb that is unbound, return True
-        if not aux_be or aux_verb.get(lemma_attr) != aux_be:
+        # Note: we check with "not in", because in French the lemma can be e.g. 'suivre|être'
+        if not aux_be or aux_be not in aux_verb.get(lemma_attr):
             return True
         # Else, check whether the perfect is in the list of bound verbs
         else:
