@@ -56,25 +56,31 @@ class PerfectExtractor(BaseExtractor):
         """
         raise NotImplementedError
 
-    def is_lexically_bound(self, language, aux_verb, perfect):
+    def is_lexically_bound(self, language, aux_verb, past_participle):
         """
         Checks if the perfect is lexically bound to the auxiliary verb.
         If not, we are not dealing with a present perfect here.
         """
         lemma_attr = self.config.get('all', 'lemma_attr')
         aux_be = self.config.get(language, 'lexical_bound')
+        reflexive_lemmata = self.config.get(language, 'reflexive_lemmata').split(',')
 
         # If lexical bounds do not exist or we're dealing with an auxiliary verb that is unbound, return True
         # Note: we check with "not in", because in French the lemma can be e.g. 'suivre|être'
+        word_before = aux_verb.getprevious()
         if not aux_be or aux_be not in aux_verb.get(lemma_attr):
             return True
-        # Else, check whether the perfect is in the list of bound verbs
+        # Else, check whether the past participle is in the list of bound verbs
+        elif past_participle.get(lemma_attr) in self.aux_be_list[language]:
+            return True
+        # Else, check if we are dealing with a reflexive present perfect (in that case, there is no lexical bound)
         else:
-            return perfect.get(lemma_attr) in self.aux_be_list[language]
+            if reflexive_lemmata and word_before is not None:
+                return word_before.get(lemma_attr) in reflexive_lemmata
 
     def check_present_perfect(self, element, language, check_ppp=True, check_ppc=False, check_preceding=False):
         """
-        Checks whether this element is the start of a present perfect (pp),
+        Checks whether this element (i.e. the auxiliary) is the start of a present perfect (pp),
         a present perfect continuous (ppc) or passive present perfect (ppp).
         If it is, the complete construction is returned as a PresentPerfect object.
         If not, None is returned.
@@ -143,8 +149,8 @@ class PerfectExtractor(BaseExtractor):
             else:
                 pp.add_word(sibling.text, sibling_lemma, False, sibling.get('id'))
 
-        # If we haven't yet found a perfect, and we are allowed to look in the other direction,
-        # try to find a perfect by looking backwards in the sentence.
+        # If we haven't yet found a past participle, and we are allowed to look in the other direction,
+        # try to find a past participle by looking backwards in the sentence.
         if not is_pp and allow_reversed and not check_preceding:
             pp = self.check_present_perfect(element, language, check_ppp=check_ppp, check_preceding=True)
             if pp:
