@@ -56,7 +56,7 @@ class PerfectExtractor(BaseExtractor):
         """
         raise NotImplementedError
 
-    def is_lexically_bound(self, language, aux_verb, past_participle):
+    def is_lexically_bound(self, language, aux_verb, past_participle, w_before=None):
         """
         Checks if the perfect is lexically bound to the auxiliary verb.
         If not, we are not dealing with a present perfect here.
@@ -67,7 +67,6 @@ class PerfectExtractor(BaseExtractor):
 
         # If lexical bounds do not exist or we're dealing with an auxiliary verb that is unbound, return True
         # Note: we check with "not in", because in French the lemma can be e.g. 'suivre|être'
-        word_before = aux_verb.getprevious()
         if not aux_be or aux_be not in aux_verb.get(lemma_attr):
             return True
         # Else, check whether the past participle is in the list of bound verbs
@@ -75,10 +74,10 @@ class PerfectExtractor(BaseExtractor):
             return True
         # Else, check if we are dealing with a reflexive present perfect (in that case, there is no lexical bound)
         else:
-            if reflexive_lemmata and word_before is not None:
-                return word_before.get(lemma_attr) in reflexive_lemmata
+            if reflexive_lemmata and w_before is not None:
+                return w_before.get(lemma_attr) in reflexive_lemmata
 
-    def check_present_perfect(self, element, language, check_ppp=True, check_ppc=False, check_preceding=False):
+    def check_present_perfect(self, auxiliary, language, check_ppp=True, check_ppc=False, check_preceding=False):
         """
         Checks whether this element (i.e. the auxiliary) is the start of a present perfect (pp),
         a present perfect continuous (ppc) or passive present perfect (ppp).
@@ -97,23 +96,25 @@ class PerfectExtractor(BaseExtractor):
         pos_tag = self.config.get(language, 'pos')
 
         # Start a potential present perfect
-        s = self.get_sentence(element)
-        pp = PresentPerfect(element.text, element.get(lemma_attr), element.get('id'), s)
+        s = self.get_sentence(auxiliary)
+        pp = PresentPerfect(auxiliary.text, auxiliary.get(lemma_attr), auxiliary.get('id'), s)
         is_pp = False
 
         # Check if the starting auxiliary is actually allowed
-        if any(aux_words) and element.text not in aux_words:
+        if any(aux_words) and auxiliary.text not in aux_words:
             return None
 
         # Loop over the siblings of the current element.
-        for sibling in self.get_siblings(element, s.get('id'), check_preceding):
+        siblings = self.get_siblings(auxiliary, s.get('id'), check_preceding)
+        for n, sibling in enumerate(siblings):
             # If the tag of the sibling is the perfect tag, we found a present perfect!
             sibling_pos = sibling.get(pos_tag)
             sibling_lemma = sibling.get(lemma_attr)
             if sibling_pos in perfect_tags:
                 # Check if the sibling is lexically bound to the auxiliary verb
                 # (only if we're not checking for passive present perfect)
-                if check_ppp and not self.is_lexically_bound(language, element, sibling):
+                before = auxiliary.getnext() if check_preceding else auxiliary.getprevious()
+                if check_ppp and not self.is_lexically_bound(language, auxiliary, sibling, before):
                     break
 
                 # Check if the lemma is not in the lemmata list, if so break, unless we found a potential ppp
@@ -152,7 +153,7 @@ class PerfectExtractor(BaseExtractor):
         # If we haven't yet found a past participle, and we are allowed to look in the other direction,
         # try to find a past participle by looking backwards in the sentence.
         if not is_pp and allow_reversed and not check_preceding:
-            pp = self.check_present_perfect(element, language, check_ppp=check_ppp, check_preceding=True)
+            pp = self.check_present_perfect(auxiliary, language, check_ppp=check_ppp, check_preceding=True)
             if pp:
                 is_pp = True
 
