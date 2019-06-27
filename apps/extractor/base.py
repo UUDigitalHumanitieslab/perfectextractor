@@ -14,7 +14,8 @@ class BaseExtractor(object):
 
     def __init__(self, language_from, languages_to=None,
                  file_names=None, sentence_ids=None,
-                 lemmata=None, tokens=None, outfile=None, position=None, output=TXT,
+                 lemmata=None, tokens=None, metadata=None,
+                 outfile=None, position=None, output=TXT,
                  sort_by_certainty=False, file_limit=0, min_file_size=0, max_file_size=0):
         """
         Initializes the extractor for the given source and target language(s).
@@ -24,6 +25,7 @@ class BaseExtractor(object):
         :param sentence_ids: whether to limit the search to certain sentence IDs
         :param lemmata: whether to limit the search to certain lemmata (can be provided as a boolean or a list)
         :param tokens: whether to limit the search to certain tokens (list of tuples (from-to))
+        :param metadata: whether to add metadata to the output (list of tuples (metadata-level))
         :param outfile: the filename to output the results to
         :param position: whether to limit the search to a certain position (e.g. only sentence-initial)
         :param output: whether to output the results in text or XML format
@@ -37,6 +39,7 @@ class BaseExtractor(object):
         self.file_names = file_names
         self.sentence_ids = sentence_ids
         self.tokens = dict(tokens) if tokens else None
+        self.metadata = dict(metadata) if metadata else {}
         self.outfile = outfile
         self.position = position
         self.output = output
@@ -112,6 +115,8 @@ class BaseExtractor(object):
             'words {}'.format(self.l_from),
             'ids {}'.format(self.l_from),
             self.l_from]
+        for metadata in self.metadata.keys():
+            header.append(metadata)
         for language in self.l_to:
             header.append('alignment type')
             header.append(language)
@@ -138,6 +143,19 @@ class BaseExtractor(object):
     def list_directories(self, path):
         directories = [os.path.join(path, directory) for directory in os.listdir(path)]
         return filter(os.path.isdir, directories)
+
+    def append_metadata(self, w, s, result):
+        for metadata, level in self.metadata.items():
+            if w and level == 'w':
+                result.append(w.get(metadata))
+            elif s and level == 's':
+                result.append(s.get(metadata))
+            elif s and level == 'p':
+                result.append(s.getparent().get(metadata))
+            elif s and level == 'text':
+                result.append(s.getparent().getparent().get(metadata))
+            else:
+                raise ValueError('Invalid level {}'.format(level))
 
     @abstractmethod
     def get_config(self):
