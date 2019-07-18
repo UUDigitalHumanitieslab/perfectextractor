@@ -146,13 +146,13 @@ class BaseExtractor(object):
 
     def append_metadata(self, w, s, result):
         for metadata, level in self.metadata.items():
-            if w and level == 'w':
+            if w is not None and level == 'w':
                 result.append(w.get(metadata))
-            elif s and level == 's':
+            elif s is not None and level == 's':
                 result.append(s.get(metadata))
-            elif s and level == 'p':
+            elif s is not None and level == 'p':
                 result.append(s.getparent().get(metadata))
-            elif s and level == 'text':
+            elif s is not None and level == 'text':
                 result.append(s.getparent().getparent().get(metadata))
             else:
                 raise ValueError('Invalid level {}'.format(level))
