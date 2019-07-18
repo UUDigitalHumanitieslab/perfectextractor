@@ -1,0 +1,1618 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<text topic="CHILD CARE">
+  <p id="1">
+    <s id="s1.1" caller="A" act_tag="o" damsl_act_tag="fo_o_fw_&quot;_by_bc">
+      <w id="w1.1.1" lem="Okay" tree="UH">Okay</w>
+      <w id="w1.1.2" lem="." tree=".">.</w>
+    </s>
+    <s id="s1.2" caller="A" act_tag="qw" damsl_act_tag="qw">
+      <w id="w1.2.1" lem="So" tree="UH">So</w>
+      <w id="w1.2.2" lem="," tree=",">,</w>
+    </s>
+  </p>
+  <p id="2">
+    <s id="s2.1" caller="B" act_tag="qy^d" damsl_act_tag="qy^d">
+      <w id="w2.1.1" lem="I" tree="PRP">I</w>
+      <w id="w2.1.2" lem="guess" tree="VBP">guess</w>
+      <w id="w2.1.3" lem="," tree=",">,</w>
+    </s>
+  </p>
+  <p id="3">
+    <s id="s3.1" caller="A" act_tag="qy^d" damsl_act_tag="qy^d">
+      <w id="w3.1.1" lem="What" tree="WP">What</w>
+      <w id="w3.1.2" lem="kind" tree="NN">kind</w>
+      <w id="w3.1.3" lem="of" tree="IN">of</w>
+      <w id="w3.1.4" lem="experience" tree="NN">experience</w>
+      <w id="w3.1.5" lem="do" tree="VBP">do</w>
+      <w id="w3.1.6" lem="you" tree="PRP">you</w>
+      <w id="w3.1.7" lem="," tree=",">,</w>
+      <w id="w3.1.8" lem="do" tree="VBP">do</w>
+      <w id="w3.1.9" lem="you" tree="PRP">you</w>
+      <w id="w3.1.10" lem="have" tree="VB">have</w>
+      <w id="w3.1.11" lem="," tree=",">,</w>
+      <w id="w3.1.12" lem="then" tree="RB">then</w>
+      <w id="w3.1.13" lem="with" tree="IN">with</w>
+      <w id="w3.1.14" lem="child" tree="NN">child</w>
+      <w id="w3.1.15" lem="care" tree="NN">care</w>
+      <w id="w3.1.16" lem="?" tree=".">?</w>
+    </s>
+  </p>
+  <p id="4">
+    <s id="s4.1" caller="B" act_tag="qy^d" damsl_act_tag="qy^d">
+      <w id="w4.1.1" lem="I" tree="PRP">I</w>
+      <w id="w4.1.2" lem="think" tree="VBP">think</w>
+      <w id="w4.1.3" lem="," tree=",">,</w>
+      <w id="w4.1.4" lem="uh" tree="UH">uh</w>
+      <w id="w4.1.5" lem="," tree=",">,</w>
+      <w id="w4.1.6" lem="I" tree="PRP">I</w>
+      <w id="w4.1.7" lem="wonder" tree="VBP">wonder</w>
+      <w id="w4.1.8" lem="if" tree="IN">if</w>
+      <w id="w4.1.9" lem="that" tree="DT">that</w>
+      <w id="w4.1.10" lem="work" tree="VBD">worked</w>
+      <w id="w4.1.11" lem="." tree=".">.</w>
+    </s>
+  </p>
+  <p id="5">
+    <s id="s5.1" caller="A" act_tag="qy" damsl_act_tag="qy">
+      <w id="w5.1.1" lem="Does" tree="VBZ">Does</w>
+      <w id="w5.1.2" lem="it" tree="PRP">it</w>
+      <w id="w5.1.3" lem="say" tree="VB">say</w>
+      <w id="w5.1.4" lem="something" tree="NN">something</w>
+      <w id="w5.1.5" lem="?" tree=".">?</w>
+    </s>
+  </p>
+  <p id="6">
+    <s id="s6.1" caller="B" act_tag="sd" damsl_act_tag="sd">
+      <w id="w6.1.1" lem="I" tree="PRP">I</w>
+      <w id="w6.1.2" lem="think" tree="VBP">think</w>
+      <w id="w6.1.3" lem="it" tree="PRP">it</w>
+      <w id="w6.1.4" lem="usually" tree="RB">usually</w>
+      <w id="w6.1.5" lem="do" tree="VBZ">does</w>
+      <w id="w6.1.6" lem="." tree=".">.</w>
+    </s>
+    <s id="s6.2" caller="B" act_tag="ad" damsl_act_tag="ad">
+      <w id="w6.2.1" lem="You" tree="PRP">You</w>
+      <w id="w6.2.2" lem="might" tree="MD">might</w>
+      <w id="w6.2.3" lem="try" tree="VB">try</w>
+      <w id="w6.2.4" lem="," tree=",">,</w>
+      <w id="w6.2.5" lem="uh" tree="UH">uh</w>
+      <w id="w6.2.6" lem="," tree=",">,</w>
+    </s>
+    <s id="s6.3" caller="B" act_tag="h" damsl_act_tag="h">
+      <w id="w6.3.1" lem="I" tree="PRP">I</w>
+      <w id="w6.3.2" lem="do" tree="VBP">do</w>
+      <w id="w6.3.3" lem="n't" tree="RB">n't</w>
+      <w id="w6.3.4" lem="know" tree="VB">know</w>
+      <w id="w6.3.5" lem="," tree=",">,</w>
+    </s>
+    <s id="s6.4" caller="B" act_tag="ad" damsl_act_tag="ad">
+      <w id="w6.4.1" lem="hold" tree="VB">hold</w>
+      <w id="w6.4.2" lem="it" tree="PRP">it</w>
+      <w id="w6.4.3" lem="down" tree="RB">down</w>
+      <w id="w6.4.4" lem="a" tree="DT">a</w>
+      <w id="w6.4.5" lem="little" tree="RB">little</w>
+      <w id="w6.4.6" lem="long" tree="JJR">longer</w>
+      <w id="w6.4.7" lem="," tree=",">,</w>
+    </s>
+    <s id="s6.5" caller="B" act_tag="ad" damsl_act_tag="ad">
+      <w id="w6.5.1" lem="and" tree="CC">and</w>
+      <w id="w6.5.2" lem="see" tree="VB">see</w>
+      <w id="w6.5.3" lem="if" tree="IN">if</w>
+      <w id="w6.5.4" lem="it" tree="PRP">it</w>
+      <w id="w6.5.5" lem="," tree=",">,</w>
+      <w id="w6.5.6" lem="uh" tree="UH">uh</w>
+      <w id="w6.5.7" lem="," tree=",">,</w>
+    </s>
+  </p>
+  <p id="7">
+    <s id="s7.1" caller="A" act_tag="aa" damsl_act_tag="aa">
+      <w id="w7.1.1" lem="Okay" tree="UH">Okay</w>
+      <w id="w7.1.2" lem="." tree=".">.</w>
+    </s>
+    <s id="s7.2" caller="A" act_tag="qy" damsl_act_tag="qy">
+      <w id="w7.2.1" lem="Well" tree="UH">Well</w>
+      <w id="w7.2.2" lem="," tree=",">,</w>
+    </s>
+  </p>
+  <p id="8">
+    <s id="s8.1" caller="B" act_tag="b" damsl_act_tag="b">
+      <w id="w8.1.1" lem="Okay" tree="UH">Okay</w>
+    </s>
+    <s id="s8.2" caller="B" act_tag="sd" damsl_act_tag="sd">
+      <w id="w8.2.1" lem="I" tree="PRP">I</w>
+      <w id="w8.2.2" lem="," tree=",">,</w>
+    </s>
+  </p>
+  <p id="9">
+    <s id="s9.1" caller="A" act_tag="sd" damsl_act_tag="sd">
+      <w id="w9.1.1" lem="Does" tree="VBZ">Does</w>
+      <w id="w9.1.2" lem="it" tree="PRP">it</w>
+      <w id="w9.1.3" lem="usually" tree="RB">usually</w>
+      <w id="w9.1.4" lem="make" tree="VB">make</w>
+      <w id="w9.1.5" lem="a" tree="DT">a</w>
+      <w id="w9.1.6" lem="recording" tree="NN">recording</w>
+      <w id="w9.1.7" lem="or" tree="CC">or</w>
+      <w id="w9.1.8" lem="s-" tree="XX">s-</w>
+      <w id="w9.1.9" lem="," tree=",">,</w>
+    </s>
+  </p>
+  <p id="10">
+    <s id="s10.1" caller="B" act_tag="sd" damsl_act_tag="sd">
+      <w id="w10.1.1" lem="Well" tree="UH">Well</w>
+      <w id="w10.1.2" lem="," tree=",">,</w>
+      <w id="w10.1.3" lem="I" tree="PRP">I</w>
+      <w id="w10.1.4" lem="do" tree="VBP">do</w>
+      <w id="w10.1.5" lem="n't" tree="RB">n't</w>
+      <w id="w10.1.6" lem="remember" tree="VB">remember</w>
+      <w id="w10.1.7" lem="." tree=".">.</w>
+    </s>
+    <s id="s10.2" caller="B" act_tag="sd" damsl_act_tag="sd">
+      <w id="w10.2.1" lem="It" tree="PRP">It</w>
+      <w id="w10.2.2" lem="seem" tree="VBD">seemed</w>
+      <w id="w10.2.3" lem="like" tree="IN">like</w>
+      <w id="w10.2.4" lem="it" tree="PRP">it</w>
+      <w id="w10.2.5" lem="do" tree="VBD">did</w>
+      <w id="w10.2.6" lem="," tree=",">,</w>
+    </s>
+    <s id="s10.3" caller="B" act_tag="sd" damsl_act_tag="sd">
+      <w id="w10.3.1" lem="but" tree="CC">but</w>
+      <w id="w10.3.2" lem="it" tree="PRP">it</w>
+      <w id="w10.3.3" lem="might" tree="MD">might</w>
+      <w id="w10.3.4" lem="not" tree="RB">not</w>
+      <w id="w10.3.5" lem="." tree=".">.</w>
+    </s>
+    <s id="s10.4" caller="B" act_tag="sv" damsl_act_tag="sv">
+      <w id="w10.4.1" lem="I" tree="PRP">I</w>
+      <w id="w10.4.2" lem="guess" tree="VBP">guess</w>
+      <w id="w10.4.3" lem="--" tree=":">--</w>
+    </s>
+  </p>
+  <p id="11">
+    <s id="s11.1" caller="A" act_tag="bk" damsl_act_tag="bk">
+      <w id="w11.1.1" lem="Okay" tree="UH">Okay</w>
+      <w id="w11.1.2" lem="." tree=".">.</w>
+    </s>
+  </p>
+  <p id="12">
+    <s id="s12.1" caller="B" act_tag="bk" damsl_act_tag="bk">
+      <w id="w12.1.1" lem="--" tree=":">--</w>
+      <w id="w12.1.2" lem="I" tree="PRP">I</w>
+      <w id="w12.1.3" lem="guess" tree="VBP">guess</w>
+      <w id="w12.1.4" lem="we" tree="PRP">we</w>
+      <w id="w12.1.5" lem="can" tree="MD">can</w>
+      <w id="w12.1.6" lem="start" tree="VB">start</w>
+      <w id="w12.1.7" lem="." tree=".">.</w>
+      <w id="w12.1.8" lem="Uh" tree="UH">Uh</w>
+      <w id="w12.1.9" lem="," tree=",">,</w>
+    </s>
+  </p>
+  <p id="13">
+    <s id="s13.1" caller="A" act_tag="aa" damsl_act_tag="aa">
+      <w id="w13.1.1" lem="Okay" tree="UH">Okay</w>
+      <w id="w13.1.2" lem="." tree=".">.</w>
+    </s>
+  </p>
+  <p id="14">
+    <s id="s14.1" caller="B" act_tag="nn" damsl_act_tag="nn">
+      <w id="w14.1.1" lem="No" tree="UH">No</w>
+      <w id="w14.1.2" lem="," tree=",">,</w>
+    </s>
+    <s id="s14.2" caller="B" act_tag="sd^e" damsl_act_tag="sd">
+      <w id="w14.2.1" lem="I" tree="PRP">I</w>
+      <w id="w14.2.2" lem="do" tree="VBP">do</w>
+      <w id="w14.2.3" lem="n't" tree="RB">n't</w>
+      <w id="w14.2.4" lem="," tree=",">,</w>
+      <w id="w14.2.5" lem="I" tree="PRP">I</w>
+      <w id="w14.2.6" lem="do" tree="VBP">do</w>
+      <w id="w14.2.7" lem="n't" tree="RB">n't</w>
+      <w id="w14.2.8" lem="have" tree="VB">have</w>
+      <w id="w14.2.9" lem="any" tree="DT">any</w>
+      <w id="w14.2.10" lem="kid" tree="NNS">kids</w>
+      <w id="w14.2.11" lem="." tree=".">.</w>
+    </s>
+    <s id="s14.3" caller="B" act_tag="sd" damsl_act_tag="sd">
+      <w id="w14.3.1" lem="I" tree="PRP">I</w>
+      <w id="w14.3.2" lem="," tree=",">,</w>
+      <w id="w14.3.3" lem="uh" tree="UH">uh</w>
+      <w id="w14.3.4" lem="," tree=",">,</w>
+      <w id="w14.3.5" lem="my" tree="PRP$">my</w>
+      <w id="w14.3.6" lem="sister" tree="NN">sister</w>
+      <w id="w14.3.7" lem="have" tree="VBZ">has</w>
+      <w id="w14.3.8" lem="a" tree="DT">a</w>
+      <w id="w14.3.9" lem="," tree=",">,</w>
+      <w id="w14.3.10" lem="she" tree="PRP">she</w>
+      <w id="w14.3.11" lem="just" tree="RB">just</w>
+      <w id="w14.3.12" lem="have" tree="VBD">had</w>
+      <w id="w14.3.13" lem="a" tree="DT">a</w>
+      <w id="w14.3.14" lem="baby" tree="NN">baby</w>
+      <w id="w14.3.15" lem="," tree=",">,</w>
+    </s>
+    <s id="s14.4" caller="B" act_tag="sd" damsl_act_tag="sd">
+      <w id="w14.4.1" lem="he" tree="PRP">he</w>
+      <w id="w14.4.2" lem="'s" tree="BES">'s</w>
+      <w id="w14.4.3" lem="about" tree="RB">about</w>
+      <w id="w14.4.4" lem="five" tree="CD">five</w>
+      <w id="w14.4.5" lem="month" tree="NNS">months</w>
+      <w id="w14.4.6" lem="old" tree="JJ">old</w>
+    </s>
+    <s id="s14.5" caller="B" act_tag="sd" damsl_act_tag="sd">
+      <w id="w14.5.1" lem="and" tree="CC">and</w>
+      <w id="w14.5.2" lem="she" tree="PRP">she</w>
+      <w id="w14.5.3" lem="be" tree="VBD">was</w>
+      <w id="w14.5.4" lem="worry" tree="VBG">worrying</w>
+      <w id="w14.5.5" lem="about" tree="IN">about</w>
+      <w id="w14.5.6" lem="go" tree="VBG">going</w>
+      <w id="w14.5.7" lem="back" tree="RB">back</w>
+      <w id="w14.5.8" lem="to" tree="TO">to</w>
+      <w id="w14.5.9" lem="work" tree="VB">work</w>
+      <w id="w14.5.10" lem="and" tree="CC">and</w>
+      <w id="w14.5.11" lem="what" tree="WP">what</w>
+      <w id="w14.5.12" lem="she" tree="PRP">she</w>
+      <w id="w14.5.13" lem="be" tree="VBD">was</w>
+      <w id="w14.5.14" lem="go" tree="VBG">going</w>
+      <w id="w14.5.15" lem="to" tree="TO">to</w>
+      <w id="w14.5.16" lem="do" tree="VB">do</w>
+      <w id="w14.5.17" lem="with" tree="IN">with</w>
+      <w id="w14.5.18" lem="him" tree="PRP">him</w>
+      <w id="w14.5.19" lem="and" tree="CC">and</w>
+      <w id="w14.5.20" lem="--" tree=":">--</w>
+    </s>
+  </p>
+  <p id="15">
+    <s id="s15.1" caller="A" act_tag="b" damsl_act_tag="b">
+      <w id="w15.1.1" lem="Uh-huh" tree="UH">Uh-huh</w>
+      <w id="w15.1.2" lem="." tree=".">.</w>
+    </s>
+  </p>
+  <p id="16">
+    <s id="s16.1" caller="B" act_tag="b" damsl_act_tag="b">
+      <w id="w16.1.1" lem="--" tree=":">--</w>
+      <w id="w16.1.2" lem="the" tree="DT">the</w>
+      <w id="w16.1.3" lem="different" tree="JJ">different</w>
+      <w id="w16.1.4" lem="," tree=",">,</w>
+    </s>
+    <s id="s16.2" caller="B" act_tag="qy" damsl_act_tag="qy">
+      <w id="w16.2.1" lem="do" tree="VBP">do</w>
+      <w id="w16.2.2" lem="you" tree="PRP">you</w>
+      <w id="w16.2.3" lem="have" tree="VB">have</w>
+      <w id="w16.2.4" lem="kid" tree="NNS">kids</w>
+      <w id="w16.2.5" lem="?" tree=".">?</w>
+    </s>
+  </p>
+  <p id="17">
+    <s id="s17.1" caller="A" act_tag="na" damsl_act_tag="na">
+      <w id="w17.1.1" lem="I" tree="PRP">I</w>
+      <w id="w17.1.2" lem="have" tree="VBP">have</w>
+      <w id="w17.1.3" lem="three" tree="CD">three</w>
+      <w id="w17.1.4" lem="." tree=".">.</w>
+    </s>
+  </p>
+  <p id="18">
+    <s id="s18.1" caller="B" act_tag="bh" damsl_act_tag="bh">
+      <w id="w18.1.1" lem="Oh" tree="UH">Oh</w>
+      <w id="w18.1.2" lem="," tree=",">,</w>
+      <w id="w18.1.3" lem="really" tree="UH">really</w>
+      <w id="w18.1.4" lem="?" tree=".">?</w>
+    </s>
+  </p>
+  <p id="19">
+    <s id="s19.1" caller="A" act_tag="ny" damsl_act_tag="ny">
+      <w id="w19.1.1" lem="Uh-huh" tree="UH">Uh-huh</w>
+      <w id="w19.1.2" lem="." tree=".">.</w>
+    </s>
+  </p>
+  <p id="20">
+    <s id="s20.1" caller="B" act_tag="x" damsl_act_tag="x">
+      <w id="w20.1.1" lem="." tree=".">.</w>
+    </s>
+  </p>
+  <p id="21">
+    <s id="s21.1" caller="A" act_tag="b" damsl_act_tag="b">
+      <w id="w21.1.1" lem="Yeah" tree="UH">Yeah</w>
+      <w id="w21.1.2" lem="," tree=",">,</w>
+    </s>
+    <s id="s21.2" caller="A" act_tag="sd" damsl_act_tag="sd">
+      <w id="w21.2.1" lem="I" tree="PRP">I</w>
+      <w id="w21.2.2" lem="do" tree="VBP">do</w>
+      <w id="w21.2.3" lem="." tree=".">.</w>
+    </s>
+    <s id="s21.3" caller="A" act_tag="%" damsl_act_tag="%">
+      <w id="w21.3.1" lem="Yes" tree="UH">Yes</w>
+      <w id="w21.3.2" lem="," tree=",">,</w>
+      <w id="w21.3.3" lem="uh" tree="UH">uh</w>
+      <w id="w21.3.4" lem="," tree=",">,</w>
+    </s>
+    <s id="s21.4" caller="A" act_tag="sd" damsl_act_tag="sd">
+      <w id="w21.4.1" lem="I" tree="PRP">I</w>
+      <w id="w21.4.2" lem="do" tree="VBP">do</w>
+      <w id="w21.4.3" lem="n't" tree="RB">n't</w>
+      <w id="w21.4.4" lem="work" tree="VB">work</w>
+      <w id="w21.4.5" lem="," tree=",">,</w>
+      <w id="w21.4.6" lem="though" tree="RB">though</w>
+      <w id="w21.4.7" lem="," tree=",">,</w>
+    </s>
+    <s id="s21.5" caller="A" act_tag="sd" damsl_act_tag="sd">
+      <w id="w21.5.1" lem="but" tree="CC">but</w>
+      <w id="w21.5.2" lem="I" tree="PRP">I</w>
+      <w id="w21.5.3" lem="use" tree="VBD">used</w>
+      <w id="w21.5.4" lem="to" tree="TO">to</w>
+      <w id="w21.5.5" lem="work" tree="VB">work</w>
+      <w id="w21.5.6" lem="and" tree="CC">and</w>
+      <w id="w21.5.7" lem="," tree=",">,</w>
+      <w id="w21.5.8" lem="when" tree="WRB">when</w>
+      <w id="w21.5.9" lem="I" tree="PRP">I</w>
+      <w id="w21.5.10" lem="have" tree="VBD">had</w>
+      <w id="w21.5.11" lem="two" tree="CD">two</w>
+      <w id="w21.5.12" lem="child" tree="NNS">children</w>
+      <w id="w21.5.13" lem="." tree=".">.</w>
+    </s>
+  </p>
+  <p id="22">
+    <s id="s22.1" caller="B" act_tag="b" damsl_act_tag="b">
+      <w id="w22.1.1" lem="Uh-huh" tree="UH">Uh-huh</w>
+      <w id="w22.1.2" lem="." tree=".">.</w>
+    </s>
+  </p>
+  <p id="23">
+    <s id="s23.1" caller="A" act_tag="sd" damsl_act_tag="sd">
+      <w id="w23.1.1" lem="I" tree="PRP">I</w>
+      <w id="w23.1.2" lem="work" tree="VBP">work</w>
+      <w id="w23.1.3" lem="off" tree="RB">off</w>
+      <w id="w23.1.4" lem="and" tree="CC">and</w>
+      <w id="w23.1.5" lem="on" tree="RB">on</w>
+      <w id="w23.1.6" lem="just" tree="RB">just</w>
+      <w id="w23.1.7" lem="temporarily" tree="RB">temporarily</w>
+      <w id="w23.1.8" lem="and" tree="CC">and</w>
+      <w id="w23.1.9" lem="usually" tree="RB">usually</w>
+      <w id="w23.1.10" lem="find" tree="VBP">find</w>
+      <w id="w23.1.11" lem="friend" tree="NNS">friends</w>
+      <w id="w23.1.12" lem="to" tree="TO">to</w>
+      <w id="w23.1.13" lem="babysit" tree="VB">babysit</w>
+      <w id="w23.1.14" lem="," tree=",">,</w>
+    </s>
+    <s id="s23.2" caller="A" act_tag="sd" damsl_act_tag="sd">
+      <w id="w23.2.1" lem="but" tree="CC">but</w>
+      <w id="w23.2.2" lem="I" tree="PRP">I</w>
+      <w id="w23.2.3" lem="do" tree="VBP">do</w>
+      <w id="w23.2.4" lem="n't" tree="RB">n't</w>
+      <w id="w23.2.5" lem="envy" tree="VB">envy</w>
+      <w id="w23.2.6" lem="anybody" tree="NN">anybody</w>
+      <w id="w23.2.7" lem="who" tree="WP">who</w>
+      <w id="w23.2.8" lem="'s" tree="BES">'s</w>
+      <w id="w23.2.9" lem="in" tree="IN">in</w>
+      <w id="w23.2.10" lem="that" tree="DT">that</w>
+      <w id="w23.2.11" lem="situation" tree="NN">situation</w>
+      <w id="w23.2.12" lem="to" tree="TO">to</w>
+      <w id="w23.2.13" lem="find" tree="VB">find</w>
+      <w id="w23.2.14" lem="day" tree="NN">day</w>
+      <w id="w23.2.15" lem="care" tree="NN">care</w>
+      <w id="w23.2.16" lem="." tree=".">.</w>
+    </s>
+  </p>
+  <p id="24">
+    <s id="s24.1" caller="B" act_tag="b" damsl_act_tag="b">
+      <w id="w24.1.1" lem="Yeah" tree="UH">Yeah</w>
+      <w id="w24.1.2" lem="." tree=".">.</w>
+    </s>
+  </p>
+  <p id="25">
+    <s id="s25.1" caller="A" act_tag="qy" damsl_act_tag="qy">
+      <w id="w25.1.1" lem="But" tree="CC">But</w>
+      <w id="w25.1.2" lem="," tree=",">,</w>
+      <w id="w25.1.3" lem="do" tree="VBZ">does</w>
+      <w id="w25.1.4" lem="your" tree="PRP$">your</w>
+      <w id="w25.1.5" lem="sister" tree="NN">sister</w>
+      <w id="w25.1.6" lem="live" tree="VB">live</w>
+      <w id="w25.1.7" lem="in" tree="IN">in</w>
+      <w id="w25.1.8" lem="a" tree="DT">a</w>
+      <w id="w25.1.9" lem="big" tree="JJ">big</w>
+      <w id="w25.1.10" lem="community" tree="NN">community</w>
+      <w id="w25.1.11" lem="?" tree=".">?</w>
+    </s>
+  </p>
+  <p id="26">
+    <s id="s26.1" caller="B" act_tag="ny" damsl_act_tag="ny">
+      <w id="w26.1.1" lem="Uh" tree="UH">Uh</w>
+      <w id="w26.1.2" lem="," tree=",">,</w>
+      <w id="w26.1.3" lem="yeah" tree="UH">yeah</w>
+    </s>
+    <s id="s26.2" caller="B" act_tag="sd^e" damsl_act_tag="sd">
+      <w id="w26.2.1" lem="she" tree="PRP">she</w>
+      <w id="w26.2.2" lem="live" tree="VBZ">lives</w>
+      <w id="w26.2.3" lem="," tree=",">,</w>
+    </s>
+    <s id="s26.3" caller="B" act_tag="sd" damsl_act_tag="sd">
+      <w id="w26.3.1" lem="it" tree="PRP">it</w>
+      <w id="w26.3.2" lem="'s" tree="BES">'s</w>
+      <w id="w26.3.3" lem="a" tree="DT">a</w>
+      <w id="w26.3.4" lem="," tree=",">,</w>
+      <w id="w26.3.5" lem="it" tree="PRP">it</w>
+      <w id="w26.3.6" lem="'s" tree="BES">'s</w>
+      <w id="w26.3.7" lem="a" tree="DT">a</w>
+      <w id="w26.3.8" lem="fairly" tree="RB">fairly</w>
+      <w id="w26.3.9" lem="large" tree="JJ">large</w>
+      <w id="w26.3.10" lem="community" tree="NN">community</w>
+      <w id="w26.3.11" lem="." tree=".">.</w>
+    </s>
+    <s id="s26.4" caller="B" act_tag="sd" damsl_act_tag="sd">
+      <w id="w26.4.1" lem="She" tree="PRP">She</w>
+      <w id="w26.4.2" lem="," tree=",">,</w>
+      <w id="w26.4.3" lem="uh" tree="UH">uh</w>
+      <w id="w26.4.4" lem="," tree=",">,</w>
+      <w id="w26.4.5" lem="get" tree="VBD">got</w>
+      <w id="w26.4.6" lem="real" tree="RB">real</w>
+      <w id="w26.4.7" lem="lucky" tree="JJ">lucky</w>
+      <w id="w26.4.8" lem="," tree=",">,</w>
+      <w id="w26.4.9" lem="though" tree="RB">though</w>
+      <w id="w26.4.10" lem="." tree=".">.</w>
+    </s>
+    <s id="s26.5" caller="B" act_tag="sd" damsl_act_tag="sd">
+      <w id="w26.5.1" lem="He" tree="PRP">He</w>
+      <w id="w26.5.2" lem="have" tree="VBD">had</w>
+      <w id="w26.5.3" lem="a" tree="DT">a</w>
+      <w id="w26.5.4" lem="bos" tree="NN">boss</w>
+      <w id="w26.5.5" lem="who" tree="WP">who</w>
+      <w id="w26.5.6" lem="," tree=",">,</w>
+      <w id="w26.5.7" lem="uh" tree="UH">uh</w>
+      <w id="w26.5.8" lem="," tree=",">,</w>
+      <w id="w26.5.9" lem="move" tree="VBD">moved</w>
+      <w id="w26.5.10" lem="into" tree="IN">into</w>
+      <w id="w26.5.11" lem="a" tree="DT">a</w>
+      <w id="w26.5.12" lem="large" tree="JJR">larger</w>
+      <w id="w26.5.13" lem="office" tree="NN">office</w>
+      <w id="w26.5.14" lem="--" tree=":">--</w>
+    </s>
+  </p>
+  <p id="27">
+    <s id="s27.1" caller="A" act_tag="b" damsl_act_tag="b">
+      <w id="w27.1.1" lem="Uh-huh" tree="UH">Uh-huh</w>
+      <w id="w27.1.2" lem="." tree=".">.</w>
+    </s>
+  </p>
+  <p id="28">
+    <s id="s28.1" caller="B" act_tag="sd" damsl_act_tag="sd">
+      <w id="w28.1.1" lem="--" tree=":">--</w>
+      <w id="w28.1.2" lem="and" tree="CC">and</w>
+      <w id="w28.1.3" lem="she" tree="PRP">she</w>
+      <w id="w28.1.4" lem="'s" tree="BES">'s</w>
+      <w id="w28.1.5" lem="able" tree="JJ">able</w>
+      <w id="w28.1.6" lem="to" tree="TO">to</w>
+      <w id="w28.1.7" lem="take" tree="VB">take</w>
+      <w id="w28.1.8" lem="her" tree="PRP$">her</w>
+      <w id="w28.1.9" lem="baby" tree="NN">baby</w>
+      <w id="w28.1.10" lem="to" tree="IN">to</w>
+      <w id="w28.1.11" lem="work" tree="NN">work</w>
+      <w id="w28.1.12" lem="with" tree="IN">with</w>
+      <w id="w28.1.13" lem="her" tree="PRP">her</w>
+      <w id="w28.1.14" lem="." tree=".">.</w>
+    </s>
+  </p>
+  <p id="29">
+    <s id="s29.1" caller="A" act_tag="bh" damsl_act_tag="bh">
+      <w id="w29.1.1" lem="Oh" tree="UH">Oh</w>
+      <w id="w29.1.2" lem="," tree=",">,</w>
+      <w id="w29.1.3" lem="really" tree="UH">really</w>
+      <w id="w29.1.4" lem="?" tree=".">?</w>
+    </s>
+  </p>
+  <p id="30">
+    <s id="s30.1" caller="B" act_tag="sd" damsl_act_tag="sd">
+      <w id="w30.1.1" lem="And" tree="CC">And</w>
+      <w id="w30.1.2" lem="it" tree="PRP">it</w>
+      <w id="w30.1.3" lem="'s" tree="BES">'s</w>
+      <w id="w30.1.4" lem="a" tree="DT">a</w>
+      <w id="w30.1.5" lem="small" tree="JJ">small</w>
+      <w id="w30.1.6" lem="office" tree="NN">office</w>
+      <w id="w30.1.7" lem="that" tree="WDT">that</w>
+      <w id="w30.1.8" lem="she" tree="PRP">she</w>
+      <w id="w30.1.9" lem="work" tree="VBZ">works</w>
+      <w id="w30.1.10" lem="in" tree="RB">in</w>
+      <w id="w30.1.11" lem="--" tree=":">--</w>
+    </s>
+  </p>
+  <p id="31">
+    <s id="s31.1" caller="A" act_tag="b" damsl_act_tag="b">
+      <w id="w31.1.1" lem="Uh-huh" tree="UH">Uh-huh</w>
+      <w id="w31.1.2" lem="." tree=".">.</w>
+    </s>
+  </p>
+  <p id="32">
+    <s id="s32.1" caller="B" act_tag="sd" damsl_act_tag="sd">
+      <w id="w32.1.1" lem="--" tree=":">--</w>
+      <w id="w32.1.2" lem="and" tree="CC">and</w>
+      <w id="w32.1.3" lem="," tree=",">,</w>
+      <w id="w32.1.4" lem="uh" tree="UH">uh</w>
+      <w id="w32.1.5" lem="," tree=",">,</w>
+      <w id="w32.1.6" lem="it" tree="PRP">it</w>
+      <w id="w32.1.7" lem="'s" tree="BES">'s</w>
+      <w id="w32.1.8" lem="a" tree="DT">a</w>
+      <w id="w32.1.9" lem="," tree=",">,</w>
+      <w id="w32.1.10" lem="it" tree="PRP">it</w>
+      <w id="w32.1.11" lem="'s" tree="BES">'s</w>
+      <w id="w32.1.12" lem="a" tree="DT">a</w>
+      <w id="w32.1.13" lem="legal" tree="JJ">legal</w>
+      <w id="w32.1.14" lem="firm" tree="NN">firm</w>
+      <w id="w32.1.15" lem="," tree=",">,</w>
+      <w id="w32.1.16" lem="office" tree="NN">office</w>
+      <w id="w32.1.17" lem="," tree=",">,</w>
+    </s>
+    <s id="s32.2" caller="B" act_tag="sd" damsl_act_tag="sd">
+      <w id="w32.2.1" lem="and" tree="CC">and</w>
+      <w id="w32.2.2" lem="it" tree="PRP">it</w>
+      <w id="w32.2.3" lem="'s" tree="BES">'s</w>
+      <w id="w32.2.4" lem="just" tree="RB">just</w>
+      <w id="w32.2.5" lem="one" tree="CD">one</w>
+      <w id="w32.2.6" lem="lawyer" tree="NN">lawyer</w>
+      <w id="w32.2.7" lem="--" tree=":">--</w>
+    </s>
+  </p>
+  <p id="33">
+    <s id="s33.1" caller="A" act_tag="%" damsl_act_tag="%">
+      <w id="w33.1.1" lem="Um" tree="UH">Um</w>
+      <w id="w33.1.2" lem="." tree=".">.</w>
+    </s>
+  </p>
+  <p id="34">
+    <s id="s34.1" caller="B" act_tag="sd" damsl_act_tag="sd">
+      <w id="w34.1.1" lem="--" tree=":">--</w>
+      <w id="w34.1.2" lem="and" tree="CC">and</w>
+      <w id="w34.1.3" lem="so" tree="RB">so</w>
+      <w id="w34.1.4" lem="she" tree="PRP">she</w>
+      <w id="w34.1.5" lem="'s" tree="BES">'s</w>
+      <w id="w34.1.6" lem="the" tree="DT">the</w>
+      <w id="w34.1.7" lem="only" tree="RB">only</w>
+      <w id="w34.1.8" lem="one" tree="NN">one</w>
+      <w id="w34.1.9" lem="really" tree="RB">really</w>
+      <w id="w34.1.10" lem="that" tree="WDT">that</w>
+      <w id="w34.1.11" lem="take" tree="VBZ">takes</w>
+      <w id="w34.1.12" lem="care" tree="NN">care</w>
+      <w id="w34.1.13" lem="of" tree="IN">of</w>
+      <w id="w34.1.14" lem="the" tree="DT">the</w>
+      <w id="w34.1.15" lem="office" tree="NN">office</w>
+      <w id="w34.1.16" lem="." tree=".">.</w>
+    </s>
+    <s id="s34.2" caller="B" act_tag="sd" damsl_act_tag="sd">
+      <w id="w34.2.1" lem="There" tree="EX">There</w>
+      <w id="w34.2.2" lem="'s" tree="BES">'s</w>
+      <w id="w34.2.3" lem="no" tree="DT">no</w>
+      <w id="w34.2.4" lem="one" tree="NN">one</w>
+      <w id="w34.2.5" lem="else" tree="RB">else</w>
+      <w id="w34.2.6" lem="that" tree="WDT">that</w>
+      <w id="w34.2.7" lem="work" tree="VBZ">works</w>
+      <w id="w34.2.8" lem="there" tree="RB">there</w>
+      <w id="w34.2.9" lem="." tree=".">.</w>
+    </s>
+  </p>
+  <p id="35">
+    <s id="s35.1" caller="A" act_tag="b" damsl_act_tag="b">
+      <w id="w35.1.1" lem="Uh-huh" tree="UH">Uh-huh</w>
+      <w id="w35.1.2" lem="." tree=".">.</w>
+    </s>
+  </p>
+  <p id="36">
+    <s id="s36.1" caller="B" act_tag="sd" damsl_act_tag="sd">
+      <w id="w36.1.1" lem="And" tree="CC">And</w>
+      <w id="w36.1.2" lem="so" tree="RB">so</w>
+      <w id="w36.1.3" lem="they" tree="PRP">they</w>
+      <w id="w36.1.4" lem="have" tree="VBP">have</w>
+      <w id="w36.1.5" lem="an" tree="DT">an</w>
+      <w id="w36.1.6" lem="extra" tree="JJ">extra</w>
+      <w id="w36.1.7" lem="room" tree="NN">room</w>
+      <w id="w36.1.8" lem="and" tree="CC">and</w>
+      <w id="w36.1.9" lem="everything" tree="NN">everything</w>
+      <w id="w36.1.10" lem="for" tree="IN">for</w>
+      <w id="w36.1.11" lem="the" tree="DT">the</w>
+      <w id="w36.1.12" lem="baby" tree="NN">baby</w>
+      <w id="w36.1.13" lem="," tree=",">,</w>
+    </s>
+    <s id="s36.2" caller="B" act_tag="sd" damsl_act_tag="sd">
+      <w id="w36.2.1" lem="so" tree="RB">so</w>
+      <w id="w36.2.2" lem="it" tree="PRP">it</w>
+      <w id="w36.2.3" lem="work" tree="VBZ">works</w>
+      <w id="w36.2.4" lem="out" tree="RP">out</w>
+      <w id="w36.2.5" lem="pretty" tree="RB">pretty</w>
+      <w id="w36.2.6" lem="good" tree="JJ">good</w>
+      <w id="w36.2.7" lem="for" tree="IN">for</w>
+      <w id="w36.2.8" lem="her" tree="PRP">her</w>
+      <w id="w36.2.9" lem="." tree=".">.</w>
+    </s>
+  </p>
+  <p id="37">
+    <s id="s37.1" caller="A" act_tag="ba" damsl_act_tag="ba">
+      <w id="w37.1.1" lem="Wow" tree="UH">Wow</w>
+      <w id="w37.1.2" lem="." tree=".">.</w>
+    </s>
+  </p>
+  <p id="38">
+    <s id="s38.1" caller="B" act_tag="x" damsl_act_tag="x">
+      <w id="w38.1.1" lem="." tree=".">.</w>
+    </s>
+  </p>
+  <p id="39">
+    <s id="s39.1" caller="A" act_tag="ba" damsl_act_tag="ba">
+      <w id="w39.1.1" lem="How" tree="WRB">How</w>
+      <w id="w39.1.2" lem="lucky" tree="JJ">lucky</w>
+      <w id="w39.1.3" lem="." tree=".">.</w>
+    </s>
+    <s id="s39.2" caller="A" act_tag="sd" damsl_act_tag="sd">
+      <w id="w39.2.1" lem="I" tree="PRP">I</w>
+      <w id="w39.2.2" lem="," tree=",">,</w>
+      <w id="w39.2.3" lem="I" tree="PRP">I</w>
+      <w id="w39.2.4" lem="know" tree="VBP">know</w>
+      <w id="w39.2.5" lem="a" tree="DT">a</w>
+      <w id="w39.2.6" lem="lot" tree="NN">lot</w>
+      <w id="w39.2.7" lem="of" tree="IN">of</w>
+      <w id="w39.2.8" lem="people" tree="NNS">people</w>
+      <w id="w39.2.9" lem="around" tree="IN">around</w>
+      <w id="w39.2.10" lem="here" tree="RB">here</w>
+      <w id="w39.2.11" lem="sometimes" tree="RB">sometimes</w>
+      <w id="w39.2.12" lem="have" tree="VBP">have</w>
+      <w id="w39.2.13" lem="," tree=",">,</w>
+      <w id="w39.2.14" lem="like" tree="UH">like</w>
+      <w id="w39.2.15" lem="," tree=",">,</w>
+      <w id="w39.2.16" lem="mother" tree="NNS">mothers</w>
+      <w id="w39.2.17" lem="or" tree="CC">or</w>
+      <w id="w39.2.18" lem="grandmother" tree="NNS">grandmothers</w>
+      <w id="w39.2.19" lem="--" tree=":">--</w>
+    </s>
+  </p>
+  <p id="40">
+    <s id="s40.1" caller="B" act_tag="b" damsl_act_tag="b">
+      <w id="w40.1.1" lem="Yeah" tree="UH">Yeah</w>
+      <w id="w40.1.2" lem="." tree=".">.</w>
+    </s>
+  </p>
+  <p id="41">
+    <s id="s41.1" caller="A" act_tag="b" damsl_act_tag="b">
+      <w id="w41.1.1" lem="--" tree=":">--</w>
+      <w id="w41.1.2" lem="that" tree="WDT">that</w>
+      <w id="w41.1.3" lem="take" tree="VBP">take</w>
+      <w id="w41.1.4" lem="care" tree="NN">care</w>
+      <w id="w41.1.5" lem="of" tree="IN">of</w>
+      <w id="w41.1.6" lem="their" tree="PRP$">their</w>
+      <w id="w41.1.7" lem="kid" tree="NNS">kids</w>
+    </s>
+    <s id="s41.2" caller="A" act_tag="sd" damsl_act_tag="sd">
+      <w id="w41.2.1" lem="and" tree="CC">and</w>
+      <w id="w41.2.2" lem="," tree=",">,</w>
+      <w id="w41.2.3" lem="but" tree="CC">but</w>
+      <w id="w41.2.4" lem="," tree=",">,</w>
+      <w id="w41.2.5" lem="the" tree="DT">the</w>
+      <w id="w41.2.6" lem="community" tree="NN">community</w>
+      <w id="w41.2.7" lem="I" tree="PRP">I</w>
+      <w id="w41.2.8" lem="'m" tree="VBP">'m</w>
+      <w id="w41.2.9" lem="in" tree="IN">in</w>
+      <w id="w41.2.10" lem="be" tree="VBZ">is</w>
+      <w id="w41.2.11" lem="not" tree="RB">not</w>
+      <w id="w41.2.12" lem="a" tree="DT">a</w>
+      <w id="w41.2.13" lem="real" tree="RB">real</w>
+      <w id="w41.2.14" lem="large" tree="JJ">large</w>
+      <w id="w41.2.15" lem="one" tree="NN">one</w>
+      <w id="w41.2.16" lem="," tree=",">,</w>
+    </s>
+    <s id="s41.3" caller="A" act_tag="sd" damsl_act_tag="sd">
+      <w id="w41.3.1" lem="so" tree="RB">so</w>
+      <w id="w41.3.2" lem="there" tree="EX">there</w>
+      <w id="w41.3.3" lem="be" tree="VBP">are</w>
+      <w id="w41.3.4" lem="a" tree="DT">a</w>
+      <w id="w41.3.5" lem="lot" tree="NN">lot</w>
+      <w id="w41.3.6" lem="of" tree="IN">of</w>
+      <w id="w41.3.7" lem="people" tree="NNS">people</w>
+      <w id="w41.3.8" lem="who" tree="WP">who</w>
+      <w id="w41.3.9" lem="babysit" tree="VBP">babysit</w>
+      <w id="w41.3.10" lem="in" tree="IN">in</w>
+      <w id="w41.3.11" lem="their" tree="PRP$">their</w>
+      <w id="w41.3.12" lem="home" tree="NNS">homes</w>
+      <w id="w41.3.13" lem="that" tree="WDT">that</w>
+      <w id="w41.3.14" lem="," tree=",">,</w>
+      <w id="w41.3.15" lem="you" tree="PRP">you</w>
+      <w id="w41.3.16" lem="know" tree="VBP">know</w>
+      <w id="w41.3.17" lem="," tree=",">,</w>
+    </s>
+    <s id="s41.4" caller="A" act_tag="sd" damsl_act_tag="sd">
+      <w id="w41.4.1" lem="you" tree="PRP">you</w>
+      <w id="w41.4.2" lem="either" tree="CC">either</w>
+      <w id="w41.4.3" lem="know" tree="VBP">know</w>
+      <w id="w41.4.4" lem="them" tree="PRP">them</w>
+      <w id="w41.4.5" lem="or" tree="CC">or</w>
+      <w id="w41.4.6" lem="know" tree="VBP">know</w>
+      <w id="w41.4.7" lem="somebody" tree="NN">somebody</w>
+      <w id="w41.4.8" lem="who" tree="WP">who</w>
+      <w id="w41.4.9" lem="know" tree="VBZ">knows</w>
+      <w id="w41.4.10" lem="them" tree="PRP">them</w>
+      <w id="w41.4.11" lem="," tree=",">,</w>
+      <w id="w41.4.12" lem="to" tree="TO">to</w>
+      <w id="w41.4.13" lem="get" tree="VB">get</w>
+      <w id="w41.4.14" lem="to" tree="IN">to</w>
+      <w id="w41.4.15" lem="," tree=",">,</w>
+    </s>
+  </p>
+  <p id="42">
+    <s id="s42.1" caller="B" act_tag="b" damsl_act_tag="b">
+      <w id="w42.1.1" lem="Yeah" tree="UH">Yeah</w>
+      <w id="w42.1.2" lem="," tree=",">,</w>
+    </s>
+    <s id="s42.2" caller="B" act_tag="bf" damsl_act_tag="bf">
+      <w id="w42.2.1" lem="so" tree="RB">so</w>
+      <w id="w42.2.2" lem="it" tree="PRP">it</w>
+      <w id="w42.2.3" lem="'s" tree="BES">'s</w>
+      <w id="w42.2.4" lem="fairly" tree="RB">fairly</w>
+      <w id="w42.2.5" lem="safe" tree="JJ">safe</w>
+      <w id="w42.2.6" lem="." tree=".">.</w>
+    </s>
+  </p>
+  <p id="43">
+    <s id="s43.1" caller="A" act_tag="aa" damsl_act_tag="aa">
+      <w id="w43.1.1" lem="Yeah" tree="UH">Yeah</w>
+      <w id="w43.1.2" lem="," tree=",">,</w>
+    </s>
+    <s id="s43.2" caller="A" act_tag="sd" damsl_act_tag="sd">
+      <w id="w43.2.1" lem="to" tree="TO">to</w>
+      <w id="w43.2.2" lem="get" tree="VB">get</w>
+      <w id="w43.2.3" lem="reference" tree="NNS">references</w>
+      <w id="w43.2.4" lem="and" tree="CC">and</w>
+      <w id="w43.2.5" lem="that" tree="DT">that</w>
+      <w id="w43.2.6" lem="," tree=",">,</w>
+    </s>
+    <s id="s43.3" caller="A" act_tag="%" damsl_act_tag="%">
+      <w id="w43.3.1" lem="so" tree="RB">so</w>
+      <w id="w43.3.2" lem="," tree=",">,</w>
+      <w id="w43.3.3" lem="but" tree="CC">but</w>
+      <w id="w43.3.4" lem="," tree=",">,</w>
+      <w id="w43.3.5" lem="uh" tree="UH">uh</w>
+      <w id="w43.3.6" lem="," tree=",">,</w>
+    </s>
+    <s id="s43.4" caller="A" act_tag="sd" damsl_act_tag="sd">
+      <w id="w43.4.1" lem="I" tree="PRP">I</w>
+      <w id="w43.4.2" lem="," tree=",">,</w>
+      <w id="w43.4.3" lem="I" tree="PRP">I</w>
+      <w id="w43.4.4" lem="d-" tree="VBP">d-</w>
+      <w id="w43.4.5" lem="," tree=",">,</w>
+      <w id="w43.4.6" lem="do" tree="VBP">do</w>
+      <w id="w43.4.7" lem="n't" tree="RB">n't</w>
+      <w id="w43.4.8" lem="feel" tree="VB">feel</w>
+      <w id="w43.4.9" lem="comfortable" tree="JJ">comfortable</w>
+      <w id="w43.4.10" lem="about" tree="IN">about</w>
+      <w id="w43.4.11" lem="leave" tree="VBG">leaving</w>
+      <w id="w43.4.12" lem="my" tree="PRP$">my</w>
+      <w id="w43.4.13" lem="kid" tree="NNS">kids</w>
+      <w id="w43.4.14" lem="in" tree="IN">in</w>
+      <w id="w43.4.15" lem="a" tree="DT">a</w>
+      <w id="w43.4.16" lem="big" tree="JJ">big</w>
+      <w id="w43.4.17" lem="day" tree="NN">day</w>
+      <w id="w43.4.18" lem="care" tree="NN">care</w>
+      <w id="w43.4.19" lem="center" tree="NN">center</w>
+      <w id="w43.4.20" lem="," tree=",">,</w>
+      <w id="w43.4.21" lem="but" tree="CC">but</w>
+      <w id="w43.4.22" lem="," tree=",">,</w>
+      <w id="w43.4.23" lem="simply" tree="RB">simply</w>
+      <w id="w43.4.24" lem="because" tree="IN">because</w>
+      <w id="w43.4.25" lem="there" tree="EX">there</w>
+      <w id="w43.4.26" lem="'s" tree="BES">'s</w>
+      <w id="w43.4.27" lem="so" tree="RB">so</w>
+      <w id="w43.4.28" lem="many" tree="JJ">many</w>
+      <w id="w43.4.29" lem="kid" tree="NNS">kids</w>
+      <w id="w43.4.30" lem="and" tree="CC">and</w>
+      <w id="w43.4.31" lem="so" tree="RB">so</w>
+      <w id="w43.4.32" lem="many" tree="JJ">many</w>
+      <w id="w43.4.33" lem="," tree=",">,</w>
+    </s>
+  </p>
+  <p id="44">
+    <s id="s44.1" caller="B" act_tag="qy" damsl_act_tag="qy">
+      <w id="w44.1.1" lem="Worried" tree="JJ">Worried</w>
+      <w id="w44.1.2" lem="that" tree="IN">that</w>
+      <w id="w44.1.3" lem="they" tree="PRP">they</w>
+      <w id="w44.1.4" lem="'re" tree="VBP">'re</w>
+      <w id="w44.1.5" lem="not" tree="RB">not</w>
+      <w id="w44.1.6" lem="go" tree="VBG">going</w>
+      <w id="w44.1.7" lem="to" tree="TO">to</w>
+      <w id="w44.1.8" lem="get" tree="VB">get</w>
+      <w id="w44.1.9" lem="enough" tree="JJ">enough</w>
+      <w id="w44.1.10" lem="attention" tree="NN">attention</w>
+      <w id="w44.1.11" lem="?" tree=".">?</w>
+    </s>
+  </p>
+  <p id="45">
+    <s id="s45.1" caller="A" act_tag="ny" damsl_act_tag="ny">
+      <w id="w45.1.1" lem="Yeah" tree="UH">Yeah</w>
+      <w id="w45.1.2" lem="," tree=",">,</w>
+    </s>
+    <s id="s45.2" caller="A" act_tag="sd^e" damsl_act_tag="sd">
+      <w id="w45.2.1" lem="and" tree="CC">and</w>
+      <w id="w45.2.2" lem="," tree=",">,</w>
+      <w id="w45.2.3" lem="uh" tree="UH">uh</w>
+      <w id="w45.2.4" lem="," tree=",">,</w>
+      <w id="w45.2.5" lem="you" tree="PRP">you</w>
+      <w id="w45.2.6" lem="know" tree="VBP">know</w>
+      <w id="w45.2.7" lem="," tree=",">,</w>
+      <w id="w45.2.8" lem="cold" tree="NNS">colds</w>
+      <w id="w45.2.9" lem="and" tree="CC">and</w>
+      <w id="w45.2.10" lem="thing" tree="NNS">things</w>
+      <w id="w45.2.11" lem="like" tree="IN">like</w>
+      <w id="w45.2.12" lem="that" tree="DT">that</w>
+      <w id="w45.2.13" lem="get" tree="VBP">get</w>
+      <w id="w45.2.14" lem="--" tree=":">--</w>
+    </s>
+  </p>
+  <p id="46">
+    <s id="s46.1" caller="B" act_tag="b" damsl_act_tag="b">
+      <w id="w46.1.1" lem="Yeah" tree="UH">Yeah</w>
+      <w id="w46.1.2" lem="." tree=".">.</w>
+    </s>
+  </p>
+  <p id="47">
+    <s id="s47.1" caller="A" act_tag="b" damsl_act_tag="b">
+      <w id="w47.1.1" lem="--" tree=":">--</w>
+      <w id="w47.1.2" lem="spread" tree="VBN">spread</w>
+      <w id="w47.1.3" lem="real" tree="RB">real</w>
+      <w id="w47.1.4" lem="easy" tree="RB">easy</w>
+      <w id="w47.1.5" lem="and" tree="CC">and</w>
+      <w id="w47.1.6" lem="thing" tree="NNS">things</w>
+      <w id="w47.1.7" lem="," tree=",">,</w>
+    </s>
+    <s id="s47.2" caller="A" act_tag="sv" damsl_act_tag="sv">
+      <w id="w47.2.1" lem="but" tree="CC">but</w>
+      <w id="w47.2.2" lem="," tree=",">,</w>
+      <w id="w47.2.3" lem="and" tree="CC">and</w>
+      <w id="w47.2.4" lem="they" tree="PRP">they</w>
+      <w id="w47.2.5" lem="'re" tree="VBP">'re</w>
+      <w id="w47.2.6" lem="expensive" tree="JJ">expensive</w>
+    </s>
+    <s id="s47.3" caller="A" act_tag="sd" damsl_act_tag="sd">
+      <w id="w47.3.1" lem="and" tree="CC">and</w>
+      <w id="w47.3.2" lem="," tree=",">,</w>
+      <w id="w47.3.3" lem="course" tree="NN">course</w>
+      <w id="w47.3.4" lem="," tree=",">,</w>
+      <w id="w47.3.5" lem="there" tree="EX">there</w>
+      <w id="w47.3.6" lem="'s" tree="BES">'s</w>
+      <w id="w47.3.7" lem="a" tree="DT">a</w>
+      <w id="w47.3.8" lem="lot" tree="NN">lot</w>
+      <w id="w47.3.9" lem="of" tree="IN">of</w>
+      <w id="w47.3.10" lem="different" tree="JJ">different</w>
+      <w id="w47.3.11" lem="type" tree="NNS">types</w>
+      <w id="w47.3.12" lem="of" tree="IN">of</w>
+      <w id="w47.3.13" lem="day" tree="NN">day</w>
+      <w id="w47.3.14" lem="care" tree="NN">care</w>
+      <w id="w47.3.15" lem="available" tree="JJ">available</w>
+      <w id="w47.3.16" lem="," tree=",">,</w>
+      <w id="w47.3.17" lem="too" tree="RB">too</w>
+      <w id="w47.3.18" lem="," tree=",">,</w>
+      <w id="w47.3.19" lem="you" tree="PRP">you</w>
+      <w id="w47.3.20" lem="know" tree="VBP">know</w>
+      <w id="w47.3.21" lem="," tree=",">,</w>
+      <w id="w47.3.22" lem="where" tree="WRB">where</w>
+      <w id="w47.3.23" lem="they" tree="PRP">they</w>
+      <w id="w47.3.24" lem="teach" tree="VBP">teach</w>
+      <w id="w47.3.25" lem="them" tree="PRP">them</w>
+      <w id="w47.3.26" lem="academic" tree="JJ">academic</w>
+      <w id="w47.3.27" lem="thing" tree="NNS">things</w>
+      <w id="w47.3.28" lem="." tree=".">.</w>
+    </s>
+  </p>
+  <p id="48">
+    <s id="s48.1" caller="B" act_tag="aa" damsl_act_tag="aa">
+      <w id="w48.1.1" lem="Yes" tree="UH">Yes</w>
+      <w id="w48.1.2" lem="." tree=".">.</w>
+    </s>
+  </p>
+  <p id="49">
+    <s id="s49.1" caller="A" act_tag="sd" damsl_act_tag="sd">
+      <w id="w49.1.1" lem="Or" tree="CC">Or</w>
+      <w id="w49.1.2" lem="they" tree="PRP">they</w>
+      <w id="w49.1.3" lem="just" tree="RB">just</w>
+      <w id="w49.1.4" lem="watch" tree="VBP">watch</w>
+      <w id="w49.1.5" lem="them" tree="PRP">them</w>
+      <w id="w49.1.6" lem="and" tree="CC">and</w>
+      <w id="w49.1.7" lem="let" tree="VBP">let</w>
+      <w id="w49.1.8" lem="them" tree="PRP">them</w>
+      <w id="w49.1.9" lem="play" tree="VB">play</w>
+      <w id="w49.1.10" lem="and" tree="CC">and</w>
+      <w id="w49.1.11" lem="thing" tree="NNS">things</w>
+      <w id="w49.1.12" lem="like" tree="IN">like</w>
+      <w id="w49.1.13" lem="that" tree="DT">that</w>
+      <w id="w49.1.14" lem="," tree=",">,</w>
+    </s>
+    <s id="s49.2" caller="A" act_tag="%" damsl_act_tag="%">
+      <w id="w49.2.1" lem="but" tree="CC">but</w>
+      <w id="w49.2.2" lem="," tree=",">,</w>
+    </s>
+    <s id="s49.3" caller="A" act_tag="sv" damsl_act_tag="sv">
+      <w id="w49.3.1" lem="take" tree="VB">take</w>
+      <w id="w49.3.2" lem="a" tree="DT">a</w>
+      <w id="w49.3.3" lem="long" tree="JJ">long</w>
+      <w id="w49.3.4" lem="time" tree="NN">time</w>
+      <w id="w49.3.5" lem="to" tree="TO">to</w>
+      <w id="w49.3.6" lem="find" tree="VB">find</w>
+      <w id="w49.3.7" lem="the" tree="DT">the</w>
+      <w id="w49.3.8" lem="right" tree="JJ">right</w>
+      <w id="w49.3.9" lem="place" tree="NN">place</w>
+    </s>
+    <s id="s49.4" caller="A" act_tag="x" damsl_act_tag="x">
+      <w id="w49.4.1" lem="." tree=".">.</w>
+    </s>
+  </p>
+  <p id="50">
+    <s id="s50.1" caller="B" act_tag="aa" damsl_act_tag="aa">
+      <w id="w50.1.1" lem="Yeah" tree="UH">Yeah</w>
+      <w id="w50.1.2" lem="," tree=",">,</w>
+    </s>
+    <s id="s50.2" caller="B" act_tag="sv" damsl_act_tag="sv">
+      <w id="w50.2.1" lem="and" tree="CC">and</w>
+      <w id="w50.2.2" lem="you" tree="PRP">you</w>
+      <w id="w50.2.3" lem="," tree=",">,</w>
+      <w id="w50.2.4" lem="and" tree="CC">and</w>
+      <w id="w50.2.5" lem="you" tree="PRP">you</w>
+      <w id="w50.2.6" lem="do" tree="VBP">do</w>
+      <w id="w50.2.7" lem="n't" tree="RB">n't</w>
+      <w id="w50.2.8" lem="always" tree="RB">always</w>
+      <w id="w50.2.9" lem="even" tree="RB">even</w>
+      <w id="w50.2.10" lem="know" tree="VB">know</w>
+      <w id="w50.2.11" lem="if" tree="IN">if</w>
+      <w id="w50.2.12" lem="it" tree="PRP">it</w>
+      <w id="w50.2.13" lem="'s" tree="BES">'s</w>
+      <w id="w50.2.14" lem="," tree=",">,</w>
+      <w id="w50.2.15" lem="it" tree="PRP">it</w>
+      <w id="w50.2.16" lem="'s" tree="BES">'s</w>
+      <w id="w50.2.17" lem="go" tree="VBG">going</w>
+      <w id="w50.2.18" lem="to" tree="TO">to</w>
+      <w id="w50.2.19" lem="be" tree="VB">be</w>
+      <w id="w50.2.20" lem="the" tree="DT">the</w>
+      <w id="w50.2.21" lem="right" tree="JJ">right</w>
+      <w id="w50.2.22" lem="place" tree="NN">place</w>
+      <w id="w50.2.23" lem="or" tree="CC">or</w>
+      <w id="w50.2.24" lem="not" tree="RB">not</w>
+      <w id="w50.2.25" lem="." tree=".">.</w>
+    </s>
+  </p>
+  <p id="51">
+    <s id="s51.1" caller="A" act_tag="b" damsl_act_tag="b">
+      <w id="w51.1.1" lem="Uh-huh" tree="UH">Uh-huh</w>
+      <w id="w51.1.2" lem="." tree=".">.</w>
+    </s>
+  </p>
+  <p id="52">
+    <s id="s52.1" caller="B" act_tag="sv" damsl_act_tag="sv">
+      <w id="w52.1.1" lem="Anything" tree="NN">Anything</w>
+      <w id="w52.1.2" lem="," tree=",">,</w>
+      <w id="w52.1.3" lem="I" tree="PRP">I</w>
+      <w id="w52.1.4" lem="guess" tree="VBP">guess</w>
+      <w id="w52.1.5" lem="," tree=",">,</w>
+      <w id="w52.1.6" lem="could" tree="MD">could</w>
+      <w id="w52.1.7" lem="happen" tree="VB">happen</w>
+      <w id="w52.1.8" lem="." tree=".">.</w>
+    </s>
+  </p>
+  <p id="53">
+    <s id="s53.1" caller="A" act_tag="b" damsl_act_tag="b">
+      <w id="w53.1.1" lem="Uh-huh" tree="UH">Uh-huh</w>
+      <w id="w53.1.2" lem="." tree=".">.</w>
+    </s>
+  </p>
+  <p id="54">
+    <s id="s54.1" caller="B" act_tag="qy^d" damsl_act_tag="qy^d">
+      <w id="w54.1.1" lem="Because" tree="IN">Because</w>
+      <w id="w54.1.2" lem="after" tree="IN">after</w>
+      <w id="w54.1.3" lem="," tree=",">,</w>
+      <w id="w54.1.4" lem="I" tree="PRP">I</w>
+      <w id="w54.1.5" lem="guess" tree="VBP">guess</w>
+      <w id="w54.1.6" lem="after" tree="IN">after</w>
+      <w id="w54.1.7" lem="he" tree="PRP">he</w>
+      <w id="w54.1.8" lem="," tree=",">,</w>
+      <w id="w54.1.9" lem="you" tree="PRP">you</w>
+      <w id="w54.1.10" lem="know" tree="VBP">know</w>
+      <w id="w54.1.11" lem="," tree=",">,</w>
+      <w id="w54.1.12" lem="get" tree="VBZ">gets</w>
+      <w id="w54.1.13" lem="to" tree="IN">to</w>
+      <w id="w54.1.14" lem="a" tree="DT">a</w>
+      <w id="w54.1.15" lem="certain" tree="JJ">certain</w>
+      <w id="w54.1.16" lem="age" tree="NN">age</w>
+      <w id="w54.1.17" lem="she" tree="PRP">she</w>
+      <w id="w54.1.18" lem="'s" tree="BES">'s</w>
+      <w id="w54.1.19" lem="go" tree="VBG">going</w>
+      <w id="w54.1.20" lem="to" tree="TO">to</w>
+      <w id="w54.1.21" lem="have" tree="VB">have</w>
+      <w id="w54.1.22" lem="to" tree="TO">to</w>
+      <w id="w54.1.23" lem="take" tree="VB">take</w>
+      <w id="w54.1.24" lem="him" tree="PRP">him</w>
+      <w id="w54.1.25" lem="to" tree="IN">to</w>
+      <w id="w54.1.26" lem="a" tree="DT">a</w>
+      <w id="w54.1.27" lem="day" tree="NN">day</w>
+      <w id="w54.1.28" lem="care" tree="NN">care</w>
+      <w id="w54.1.29" lem="." tree=".">.</w>
+    </s>
+  </p>
+  <p id="55">
+    <s id="s55.1" caller="A" act_tag="ny" damsl_act_tag="ny">
+      <w id="w55.1.1" lem="Uh-huh" tree="UH">Uh-huh</w>
+      <w id="w55.1.2" lem="," tree=",">,</w>
+    </s>
+    <s id="s55.2" caller="A" act_tag="sd^e" damsl_act_tag="sd">
+      <w id="w55.2.1" lem="when" tree="WRB">when</w>
+      <w id="w55.2.2" lem="he" tree="PRP">he</w>
+      <w id="w55.2.3" lem="start" tree="VBZ">starts</w>
+      <w id="w55.2.4" lem="toddle" tree="VBG">toddling</w>
+      <w id="w55.2.5" lem="around" tree="RB">around</w>
+      <w id="w55.2.6" lem="and" tree="CC">and</w>
+      <w id="w55.2.7" lem="stuff" tree="NN">stuff</w>
+      <w id="w55.2.8" lem="." tree=".">.</w>
+    </s>
+  </p>
+  <p id="56">
+    <s id="s56.1" caller="B" act_tag="b" damsl_act_tag="b">
+      <w id="w56.1.1" lem="Yeah" tree="UH">Yeah</w>
+      <w id="w56.1.2" lem="." tree=".">.</w>
+    </s>
+  </p>
+  <p id="57">
+    <s id="s57.1" caller="A" act_tag="b^m" damsl_act_tag="b^m">
+      <w id="w57.1.1" lem="Yeah" tree="UH">Yeah</w>
+      <w id="w57.1.2" lem="." tree=".">.</w>
+    </s>
+  </p>
+  <p id="58">
+    <s id="s58.1" caller="B" act_tag="sd" damsl_act_tag="sd">
+      <w id="w58.1.1" lem="When" tree="WRB">When</w>
+      <w id="w58.1.2" lem="," tree=",">,</w>
+      <w id="w58.1.3" lem="when" tree="WRB">when</w>
+      <w id="w58.1.4" lem="he" tree="PRP">he</w>
+      <w id="w58.1.5" lem="'s" tree="BES">'s</w>
+      <w id="w58.1.6" lem="not" tree="RB">not</w>
+      <w id="w58.1.7" lem="," tree=",">,</w>
+      <w id="w58.1.8" lem="when" tree="WRB">when</w>
+      <w id="w58.1.9" lem="she" tree="PRP">she</w>
+      <w id="w58.1.10" lem="ca" tree="MD">ca</w>
+      <w id="w58.1.11" lem="n't" tree="RB">n't</w>
+      <w id="w58.1.12" lem="keep" tree="VB">keep</w>
+      <w id="w58.1.13" lem="control" tree="NN">control</w>
+      <w id="w58.1.14" lem="of" tree="IN">of</w>
+      <w id="w58.1.15" lem="him" tree="PRP">him</w>
+    </s>
+    <s id="s58.2" caller="B" act_tag="sd" damsl_act_tag="sd">
+      <w id="w58.2.1" lem="and" tree="CC">and</w>
+      <w id="w58.2.2" lem="he" tree="PRP">he</w>
+      <w id="w58.2.3" lem="start" tree="VBZ">starts</w>
+      <w id="w58.2.4" lem="crawl" tree="VBG">crawling</w>
+    </s>
+    <s id="s58.3" caller="B" act_tag="%" damsl_act_tag="%">
+      <w id="w58.3.1" lem="that" tree="DT">that</w>
+      <w id="w58.3.2" lem="'s" tree="BES">'s</w>
+      <w id="w58.3.3" lem="," tree=",">,</w>
+    </s>
+  </p>
+  <p id="59">
+    <s id="s59.1" caller="A" act_tag="aa" damsl_act_tag="aa">
+      <w id="w59.1.1" lem="Uh-huh" tree="UH">Uh-huh</w>
+      <w id="w59.1.2" lem="." tree=".">.</w>
+    </s>
+    <s id="s59.2" caller="A" act_tag="sv" damsl_act_tag="sv">
+      <w id="w59.2.1" lem="It" tree="PRP">It</w>
+      <w id="w59.2.2" lem="would" tree="MD">would</w>
+      <w id="w59.2.3" lem="be" tree="VB">be</w>
+      <w id="w59.2.4" lem="hard" tree="JJ">hard</w>
+      <w id="w59.2.5" lem="," tree=",">,</w>
+    </s>
+    <s id="s59.3" caller="A" act_tag="sv" damsl_act_tag="sv">
+      <w id="w59.3.1" lem="I" tree="PRP">I</w>
+      <w id="w59.3.2" lem="think" tree="VBP">think</w>
+      <w id="w59.3.3" lem="it" tree="PRP">it</w>
+      <w id="w59.3.4" lem="would" tree="MD">would</w>
+      <w id="w59.3.5" lem="be" tree="VB">be</w>
+      <w id="w59.3.6" lem="kind" tree="RB">kind</w>
+      <w id="w59.3.7" lem="of" tree="RB">of</w>
+      <w id="w59.3.8" lem="stressful" tree="JJ">stressful</w>
+      <w id="w59.3.9" lem="." tree=".">.</w>
+    </s>
+    <s id="s59.4" caller="A" act_tag="sv" damsl_act_tag="sv">
+      <w id="w59.4.1" lem="It" tree="PRP">It</w>
+      <w id="w59.4.2" lem="would" tree="MD">would</w>
+      <w id="w59.4.3" lem="be" tree="VB">be</w>
+      <w id="w59.4.4" lem="nice" tree="JJ">nice</w>
+      <w id="w59.4.5" lem="to" tree="TO">to</w>
+      <w id="w59.4.6" lem="have" tree="VB">have</w>
+      <w id="w59.4.7" lem="him" tree="PRP">him</w>
+      <w id="w59.4.8" lem="around" tree="RB">around</w>
+      <w id="w59.4.9" lem="--" tree=":">--</w>
+    </s>
+  </p>
+  <p id="60">
+    <s id="s60.1" caller="B" act_tag="b" damsl_act_tag="b">
+      <w id="w60.1.1" lem="Uh-huh" tree="UH">Uh-huh</w>
+      <w id="w60.1.2" lem="." tree=".">.</w>
+    </s>
+  </p>
+  <p id="61">
+    <s id="s61.1" caller="A" act_tag="sv" damsl_act_tag="sv">
+      <w id="w61.1.1" lem="--" tree=":">--</w>
+      <w id="w61.1.2" lem="but" tree="CC">but</w>
+      <w id="w61.1.3" lem="," tree=",">,</w>
+      <w id="w61.1.4" lem="uh" tree="UH">uh</w>
+      <w id="w61.1.5" lem="," tree=",">,</w>
+      <w id="w61.1.6" lem="seem" tree="VBZ">seems</w>
+      <w id="w61.1.7" lem="like" tree="IN">like</w>
+      <w id="w61.1.8" lem="," tree=",">,</w>
+      <w id="w61.1.9" lem="you" tree="PRP">you</w>
+      <w id="w61.1.10" lem="know" tree="VBP">know</w>
+      <w id="w61.1.11" lem="," tree=",">,</w>
+    </s>
+    <s id="s61.2" caller="A" act_tag="fe" damsl_act_tag="ba">
+      <w id="w61.2.1" lem="goll-" tree="XX">goll-</w>
+      <w id="w61.2.2" lem="," tree=",">,</w>
+    </s>
+    <s id="s61.3" caller="A" act_tag="qh" damsl_act_tag="qh">
+      <w id="w61.3.1" lem="what" tree="WP">what</w>
+      <w id="w61.3.2" lem="if" tree="IN">if</w>
+      <w id="w61.3.3" lem="he" tree="PRP">he</w>
+      <w id="w61.3.4" lem="cry" tree="VBD">cried</w>
+      <w id="w61.3.5" lem="at" tree="IN">at</w>
+      <w id="w61.3.6" lem="the" tree="DT">the</w>
+      <w id="w61.3.7" lem="wrong" tree="JJ">wrong</w>
+      <w id="w61.3.8" lem="time" tree="NN">time</w>
+    </s>
+    <s id="s61.4" caller="A" act_tag="&quot;" damsl_act_tag="fo_o_fw_&quot;_by_bc">
+      <w id="w61.4.1" lem="or" tree="CC">or</w>
+      <w id="w61.4.2" lem="the" tree="DT">the</w>
+      <w id="w61.4.3" lem="phone" tree="NN">phone</w>
+      <w id="w61.4.4" lem="ring" tree="VBD">rang</w>
+      <w id="w61.4.5" lem="or" tree="CC">or</w>
+      <w id="w61.4.6" lem="," tree=",">,</w>
+    </s>
+  </p>
+  <p id="62">
+    <s id="s62.1" caller="B" act_tag="x" damsl_act_tag="x">
+      <w id="w62.1.1" lem="." tree=".">.</w>
+    </s>
+  </p>
+  <p id="63">
+    <s id="s63.1" caller="A" act_tag="x" damsl_act_tag="x">
+      <w id="w63.1.1" lem="you" tree="PRP">you</w>
+      <w id="w63.1.2" lem="know" tree="VBP">know</w>
+      <w id="w63.1.3" lem="," tree=",">,</w>
+      <w id="w63.1.4" lem="at" tree="IN">at</w>
+      <w id="w63.1.5" lem="the" tree="DT">the</w>
+      <w id="w63.1.6" lem="wrong" tree="JJ">wrong</w>
+      <w id="w63.1.7" lem="time" tree="NN">time</w>
+      <w id="w63.1.8" lem="." tree=".">.</w>
+    </s>
+  </p>
+  <p id="64">
+    <s id="s64.1" caller="B" act_tag="b" damsl_act_tag="b">
+      <w id="w64.1.1" lem="Yeah" tree="UH">Yeah</w>
+      <w id="w64.1.2" lem="." tree=".">.</w>
+    </s>
+  </p>
+  <p id="65">
+    <s id="s65.1" caller="A" act_tag="%" damsl_act_tag="%">
+      <w id="w65.1.1" lem="But" tree="CC">But</w>
+      <w id="w65.1.2" lem="," tree=",">,</w>
+    </s>
+  </p>
+  <p id="66">
+    <s id="s66.1" caller="B" act_tag="sd" damsl_act_tag="sd">
+      <w id="w66.1.1" lem="I" tree="PRP">I</w>
+      <w id="w66.1.2" lem="think" tree="VBP">think</w>
+      <w id="w66.1.3" lem="she" tree="PRP">she</w>
+      <w id="w66.1.4" lem="have" tree="VBZ">has</w>
+      <w id="w66.1.5" lem="problem" tree="NNS">problems</w>
+      <w id="w66.1.6" lem="with" tree="IN">with</w>
+      <w id="w66.1.7" lem="that" tree="DT">that</w>
+      <w id="w66.1.8" lem="," tree=",">,</w>
+      <w id="w66.1.9" lem="too" tree="RB">too</w>
+      <w id="w66.1.10" lem="." tree=".">.</w>
+    </s>
+  </p>
+  <p id="67">
+    <s id="s67.1" caller="A" act_tag="b" damsl_act_tag="b">
+      <w id="w67.1.1" lem="Uh-huh" tree="UH">Uh-huh</w>
+      <w id="w67.1.2" lem="." tree=".">.</w>
+    </s>
+    <s id="s67.2" caller="A" act_tag="qy" damsl_act_tag="qy">
+      <w id="w67.2.1" lem="Well" tree="UH">Well</w>
+      <w id="w67.2.2" lem="," tree=",">,</w>
+      <w id="w67.2.3" lem="when" tree="WRB">when</w>
+      <w id="w67.2.4" lem="you" tree="PRP">you</w>
+      <w id="w67.2.5" lem="have" tree="VBP">have</w>
+      <w id="w67.2.6" lem="kid" tree="NNS">kids</w>
+      <w id="w67.2.7" lem="," tree=",">,</w>
+      <w id="w67.2.8" lem="will" tree="MD">will</w>
+      <w id="w67.2.9" lem="you" tree="PRP">you</w>
+      <w id="w67.2.10" lem="work" tree="VB">work</w>
+      <w id="w67.2.11" lem="?" tree=".">?</w>
+    </s>
+    <s id="s67.3" caller="A" act_tag="qy" damsl_act_tag="qy">
+      <w id="w67.3.1" lem="Do" tree="VBP">Do</w>
+      <w id="w67.3.2" lem="you" tree="PRP">you</w>
+      <w id="w67.3.3" lem="--" tree=":">--</w>
+    </s>
+  </p>
+  <p id="68">
+    <s id="s68.1" caller="B" act_tag="no" damsl_act_tag="no">
+      <w id="w68.1.1" lem="I" tree="PRP">I</w>
+      <w id="w68.1.2" lem="do" tree="VBP">do</w>
+      <w id="w68.1.3" lem="n't" tree="RB">n't</w>
+      <w id="w68.1.4" lem="know" tree="VB">know</w>
+      <w id="w68.1.5" lem="--" tree=":">--</w>
+    </s>
+  </p>
+  <p id="69">
+    <s id="s69.1" caller="A" act_tag="no" damsl_act_tag="no">
+      <w id="w69.1.1" lem="--" tree=":">--</w>
+      <w id="w69.1.2" lem="work" tree="VB">work</w>
+      <w id="w69.1.3" lem="now" tree="RB">now</w>
+      <w id="w69.1.4" lem="?" tree=".">?</w>
+    </s>
+  </p>
+  <p id="70">
+    <s id="s70.1" caller="B" act_tag="sd" damsl_act_tag="sd">
+      <w id="w70.1.1" lem="--" tree=":">--</w>
+      <w id="w70.1.2" lem="that" tree="DT">that</w>
+      <w id="w70.1.3" lem="'s" tree="BES">'s</w>
+      <w id="w70.1.4" lem="something" tree="NN">something</w>
+      <w id="w70.1.5" lem="I" tree="PRP">I</w>
+      <w id="w70.1.6" lem="'ve" tree="VBP">'ve</w>
+      <w id="w70.1.7" lem="consider" tree="VBN">considered</w>
+      <w id="w70.1.8" lem="." tree=".">.</w>
+      <w id="w70.1.9" lem="Uh" tree="UH">Uh</w>
+      <w id="w70.1.10" lem="," tree=",">,</w>
+    </s>
+  </p>
+  <p id="71">
+    <s id="s71.1" caller="A" act_tag="b" damsl_act_tag="b">
+      <w id="w71.1.1" lem="Uh-huh" tree="UH">Uh-huh</w>
+      <w id="w71.1.2" lem="." tree=".">.</w>
+    </s>
+  </p>
+  <p id="72">
+    <s id="s72.1" caller="B" act_tag="sv" damsl_act_tag="sv">
+      <w id="w72.1.1" lem="I" tree="PRP">I</w>
+      <w id="w72.1.2" lem="always" tree="RB">always</w>
+      <w id="w72.1.3" lem="kind" tree="RB">kind</w>
+      <w id="w72.1.4" lem="of" tree="RB">of</w>
+      <w id="w72.1.5" lem="think" tree="VBP">think</w>
+      <w id="w72.1.6" lem="it" tree="PRP">it</w>
+      <w id="w72.1.7" lem="would" tree="MD">would</w>
+      <w id="w72.1.8" lem="be" tree="VB">be</w>
+      <w id="w72.1.9" lem="neat" tree="JJ">neat</w>
+      <w id="w72.1.10" lem="to" tree="TO">to</w>
+      <w id="w72.1.11" lem="be" tree="VB">be</w>
+      <w id="w72.1.12" lem="able" tree="JJ">able</w>
+      <w id="w72.1.13" lem="to" tree="TO">to</w>
+      <w id="w72.1.14" lem="watch" tree="VB">watch</w>
+      <w id="w72.1.15" lem="them" tree="PRP">them</w>
+      <w id="w72.1.16" lem="and" tree="CC">and</w>
+      <w id="w72.1.17" lem="be" tree="VB">be</w>
+      <w id="w72.1.18" lem="there" tree="RB">there</w>
+      <w id="w72.1.19" lem="for" tree="IN">for</w>
+      <w id="w72.1.20" lem="them" tree="PRP">them</w>
+      <w id="w72.1.21" lem="all" tree="PDT">all</w>
+      <w id="w72.1.22" lem="the" tree="DT">the</w>
+      <w id="w72.1.23" lem="time" tree="NN">time</w>
+      <w id="w72.1.24" lem="." tree=".">.</w>
+    </s>
+  </p>
+  <p id="73">
+    <s id="s73.1" caller="A" act_tag="b" damsl_act_tag="b">
+      <w id="w73.1.1" lem="Uh-huh" tree="UH">Uh-huh</w>
+      <w id="w73.1.2" lem="." tree=".">.</w>
+    </s>
+  </p>
+  <p id="74">
+    <s id="s74.1" caller="B" act_tag="qy" damsl_act_tag="qy">
+      <w id="w74.1.1" lem="Is" tree="VBZ">Is</w>
+      <w id="w74.1.2" lem="that" tree="DT">that</w>
+      <w id="w74.1.3" lem="what" tree="WP">what</w>
+      <w id="w74.1.4" lem="you" tree="PRP">you</w>
+      <w id="w74.1.5" lem="do" tree="VBP">do</w>
+      <w id="w74.1.6" lem="?" tree=".">?</w>
+    </s>
+  </p>
+  <p id="75">
+    <s id="s75.1" caller="A" act_tag="ny" damsl_act_tag="ny">
+      <w id="w75.1.1" lem="Uh" tree="UH">Uh</w>
+      <w id="w75.1.2" lem="," tree=",">,</w>
+      <w id="w75.1.3" lem="yeah" tree="UH">yeah</w>
+      <w id="w75.1.4" lem="." tree=".">.</w>
+    </s>
+    <s id="s75.2" caller="A" act_tag="sd^e" damsl_act_tag="sd">
+      <w id="w75.2.1" lem="Actually" tree="UH">Actually</w>
+      <w id="w75.2.2" lem="," tree=",">,</w>
+      <w id="w75.2.3" lem="I" tree="PRP">I</w>
+      <w id="w75.2.4" lem="teach" tree="VBP">teach</w>
+      <w id="w75.2.5" lem="my" tree="PRP$">my</w>
+      <w id="w75.2.6" lem="kid" tree="NNS">kids</w>
+      <w id="w75.2.7" lem="at" tree="IN">at</w>
+      <w id="w75.2.8" lem="home" tree="NN">home</w>
+      <w id="w75.2.9" lem="," tree=",">,</w>
+    </s>
+    <s id="s75.3" caller="A" act_tag="sd" damsl_act_tag="sd">
+      <w id="w75.3.1" lem="so" tree="RB">so</w>
+      <w id="w75.3.2" lem="I" tree="PRP">I</w>
+      <w id="w75.3.3" lem="'m" tree="VBP">'m</w>
+      <w id="w75.3.4" lem="here" tree="RB">here</w>
+      <w id="w75.3.5" lem="all" tree="PDT">all</w>
+      <w id="w75.3.6" lem="the" tree="DT">the</w>
+      <w id="w75.3.7" lem="time" tree="NN">time</w>
+      <w id="w75.3.8" lem="." tree=".">.</w>
+    </s>
+  </p>
+  <p id="76">
+    <s id="s76.1" caller="B" act_tag="bf" damsl_act_tag="bf">
+      <w id="w76.1.1" lem="Oh" tree="UH">Oh</w>
+      <w id="w76.1.2" lem="," tree=",">,</w>
+      <w id="w76.1.3" lem="so" tree="RB">so</w>
+      <w id="w76.1.4" lem="they" tree="PRP">they</w>
+      <w id="w76.1.5" lem="do" tree="VBP">do</w>
+      <w id="w76.1.6" lem="n't" tree="RB">n't</w>
+      <w id="w76.1.7" lem="go" tree="VB">go</w>
+      <w id="w76.1.8" lem="to" tree="IN">to</w>
+      <w id="w76.1.9" lem="school" tree="NN">school</w>
+      <w id="w76.1.10" lem="." tree=".">.</w>
+    </s>
+    <s id="s76.2" caller="B" act_tag="qy" damsl_act_tag="qy">
+      <w id="w76.2.1" lem="Is" tree="VBZ">Is</w>
+      <w id="w76.2.2" lem="it" tree="PRP">it</w>
+      <w id="w76.2.3" lem="like" tree="IN">like</w>
+      <w id="w76.2.4" lem="," tree=",">,</w>
+      <w id="w76.2.5" lem="uh" tree="UH">uh</w>
+      <w id="w76.2.6" lem="," tree=",">,</w>
+    </s>
+    <s id="s76.3" caller="B" act_tag="t1" damsl_act_tag="t1">
+      <w id="w76.3.1" lem="oh" tree="UH">oh</w>
+      <w id="w76.3.2" lem="," tree=",">,</w>
+      <w id="w76.3.3" lem="what" tree="WP">what</w>
+      <w id="w76.3.4" lem="'s" tree="BES">'s</w>
+      <w id="w76.3.5" lem="that" tree="DT">that</w>
+      <w id="w76.3.6" lem="call" tree="VBN">called</w>
+      <w id="w76.3.7" lem="," tree=",">,</w>
+    </s>
+    <s id="s76.4" caller="B" act_tag="sd" damsl_act_tag="sd">
+      <w id="w76.4.1" lem="it" tree="PRP">it</w>
+      <w id="w76.4.2" lem="'s" tree="BES">'s</w>
+      <w id="w76.4.3" lem="," tree=",">,</w>
+      <w id="w76.4.4" lem="uh" tree="UH">uh</w>
+      <w id="w76.4.5" lem="," tree=",">,</w>
+      <w id="w76.4.6" lem="correspondence" tree="NN">correspondence</w>
+      <w id="w76.4.7" lem="school" tree="NN">school</w>
+      <w id="w76.4.8" lem="," tree=",">,</w>
+    </s>
+    <s id="s76.5" caller="B" act_tag="sd" damsl_act_tag="sd">
+      <w id="w76.5.1" lem="they" tree="PRP">they</w>
+      <w id="w76.5.2" lem="do" tree="VBP">do</w>
+      <w id="w76.5.3" lem="it" tree="PRP">it</w>
+      <w id="w76.5.4" lem="--" tree=":">--</w>
+    </s>
+  </p>
+  <p id="77">
+    <s id="s77.1" caller="A" act_tag="b" damsl_act_tag="b">
+      <w id="w77.1.1" lem="Uh-huh" tree="UH">Uh-huh</w>
+      <w id="w77.1.2" lem="." tree=".">.</w>
+    </s>
+  </p>
+  <p id="78">
+    <s id="s78.1" caller="B" act_tag="b" damsl_act_tag="b">
+      <w id="w78.1.1" lem="--" tree=":">--</w>
+      <w id="w78.1.2" lem="at" tree="IN">at</w>
+      <w id="w78.1.3" lem="home" tree="NN">home</w>
+      <w id="w78.1.4" lem="." tree=".">.</w>
+    </s>
+  </p>
+  <p id="79">
+    <s id="s79.1" caller="A" act_tag="b" damsl_act_tag="b">
+      <w id="w79.1.1" lem="Yeah" tree="UH">Yeah</w>
+      <w id="w79.1.2" lem="," tree=",">,</w>
+    </s>
+    <s id="s79.2" caller="A" act_tag="b^r" damsl_act_tag="b">
+      <w id="w79.2.1" lem="yeah" tree="UH">yeah</w>
+      <w id="w79.2.2" lem="." tree=".">.</w>
+    </s>
+  </p>
+  <p id="80">
+    <s id="s80.1" caller="B" act_tag="sv" damsl_act_tag="sv">
+      <w id="w80.1.1" lem="That" tree="DT">That</w>
+      <w id="w80.1.2" lem="'s" tree="BES">'s</w>
+      <w id="w80.1.3" lem="interesting" tree="JJ">interesting</w>
+      <w id="w80.1.4" lem="." tree=".">.</w>
+    </s>
+  </p>
+  <p id="81">
+    <s id="s81.1" caller="A" act_tag="%" damsl_act_tag="%">
+      <w id="w81.1.1" lem="So" tree="UH">So</w>
+      <w id="w81.1.2" lem="," tree=",">,</w>
+    </s>
+  </p>
+  <p id="82">
+    <s id="s82.1" caller="B" act_tag="qy" damsl_act_tag="qy">
+      <w id="w82.1.1" lem="Do" tree="VBP">Do</w>
+      <w id="w82.1.2" lem="you" tree="PRP">you</w>
+      <w id="w82.1.3" lem="have" tree="VB">have</w>
+      <w id="w82.1.4" lem="to" tree="TO">to</w>
+      <w id="w82.1.5" lem="have" tree="VB">have</w>
+      <w id="w82.1.6" lem="any" tree="DT">any</w>
+      <w id="w82.1.7" lem="special" tree="JJ">special</w>
+      <w id="w82.1.8" lem="training" tree="NN">training</w>
+      <w id="w82.1.9" lem="?" tree=".">?</w>
+    </s>
+  </p>
+  <p id="83">
+    <s id="s83.1" caller="A" act_tag="%" damsl_act_tag="%">
+      <w id="w83.1.1" lem="Not" tree="RB">Not</w>
+      <w id="w83.1.2" lem="," tree=",">,</w>
+    </s>
+    <s id="s83.2" caller="A" act_tag="sd" damsl_act_tag="sd">
+      <w id="w83.2.1" lem="it" tree="PRP">it</w>
+      <w id="w83.2.2" lem="depend" tree="VBZ">depends</w>
+      <w id="w83.2.3" lem="on" tree="IN">on</w>
+      <w id="w83.2.4" lem="the" tree="DT">the</w>
+      <w id="w83.2.5" lem="state" tree="NN">state</w>
+      <w id="w83.2.6" lem="you" tree="PRP">you</w>
+      <w id="w83.2.7" lem="live" tree="VBP">live</w>
+      <w id="w83.2.8" lem="actually" tree="RB">actually</w>
+      <w id="w83.2.9" lem="." tree=".">.</w>
+    </s>
+    <s id="s83.3" caller="A" act_tag="sd" damsl_act_tag="sd">
+      <w id="w83.3.1" lem="Some" tree="DT">Some</w>
+      <w id="w83.3.2" lem="law" tree="NNS">laws</w>
+      <w id="w83.3.3" lem="absolutely" tree="RB">absolutely</w>
+      <w id="w83.3.4" lem="prohibit" tree="VBP">prohibit</w>
+      <w id="w83.3.5" lem="it" tree="PRP">it</w>
+      <w id="w83.3.6" lem="." tree=".">.</w>
+    </s>
+    <s id="s83.4" caller="A" act_tag="sd" damsl_act_tag="sd">
+      <w id="w83.4.1" lem="Some" tree="DT">Some</w>
+      <w id="w83.4.2" lem="state" tree="NNS">states</w>
+      <w id="w83.4.3" lem="," tree=",">,</w>
+      <w id="w83.4.4" lem="uh" tree="UH">uh</w>
+      <w id="w83.4.5" lem="," tree=",">,</w>
+      <w id="w83.4.6" lem="say" tree="VBP">say</w>
+      <w id="w83.4.7" lem="that" tree="IN">that</w>
+      <w id="w83.4.8" lem="you" tree="PRP">you</w>
+      <w id="w83.4.9" lem="have" tree="VBP">have</w>
+      <w id="w83.4.10" lem="to" tree="TO">to</w>
+      <w id="w83.4.11" lem="be" tree="VB">be</w>
+      <w id="w83.4.12" lem="a" tree="DT">a</w>
+      <w id="w83.4.13" lem="certified" tree="JJ">certified</w>
+      <w id="w83.4.14" lem="teacher" tree="NN">teacher</w>
+      <w id="w83.4.15" lem="in" tree="IN">in</w>
+      <w id="w83.4.16" lem="order" tree="NN">order</w>
+      <w id="w83.4.17" lem="to" tree="TO">to</w>
+      <w id="w83.4.18" lem="do" tree="VB">do</w>
+      <w id="w83.4.19" lem="that" tree="DT">that</w>
+      <w id="w83.4.20" lem="." tree=".">.</w>
+    </s>
+    <s id="s83.5" caller="A" act_tag="sd" damsl_act_tag="sd">
+      <w id="w83.5.1" lem="Our" tree="PRP$">Our</w>
+      <w id="w83.5.2" lem="state" tree="NN">state</w>
+      <w id="w83.5.3" lem="do" tree="VBZ">does</w>
+      <w id="w83.5.4" lem="n't" tree="RB">n't</w>
+      <w id="w83.5.5" lem="yet" tree="RB">yet</w>
+      <w id="w83.5.6" lem="," tree=",">,</w>
+      <w id="w83.5.7" lem="say" tree="VB">say</w>
+      <w id="w83.5.8" lem="that" tree="DT">that</w>
+    </s>
+    <s id="s83.6" caller="A" act_tag="sd" damsl_act_tag="sd">
+      <w id="w83.6.1" lem="and" tree="CC">and</w>
+      <w id="w83.6.2" lem="I" tree="PRP">I</w>
+      <w id="w83.6.3" lem="'m" tree="VBP">'m</w>
+      <w id="w83.6.4" lem="not" tree="RB">not</w>
+      <w id="w83.6.5" lem="a" tree="DT">a</w>
+      <w id="w83.6.6" lem="certified" tree="JJ">certified</w>
+      <w id="w83.6.7" lem="teacher" tree="NN">teacher</w>
+      <w id="w83.6.8" lem="." tree=".">.</w>
+    </s>
+    <s id="s83.7" caller="A" act_tag="sd" damsl_act_tag="sd">
+      <w id="w83.7.1" lem="I" tree="PRP">I</w>
+      <w id="w83.7.2" lem="go" tree="VBD">went</w>
+      <w id="w83.7.3" lem="to" tree="IN">to</w>
+      <w id="w83.7.4" lem="college" tree="NN">college</w>
+      <w id="w83.7.5" lem="," tree=",">,</w>
+    </s>
+    <s id="s83.8" caller="A" act_tag="sd" damsl_act_tag="sd">
+      <w id="w83.8.1" lem="but" tree="CC">but</w>
+      <w id="w83.8.2" lem="I" tree="PRP">I</w>
+      <w id="w83.8.3" lem="," tree=",">,</w>
+      <w id="w83.8.4" lem="you" tree="PRP">you</w>
+      <w id="w83.8.5" lem="know" tree="VBP">know</w>
+      <w id="w83.8.6" lem="," tree=",">,</w>
+      <w id="w83.8.7" lem="but" tree="CC">but</w>
+      <w id="w83.8.8" lem="my" tree="PRP$">my</w>
+      <w id="w83.8.9" lem="kid" tree="NNS">kids</w>
+      <w id="w83.8.10" lem="be" tree="VBP">are</w>
+      <w id="w83.8.11" lem="only" tree="RB">only</w>
+      <w id="w83.8.12" lem="elementary" tree="JJ">elementary</w>
+      <w id="w83.8.13" lem="grade" tree="NNS">grades</w>
+      <w id="w83.8.14" lem="," tree=",">,</w>
+      <w id="w83.8.15" lem="level" tree="NNS">levels</w>
+      <w id="w83.8.16" lem="right" tree="RB">right</w>
+      <w id="w83.8.17" lem="now" tree="RB">now</w>
+    </s>
+    <s id="s83.9" caller="A" act_tag="%" damsl_act_tag="%">
+      <w id="w83.9.1" lem="and" tree="CC">and</w>
+      <w id="w83.9.2" lem="so" tree="RB">so</w>
+      <w id="w83.9.3" lem="," tree=",">,</w>
+    </s>
+  </p>
+  <p id="84">
+    <s id="s84.1" caller="B" act_tag="bf" damsl_act_tag="bf">
+      <w id="w84.1.1" lem="So" tree="RB">So</w>
+      <w id="w84.1.2" lem="they" tree="PRP">they</w>
+      <w id="w84.1.3" lem="have" tree="VBP">have</w>
+      <w id="w84.1.4" lem="n't" tree="RB">n't</w>
+      <w id="w84.1.5" lem="be" tree="VBN">been</w>
+      <w id="w84.1.6" lem="to" tree="IN">to</w>
+      <w id="w84.1.7" lem="public" tree="JJ">public</w>
+      <w id="w84.1.8" lem="school" tree="NNS">schools</w>
+      <w id="w84.1.9" lem="at" tree="IN">at</w>
+      <w id="w84.1.10" lem="all" tree="DT">all</w>
+      <w id="w84.1.11" lem="." tree=".">.</w>
+    </s>
+  </p>
+  <p id="85">
+    <s id="s85.1" caller="A" act_tag="no" damsl_act_tag="no">
+      <w id="w85.1.1" lem="One" tree="CD">One</w>
+      <w id="w85.1.2" lem="of" tree="IN">of</w>
+      <w id="w85.1.3" lem="them" tree="PRP">them</w>
+      <w id="w85.1.4" lem="be" tree="VBD">was</w>
+      <w id="w85.1.5" lem="for" tree="IN">for</w>
+      <w id="w85.1.6" lem="a" tree="DT">a</w>
+      <w id="w85.1.7" lem="couple" tree="NN">couple</w>
+      <w id="w85.1.8" lem="of" tree="IN">of</w>
+      <w id="w85.1.9" lem="year" tree="NNS">years</w>
+    </s>
+    <s id="s85.2" caller="A" act_tag="sd" damsl_act_tag="sd">
+      <w id="w85.2.1" lem="and" tree="CC">and</w>
+      <w id="w85.2.2" lem="so" tree="RB">so</w>
+      <w id="w85.2.3" lem="," tree=",">,</w>
+      <w id="w85.2.4" lem="you" tree="PRP">you</w>
+      <w id="w85.2.5" lem="know" tree="VBP">know</w>
+      <w id="w85.2.6" lem="," tree=",">,</w>
+      <w id="w85.2.7" lem="my" tree="PRP$">my</w>
+      <w id="w85.2.8" lem="old" tree="JJS">oldest</w>
+      <w id="w85.2.9" lem="," tree=",">,</w>
+      <w id="w85.2.10" lem="he" tree="PRP">he</w>
+      <w id="w85.2.11" lem="be" tree="VBD">was</w>
+      <w id="w85.2.12" lem="," tree=",">,</w>
+    </s>
+    <s id="s85.3" caller="A" act_tag="sd" damsl_act_tag="sd">
+      <w id="w85.3.1" lem="and" tree="CC">and</w>
+      <w id="w85.3.2" lem="then" tree="RB">then</w>
+      <w id="w85.3.3" lem="my" tree="PRP$">my</w>
+      <w id="w85.3.4" lem="young" tree="JJS">youngest</w>
+      <w id="w85.3.5" lem="two" tree="CD">two</w>
+      <w id="w85.3.6" lem="have" tree="VBP">have</w>
+      <w id="w85.3.7" lem="never" tree="RB">never</w>
+      <w id="w85.3.8" lem="be" tree="VBN">been</w>
+      <w id="w85.3.9" lem="." tree=".">.</w>
+    </s>
+  </p>
+  <p id="86">
+    <s id="s86.1" caller="B" act_tag="%" damsl_act_tag="%">
+      <w id="w86.1.1" lem="Um" tree="UH">Um</w>
+      <w id="w86.1.2" lem="." tree=".">.</w>
+    </s>
+  </p>
+  <p id="87">
+    <s id="s87.1" caller="A" act_tag="%" damsl_act_tag="%">
+      <w id="w87.1.1" lem="So" tree="RB">So</w>
+      <w id="w87.1.2" lem="anyway" tree="UH">anyway</w>
+      <w id="w87.1.3" lem="," tree=",">,</w>
+    </s>
+    <s id="s87.2" caller="A" act_tag="%" damsl_act_tag="%">
+      <w id="w87.2.1" lem="but" tree="CC">but</w>
+      <w id="w87.2.2" lem="we" tree="PRP">we</w>
+      <w id="w87.2.3" lem="do" tree="VBP">do</w>
+      <w id="w87.2.4" lem="n't" tree="RB">n't</w>
+      <w id="w87.2.5" lem="," tree=",">,</w>
+    </s>
+  </p>
+  <p id="88">
+    <s id="s88.1" caller="B" act_tag="%" damsl_act_tag="%">
+      <w id="w88.1.1" lem="So" tree="RB">So</w>
+      <w id="w88.1.2" lem="," tree=",">,</w>
+      <w id="w88.1.3" lem="you" tree="PRP">you</w>
+      <w id="w88.1.4" lem="'ve" tree="VBP">'ve</w>
+      <w id="w88.1.5" lem="never" tree="RB">never</w>
+      <w id="w88.1.6" lem="have" tree="VBN">had</w>
+      <w id="w88.1.7" lem="," tree=",">,</w>
+    </s>
+  </p>
+</text>

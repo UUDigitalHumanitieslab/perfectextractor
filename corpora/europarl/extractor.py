@@ -282,7 +282,7 @@ class EuroparlPoSExtractor(EuroparlExtractor, PoSExtractor):
             for w in s.xpath(xpath):
                 words = self.preprocess_found(w)
 
-                if words is None:
+                if not words:
                     continue
 
                 result = list()
@@ -332,10 +332,10 @@ class EuroparlPoSExtractor(EuroparlExtractor, PoSExtractor):
 
         lemma_attr = self.config.get('all', 'lemma_attr')
         if self.lemmata_list and word.get(lemma_attr) not in self.lemmata_list:
-            result = None
+            result = []
 
         if self.position and not word.get('id').endswith('.' + str(self.position)):
-            result = None
+            result = []
 
         if self.tokens:
             end_token = self.tokens.get(word.get('id'))
@@ -375,9 +375,10 @@ class EuroparlFrenchArticleExtractor(EuroparlPoSExtractor):
         """
         result = []
 
+        lemma_attr = self.config.get('all', 'lemma_attr')
         for w in super(EuroparlFrenchArticleExtractor, self).preprocess_found(word):
             prev = w.getprevious()
-            if prev is not None and prev.get('lem') in self.particles:
+            if prev is not None and prev.get(lemma_attr) in self.particles:
                 result.append(prev)
 
             result.append(word)
@@ -390,13 +391,14 @@ class EuroparlFrenchArticleExtractor(EuroparlPoSExtractor):
         For 'des', this is quite hard to decide, so we leave both options open.
         """
         result = ''
+        lemma_attr = self.config.get('all', 'lemma_attr')
 
-        if words[-1].get('lem') == 'le':
+        if words[-1].get(lemma_attr) == 'le':
             result = 'definite'
-        elif words[-1].get('lem') == 'un':
+        elif words[-1].get(lemma_attr) == 'un':
             result = 'indefinite'
 
-        if words[0].get('lem') in self.particles:
+        if words[0].get(lemma_attr) in self.particles:
             if result:
                 result += ' '
             result += 'partitive'

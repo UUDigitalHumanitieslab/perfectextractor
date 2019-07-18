@@ -5,10 +5,12 @@ import unittest
 
 from lxml import etree
 
-from corpora.europarl.extractor import EuroparlExtractor, EuroparlPerfectExtractor, EuroparlRecentPastExtractor, EuroparlPoSExtractor
+from corpora.europarl.extractor import EuroparlExtractor, EuroparlPerfectExtractor, EuroparlRecentPastExtractor, \
+    EuroparlPoSExtractor, EuroparlSinceDurationExtractor, EuroparlFrenchArticleExtractor
 
 EUROPARL_DATA = os.path.join(os.path.dirname(__file__), 'data/europarl')
 DCEP_DATA = os.path.join(os.path.dirname(__file__), 'data/dcep')
+SWITCHBOARD_DATA = os.path.join(os.path.dirname(__file__), 'data/switchboard')
 
 
 class TestEuroparlPerfectExtractor(unittest.TestCase):
@@ -175,3 +177,24 @@ class TestEuroparlPerfectExtractor(unittest.TestCase):
 
         tokens_extractor = EuroparlPoSExtractor('en', ['nl'], tokens=[('w1.19', 'w1.17')])
         self.assertRaises(ValueError, tokens_extractor.generate_results, os.path.join(EUROPARL_DATA, 'en'))
+
+    def test_metadata(self):
+        metadata_extractor = EuroparlPoSExtractor('en', [], lemmata=['when'],
+                                                  metadata=[('topic', 'text'), ('damsl_act_tag', 's')])
+        results = metadata_extractor.generate_results(os.path.join(SWITCHBOARD_DATA, 'en'))
+        self.assertEqual(len(results), 5)
+        self.assertEqual(results[0][6], u'CHILD CARE')
+        self.assertEqual(results[0][7], u'sd')
+        self.assertEqual(results[4][7], u'qy')
+
+    def test_since(self):
+        metadata_extractor = EuroparlSinceDurationExtractor('nl', [])
+        results = metadata_extractor.generate_results(os.path.join(EUROPARL_DATA, 'nl'))
+        self.assertEqual(len(results), 1)
+        self.assertEqual(results[0][3], u'sinds tien jaar')
+
+    def test_articles(self):
+        article_extractor = EuroparlFrenchArticleExtractor('fr', [])
+        results = article_extractor.generate_results(os.path.join(EUROPARL_DATA, 'fr'))
+        self.assertEqual(len(results), 2041)
+        self.assertEqual(results[0][2], u'indefinite partitive')
