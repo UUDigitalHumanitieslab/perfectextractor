@@ -58,6 +58,8 @@ def process_data_folders(extractor, path):
               help='Search in to?')
 @click.option('--output', default=TXT, type=click.Choice([TXT, XML]),
               help='Output in text or XML format')
+@click.option('--one_per_sentence', is_flag=True,
+              help='Output all sentences, and only one classification per sentence')
 @click.option('--sort_by_certainty', is_flag=True,
               help='Sort by certainty?')
 @click.option('--file_limit', default=0,
@@ -70,12 +72,13 @@ def extract(folder, language_from, languages_to, corpus='europarl', extractor='b
             pos=None, search_in_to=False,
             output=TXT, file_names=None, sentence_ids=None,
             lemmata=None, position=None, tokens=None, metadata=None,
-            outfile=None, sort_by_certainty=False, file_limit=0,
+            outfile=None, one_per_sentence=False, sort_by_certainty=False, file_limit=0,
             min_file_size=0, max_file_size=0):
     # Set the default arguments
     kwargs = dict(output=output, file_names=file_names, sentence_ids=sentence_ids,
                   lemmata=lemmata, position=position, tokens=tokens, metadata=metadata,
-                  outfile=outfile, sort_by_certainty=sort_by_certainty, file_limit=file_limit,
+                  outfile=outfile, one_per_sentence=one_per_sentence,
+                  sort_by_certainty=sort_by_certainty, file_limit=file_limit,
                   min_file_size=min_file_size, max_file_size=max_file_size)
 
     # Determine the extractor to be used

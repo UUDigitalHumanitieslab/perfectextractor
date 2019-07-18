@@ -1,3 +1,5 @@
+# -*- encoding: utf-8 -*-
+
 import os
 
 from lxml import etree
@@ -46,10 +48,14 @@ class BNCExtractor(BaseBNC, BaseExtractor):
         return element.itersiblings(tag='w', preceding=check_preceding)
 
     def get_sentence_words(self, sentence):
-        # TODO: this is copied from apps/models.py. Consider refactoring!
+        """
+        Returns all words in the sentence.
+        Note that in the BNC, these can be either in w or c tags (the latter are for punctuation)
+        :param sentence: the s element
+        :return: all w and c texts, joined with a space.
+        """
         s = []
-        # TODO: this xPath-expression might be specific for a corpus
-        for w in sentence.xpath('.//w'):
+        for w in sentence.xpath('.//w | .//c'):
             s.append(w.text.strip() if w.text else ' ')
         return ' '.join(s)
 
@@ -82,6 +88,9 @@ class BNCPerfectExtractor(BNCExtractor, PerfectExtractor):
 
         # Find potential present perfects
         for _, s in s_trees:
+            sentence = self.get_sentence_words(s)
+            is_question = self.is_question(sentence)
+
             for e in s.xpath(self.config.get(self.l_from, 'xpath')):
                 pp = self.check_present_perfect(e, self.l_from)
 
@@ -93,8 +102,89 @@ class BNCPerfectExtractor(BNCExtractor, PerfectExtractor):
                     result.append(pp.perfect_type())
                     result.append(pp.verbs_to_string())
                     result.append(pp.perfect_lemma())
-                    result.append(pp.mark_sentence())
+                    result.append(str(is_question))
+                    result.append(sentence)
+                    results.append(result)
 
+                    # If we want (only) one classification per sentence, break the for loop here.
+                    if self.one_per_sentence:
+                        break
+            else:
+                # If we want one classification per sentence, add the sentence with a classification here.
+                if self.one_per_sentence:
+                    tense, tenses = self.get_tenses(s)
+
+                    result = list()
+                    result.append(os.path.basename(filename))
+                    result.append(genre)
+                    result.append(tense)
+                    result.append(','.join(tenses))
+                    result.append('')
+                    result.append(str(is_question))
+                    result.append(sentence)
                     results.append(result)
 
         return results
+
+    def is_question(self, sentence):
+        """
+        Naively checks if a sentence is a question.
+        :param sentence: a string of words separated by spaces
+        :return: whether this sentence contains a question mark
+        """
+        return '?' in sentence
+
+    def get_tenses(self, sentence):
+        """
+        This method allows to retrieve the "tense" for a sentence. It is very naive,
+        based upon the verbs that appear in the sentence.
+        See http://www.natcorp.ox.ac.uk/docs/URG/posguide.html#section1 for the BNC tagset
+        :param sentence: the s element
+        :return: a tuple of the assigned tense and all tenses for the verbs in the sentences
+        """
+        tense = 'none'
+        tenses = []
+        for w in sentence.xpath('.//w'):
+            pos = self.get_pos(self.l_from, w)
+            if pos.startswith('V'):
+                if pos.endswith('B') or pos.endswith('Z'):
+                    tenses.append('present')
+                elif pos.endswith('D'):
+                    tenses.append('past')
+                elif pos.endswith('N'):
+                    tenses.append('participle')
+                elif pos.endswith('G'):
+                    tenses.append('gerund')
+                elif pos.endswith('I'):
+                    tenses.append('infinitive')
+                elif pos == 'VM0':
+                    tenses.append('modal')
+                else:
+                    tenses.append('other')
+        if tenses:
+            tenses_set = set(tenses)
+            if len(tenses_set) == 1:
+                tense = tenses[0]
+            else:
+                if tenses_set in [{'present', 'infinitive'}, {'present', 'gerund'}, {'present', 'gerund', 'infinitive'}]:
+                    tense = 'present'
+                elif tenses_set in [{'past', 'infinitive'}, {'past', 'gerund'}, {'past', 'gerund', 'infinitive'}]:
+                    tense = 'past'
+                elif tenses_set == {'modal', 'infinitive'}:
+                    tense = 'modal'
+                else:
+                    tense = 'other'  # result.append(','.join(tenses))
+
+        return tense, tenses
+
+    def get_pos(self, language, element):
+        """
+        POS-tags in the BNC can potentially consist of two part-of-speech tags,
+        but the first tag is the most likely choice.
+        See http://www.natcorp.ox.ac.uk/docs/URG/posguide.html#ambiguity
+        :param language: the current language
+        :param element: the current w element
+        :return: the (most likely) part-of-speech tag
+        """
+        pos = element.get(self.config.get(language, 'pos'))
+        return pos.split('-')[0]

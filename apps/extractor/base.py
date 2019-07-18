@@ -16,6 +16,7 @@ class BaseExtractor(object):
                  file_names=None, sentence_ids=None,
                  lemmata=None, tokens=None, metadata=None,
                  outfile=None, position=None, output=TXT,
+                 one_per_sentence=False,
                  sort_by_certainty=False, file_limit=0, min_file_size=0, max_file_size=0):
         """
         Initializes the extractor for the given source and target language(s).
@@ -29,6 +30,7 @@ class BaseExtractor(object):
         :param outfile: the filename to output the results to
         :param position: whether to limit the search to a certain position (e.g. only sentence-initial)
         :param output: whether to output the results in text or XML format
+        :param one_per_sentence: whether to output all lines, and allow one classification per sentence
         :param sort_by_certainty: whether to sort the files by average alignment certainty
         :param file_limit: whether to limit the number of files searched in
         :param min_file_size: whether to only use files larger (or equal) than a certain size
@@ -43,6 +45,7 @@ class BaseExtractor(object):
         self.outfile = outfile
         self.position = position
         self.output = output
+        self.one_per_sentence = one_per_sentence
         self.sort_by_certainty = sort_by_certainty
         self.file_limit = file_limit
         self.min_file_size = min_file_size

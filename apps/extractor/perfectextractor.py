@@ -93,7 +93,6 @@ class PerfectExtractor(BaseExtractor):
         ppc_tags = self.config.get(language, 'ppc_tags').split(',')
         stop_tags = tuple(self.config.get(language, 'stop_tags').split(','))
         allow_reversed = self.config.getboolean(language, 'allow_reversed')
-        pos_tag = self.config.get(language, 'pos')
 
         # Start a potential present perfect
         s = self.get_sentence(auxiliary)
@@ -108,7 +107,7 @@ class PerfectExtractor(BaseExtractor):
         siblings = self.get_siblings(auxiliary, s.get('id'), check_preceding)
         for n, sibling in enumerate(siblings):
             # If the tag of the sibling is the perfect tag, we found a present perfect!
-            sibling_pos = sibling.get(pos_tag)
+            sibling_pos = self.get_pos(language, sibling)
             sibling_lemma = sibling.get(lemma_attr)
             if sibling_pos in perfect_tags:
                 # Check if the sibling is lexically bound to the auxiliary verb
@@ -158,6 +157,9 @@ class PerfectExtractor(BaseExtractor):
                 is_pp = True
 
         return pp if is_pp else None
+
+    def get_pos(self, language, element):
+        return element.get(self.config.get(language, 'pos'))
 
     def in_lemmata_list(self, element):
         """
