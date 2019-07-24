@@ -73,6 +73,18 @@ class BNCPerfectExtractor(BNCExtractor, PerfectExtractor):
     def get_line_by_number(self, tree, language_to, segment_number):
         raise NotImplementedError
 
+    def generate_header(self):
+        header = [
+            'document',
+            'genre',
+            'is-perfect',
+            'tense',
+            'words',
+            'lemma',
+            'is-question',
+            'text']
+        return header
+
     def process_file(self, filename):
         """
         Processes a single file.
@@ -82,6 +94,9 @@ class BNCPerfectExtractor(BNCExtractor, PerfectExtractor):
         # Retrieve the genre
         tree = etree.parse(filename)
         genre = self.get_genre(tree)
+
+        if not genre.startswith('S'):  # Only spoken genre for the moment
+            return results
 
         # Parse the current tree (create a iterator over 's' elements)
         s_trees = etree.iterparse(filename, tag='s')
@@ -99,10 +114,11 @@ class BNCPerfectExtractor(BNCExtractor, PerfectExtractor):
                     result = list()
                     result.append(os.path.basename(filename))
                     result.append(genre)
+                    result.append('1')
                     result.append(pp.perfect_type())
                     result.append(pp.verbs_to_string())
                     result.append(pp.perfect_lemma())
-                    result.append(str(is_question))
+                    result.append('1' if is_question else '0')
                     result.append(sentence)
                     results.append(result)
 
@@ -117,10 +133,11 @@ class BNCPerfectExtractor(BNCExtractor, PerfectExtractor):
                     result = list()
                     result.append(os.path.basename(filename))
                     result.append(genre)
+                    result.append('0')
                     result.append(tense)
                     result.append(','.join(tenses))
                     result.append('')
-                    result.append(str(is_question))
+                    result.append('1' if is_question else '0')
                     result.append(sentence)
                     results.append(result)
 
