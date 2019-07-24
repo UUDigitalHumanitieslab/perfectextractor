@@ -523,7 +523,7 @@ class EuroparlRecentPastExtractor(EuroparlExtractor, RecentPastExtractor):
 
 
 class EuroparlPerfectExtractor(EuroparlExtractor, PerfectExtractor):
-    def get_line_by_number(self, tree, language_to, segment_number):
+    def get_line_and_pp(self, tree, language_to, segment_number):
         """
         Returns the full line for a segment number, as well as the PresentPerfect found (or None if none found).
         TODO: handle more than one here? => bug
@@ -592,6 +592,24 @@ class EuroparlPerfectExtractor(EuroparlExtractor, PerfectExtractor):
                             # If no translation is available, add empty columns
                             result.extend([''] * 2)
 
+                    results.append(result)
+
+                    # If we want (only) one classification per sentence, break the for loop here.
+                    if self.one_per_sentence:
+                        break
+            else:
+                # If we want one classification per sentence, add the sentence with a classification here.
+                if self.one_per_sentence:
+                    tense, tenses = self.get_tenses(s)
+
+                    result = list()
+                    result.append(os.path.basename(filename))
+                    result.append(s.get('id'))
+                    result.append(tense)
+                    result.append(','.join(tenses))
+                    result.append('')
+                    result.append(self.get_sentence_words(s))
+                    self.append_metadata(None, s, result)
                     results.append(result)
 
         return results

@@ -68,7 +68,7 @@ class TestEuroparlPerfectExtractor(unittest.TestCase):
         self.assertEqual(align, '2 => 1')
 
     def test_get_line_by_number(self):
-        xml_sentence, _, pp = self.nl_extractor.get_line_by_number(self.nl_tree, 'nl', '4')
+        xml_sentence, _, pp = self.nl_extractor.get_line_and_pp(self.nl_tree, 'nl', '4')
         self.assertEqual(etree.fromstring(xml_sentence).get('id'), '4')
         self.assertEqual(pp.get_sentence_id(), '4')
         self.assertEqual(pp.verbs(), ['is', 'aangebroken'])
@@ -77,21 +77,21 @@ class TestEuroparlPerfectExtractor(unittest.TestCase):
         self.assertFalse(pp.is_passive)
         self.assertFalse(pp.is_continuous)
 
-        xml_sentence, _, pp = self.nl_extractor.get_line_by_number(self.nl_tree, 'nl', '15')
+        xml_sentence, _, pp = self.nl_extractor.get_line_and_pp(self.nl_tree, 'nl', '15')
         self.assertEqual(etree.fromstring(xml_sentence).get('id'), '15')
         self.assertEqual(pp.verbs(), ['heeft', 'bemoeid'])
         self.assertEqual(pp.words_between(), 0)
         self.assertFalse(pp.is_passive)
         self.assertFalse(pp.is_continuous)
 
-        xml_sentence, _, pp = self.nl_extractor.get_line_by_number(self.nl_translationtrees['en'], 'en', '6')
+        xml_sentence, _, pp = self.nl_extractor.get_line_and_pp(self.nl_translationtrees['en'], 'en', '6')
         self.assertEqual(etree.fromstring(xml_sentence).get('id'), '6')
         self.assertEqual(pp.verbs(), ['has', 'said'])
         self.assertEqual(pp.words_between(), 1)
         self.assertFalse(pp.is_passive)
         self.assertFalse(pp.is_continuous)
 
-        xml_sentence, _, pp = self.en_extractor.get_line_by_number(self.en_tree, 'en', '89')
+        xml_sentence, _, pp = self.en_extractor.get_line_and_pp(self.en_tree, 'en', '89')
         self.assertEqual(etree.fromstring(xml_sentence).get('id'), '89')
         self.assertEqual(pp.verbs(), ['has', 'been', 'mentioned'])
         self.assertEqual(pp.words_between(), 1)
@@ -99,7 +99,7 @@ class TestEuroparlPerfectExtractor(unittest.TestCase):
         self.assertTrue(pp.is_passive)
         self.assertFalse(pp.is_continuous)
 
-        xml_sentence, _, pp = self.en_extractor.get_line_by_number(self.en_tree, 'en', '121')
+        xml_sentence, _, pp = self.en_extractor.get_line_and_pp(self.en_tree, 'en', '121')
         self.assertEqual(etree.fromstring(xml_sentence).get('id'), '121')
         self.assertEqual(pp.verbs(), ['has', 'been', 'carrying'])
         self.assertEqual(pp.words_between(), 0)
@@ -107,7 +107,7 @@ class TestEuroparlPerfectExtractor(unittest.TestCase):
         self.assertFalse(pp.is_passive)
         self.assertTrue(pp.is_continuous)
 
-        xml_sentence, _, pp = self.en_extractor.get_line_by_number(self.en_tree, 'en', '180')
+        xml_sentence, _, pp = self.en_extractor.get_line_and_pp(self.en_tree, 'en', '180')
         self.assertEqual(etree.fromstring(xml_sentence).get('id'), '180')
         self.assertEqual(pp.verbs(), ['has', 'brought'])
         self.assertEqual(pp.words_between(), 1)

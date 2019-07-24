@@ -1,4 +1,5 @@
 from abc import ABCMeta, abstractmethod
+import ConfigParser
 import codecs
 import os
 
@@ -54,6 +55,11 @@ class BaseExtractor(object):
         # Read in the lemmata list (if provided)
         self.lemmata_list = []
         self.read_lemmata(lemmata)
+
+        # Read the config
+        config = ConfigParser.RawConfigParser()
+        config.readfp(codecs.open(self.get_config(), 'r', 'utf8'))
+        self.config = config
 
         # Other variables
         self.other_extractors = []
@@ -159,6 +165,61 @@ class BaseExtractor(object):
                 result.append(s.getparent().getparent().get(metadata))
             else:
                 raise ValueError('Invalid level {}'.format(level))
+
+    def get_pos(self, language, element):
+        return element.get(self.config.get(language, 'pos'))
+
+    def get_tenses(self, sentence):
+        """
+        This method allows to retrieve the "tense" for a sentence. It is very naive,
+        based upon the part-of-speech tags of verbs that appear in the sentence.
+        It should work for the tagsets of both the Penn Treebank Project and the BNC.
+        See https://www.cis.uni-muenchen.de/~schmid/tools/TreeTagger/data/Penn-Treebank-Tagset.pdf for the
+        Penn Treebank Project tagset and see http://www.natcorp.ox.ac.uk/docs/URG/posguide.html#section1
+        for the BNC tagset
+        :param sentence: the s element
+        :return: a tuple of the assigned tense and all tenses for the verbs in the sentences
+        """
+        tense = 'none'
+        tenses = []
+        for w in sentence.xpath('.//w'):
+            pos = self.get_pos(self.l_from, w)
+
+            if pos.startswith('V') and len(pos) == 3:
+                if pos.endswith('B') or pos.endswith('P') or pos.endswith('Z'):
+                    tenses.append('present')
+                elif pos.endswith('D'):
+                    tenses.append('past')
+                elif pos.endswith('N'):
+                    tenses.append('participle')
+                elif pos.endswith('G'):
+                    tenses.append('gerund')
+                elif pos.endswith('I'):
+                    tenses.append('infinitive')
+                elif pos == 'VM0':
+                    tenses.append('modal')
+            elif pos == 'MD':
+                tenses.append('modal')
+            elif pos == 'BES':
+                tenses.append('present')
+            elif pos == 'VB':
+                tenses.append('infinitive')
+
+        if tenses:
+            tenses_set = set(tenses)
+            if len(tenses_set) == 1:
+                tense = tenses[0]
+            else:
+                if tenses_set in [{'present', 'infinitive'}, {'present', 'gerund'}, {'present', 'gerund', 'infinitive'}]:
+                    tense = 'present'
+                elif tenses_set in [{'past', 'infinitive'}, {'past', 'gerund'}, {'past', 'gerund', 'infinitive'}]:
+                    tense = 'past'
+                elif tenses_set == {'modal', 'infinitive'}:
+                    tense = 'modal'
+                else:
+                    tense = 'other'
+
+        return tense, tenses
 
     @abstractmethod
     def get_config(self):

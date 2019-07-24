@@ -1,7 +1,6 @@
 # -*- encoding: utf-8 -*-
 
 from abc import ABCMeta, abstractmethod
-import ConfigParser
 import codecs
 import string
 import os
@@ -31,11 +30,6 @@ class PerfectExtractor(BaseExtractor):
 
         self.search_in_to = search_in_to
 
-        # Read the config
-        config = ConfigParser.RawConfigParser()
-        config.readfp(codecs.open(self.get_config(), 'r', 'utf8'))
-        self.config = config
-
         # Read the list of verbs that use 'to be' as auxiliary verb per language
         self.aux_be_list = {}
         languages = [self.l_from]
@@ -49,7 +43,7 @@ class PerfectExtractor(BaseExtractor):
             self.aux_be_list[language] = aux_be_list
 
     @abstractmethod
-    def get_line_by_number(self, tree, language_to, segment_number):
+    def get_line_and_pp(self, tree, language_to, segment_number):
         """
         Returns the full line for a segment number, as well as the PresentPerfect found (or None if none found).
         TODO: handle more than one here? => bug
@@ -158,9 +152,6 @@ class PerfectExtractor(BaseExtractor):
 
         return pp if is_pp else None
 
-    def get_pos(self, language, element):
-        return element.get(self.config.get(language, 'pos'))
-
     def in_lemmata_list(self, element):
         """
         Returns whether the given element is in the lemmata list.
@@ -178,7 +169,7 @@ class PerfectExtractor(BaseExtractor):
 
         if translated_lines and any(translated_lines):
             for t in translated_lines:
-                sentence, translation, translated_pp = self.get_line_by_number(translated_tree, language_to, t)
+                sentence, translation, translated_pp = self.get_line_and_pp(translated_tree, language_to, t)
                 translated_pps.append(translated_pp)
                 translated_sentences.append(sentence)
                 translated_marked_sentences.append(translation)

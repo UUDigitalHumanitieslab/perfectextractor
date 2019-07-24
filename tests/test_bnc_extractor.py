@@ -22,7 +22,7 @@ class TestBNCPerfectExtractor(unittest.TestCase):
         self.assertEqual(os.path.basename(filenames[0]), 'ALP-formatted.xml')
 
     def test_process(self):
-        VERBS_COLUMN = 3
+        VERBS_COLUMN = 4
 
         filename = os.path.join(DATA_FOLDER, 'ALP-formatted.xml')
         results = self.extractor.process_file(filename)
@@ -48,5 +48,5 @@ class TestBNCPerfectExtractor(unittest.TestCase):
         self.assertEqual(results[4][VERBS_COLUMN], 'has shown')
 
     def test_not_implemented(self):
-        self.assertRaises(NotImplementedError, self.extractor.get_line_by_number, None, None, None)
+        self.assertRaises(NotImplementedError, self.extractor.get_line_and_pp, None, None, None)
         self.assertRaises(NotImplementedError, self.extractor.get_translated_lines, None, None, None, None)

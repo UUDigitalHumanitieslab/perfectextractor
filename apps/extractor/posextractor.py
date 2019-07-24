@@ -1,6 +1,4 @@
 from abc import ABCMeta, abstractmethod
-import codecs
-import ConfigParser
 import os
 
 from .base import BaseExtractor
@@ -22,11 +20,6 @@ class PoSExtractor(BaseExtractor):
         super(PoSExtractor, self).__init__(language_from, languages_to, **kwargs)
 
         self.pos = pos
-
-        # Read the config
-        config = ConfigParser.RawConfigParser()
-        config.readfp(codecs.open(self.get_config(), 'r', 'utf8'))
-        self.config = config
 
     @abstractmethod
     def preprocess_found(self, word):

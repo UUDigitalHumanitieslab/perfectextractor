@@ -70,7 +70,7 @@ class BNCExtractor(BaseBNC, BaseExtractor):
 
 
 class BNCPerfectExtractor(BNCExtractor, PerfectExtractor):
-    def get_line_by_number(self, tree, language_to, segment_number):
+    def get_line_and_pp(self, tree, language_to, segment_number):
         raise NotImplementedError
 
     def generate_header(self):
@@ -95,8 +95,8 @@ class BNCPerfectExtractor(BNCExtractor, PerfectExtractor):
         tree = etree.parse(filename)
         genre = self.get_genre(tree)
 
-        if not genre.startswith('S'):  # Only spoken genre for the moment
-            return results
+        # if not genre.startswith('S'):  # Only spoken genre for the moment
+        #    return results
 
         # Parse the current tree (create a iterator over 's' elements)
         s_trees = etree.iterparse(filename, tag='s')
@@ -150,49 +150,6 @@ class BNCPerfectExtractor(BNCExtractor, PerfectExtractor):
         :return: whether this sentence contains a question mark
         """
         return '?' in sentence
-
-    def get_tenses(self, sentence):
-        """
-        This method allows to retrieve the "tense" for a sentence. It is very naive,
-        based upon the verbs that appear in the sentence.
-        See http://www.natcorp.ox.ac.uk/docs/URG/posguide.html#section1 for the BNC tagset
-        :param sentence: the s element
-        :return: a tuple of the assigned tense and all tenses for the verbs in the sentences
-        """
-        tense = 'none'
-        tenses = []
-        for w in sentence.xpath('.//w'):
-            pos = self.get_pos(self.l_from, w)
-            if pos.startswith('V'):
-                if pos.endswith('B') or pos.endswith('Z'):
-                    tenses.append('present')
-                elif pos.endswith('D'):
-                    tenses.append('past')
-                elif pos.endswith('N'):
-                    tenses.append('participle')
-                elif pos.endswith('G'):
-                    tenses.append('gerund')
-                elif pos.endswith('I'):
-                    tenses.append('infinitive')
-                elif pos == 'VM0':
-                    tenses.append('modal')
-                else:
-                    tenses.append('other')
-        if tenses:
-            tenses_set = set(tenses)
-            if len(tenses_set) == 1:
-                tense = tenses[0]
-            else:
-                if tenses_set in [{'present', 'infinitive'}, {'present', 'gerund'}, {'present', 'gerund', 'infinitive'}]:
-                    tense = 'present'
-                elif tenses_set in [{'past', 'infinitive'}, {'past', 'gerund'}, {'past', 'gerund', 'infinitive'}]:
-                    tense = 'past'
-                elif tenses_set == {'modal', 'infinitive'}:
-                    tense = 'modal'
-                else:
-                    tense = 'other'  # result.append(','.join(tenses))
-
-        return tense, tenses
 
     def get_pos(self, language, element):
         """

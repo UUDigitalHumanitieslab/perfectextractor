@@ -1,6 +1,4 @@
 from abc import ABCMeta
-import ConfigParser
-import codecs
 import string
 
 from .base import BaseExtractor
@@ -18,11 +16,6 @@ class RecentPastExtractor(BaseExtractor):
         :param languages_to: the target language(s)
         """
         super(RecentPastExtractor, self).__init__(language_from, languages_to, **kwargs)
-
-        # Read the config
-        config = ConfigParser.RawConfigParser()
-        config.readfp(codecs.open(self.get_config(), 'r', 'utf8'))
-        self.config = config
 
     def check_recent_past(self, w, language):
         """
