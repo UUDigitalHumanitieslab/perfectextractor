@@ -22,11 +22,6 @@ class RecentPastExtractor(BaseExtractor):
         """
         super(RecentPastExtractor, self).__init__(language_from, languages_to, **kwargs)
 
-        # Read the config
-        config = ConfigParser.ConfigParser()
-        config.read(self.get_config())
-        self.config = config
-
     def check_recent_past(self, w, language):
         """
         Checks if the element w is the start of a recent past construction

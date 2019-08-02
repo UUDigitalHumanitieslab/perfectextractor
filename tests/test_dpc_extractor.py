@@ -48,7 +48,7 @@ class TestDPCExtractor(unittest.TestCase):
 
     def test_get_line_by_number(self):
         tree = etree.parse(self.document + 'en-tei.xml')
-        line = self.en_extractor.get_line_by_number(tree, 'en', 'p1.s16')
+        line = self.en_extractor.get_line_and_pp(tree, 'en', 'p1.s16')
         pp = PresentPerfect('have', 'have', 'test_id')
         pp.add_word('attained', 'attain', True, 'test_id')
         # self.assertIn(u'**have attained**', line[0])

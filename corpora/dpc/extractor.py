@@ -86,7 +86,7 @@ class DPCExtractor(BaseExtractor):
 
 
 class DPCPerfectExtractor(PerfectExtractor, DPCExtractor):
-    def get_line_by_number(self, tree, language_to, segment_number):
+    def get_line_and_pp(self, tree, language_to, segment_number):
         """
         Returns the full line for a segment number, as well as the PresentPerfect found (or None if none found).
         TODO: handle more than one here? => bug

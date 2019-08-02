@@ -1,3 +1,5 @@
+# -*- encoding: utf-8 -*-
+
 from abc import ABCMeta, abstractmethod
 import codecs
 import string
@@ -6,11 +8,6 @@ import os
 from .base import BaseExtractor
 from .models import PresentPerfect
 from .wiktionary import get_translations
-
-try:
-    import ConfigParser
-except ImportError:
-    import configparser as ConfigParser
 
 AUX_BE_CONFIG = os.path.join(os.path.dirname(__file__), 'config/{language}_aux_be.txt')
 
@@ -33,11 +30,6 @@ class PerfectExtractor(BaseExtractor):
 
         self.search_in_to = search_in_to
 
-        # Read the config
-        config = ConfigParser.ConfigParser()
-        config.read(self.get_config())
-        self.config = config
-
         # Read the list of verbs that use 'to be' as auxiliary verb per language
         self.aux_be_list = {}
         languages = [self.l_from]
@@ -51,31 +43,37 @@ class PerfectExtractor(BaseExtractor):
             self.aux_be_list[language] = aux_be_list
 
     @abstractmethod
-    def get_line_by_number(self, tree, language_to, segment_number):
+    def get_line_and_pp(self, tree, language_to, segment_number):
         """
         Returns the full line for a segment number, as well as the PresentPerfect found (or None if none found).
         TODO: handle more than one here? => bug
         """
         raise NotImplementedError
 
-    def is_lexically_bound(self, language, aux_verb, perfect):
+    def is_lexically_bound(self, language, aux_verb, past_participle, w_before=None):
         """
         Checks if the perfect is lexically bound to the auxiliary verb.
         If not, we are not dealing with a present perfect here.
         """
         lemma_attr = self.config.get('all', 'lemma_attr')
         aux_be = self.config.get(language, 'lexical_bound')
+        reflexive_lemmata = self.config.get(language, 'reflexive_lemmata').split(',')
 
         # If lexical bounds do not exist or we're dealing with an auxiliary verb that is unbound, return True
-        if not aux_be or aux_verb.get(lemma_attr) != aux_be:
+        # Note: we check with "not in", because in French the lemma can be e.g. 'suivre|être'
+        if not aux_be or aux_be not in aux_verb.get(lemma_attr):
             return True
-        # Else, check whether the perfect is in the list of bound verbs
+        # Else, check whether the past participle is in the list of bound verbs
+        elif past_participle.get(lemma_attr) in self.aux_be_list[language]:
+            return True
+        # Else, check if we are dealing with a reflexive present perfect (in that case, there is no lexical bound)
         else:
-            return perfect.get(lemma_attr) in self.aux_be_list[language]
+            if reflexive_lemmata and w_before is not None:
+                return w_before.get(lemma_attr) in reflexive_lemmata
 
-    def check_present_perfect(self, element, language, check_ppp=True, check_ppc=False, check_preceding=False):
+    def check_present_perfect(self, auxiliary, language, check_ppp=True, check_ppc=False, check_preceding=False):
         """
-        Checks whether this element is the start of a present perfect (pp),
+        Checks whether this element (i.e. the auxiliary) is the start of a present perfect (pp),
         a present perfect continuous (ppc) or passive present perfect (ppp).
         If it is, the complete construction is returned as a PresentPerfect object.
         If not, None is returned.
@@ -89,26 +87,27 @@ class PerfectExtractor(BaseExtractor):
         ppc_tags = self.config.get(language, 'ppc_tags').split(',')
         stop_tags = tuple(self.config.get(language, 'stop_tags').split(','))
         allow_reversed = self.config.getboolean(language, 'allow_reversed')
-        pos_tag = self.config.get(language, 'pos')
 
         # Start a potential present perfect
-        s = self.get_sentence(element)
-        pp = PresentPerfect(element.text, element.get(lemma_attr), element.get('id'), s)
+        s = self.get_sentence(auxiliary)
+        pp = PresentPerfect(auxiliary.text, auxiliary.get(lemma_attr), auxiliary.get('id'), s)
         is_pp = False
 
         # Check if the starting auxiliary is actually allowed
-        if any(aux_words) and element.text not in aux_words:
+        if any(aux_words) and auxiliary.text not in aux_words:
             return None
 
         # Loop over the siblings of the current element.
-        for sibling in self.get_siblings(element, s.get('id'), check_preceding):
+        siblings = self.get_siblings(auxiliary, s.get('id'), check_preceding)
+        for n, sibling in enumerate(siblings):
             # If the tag of the sibling is the perfect tag, we found a present perfect!
-            sibling_pos = sibling.get(pos_tag)
+            sibling_pos = self.get_pos(language, sibling)
             sibling_lemma = sibling.get(lemma_attr)
             if sibling_pos in perfect_tags:
                 # Check if the sibling is lexically bound to the auxiliary verb
                 # (only if we're not checking for passive present perfect)
-                if check_ppp and not self.is_lexically_bound(language, element, sibling):
+                before = auxiliary.getnext() if check_preceding else auxiliary.getprevious()
+                if check_ppp and not self.is_lexically_bound(language, auxiliary, sibling, before):
                     break
 
                 # Check if the lemma is not in the lemmata list, if so break, unless we found a potential ppp
@@ -144,10 +143,10 @@ class PerfectExtractor(BaseExtractor):
             else:
                 pp.add_word(sibling.text, sibling_lemma, False, sibling.get('id'))
 
-        # If we haven't yet found a perfect, and we are allowed to look in the other direction,
-        # try to find a perfect by looking backwards in the sentence.
+        # If we haven't yet found a past participle, and we are allowed to look in the other direction,
+        # try to find a past participle by looking backwards in the sentence.
         if not is_pp and allow_reversed and not check_preceding:
-            pp = self.check_present_perfect(element, language, check_ppp=check_ppp, check_preceding=True)
+            pp = self.check_present_perfect(auxiliary, language, check_ppp=check_ppp, check_preceding=True)
             if pp:
                 is_pp = True
 
@@ -170,7 +169,7 @@ class PerfectExtractor(BaseExtractor):
 
         if translated_lines and any(translated_lines):
             for t in translated_lines:
-                sentence, translation, translated_pp = self.get_line_by_number(translated_tree, language_to, t)
+                sentence, translation, translated_pp = self.get_line_and_pp(translated_tree, language_to, t)
                 translated_pps.append(translated_pp)
                 translated_sentences.append(sentence)
                 translated_marked_sentences.append(translation)

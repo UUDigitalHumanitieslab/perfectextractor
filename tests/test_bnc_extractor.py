@@ -6,7 +6,7 @@ import unittest
 from corpora.bnc.extractor import BNCPerfectExtractor
 
 DATA_FOLDER = os.path.join(os.path.dirname(__file__), 'data/bnc')
-VERBS_COLUMN = 3
+VERBS_COLUMN = 4
 
 
 class TestBNCPerfectExtractor(unittest.TestCase):
@@ -49,5 +49,5 @@ class TestBNCPerfectExtractor(unittest.TestCase):
         self.assertEqual(results[4][VERBS_COLUMN], 'has shown')
 
     def test_not_implemented(self):
-        self.assertRaises(NotImplementedError, self.extractor.get_line_by_number, None, None, None)
+        self.assertRaises(NotImplementedError, self.extractor.get_line_and_pp, None, None, None)
         self.assertRaises(NotImplementedError, self.extractor.get_translated_lines, None, None, None, None)

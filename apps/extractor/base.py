@@ -7,6 +7,11 @@ import click
 
 from .utils import TXT
 
+try:
+    import ConfigParser
+except ImportError:
+    import configparser as ConfigParser
+
 LEMMATA_CONFIG = os.path.join(os.path.dirname(__file__), 'config/{language}_lemmata.txt')
 
 
@@ -15,7 +20,9 @@ class BaseExtractor(object):
 
     def __init__(self, language_from, languages_to=None,
                  file_names=None, sentence_ids=None,
-                 lemmata=None, tokens=None, outfile=None, position=None, output=TXT,
+                 lemmata=None, tokens=None, metadata=None,
+                 outfile=None, position=None, output=TXT,
+                 one_per_sentence=False,
                  sort_by_certainty=False, file_limit=0, min_file_size=0, max_file_size=0):
         """
         Initializes the extractor for the given source and target language(s).
@@ -25,9 +32,11 @@ class BaseExtractor(object):
         :param sentence_ids: whether to limit the search to certain sentence IDs
         :param lemmata: whether to limit the search to certain lemmata (can be provided as a boolean or a list)
         :param tokens: whether to limit the search to certain tokens (list of tuples (from-to))
+        :param metadata: whether to add metadata to the output (list of tuples (metadata-level))
         :param outfile: the filename to output the results to
         :param position: whether to limit the search to a certain position (e.g. only sentence-initial)
         :param output: whether to output the results in text or XML format
+        :param one_per_sentence: whether to output all lines, and allow one classification per sentence
         :param sort_by_certainty: whether to sort the files by average alignment certainty
         :param file_limit: whether to limit the number of files searched in
         :param min_file_size: whether to only use files larger (or equal) than a certain size
@@ -38,9 +47,11 @@ class BaseExtractor(object):
         self.file_names = file_names
         self.sentence_ids = sentence_ids
         self.tokens = dict(tokens) if tokens else None
+        self.metadata = dict(metadata) if metadata else {}
         self.outfile = outfile
         self.position = position
         self.output = output
+        self.one_per_sentence = one_per_sentence
         self.sort_by_certainty = sort_by_certainty
         self.file_limit = file_limit
         self.min_file_size = min_file_size
@@ -49,6 +60,11 @@ class BaseExtractor(object):
         # Read in the lemmata list (if provided)
         self.lemmata_list = []
         self.read_lemmata(lemmata)
+
+        # Read the config
+        config = ConfigParser.RawConfigParser()
+        config.readfp(codecs.open(self.get_config(), 'r', 'utf8'))
+        self.config = config
 
         # Other variables
         self.other_extractors = []
@@ -113,6 +129,8 @@ class BaseExtractor(object):
             'words {}'.format(self.l_from),
             'ids {}'.format(self.l_from),
             self.l_from]
+        for metadata in self.metadata.keys():
+            header.append(metadata)
         for language in self.l_to:
             header.append('alignment type')
             header.append(language)
@@ -139,6 +157,74 @@ class BaseExtractor(object):
     def list_directories(self, path):
         directories = [os.path.join(path, directory) for directory in os.listdir(path)]
         return filter(os.path.isdir, directories)
+
+    def append_metadata(self, w, s, result):
+        for metadata, level in self.metadata.items():
+            if w is not None and level == 'w':
+                result.append(w.get(metadata))
+            elif s is not None and level == 's':
+                result.append(s.get(metadata))
+            elif s is not None and level == 'p':
+                result.append(s.getparent().get(metadata))
+            elif s is not None and level == 'text':
+                result.append(s.getparent().getparent().get(metadata))
+            else:
+                raise ValueError('Invalid level {}'.format(level))
+
+    def get_pos(self, language, element):
+        return element.get(self.config.get(language, 'pos'))
+
+    def get_tenses(self, sentence):
+        """
+        This method allows to retrieve the "tense" for a sentence. It is very naive,
+        based upon the part-of-speech tags of verbs that appear in the sentence.
+        It should work for the tagsets of both the Penn Treebank Project and the BNC.
+        See https://www.cis.uni-muenchen.de/~schmid/tools/TreeTagger/data/Penn-Treebank-Tagset.pdf for the
+        Penn Treebank Project tagset and see http://www.natcorp.ox.ac.uk/docs/URG/posguide.html#section1
+        for the BNC tagset
+        :param sentence: the s element
+        :return: a tuple of the assigned tense and all tenses for the verbs in the sentences
+        """
+        tense = 'none'
+        tenses = []
+        for w in sentence.xpath('.//w'):
+            pos = self.get_pos(self.l_from, w)
+
+            if pos.startswith('V') and len(pos) == 3:
+                if pos.endswith('B') or pos.endswith('P') or pos.endswith('Z'):
+                    tenses.append('present')
+                elif pos.endswith('D'):
+                    tenses.append('past')
+                elif pos.endswith('N'):
+                    tenses.append('participle')
+                elif pos.endswith('G'):
+                    tenses.append('gerund')
+                elif pos.endswith('I'):
+                    tenses.append('infinitive')
+                elif pos == 'VM0':
+                    tenses.append('modal')
+            elif pos == 'MD':
+                tenses.append('modal')
+            elif pos == 'BES':
+                tenses.append('present')
+            elif pos == 'VB':
+                tenses.append('infinitive')
+
+        if tenses:
+            tenses_set = set(tenses)
+            if len(tenses_set) == 1:
+                tense = tenses[0]
+            else:
+                if tenses_set in [{'present', 'infinitive'}, {'present', 'gerund'}, {'present', 'gerund', 'infinitive'}]:
+                    tense = 'present'
+                elif tenses_set in [{'past', 'infinitive'}, {'past', 'gerund'}, {'past', 'gerund', 'infinitive'}]:
+                    tense = 'past'
+                elif tenses_set == {'modal', 'infinitive'}:
+                    tense = 'modal'
+                else:
+                    tense = 'other'
+
+        return tense, tenses
 
     @abstractmethod
     def get_config(self):

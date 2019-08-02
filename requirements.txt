@@ -4,10 +4,10 @@
 #
 #    pip-compile requirements.in
 #
-certifi==2019.3.9         # via requests
+certifi==2019.6.16        # via requests
 chardet==3.0.4            # via requests
 click==7.0
 idna==2.8                 # via requests
-lxml==4.3.2
-requests==2.21.0
-urllib3==1.24.1           # via requests
+lxml==4.4.0
+requests==2.22.0
+urllib3==1.25.3           # via requests

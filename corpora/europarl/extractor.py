@@ -66,6 +66,7 @@ class EuroparlExtractor(BaseEuroparl, BaseExtractor):
                 result.append('<root>' + etree.tostring(s) + '</root>')
             else:
                 result.append(self.get_sentence_words(s))
+            self.append_metadata(None, s, result)
 
             for language_to in self.l_to:
                 if language_to in translation_trees:
@@ -281,7 +282,7 @@ class EuroparlPoSExtractor(EuroparlExtractor, PoSExtractor):
             for w in s.xpath(xpath):
                 words = self.preprocess_found(w)
 
-                if words is None:
+                if not words:
                     continue
 
                 result = list()
@@ -294,6 +295,7 @@ class EuroparlPoSExtractor(EuroparlExtractor, PoSExtractor):
                     result.append('<root>' + etree.tostring(s) + '</root>')
                 else:
                     result.append(self.get_sentence_words(s))
+                self.append_metadata(None, s, result)
 
                 # Find the translated lines
                 for language_to in self.l_to:
@@ -330,10 +332,10 @@ class EuroparlPoSExtractor(EuroparlExtractor, PoSExtractor):
 
         lemma_attr = self.config.get('all', 'lemma_attr')
         if self.lemmata_list and word.get(lemma_attr) not in self.lemmata_list:
-            result = None
+            result = []
 
         if self.position and not word.get('id').endswith('.' + str(self.position)):
-            result = None
+            result = []
 
         if self.tokens:
             end_token = self.tokens.get(word.get('id'))
@@ -373,9 +375,10 @@ class EuroparlFrenchArticleExtractor(EuroparlPoSExtractor):
         """
         result = []
 
+        lemma_attr = self.config.get('all', 'lemma_attr')
         for w in super(EuroparlFrenchArticleExtractor, self).preprocess_found(word):
             prev = w.getprevious()
-            if prev is not None and prev.get('lem') in self.particles:
+            if prev is not None and prev.get(lemma_attr) in self.particles:
                 result.append(prev)
 
             result.append(word)
@@ -388,13 +391,14 @@ class EuroparlFrenchArticleExtractor(EuroparlPoSExtractor):
         For 'des', this is quite hard to decide, so we leave both options open.
         """
         result = ''
+        lemma_attr = self.config.get('all', 'lemma_attr')
 
-        if words[-1].get('lem') == 'le':
+        if words[-1].get(lemma_attr) == 'le':
             result = 'definite'
-        elif words[-1].get('lem') == 'un':
+        elif words[-1].get(lemma_attr) == 'un':
             result = 'indefinite'
 
-        if words[0].get('lem') in self.particles:
+        if words[0].get(lemma_attr) in self.particles:
             if result:
                 result += ' '
             result += 'partitive'
@@ -471,6 +475,7 @@ class EuroparlRecentPastExtractor(EuroparlExtractor, RecentPastExtractor):
                     result.append(rp.verbs_to_string())
                     result.append(rp.verb_ids())
                     result.append('<root>' + str(etree.tostring(rp.xml_sentence)) + '</root>')
+                    self.append_metadata(None, s, result)
 
                     found_trans = False
                     for language_to in self.l_to:
@@ -516,7 +521,7 @@ class EuroparlRecentPastExtractor(EuroparlExtractor, RecentPastExtractor):
 
 
 class EuroparlPerfectExtractor(EuroparlExtractor, PerfectExtractor):
-    def get_line_by_number(self, tree, language_to, segment_number):
+    def get_line_and_pp(self, tree, language_to, segment_number):
         """
         Returns the full line for a segment number, as well as the PresentPerfect found (or None if none found).
         TODO: handle more than one here? => bug
@@ -564,6 +569,7 @@ class EuroparlPerfectExtractor(EuroparlExtractor, PerfectExtractor):
                         result.append('<root>' + etree.tostring(pp.xml_sentence) + '</root>')
                     else:
                         result.append(pp.mark_sentence())
+                    self.append_metadata(e, s, result)
 
                     # Find the translated lines
                     for language_to in self.l_to:
@@ -584,6 +590,24 @@ class EuroparlPerfectExtractor(EuroparlExtractor, PerfectExtractor):
                             # If no translation is available, add empty columns
                             result.extend([''] * 2)
 
+                    results.append(result)
+
+                    # If we want (only) one classification per sentence, break the for loop here.
+                    if self.one_per_sentence:
+                        break
+            else:
+                # If we want one classification per sentence, add the sentence with a classification here.
+                if self.one_per_sentence:
+                    tense, tenses = self.get_tenses(s)
+
+                    result = list()
+                    result.append(os.path.basename(filename))
+                    result.append(s.get('id'))
+                    result.append(tense)
+                    result.append(','.join(tenses))
+                    result.append('')
+                    result.append(self.get_sentence_words(s))
+                    self.append_metadata(None, s, result)
                     results.append(result)
 
         return results

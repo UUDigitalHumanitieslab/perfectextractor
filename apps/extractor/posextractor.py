@@ -26,11 +26,6 @@ class PoSExtractor(BaseExtractor):
 
         self.pos = pos
 
-        # Read the config
-        config = ConfigParser.ConfigParser()
-        config.read(self.get_config())
-        self.config = config
-
     @abstractmethod
     def preprocess_found(self, word):
         """
