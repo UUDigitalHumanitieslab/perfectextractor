@@ -557,7 +557,8 @@ class EuroparlPerfectExtractor(EuroparlExtractor, PerfectExtractor):
             # Retrieves the xpath expression for the auxiliary in the given tense or a fallback
             xpath_fallback = 'xpath'
             xpath = xpath_fallback + ('_{}'.format(self.tense) if self.tense != PRESENT else '')
-            aux_xpath = self.config.get(self.l_from, xpath, fallback=self.config.get(self.l_from, xpath_fallback))
+            l_config = dict(self.config.items(self.l_from))
+            aux_xpath = l_config.get(xpath, l_config.get(xpath_fallback))
 
             for e in s.xpath(aux_xpath):
                 pp = self.check_present_perfect(e, self.l_from)
