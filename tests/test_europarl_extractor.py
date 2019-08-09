@@ -7,6 +7,7 @@ from lxml import etree
 
 from corpora.europarl.extractor import EuroparlExtractor, EuroparlPerfectExtractor, EuroparlRecentPastExtractor, \
     EuroparlPoSExtractor, EuroparlSinceDurationExtractor, EuroparlFrenchArticleExtractor
+from apps.extractor.perfectextractor import PAST
 
 EUROPARL_DATA = os.path.join(os.path.dirname(__file__), 'data/europarl')
 DCEP_DATA = os.path.join(os.path.dirname(__file__), 'data/dcep')
@@ -198,3 +199,24 @@ class TestEuroparlPerfectExtractor(unittest.TestCase):
         results = article_extractor.generate_results(os.path.join(EUROPARL_DATA, 'fr'))
         self.assertEqual(len(results), 2041)
         self.assertEqual(results[0][2], u'indefinite partitive')
+
+    def test_past_perfect(self):
+        past_perfect_extractor = EuroparlPerfectExtractor('en', [], tense=PAST)
+        results = past_perfect_extractor.generate_results(os.path.join(EUROPARL_DATA, 'en'))
+        self.assertEqual(len(results), 5)
+        self.assertEqual(results[0][3], u'had preordained')
+
+        past_perfect_extractor = EuroparlPerfectExtractor('nl', [], tense=PAST)
+        results = past_perfect_extractor.generate_results(os.path.join(EUROPARL_DATA, 'nl'))
+        self.assertEqual(len(results), 5)
+        self.assertEqual(results[0][3], u'had gelegd')
+
+        past_perfect_extractor = EuroparlPerfectExtractor('fr', [], tense=PAST)
+        results = past_perfect_extractor.generate_results(os.path.join(EUROPARL_DATA, 'fr'))
+        self.assertEqual(len(results), 10)
+        self.assertEqual(results[0][3], u'avait rétabli')
+
+        past_perfect_extractor = EuroparlPerfectExtractor('de', [], tense=PAST)
+        results = past_perfect_extractor.generate_results(os.path.join(DCEP_DATA, 'de'))
+        self.assertEqual(len(results), 1)
+        self.assertEqual(results[0][3], u'hatte beschlossen')

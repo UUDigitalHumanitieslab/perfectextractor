@@ -9,26 +9,32 @@ from .base import BaseExtractor
 from .models import PresentPerfect
 from .wiktionary import get_translations
 
+# List of verbs that have BE instead of HAVE as their auxiliary
 AUX_BE_CONFIG = os.path.join(os.path.dirname(__file__), 'config/{language}_aux_be.txt')
 
-TEI = {'ns': 'http://www.tei-c.org/ns/1.0'}
+# Tenses
+PRESENT = 'present'
+PAST = 'past'
+# FUTURE = 'future'  # TODO: implement this somewhere in the near future
 
 
 class PerfectExtractor(BaseExtractor):
     __metaclass__ = ABCMeta
 
-    def __init__(self, language_from, languages_to=None, search_in_to=False, **kwargs):
+    def __init__(self, language_from, languages_to=None, search_in_to=False, tense=PRESENT, **kwargs):
         """
-        Initializes the extractor for the given source and target language(s).
+        Initializes the PerfectExtractor for the given source and target language(s).
         Reads in the config for the source language,
         as well as the list of verbs that use 'to be' as auxiliary verb for both source and target language(s).
         :param language_from: the source language
         :param languages_to: the target language(s)
         :param search_in_to: whether to look for perfects in the target language
+        :param tense: whether to search for present, past or future perfects
         """
         super(PerfectExtractor, self).__init__(language_from, languages_to, **kwargs)
 
         self.search_in_to = search_in_to
+        self.tense = tense
 
         # Read the list of verbs that use 'to be' as auxiliary verb per language
         self.aux_be_list = {}
@@ -79,7 +85,6 @@ class PerfectExtractor(BaseExtractor):
         If not, None is returned.
         """
         lemma_attr = self.config.get('all', 'lemma_attr')
-        aux_words = self.config.get(language, 'aux_words').split(',')
         perfect_tags = self.config.get(language, 'perfect_tags').split(',')
         check_ppp = check_ppp and self.config.getboolean(language, 'ppp')
         ppp_lemma = self.config.get(language, 'ppp_lemma')
@@ -87,6 +92,11 @@ class PerfectExtractor(BaseExtractor):
         ppc_tags = self.config.get(language, 'ppc_tags').split(',')
         stop_tags = tuple(self.config.get(language, 'stop_tags').split(','))
         allow_reversed = self.config.getboolean(language, 'allow_reversed')
+
+        # Retrieves the auxiliaries, or a fallback if there are none provided
+        aux_fallback = 'aux_words'
+        aux = aux_fallback + ('_{}'.format(self.tense) if self.tense != PRESENT else '')
+        aux_words = self.config.get(language, aux, fallback=self.config.get(self.l_from, aux_fallback)).split(',')
 
         # Start a potential present perfect
         s = self.get_sentence(auxiliary)

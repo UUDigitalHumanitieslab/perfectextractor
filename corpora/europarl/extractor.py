@@ -8,7 +8,7 @@ from lxml import etree
 
 from apps.extractor.base import BaseExtractor
 from apps.extractor.models import Alignment
-from apps.extractor.perfectextractor import PerfectExtractor
+from apps.extractor.perfectextractor import PerfectExtractor, PRESENT
 from apps.extractor.posextractor import PoSExtractor
 from apps.extractor.recentpastextractor import RecentPastExtractor
 from apps.extractor.xml_utils import get_sentence_from_element
@@ -549,15 +549,20 @@ class EuroparlPerfectExtractor(EuroparlExtractor, PerfectExtractor):
         Processes a single file.
         """
         results = []
-        # Find potential present perfects (per sentence)
+        # Find potential present/past perfects (per sentence)
         for _, s in s_trees:
             if self.sentence_ids and s.get('id') not in self.sentence_ids:
                 continue
 
-            for e in s.xpath(self.config.get(self.l_from, 'xpath')):
+            # Retrieves the xpath expression for the auxiliary in the given tense or a fallback
+            xpath_fallback = 'xpath'
+            xpath = xpath_fallback + ('_{}'.format(self.tense) if self.tense != PRESENT else '')
+            aux_xpath = self.config.get(self.l_from, xpath, fallback=self.config.get(self.l_from, xpath_fallback))
+
+            for e in s.xpath(aux_xpath):
                 pp = self.check_present_perfect(e, self.l_from)
 
-                # If this is really a present perfect, add it to the result
+                # If this is really a present/past perfect, add it to the result
                 if pp:
                     result = list()
                     result.append(os.path.basename(filename))

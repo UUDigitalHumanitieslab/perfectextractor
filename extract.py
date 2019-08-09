@@ -8,6 +8,7 @@ from corpora.dpc.extractor import DPCExtractor, DPCPerfectExtractor
 from corpora.europarl.extractor import EuroparlExtractor, EuroparlPoSExtractor, EuroparlPerfectExtractor, \
     EuroparlRecentPastExtractor, EuroparlSinceDurationExtractor
 from apps.extractor.utils import TXT, XML
+from apps.extractor.perfectextractor import PRESENT, PAST
 
 # Corpora
 BNC = 'bnc'
@@ -55,7 +56,9 @@ def process_data_folders(extractor, path):
 @click.option('--position', default=0,
               help='The position of the searched item')
 @click.option('--search_in_to', is_flag=True,
-              help='Search in to?')
+              help='Also search for perfects in the to language(s)?')
+@click.option('--tense', default=PRESENT, type=click.Choice([PRESENT, PAST]),
+              help='The tense of perfect (present, past, future)')
 @click.option('--output', default=TXT, type=click.Choice([TXT, XML]),
               help='Output in text or XML format')
 @click.option('--one_per_sentence', is_flag=True,
@@ -69,7 +72,7 @@ def process_data_folders(extractor, path):
 @click.option('--max_file_size', default=0,
               help='Limits the maximal size of the files searched')
 def extract(folder, language_from, languages_to, corpus='europarl', extractor='base',
-            pos=None, search_in_to=False,
+            pos=None, search_in_to=False, tense=PRESENT,
             output=TXT, file_names=None, sentence_ids=None,
             lemmata=None, position=None, tokens=None, metadata=None,
             outfile=None, one_per_sentence=False, sort_by_certainty=False, file_limit=0,
@@ -120,6 +123,7 @@ def extract(folder, language_from, languages_to, corpus='europarl', extractor='b
 
     if extractor == PERFECT:
         kwargs['search_in_to'] = search_in_to
+        kwargs['tense'] = tense
 
     if extractor == POS:
         kwargs['pos'] = pos

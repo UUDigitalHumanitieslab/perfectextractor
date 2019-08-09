@@ -8,7 +8,7 @@ except ImportError:
 
 # Output formats
 TXT = 'txt'
-XML = "xml"
+XML = 'xml'
 
 
 def get_adjacent_line_number(segment_number, i):
