@@ -499,7 +499,7 @@ class EuroparlRecentPastExtractor(EuroparlExtractor, RecentPastExtractor):
                                                 found_trans = True
 
                                 result.append(alignment_type)
-                                result.append('<root>' + str(b'\n'.join(translated_sentences)) + '</root>' if translated_sentences else '')
+                                result.append('<root>' + '\n'.join(translated_sentences) + '</root>' if translated_sentences else '')
                             else:
                                 result.append('')
                                 result.append('')
