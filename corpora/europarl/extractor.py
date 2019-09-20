@@ -63,7 +63,7 @@ class EuroparlExtractor(BaseEuroparl, BaseExtractor):
             result.append('')
             result.append('')
             if self.output == XML:
-                result.append('<root>' + etree.tostring(s) + '</root>')
+                result.append('<root>' + etree.tostring(s, encoding=str) + '</root>')
             else:
                 result.append(self.get_sentence_words(s))
             self.append_metadata(None, s, result)
@@ -130,7 +130,7 @@ class EuroparlExtractor(BaseEuroparl, BaseExtractor):
     def get_line(self, tree, segment_number):
         line = tree.xpath('//s[@id="' + segment_number + '"]')
         if line:
-            return etree.tostring(line[0])
+            return etree.tostring(line[0], encoding=str)
         else:
             return None
 
@@ -292,7 +292,7 @@ class EuroparlPoSExtractor(EuroparlExtractor, PoSExtractor):
                 result.append(' '.join([w.text for w in words]))
                 result.append(' '.join([w.get('id') for w in words]))
                 if self.output == XML:
-                    result.append('<root>' + etree.tostring(s) + '</root>')
+                    result.append('<root>' + etree.tostring(s, encoding=str) + '</root>')
                 else:
                     result.append(self.get_sentence_words(s))
                 self.append_metadata(None, s, result)
@@ -474,7 +474,7 @@ class EuroparlRecentPastExtractor(EuroparlExtractor, RecentPastExtractor):
                     result.append(u'passé récent')
                     result.append(rp.verbs_to_string())
                     result.append(rp.verb_ids())
-                    result.append('<root>' + str(etree.tostring(rp.xml_sentence)) + '</root>')
+                    result.append('<root>' + etree.tostring(rp.xml_sentence, encoding=str) + '</root>')
                     self.append_metadata(None, s, result)
 
                     found_trans = False
@@ -542,7 +542,7 @@ class EuroparlPerfectExtractor(EuroparlExtractor, PerfectExtractor):
                         sentence = pp.mark_sentence()
                         break
 
-        return etree.tostring(s), sentence, pp
+        return etree.tostring(s, encoding=str), sentence, pp
 
     def fetch_results(self, filename, s_trees, alignment_trees, translation_trees):
         """
@@ -572,7 +572,7 @@ class EuroparlPerfectExtractor(EuroparlExtractor, PerfectExtractor):
                     result.append(pp.verbs_to_string())
                     result.append(pp.verb_ids())
                     if self.output == XML:
-                        result.append('<root>' + etree.tostring(pp.xml_sentence) + '</root>')
+                        result.append('<root>' + etree.tostring(pp.xml_sentence, encoding=str) + '</root>')
                     else:
                         result.append(pp.mark_sentence())
                     self.append_metadata(e, s, result)
