@@ -56,26 +56,40 @@ class PerfectExtractor(BaseExtractor):
         """
         raise NotImplementedError
 
-    def is_lexically_bound(self, language, aux_verb, past_participle, w_before=None):
+    def is_lexically_bound(self, language, pp, aux_verb, past_participle, w_before=None):
         """
         Checks if the perfect is lexically bound to the auxiliary verb.
         If not, we are not dealing with a present perfect here.
         """
         lemma_attr = self.config.get('all', 'lemma_attr')
         aux_be = self.config.get(language, 'lexical_bound')
-        reflexive_lemmata = self.config.get(language, 'reflexive_lemmata').split(',')
 
         # If lexical bounds do not exist or we're dealing with an auxiliary verb that is unbound, return True
         # Note: we check with "not in", because in French the lemma can be e.g. 'suivre|être'
         if not aux_be or aux_be not in aux_verb.get(lemma_attr):
             return True
-        # Else, check whether the past participle is in the list of bound verbs
-        elif past_participle.get(lemma_attr) in self.aux_be_list[language]:
-            return True
+
         # Else, check if we are dealing with a reflexive present perfect (in that case, there is no lexical bound)
+        if self.is_reflexive(language, w_before):
+            pp.prepend_word(w_before[0].text, w_before[0].get(lemma_attr), True, w_before[0].get('id'))
+            pp.is_reflexive = True
+            return True
+
+        # Finally, check whether the past participle is in the list of bound verbs
+        return past_participle.get(lemma_attr) in self.aux_be_list[language]
+
+    def is_reflexive(self, language, w_before):
+        lemma_attr = self.config.get('all', 'lemma_attr')
+        reflexive_lemmata = self.config.get(language, 'reflexive_lemmata').split(',')
+
+        precondition = reflexive_lemmata and w_before is not None and len(w_before) >= 2
+        if precondition:
+            prev_reflexive = w_before[0].get(lemma_attr) in reflexive_lemmata
+            # TODO: below condition is language-specific, and does not yet work for e.g. negation
+            prevprev_pronoun = self.get_pos(language, w_before[1]) == 'PRO:PER'
+            return prev_reflexive and prevprev_pronoun
         else:
-            if reflexive_lemmata and w_before is not None:
-                return w_before.get(lemma_attr) in reflexive_lemmata
+            return False
 
     def check_present_perfect(self, auxiliary, language, check_ppp=True, check_ppc=False, check_preceding=False):
         """
@@ -117,8 +131,8 @@ class PerfectExtractor(BaseExtractor):
             if sibling_pos in perfect_tags:
                 # Check if the sibling is lexically bound to the auxiliary verb
                 # (only if we're not checking for passive present perfect)
-                before = auxiliary.getnext() if check_preceding else auxiliary.getprevious()
-                if check_ppp and not self.is_lexically_bound(language, auxiliary, sibling, before):
+                before = self.get_siblings(auxiliary, s.get('id'), not check_preceding)
+                if check_ppp and not self.is_lexically_bound(language, pp, auxiliary, sibling, before):
                     break
 
                 # Check if the lemma is not in the lemmata list, if so break, unless we found a potential ppp

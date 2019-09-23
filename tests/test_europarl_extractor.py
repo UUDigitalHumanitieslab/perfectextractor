@@ -213,7 +213,7 @@ class TestEuroparlPerfectExtractor(unittest.TestCase):
 
         past_perfect_extractor = EuroparlPerfectExtractor('fr', [], tense=PAST)
         results = past_perfect_extractor.generate_results(os.path.join(EUROPARL_DATA, 'fr'))
-        self.assertEqual(len(results), 10)
+        self.assertEqual(len(results), 9)
         self.assertEqual(results[0][3], u'avait rétabli')
 
         past_perfect_extractor = EuroparlPerfectExtractor('de', [], tense=PAST)

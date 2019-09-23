@@ -23,6 +23,12 @@ class MultiWordExpression(object):
         """
         self.words.append(Word(word, lemma, is_verb, xml_id))
 
+    def prepend_word(self, word, lemma, is_verb, xml_id):
+        """
+        Prepends a word to the MultiWordExpression.
+        """
+        self.words.insert(0, Word(word, lemma, is_verb, xml_id))
+
     def verbs(self):
         """
         Extracts the verbs from the MultiWordExpression.
@@ -102,6 +108,7 @@ class PresentPerfect(MultiWordExpression):
         super(PresentPerfect, self).__init__(xml_sentence)
         self.is_passive = False
         self.is_continuous = False
+        self.is_reflexive = False
         self.add_word(aux_verb, aux_lemma, True, xml_id)
 
     def extend(self, present_perfect):
