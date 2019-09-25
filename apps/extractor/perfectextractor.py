@@ -86,7 +86,7 @@ class PerfectExtractor(BaseExtractor):
         if precondition:
             prev_reflexive = w_before[0].get(lemma_attr) in reflexive_lemmata
             # TODO: below condition is language-specific, and does not yet work for e.g. negation
-            prevprev_pronoun = self.get_pos(language, w_before[1]) == 'PRO:PER'
+            prevprev_pronoun = w_before[0].get(lemma_attr) not in ['nous', 'vous'] or self.get_pos(language, w_before[1]) == 'PRO:PER'
             return prev_reflexive and prevprev_pronoun
         else:
             return False
