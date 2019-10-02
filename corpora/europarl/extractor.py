@@ -195,9 +195,10 @@ class EuroparlExtractor(BaseEuroparl, BaseExtractor):
             sl = sorted([self.l_from, language_to])
             alignment_tree = self.alignment_xmls[language_to]
             base_filename = os.path.basename(filename)
-            doc = '{}/{}.gz'.format(self.l_from, base_filename)
+            doc = '{}/{}'.format(self.l_from, base_filename)
+            doc_gz = doc + '.gz'  # Europarl uses .gz natively, deal with both options
             path = '@fromDoc="{}"' if sl[0] == self.l_from else '@toDoc="{}"'
-            linkGrps = alignment_tree.xpath('//linkGrp[{}]'.format(path.format(doc)))
+            linkGrps = alignment_tree.xpath('//linkGrp[{} or {}]'.format(path.format(doc), path.format(doc_gz)))
 
             if not linkGrps:
                 if include_translations:
@@ -207,7 +208,9 @@ class EuroparlExtractor(BaseEuroparl, BaseExtractor):
 
                 if include_translations:
                     translation_link = linkGrp.get('toDoc') if sl[0] == self.l_from else linkGrp.get('fromDoc')
-                    translation_file = os.path.join(data_folder, translation_link[:-3])
+                    if translation_link.endswith('.gz'):   # See comment above: Europarl uses .gz as extension
+                        translation_link = translation_link[:-3]
+                    translation_file = os.path.join(data_folder, translation_link)
                     translation_trees[language_to] = etree.parse(translation_file)
 
                 alignments = []

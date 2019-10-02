@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <!DOCTYPE cesAlign PUBLIC "-//CES//DTD XML cesAlign//EN" "dtd/xcesAlign.dtd">
 <cesAlign version="1.0" fromDoc="de" toDoc="en">
-  <linkGrp toDoc="en/16609396__IM-PRESS__20060905-STO-10339__EN.xml.gz" fromDoc="de/16607912__IM-PRESS__20060905-STO-10339__DE.xml.gz" targType="s">
+  <linkGrp toDoc="en/16609396__IM-PRESS__20060905-STO-10339__EN.xml" fromDoc="de/16607912__IM-PRESS__20060905-STO-10339__DE.xml" targType="s">
     <link xtargets="s1.1;s1.1" certainty="0.426471" id="SL1"/>
     <link id="SL2" certainty="0.0248918" xtargets="s1.2;s1.2 s1.3"/>
     <link certainty="0.590434" xtargets="s1.3;s2.1" id="SL3"/>
@@ -16,7 +16,7 @@
     <link xtargets=";s4.1" certainty="-0.3" id="SL12"/>
     <link id="SL13" xtargets="s3.3;s5.1" certainty="0.560224"/>
   </linkGrp>
-  <linkGrp targType="s" toDoc="en/20764633__IM-PRESS__20081211-STO-44307__EN.xml.gz" fromDoc="de/20771384__IM-PRESS__20081211-STO-44307__DE.xml.gz">
+  <linkGrp targType="s" toDoc="en/20764633__IM-PRESS__20081211-STO-44307__EN.xml" fromDoc="de/20771384__IM-PRESS__20081211-STO-44307__DE.xml">
     <link id="SL1" certainty="-0.3" xtargets="s1.1;"/>
     <link certainty="-0.3" xtargets="s1.2;" id="SL2"/>
     <link xtargets="s1.3 s1.4;s1.1" certainty="0.207105" id="SL3"/>
@@ -44,7 +44,7 @@
     <link id="SL25" xtargets="s3.7;" certainty="-0.3"/>
     <link id="SL26" certainty="0.400957" xtargets="s4.1;s4.1"/>
   </linkGrp>
-  <linkGrp fromDoc="de/16450803__IM-PRESS__20060131-IPR-04891__DE.xml.gz" toDoc="en/16451293__IM-PRESS__20060131-IPR-04891__EN.xml.gz" targType="s">
+  <linkGrp fromDoc="de/16450803__IM-PRESS__20060131-IPR-04891__DE.xml" toDoc="en/16451293__IM-PRESS__20060131-IPR-04891__EN.xml" targType="s">
     <link certainty="-0.3" xtargets=";s1.1" id="SL1"/>
     <link id="SL2" certainty="-0.3" xtargets=";s1.2"/>
     <link xtargets=";s1.3" certainty="-0.3" id="SL3"/>
