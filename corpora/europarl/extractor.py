@@ -298,7 +298,7 @@ class EuroparlPoSExtractor(EuroparlExtractor, PoSExtractor):
                     result.append('<root>' + etree.tostring(s, encoding=str) + '</root>')
                 else:
                     result.append(self.get_sentence_words(s))
-                self.append_metadata(None, s, result)
+                self.append_metadata(w, s, result)
 
                 # Find the translated lines
                 for language_to in self.l_to:
@@ -478,7 +478,7 @@ class EuroparlRecentPastExtractor(EuroparlExtractor, RecentPastExtractor):
                     result.append(rp.verbs_to_string())
                     result.append(rp.verb_ids())
                     result.append('<root>' + etree.tostring(rp.xml_sentence, encoding=str) + '</root>')
-                    self.append_metadata(None, s, result)
+                    self.append_metadata(w, s, result)
 
                     found_trans = False
                     for language_to in self.l_to:
