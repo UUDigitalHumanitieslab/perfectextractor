@@ -6,13 +6,13 @@ import time
 import click
 from lxml import etree
 
-from apps.extractor.base import BaseExtractor
-from apps.extractor.models import Alignment
-from apps.extractor.perfectextractor import PerfectExtractor, PRESENT
-from apps.extractor.posextractor import PoSExtractor
-from apps.extractor.recentpastextractor import RecentPastExtractor
-from apps.extractor.xml_utils import get_sentence_from_element
-from apps.extractor.utils import XML
+from perfectextractor.apps.extractor.base import BaseExtractor
+from perfectextractor.apps.extractor.models import Alignment
+from perfectextractor.apps.extractor.perfectextractor import PerfectExtractor, PRESENT
+from perfectextractor.apps.extractor.posextractor import PoSExtractor
+from perfectextractor.apps.extractor.recentpastextractor import RecentPastExtractor
+from perfectextractor.apps.extractor.xml_utils import get_sentence_from_element
+from perfectextractor.apps.extractor.utils import XML
 
 from .base import BaseEuroparl
 

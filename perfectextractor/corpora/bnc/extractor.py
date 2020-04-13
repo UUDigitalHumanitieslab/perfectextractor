@@ -4,9 +4,9 @@ import os
 
 from lxml import etree
 
-from apps.extractor.base import BaseExtractor
-from apps.extractor.perfectextractor import PerfectExtractor
-from apps.extractor.utils import XML
+from perfectextractor.apps.extractor.base import BaseExtractor
+from perfectextractor.apps.extractor.perfectextractor import PerfectExtractor
+from perfectextractor.apps.extractor.utils import XML
 
 from .base import BaseBNC
 

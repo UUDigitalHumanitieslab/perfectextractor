@@ -4,7 +4,7 @@ import unittest
 
 from requests.exceptions import ConnectionError
 
-from apps.extractor.wiktionary import get_translations
+from perfectextractor.apps.extractor.wiktionary import get_translations
 
 
 class TestWiktionary(unittest.TestCase):

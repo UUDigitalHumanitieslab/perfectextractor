@@ -3,8 +3,8 @@ import os
 
 from lxml import etree
 
-from apps.extractor.base import BaseExtractor
-from apps.extractor.perfectextractor import PerfectExtractor
+from perfectextractor.apps.extractor.base import BaseExtractor
+from perfectextractor.apps.extractor.perfectextractor import PerfectExtractor
 from .utils import is_nl, NL
 
 DPC_CONFIG = os.path.join(os.path.dirname(__file__), 'dpc.cfg')
