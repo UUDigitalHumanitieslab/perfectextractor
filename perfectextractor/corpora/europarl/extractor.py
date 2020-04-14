@@ -18,6 +18,10 @@ from .base import BaseEuroparl
 
 
 class EuroparlExtractor(BaseEuroparl, BaseExtractor):
+    def __init__(self, *args, **kwargs):
+        self._index = dict()  # save segments indexed by id
+        super().__init__(*args, **kwargs)
+
     def process_file(self, filename):
         """
         Processes a single file.
@@ -114,21 +118,26 @@ class EuroparlExtractor(BaseEuroparl, BaseExtractor):
         return element.xpath('ancestor::s')[0]
 
     def get_siblings(self, element, sentence_id, check_preceding):
-        path = ('preceding' if check_preceding else 'following') + '::w[ancestor::s[@id="' + sentence_id + '"]]'
-        siblings = element.xpath(path)
+        siblings = element.xpath('ancestor::s//w')
         if check_preceding:
+            siblings = siblings[:siblings.index(element)]
             siblings = siblings[::-1]
+        else:
+            siblings = siblings[siblings.index(element) + 1:]
         return siblings
 
+    def _segment_by_id(self, tree, id):
+        if tree not in self._index:
+            self._index[tree] = dict()
+            for segment in tree.xpath('//s'):
+                self._index[tree][segment.get('id')] = segment
+        return self._index[tree].get(id)
+
     def get_line_as_xml(self, tree, segment_number):
-        line = tree.xpath('//s[@id="' + segment_number + '"]')
-        if line:
-            return line[0]
-        else:
-            return None
+        return self._segment_by_id(tree, segment_number)
 
     def get_line(self, tree, segment_number):
-        line = tree.xpath('//s[@id="' + segment_number + '"]')
+        line = self._segment_by_id(tree, segment_number)
         if line:
             return etree.tostring(line[0], encoding=str)
         else:
@@ -532,9 +541,9 @@ class EuroparlPerfectExtractor(EuroparlExtractor, PerfectExtractor):
         sentence = '-'
         pp = None
 
-        line = tree.xpath('//s[@id="' + segment_number + '"]')
-        if line:
-            s = line[0]
+        line = self.get_line_as_xml(tree, segment_number)
+        if line is not None:
+            s = line
             first_w = s.xpath('.//w')[0]
             sentence = get_sentence_from_element(first_w)
 
