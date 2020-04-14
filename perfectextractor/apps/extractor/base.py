@@ -15,6 +15,26 @@ except ImportError:
 LEMMATA_CONFIG = os.path.join(os.path.dirname(__file__), 'config/{language}_lemmata.txt')
 
 
+class CachedConfig:
+    def __init__(self, config):
+        self.cache = dict()
+        self.config = config
+
+    def setdefault(self, key, func):
+        if key in self.cache:
+            return self.cache[key]
+        return self.cache.setdefault(key, func())
+
+    def get(self, section, key):
+        return self.setdefault((section, key), lambda: self.config.get(section, key))
+
+    def getboolean(self, section, key):
+        return self.setdefault((section, key), lambda: self.config.getboolean(section, key))
+
+    def items(self, section):
+        return self.setdefault(section, lambda: self.config.items(section))
+
+
 class BaseExtractor(object):
     __metaclass__ = ABCMeta
 
@@ -68,7 +88,7 @@ class BaseExtractor(object):
                 config.read_file(config_file)
             except AttributeError:  # Support for old method (Python < 3.2)
                 config.readfp(config_file)
-            self.config = config
+            self.config = CachedConfig(config)
 
         # Other variables
         self.other_extractors = []
