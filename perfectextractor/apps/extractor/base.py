@@ -34,6 +34,9 @@ class CachedConfig:
     def items(self, section):
         return self.setdefault(section, lambda: self.config.items(section))
 
+    def __getitem__(self, key):
+        return self.config[key]
+
 
 class BaseExtractor(object):
     __metaclass__ = ABCMeta
