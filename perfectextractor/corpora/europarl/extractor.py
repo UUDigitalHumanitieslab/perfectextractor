@@ -19,13 +19,13 @@ from .base import BaseEuroparl
 
 class EuroparlExtractor(BaseEuroparl, BaseExtractor):
     def __init__(self, *args, **kwargs):
-        self._index = dict()  # save segments indexed by id
         super().__init__(*args, **kwargs)
 
     def process_file(self, filename):
         """
         Processes a single file.
         """
+        self._index = dict()  # save segments indexed by id
         t0 = time.time()
         click.echo('Now processing {}...'.format(filename))
 
@@ -43,6 +43,7 @@ class EuroparlExtractor(BaseEuroparl, BaseExtractor):
 
         click.echo('Finished fetching results, took {:.3} seconds'.format(time.time() - t1))
 
+        self._index = dict()  # free index memory
         return results
 
     def fetch_results(self, filename, s_trees, alignment_trees, translation_trees):
