@@ -97,16 +97,24 @@ class BaseExtractor(object):
         self.other_extractors = []
         self.alignment_xmls = dict()
 
-    def process_folder(self, dir_name):
+    def process_folder(self, dir_name, progress_cb=None, done_cb=None):
         """
         Creates a result file and processes each file in a folder.
         """
+        progress_total = len(self.collect_file_names(dir_name))
+
         result_file = self.outfile or '-'.join([dir_name, self.l_from]) + '.csv'
         with open(result_file, 'w') as f:
             f.write('\uFEFF')  # the UTF-8 BOM to hint Excel we are using that...
             csv_writer = csv.writer(f, delimiter=';')
             csv_writer.writerow(self.generate_header())
-            csv_writer.writerows(self.generate_results(dir_name))
+            for i, part in enumerate(self.generate_results(dir_name)):
+                csv_writer.writerows(part)
+                if progress_cb:
+                    progress_cb(i + 1, progress_total)
+
+        if done_cb:
+            done_cb(result_file)
 
     def collect_file_names(self, dir_name):
         """
@@ -135,18 +143,8 @@ class BaseExtractor(object):
         return file_names
 
     def generate_results(self, dir_name):
-        results = []
-
-        for file_name in self.collect_file_names(dir_name):
-            result = self.process_file(file_name)
-
-            for extractor in self.other_extractors:
-                extractor.sentence_ids = [r[1] for r in result]
-                result = extractor.process_file(file_name)
-
-            results.extend(result)
-
-        return results
+        for f in self.collect_file_names(dir_name):
+            yield self.process_file(f)
 
     def generate_header(self):
         header = [
