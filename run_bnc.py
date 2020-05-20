@@ -1,8 +1,8 @@
 import os
 import time
 
-from corpora.bnc.extractor import BNCPerfectExtractor
-from corpora.bnc.counter import BNCCounter
+from perfectextractor.corpora.bnc.extractor import BNCPerfectExtractor
+from perfectextractor.corpora.bnc.counter import BNCCounter
 
 
 def process_data_folders(extractors, path):

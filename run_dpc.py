@@ -1,7 +1,7 @@
 import os
 import time
 
-from corpora.dpc.extractor import DPCPerfectExtractor
+from perfectextractor.corpora.dpc.extractor import DPCPerfectExtractor
 
 
 def process_data_folders(extractors, path):

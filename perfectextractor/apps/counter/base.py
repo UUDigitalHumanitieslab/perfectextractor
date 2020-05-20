@@ -1,6 +1,6 @@
 from abc import ABCMeta, abstractmethod
 
-from apps.extractor.utils import UnicodeWriter
+from perfectextractor.apps.extractor.utils import UnicodeWriter
 
 
 class BaseCounter(object):

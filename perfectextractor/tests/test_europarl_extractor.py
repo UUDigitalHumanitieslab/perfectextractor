@@ -5,9 +5,9 @@ import unittest
 
 from lxml import etree
 
-from corpora.europarl.extractor import EuroparlExtractor, EuroparlPerfectExtractor, EuroparlRecentPastExtractor, \
+from perfectextractor.corpora.europarl.extractor import EuroparlExtractor, EuroparlPerfectExtractor, EuroparlRecentPastExtractor, \
     EuroparlPoSExtractor, EuroparlSinceDurationExtractor, EuroparlFrenchArticleExtractor
-from apps.extractor.perfectextractor import PAST
+from perfectextractor.apps.extractor.perfectextractor import PAST
 
 EUROPARL_DATA = os.path.join(os.path.dirname(__file__), 'data/europarl')
 DCEP_DATA = os.path.join(os.path.dirname(__file__), 'data/dcep')
@@ -27,6 +27,9 @@ class TestEuroparlPerfectExtractor(unittest.TestCase):
         self.en_extractor = EuroparlPerfectExtractor('en', ['nl'], search_in_to=True)
         self.en_tree = etree.parse(self.en_filename)
         self.en_alignmenttrees, self.en_translationtrees = self.en_extractor.parse_alignment_trees(self.en_filename)
+
+    def merge_results(self, generator):
+        return sum(list(generator), [])
 
     def test_init(self):
         self.assertEqual(self.nl_extractor.config.get('nl', 'perfect_tags'), 'verbpapa')
@@ -122,33 +125,16 @@ class TestEuroparlPerfectExtractor(unittest.TestCase):
     def test_recent_past_extraction(self):
         fr_extractor = EuroparlRecentPastExtractor('fr', ['en', 'nl'])
 
-        results = fr_extractor.process_file(self.fr_filename)
+        results = list(fr_extractor.process_file(self.fr_filename))
         self.assertEqual(len(results), 4)
         self.assertEqual(results[0][3], u'vient de dire')
         self.assertEqual(results[1][3], u'viens d\' aborder')
         self.assertEqual(results[2][3], u'viens d\' évoquer')
         self.assertEqual(results[3][3], u'vient d\' être dit')
 
-    def test_append_extractor(self):
-        perfect_extractor = EuroparlPerfectExtractor('en', ['nl'], search_in_to=False)
-        for_extractor = EuroparlPoSExtractor('en', ['nl'], lemmata=['for'])
-        year_extractor = EuroparlPoSExtractor('en', ['nl'], lemmata=['year'])
-
-        results = for_extractor.generate_results(os.path.join(EUROPARL_DATA, 'en'))
-        self.assertEqual(len(results), 177)
-
-        for_extractor.add_extractor(year_extractor)
-        results = for_extractor.generate_results(os.path.join(EUROPARL_DATA, 'en'))
-        self.assertEqual(len(results), 14)
-
-        for_extractor.add_extractor(perfect_extractor)
-        results = for_extractor.generate_results(os.path.join(EUROPARL_DATA, 'en'))
-        self.assertEqual(len(results), 7)
-        self.assertEqual(results[0][3], u'has been focused')
-
     def test_position(self):
         when_extractor = EuroparlPoSExtractor('en', ['nl'], lemmata=['when'], position=1)
-        results = when_extractor.generate_results(os.path.join(EUROPARL_DATA, 'en'))
+        results = self.merge_results(when_extractor.generate_results(os.path.join(EUROPARL_DATA, 'en')))
         self.assertEqual(len(results), 3)
 
     def test_average_alignment_certainty(self):
@@ -162,27 +148,28 @@ class TestEuroparlPerfectExtractor(unittest.TestCase):
 
     def test_file_limit(self):
         extractor = EuroparlExtractor('en', ['nl', 'de'], file_limit=2)
-        results = extractor.generate_results(os.path.join(DCEP_DATA, 'en'))
+        results = self.merge_results(extractor.generate_results(os.path.join(DCEP_DATA, 'en')))
         self.assertEqual(len(results), 55)
 
         extractor = EuroparlExtractor('en', ['nl', 'de'], file_limit=1)
-        results = extractor.generate_results(os.path.join(DCEP_DATA, 'en'))
+        results = self.merge_results(extractor.generate_results(os.path.join(DCEP_DATA, 'en')))
         self.assertEqual(len(results), 37)
 
     def test_tokens(self):
         tokens_extractor = EuroparlPoSExtractor('en', ['nl'], tokens=[('w1.13', 'w1.15'), ('w2.5', 'w2.8')])
-        results = tokens_extractor.generate_results(os.path.join(EUROPARL_DATA, 'en'))
+        results = self.merge_results(tokens_extractor.generate_results(os.path.join(EUROPARL_DATA, 'en')))
         self.assertEqual(len(results), 2)
         self.assertEqual(results[0][3], u'a historic sitting')
         self.assertEqual(results[1][3], u'my very great pleasure')
 
         tokens_extractor = EuroparlPoSExtractor('en', ['nl'], tokens=[('w1.19', 'w1.17')])
-        self.assertRaises(ValueError, tokens_extractor.generate_results, os.path.join(EUROPARL_DATA, 'en'))
+        generator = tokens_extractor.generate_results(os.path.join(EUROPARL_DATA, 'en'))
+        self.assertRaises(ValueError, next, generator)
 
     def test_metadata(self):
         metadata_extractor = EuroparlPoSExtractor('en', [], lemmata=['when'],
                                                   metadata=[('topic', 'text'), ('damsl_act_tag', 's')])
-        results = metadata_extractor.generate_results(os.path.join(SWITCHBOARD_DATA, 'en'))
+        results = self.merge_results(metadata_extractor.generate_results(os.path.join(SWITCHBOARD_DATA, 'en')))
         self.assertEqual(len(results), 5)
         self.assertEqual(results[0][6], u'CHILD CARE')
         self.assertEqual(results[0][7], u'sd')
@@ -190,33 +177,33 @@ class TestEuroparlPerfectExtractor(unittest.TestCase):
 
     def test_since(self):
         metadata_extractor = EuroparlSinceDurationExtractor('nl', [])
-        results = metadata_extractor.generate_results(os.path.join(EUROPARL_DATA, 'nl'))
+        results = self.merge_results(metadata_extractor.generate_results(os.path.join(EUROPARL_DATA, 'nl')))
         self.assertEqual(len(results), 1)
         self.assertEqual(results[0][3], u'sinds tien jaar')
 
     def test_articles(self):
         article_extractor = EuroparlFrenchArticleExtractor('fr', [])
-        results = article_extractor.generate_results(os.path.join(EUROPARL_DATA, 'fr'))
+        results = self.merge_results(article_extractor.generate_results(os.path.join(EUROPARL_DATA, 'fr')))
         self.assertEqual(len(results), 2041)
         self.assertEqual(results[0][2], u'indefinite partitive')
 
     def test_past_perfect(self):
         past_perfect_extractor = EuroparlPerfectExtractor('en', [], tense=PAST)
-        results = past_perfect_extractor.generate_results(os.path.join(EUROPARL_DATA, 'en'))
+        results = self.merge_results(past_perfect_extractor.generate_results(os.path.join(EUROPARL_DATA, 'en')))
         self.assertEqual(len(results), 5)
         self.assertEqual(results[0][3], u'had preordained')
 
         past_perfect_extractor = EuroparlPerfectExtractor('nl', [], tense=PAST)
-        results = past_perfect_extractor.generate_results(os.path.join(EUROPARL_DATA, 'nl'))
+        results = self.merge_results(past_perfect_extractor.generate_results(os.path.join(EUROPARL_DATA, 'nl')))
         self.assertEqual(len(results), 5)
         self.assertEqual(results[0][3], u'had gelegd')
 
         past_perfect_extractor = EuroparlPerfectExtractor('fr', [], tense=PAST)
-        results = past_perfect_extractor.generate_results(os.path.join(EUROPARL_DATA, 'fr'))
+        results = self.merge_results(past_perfect_extractor.generate_results(os.path.join(EUROPARL_DATA, 'fr')))
         self.assertEqual(len(results), 9)
         self.assertEqual(results[0][3], u'avait rétabli')
 
         past_perfect_extractor = EuroparlPerfectExtractor('de', [], tense=PAST)
-        results = past_perfect_extractor.generate_results(os.path.join(DCEP_DATA, 'de'))
+        results = self.merge_results(past_perfect_extractor.generate_results(os.path.join(DCEP_DATA, 'de')))
         self.assertEqual(len(results), 1)
         self.assertEqual(results[0][3], u'hatte beschlossen')

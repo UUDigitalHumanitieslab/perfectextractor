@@ -15,6 +15,29 @@ except ImportError:
 LEMMATA_CONFIG = os.path.join(os.path.dirname(__file__), 'config/{language}_lemmata.txt')
 
 
+class CachedConfig:
+    def __init__(self, config):
+        self.cache = dict()
+        self.config = config
+
+    def setdefault(self, key, func):
+        if key in self.cache:
+            return self.cache[key]
+        return self.cache.setdefault(key, func())
+
+    def get(self, section, key):
+        return self.setdefault((section, key), lambda: self.config.get(section, key))
+
+    def getboolean(self, section, key):
+        return self.setdefault((section, key), lambda: self.config.getboolean(section, key))
+
+    def items(self, section):
+        return self.setdefault(section, lambda: self.config.items(section))
+
+    def __getitem__(self, key):
+        return self.config[key]
+
+
 class BaseExtractor(object):
     __metaclass__ = ABCMeta
 
@@ -68,22 +91,31 @@ class BaseExtractor(object):
                 config.read_file(config_file)
             except AttributeError:  # Support for old method (Python < 3.2)
                 config.readfp(config_file)
-            self.config = config
+            self.config = CachedConfig(config)
 
         # Other variables
         self.other_extractors = []
         self.alignment_xmls = dict()
 
-    def process_folder(self, dir_name):
+    def process_folder(self, dir_name, progress_cb=None, done_cb=None):
         """
         Creates a result file and processes each file in a folder.
         """
+        file_names = self.collect_file_names(dir_name)
+        progress_total = len(file_names)
+
         result_file = self.outfile or '-'.join([dir_name, self.l_from]) + '.csv'
         with open(result_file, 'w') as f:
             f.write('\uFEFF')  # the UTF-8 BOM to hint Excel we are using that...
             csv_writer = csv.writer(f, delimiter=';')
             csv_writer.writerow(self.generate_header())
-            csv_writer.writerows(self.generate_results(dir_name))
+            for i, part in enumerate(self.generate_results(dir_name, file_names)):
+                csv_writer.writerows(part)
+                if progress_cb:
+                    progress_cb(i + 1, progress_total)
+
+        if done_cb:
+            done_cb(result_file)
 
     def collect_file_names(self, dir_name):
         """
@@ -111,19 +143,12 @@ class BaseExtractor(object):
         click.echo('Finished collecting file names, starting processing...')
         return file_names
 
-    def generate_results(self, dir_name):
-        results = []
+    def generate_results(self, dir_name, file_names=None):
+        if file_names is None:
+            file_names = self.collect_file_names(dir_name)
 
-        for file_name in self.collect_file_names(dir_name):
-            result = self.process_file(file_name)
-
-            for extractor in self.other_extractors:
-                extractor.sentence_ids = [r[1] for r in result]
-                result = extractor.process_file(file_name)
-
-            results.extend(result)
-
-        return results
+        for f in file_names:
+            yield self.process_file(f)
 
     def generate_header(self):
         header = [

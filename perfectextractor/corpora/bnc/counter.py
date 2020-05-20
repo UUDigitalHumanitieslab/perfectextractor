@@ -2,7 +2,7 @@ from collections import Counter
 
 from lxml import etree
 
-from apps.counter.base import BaseCounter
+from perfectextractor.apps.counter.base import BaseCounter
 from .base import BaseBNC
 
 

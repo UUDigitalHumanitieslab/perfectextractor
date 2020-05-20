@@ -5,8 +5,8 @@ import unittest
 
 from lxml import etree
 
-from apps.extractor.models import PresentPerfect
-from corpora.dpc.extractor import DPCPerfectExtractor
+from perfectextractor.apps.extractor.models import PresentPerfect
+from perfectextractor.corpora.dpc.extractor import DPCPerfectExtractor
 
 DATA_FOLDER = os.path.join(os.path.dirname(__file__), 'data/dpc')
 

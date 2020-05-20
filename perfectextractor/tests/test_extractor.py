@@ -4,8 +4,8 @@ import unittest
 
 from lxml import etree
 
-from apps.extractor.models import PresentPerfect
-from corpora.europarl.extractor import EuroparlPerfectExtractor
+from perfectextractor.apps.extractor.models import PresentPerfect
+from perfectextractor.corpora.europarl.extractor import EuroparlPerfectExtractor
 
 
 class TestPerfectExtractor(unittest.TestCase):

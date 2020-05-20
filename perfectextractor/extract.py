@@ -1,14 +1,13 @@
-import os
 import time
 
 import click
 
-from corpora.bnc.extractor import BNCExtractor, BNCPerfectExtractor
-from corpora.dpc.extractor import DPCExtractor, DPCPerfectExtractor
-from corpora.europarl.extractor import EuroparlExtractor, EuroparlPoSExtractor, EuroparlPerfectExtractor, \
+from perfectextractor.corpora.bnc.extractor import BNCExtractor, BNCPerfectExtractor
+from perfectextractor.corpora.dpc.extractor import DPCExtractor, DPCPerfectExtractor
+from perfectextractor.corpora.europarl.extractor import EuroparlExtractor, EuroparlPoSExtractor, EuroparlPerfectExtractor, \
     EuroparlRecentPastExtractor, EuroparlSinceDurationExtractor
-from apps.extractor.utils import TXT, XML
-from apps.extractor.perfectextractor import PRESENT, PAST
+from perfectextractor.apps.extractor.utils import TXT, XML
+from perfectextractor.apps.extractor.perfectextractor import PRESENT, PAST
 
 # Corpora
 BNC = 'bnc'
