@@ -101,14 +101,15 @@ class BaseExtractor(object):
         """
         Creates a result file and processes each file in a folder.
         """
-        progress_total = len(self.collect_file_names(dir_name))
+        file_names = self.collect_file_names(dir_name)
+        progress_total = len(file_names)
 
         result_file = self.outfile or '-'.join([dir_name, self.l_from]) + '.csv'
         with open(result_file, 'w') as f:
             f.write('\uFEFF')  # the UTF-8 BOM to hint Excel we are using that...
             csv_writer = csv.writer(f, delimiter=';')
             csv_writer.writerow(self.generate_header())
-            for i, part in enumerate(self.generate_results(dir_name)):
+            for i, part in enumerate(self.generate_results(dir_name, file_names)):
                 csv_writer.writerows(part)
                 if progress_cb:
                     progress_cb(i + 1, progress_total)
@@ -142,8 +143,11 @@ class BaseExtractor(object):
         click.echo('Finished collecting file names, starting processing...')
         return file_names
 
-    def generate_results(self, dir_name):
-        for f in self.collect_file_names(dir_name):
+    def generate_results(self, dir_name, file_names=None):
+        if file_names is None:
+            file_names = self.collect_file_names(dir_name)
+
+        for f in file_names:
             yield self.process_file(f)
 
     def generate_header(self):

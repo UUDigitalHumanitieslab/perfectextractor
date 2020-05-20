@@ -110,7 +110,7 @@ class EuroparlExtractor(BaseEuroparl, BaseExtractor):
         result = None
 
         line = tree.xpath('//s[@id="' + segment_number + '"]')
-        if line:
+        if line is not None:
             result = line[0]
 
         return result
@@ -599,7 +599,7 @@ class EuroparlPerfectExtractor(EuroparlExtractor, PerfectExtractor):
                                                                                                        language_to,
                                                                                                        s.get('id'))
                             translated_present_perfects, translated_sentences, translated_marked_sentences = \
-                                 self.find_translated_present_perfects(translation_trees[language_to], language_to, translated_lines)
+                                self.find_translated_present_perfects(translation_trees[language_to], language_to, translated_lines)
                             result.append(alignment_type)
                             if self.output == XML:
                                 result.append('<root>' + '\n'.join(translated_sentences) + '</root>' if translated_sentences else '')
