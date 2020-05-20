@@ -129,23 +129,6 @@ class TestEuroparlPerfectExtractor(unittest.TestCase):
         self.assertEqual(results[2][3], u'viens d\' évoquer')
         self.assertEqual(results[3][3], u'vient d\' être dit')
 
-    def test_append_extractor(self):
-        perfect_extractor = EuroparlPerfectExtractor('en', ['nl'], search_in_to=False)
-        for_extractor = EuroparlPoSExtractor('en', ['nl'], lemmata=['for'])
-        year_extractor = EuroparlPoSExtractor('en', ['nl'], lemmata=['year'])
-
-        results = for_extractor.generate_results(os.path.join(EUROPARL_DATA, 'en'))
-        self.assertEqual(len(results), 177)
-
-        for_extractor.add_extractor(year_extractor)
-        results = for_extractor.generate_results(os.path.join(EUROPARL_DATA, 'en'))
-        self.assertEqual(len(results), 14)
-
-        for_extractor.add_extractor(perfect_extractor)
-        results = for_extractor.generate_results(os.path.join(EUROPARL_DATA, 'en'))
-        self.assertEqual(len(results), 7)
-        self.assertEqual(results[0][3], u'has been focused')
-
     def test_position(self):
         when_extractor = EuroparlPoSExtractor('en', ['nl'], lemmata=['when'], position=1)
         results = when_extractor.generate_results(os.path.join(EUROPARL_DATA, 'en'))
