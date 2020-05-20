@@ -20,12 +20,12 @@ from .base import BaseEuroparl
 class EuroparlExtractor(BaseEuroparl, BaseExtractor):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        self._index = dict()  # save segments indexed by id
 
     def process_file(self, filename):
         """
         Processes a single file.
         """
-        self._index = dict()  # save segments indexed by id
         t0 = time.time()
         click.echo('Now processing {}...'.format(filename))
 
