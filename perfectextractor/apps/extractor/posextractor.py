@@ -14,7 +14,7 @@ LEMMATA_CONFIG = os.path.join(os.path.dirname(__file__), '../config/{language}_l
 class PoSExtractor(BaseExtractor):
     __metaclass__ = ABCMeta
 
-    def __init__(self, language_from, languages_to=None, pos=None, **kwargs):
+    def __init__(self, language_from, languages_to=None, pos=None, regex=None, **kwargs):
         """
         Initializes the extractor for the given source and target language(s).
         Reads in the config for the source language.
@@ -25,6 +25,7 @@ class PoSExtractor(BaseExtractor):
         super(PoSExtractor, self).__init__(language_from, languages_to, **kwargs)
 
         self.pos = pos
+        self.regex = regex
 
     @abstractmethod
     def preprocess_found(self, word):
