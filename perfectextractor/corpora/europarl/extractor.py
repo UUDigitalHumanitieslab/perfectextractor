@@ -281,10 +281,19 @@ class EuroparlPoSExtractor(EuroparlExtractor, PoSExtractor):
         pos_attr = self.config.get(self.l_from, 'pos')
         lemma_attr = self.config.get('all', 'lemma_attr')
         xp = './/w[contains(" {value} ", concat(" ", @{element}, " "))]'
+        ns = {}
         if self.pos:
             xpath = xp.format(element=pos_attr, value=' '.join(self.pos))
         elif self.tokens:
             xpath = xp.format(element='id', value=' '.join(self.tokens.keys()))
+        elif self.regex:
+            # prepare a pattern that combines multiple regexps using OR operators
+            # and non-capturing groups
+            pattern = '|'.join('(?:{})'.format(r) for r in self.regex)
+
+            # special namespace required for enabling regular expresssion functions
+            ns = {"re": "http://exslt.org/regular-expressions"}
+            xpath = './/w[re:test(., "{pattern}", "i")]'.format(pattern=pattern)
         else:
             xpath = xp.format(element=lemma_attr, value=' '.join(self.lemmata_list))
 
@@ -292,7 +301,7 @@ class EuroparlPoSExtractor(EuroparlExtractor, PoSExtractor):
             if self.sentence_ids and s.get('id') not in self.sentence_ids:
                 continue
 
-            for w in s.xpath(xpath):
+            for w in s.xpath(xpath, namespaces=ns):
                 words = self.preprocess_found(w)
 
                 if not words:

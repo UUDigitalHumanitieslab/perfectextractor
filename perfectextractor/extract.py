@@ -44,6 +44,8 @@ def process_data_folders(extractor, path):
               help='Limits the sentence IDs searched into')
 @click.option('--lemmata', '-l', multiple=True,
               help='Limits the lemmata searched for')
+@click.option('--regex', '-r', multiple=True,
+              help='Use regular expression to match words')
 @click.option('--pos', '-p', multiple=True,
               help='Limits the POS-tags searched for')
 @click.option('--tokens', '-t', multiple=True, type=click.Tuple([str, str]),
@@ -73,12 +75,12 @@ def process_data_folders(extractor, path):
 def extract(folder, language_from, languages_to, corpus='europarl', extractor='base',
             pos=None, search_in_to=False, tense=PRESENT,
             output=TXT, file_names=None, sentence_ids=None,
-            lemmata=None, position=None, tokens=None, metadata=None,
+            lemmata=None, regex=None, position=None, tokens=None, metadata=None,
             outfile=None, one_per_sentence=False, sort_by_certainty=False, file_limit=0,
             min_file_size=0, max_file_size=0):
     # Set the default arguments
     kwargs = dict(output=output, file_names=file_names, sentence_ids=sentence_ids,
-                  lemmata=lemmata, position=position, tokens=tokens, metadata=metadata,
+                  lemmata=lemmata, regex=regex, position=position, tokens=tokens, metadata=metadata,
                   outfile=outfile, one_per_sentence=one_per_sentence,
                   sort_by_certainty=sort_by_certainty, file_limit=file_limit,
                   min_file_size=min_file_size, max_file_size=max_file_size)
