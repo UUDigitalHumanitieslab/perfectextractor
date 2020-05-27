@@ -8,12 +8,12 @@ def readme():
 
 setup(name='perfectextractor',
       version='0.1',
-      description='Extracting present perfects (and related forms) from multilingual corpora',
+      description='Extracting present perfects (and related forms) from parallel corpora',
       long_description=readme(),
       classifiers=[
         'Development Status :: 3 - Alpha',
         'License :: OSI Approved :: MIT License',
-        'Programming Language :: Python :: 2.7',
+        'Programming Language :: Python :: 3',
         'Topic :: Text Processing :: Linguistic',
       ],
       url='https://github.com/UUDigitalHumanitieslab/perfectextractor',
@@ -22,6 +22,7 @@ setup(name='perfectextractor',
       license='MIT',
       packages=['perfectextractor'],
       install_requires=[
+          'click',
           'lxml',
           'requests',
       ],

@@ -1,7 +1,7 @@
 # PefectExtractor
-*Extracting present perfects (and related forms) from multilingual corpora*
+*Extracting present perfects (and related forms) from parallel corpora*
 
-This small set of scripts allows for extraction of present perfects (and related forms, like the recent past construction in French and Spanish) from part-of-speech-tagged, lemmatized and sentence-aligned multilingual corpora encoded in XML.
+This small set of scripts allows for extraction of present perfects (and related forms, like the recent past construction in French and Spanish) from part-of-speech-tagged, lemmatized and sentence-aligned parallel corpora encoded in XML.
  
 ## Recognizing Perfects 
 
