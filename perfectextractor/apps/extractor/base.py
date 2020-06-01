@@ -43,7 +43,7 @@ class BaseExtractor(object):
 
     def __init__(self, language_from, languages_to=None,
                  file_names=None, sentence_ids=None,
-                 lemmata=None, tokens=None, metadata=None,
+                 lemmata=None, tokens=None, metadata=None, regex=None,
                  outfile=None, position=None, output=TXT,
                  one_per_sentence=False,
                  sort_by_certainty=False, file_limit=0, min_file_size=0, max_file_size=0):
@@ -56,6 +56,7 @@ class BaseExtractor(object):
         :param lemmata: whether to limit the search to certain lemmata (can be provided as a boolean or a list)
         :param tokens: whether to limit the search to certain tokens (list of tuples (from-to))
         :param metadata: whether to add metadata to the output (list of tuples (metadata-level))
+        :param regex: whether to limit the search to certain regular expressions (list of regexes)
         :param outfile: the filename to output the results to
         :param position: whether to limit the search to a certain position (e.g. only sentence-initial)
         :param output: whether to output the results in text or XML format
@@ -71,6 +72,7 @@ class BaseExtractor(object):
         self.sentence_ids = sentence_ids
         self.tokens = dict(tokens) if tokens else None
         self.metadata = dict(metadata) if metadata else {}
+        self.regex = regex
         self.outfile = outfile
         self.position = position
         self.output = output
