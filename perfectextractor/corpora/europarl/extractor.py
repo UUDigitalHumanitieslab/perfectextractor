@@ -139,8 +139,8 @@ class EuroparlExtractor(BaseEuroparl, BaseExtractor):
 
     def get_line(self, tree, segment_number):
         line = self._segment_by_id(tree, segment_number)
-        if line:
-            return etree.tostring(line[0], encoding=str)
+        if line is not None:
+            return etree.tostring(line, encoding=str)
         else:
             return None
 
