@@ -1,23 +1,21 @@
-# Data files: you should download these yourself; see README.md for instructions
-data/*
-
-# IDE related
-.idea/
-
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
 *$py.class
 
+# Distribution / packaging
+build/
+dist/
+sdist/
+*.egg-info/
+*.egg
+
 # Unit test / coverage reports
 .coverage
 htmlcov/
 
-# Setuptools distribution folder.
-/dist/
-
-# Python egg metadata, regenerated from source files by setuptools.
-/*.egg-info
-/*.egg
-
+# MacOS
 .DS_Store
+
+# IDE
+.idea/
