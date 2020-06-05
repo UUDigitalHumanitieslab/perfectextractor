@@ -21,6 +21,7 @@ class PoSExtractor(BaseExtractor):
         :param language_from: the source language
         :param languages_to: the target language(s)
         :param pos: A list of part-of-speech tags
+        :param regex: A list of regular expressions
         """
         super(PoSExtractor, self).__init__(language_from, languages_to, **kwargs)
 
