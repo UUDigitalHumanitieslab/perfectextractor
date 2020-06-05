@@ -217,3 +217,14 @@ class TestEuroparlPerfectExtractor(unittest.TestCase):
         results = self.merge_results(past_perfect_extractor.generate_results(os.path.join(DCEP_DATA, 'de')))
         self.assertEqual(len(results), 1)
         self.assertEqual(results[0][3], u'hatte beschlossen')
+
+        past_perfect_extractor = EuroparlPerfectExtractor('sv', [], tense=PAST)
+        results = self.merge_results(past_perfect_extractor.generate_results(os.path.join(EUROPARL_DATA, 'sv')))
+        self.assertEqual(len(results), 7)
+        self.assertEqual(results[0][3], u'hade kunnat')
+
+    def test_languages(self):
+        sv_extractor = EuroparlPerfectExtractor('sv', [])
+        results = self.merge_results(sv_extractor.generate_results(os.path.join(EUROPARL_DATA, 'sv')))
+        self.assertEqual(len(results), 38)
+        self.assertEqual(results[0][3], u'har gjort')
