@@ -8,14 +8,14 @@ def readme():
 
 setuptools.setup(
     name='perfectextractor',
-    version='0.2',
+    version='0.3',
     author='Martijn van der Klis',
     author_email='M.H.vanderKlis@uu.nl',
     description='Extracting present perfects (and related forms) from parallel corpora',
     long_description=readme(),
     long_description_content_type='text/markdown',
     classifiers=[
-        'Development Status :: 3 - Alpha',
+        'Development Status :: 4 - Beta',
         'License :: OSI Approved :: MIT License',
         'Programming Language :: Python :: 3',
         'Operating System :: OS Independent',
@@ -23,7 +23,7 @@ setuptools.setup(
     ],
     url='https://github.com/UUDigitalHumanitieslab/perfectextractor',
     license='MIT',
-    packages=['perfectextractor'],
+    packages=setuptools.find_packages(),
     python_requires='>=3.6',
     install_requires=[
       'click',
