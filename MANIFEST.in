@@ -1,1 +1,3 @@
 include README.md
+include perfectextractor/apps/extractor/config/*.txt
+include perfectextractor/corpora/*/*.cfg
