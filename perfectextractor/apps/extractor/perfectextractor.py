@@ -119,7 +119,7 @@ class PerfectExtractor(BaseExtractor):
         is_pp = False
 
         # Check if the starting auxiliary is actually allowed
-        if any(aux_words) and auxiliary.text not in aux_words:
+        if any(aux_words) and auxiliary.text.lower() not in aux_words:
             return None
 
         # Loop over the siblings of the current element.
