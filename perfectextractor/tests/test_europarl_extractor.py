@@ -155,6 +155,15 @@ class TestEuroparlPerfectExtractor(unittest.TestCase):
         results = self.merge_results(extractor.generate_results(os.path.join(DCEP_DATA, 'en')))
         self.assertEqual(len(results), 37)
 
+    def test_lemmata(self):
+        extractor = EuroparlPerfectExtractor('fr', ['nl'], lemmata=['être'])
+        results = self.merge_results(extractor.generate_results(os.path.join(EUROPARL_DATA, 'fr')))
+        self.assertEqual(len(results), 25)
+        self.assertEqual(results[0][3], u'a été')
+        self.assertEqual(results[1][3], u'ont été')
+        self.assertEqual(results[2][3], u'a été')
+        self.assertEqual(results[3][3], u'a été')
+
     def test_regex(self):
         # Primitive search for wh-questions
         regex_extractor = EuroparlPoSExtractor('en', ['nl'], regex=['^wh.*', '^how$'], position=1)
