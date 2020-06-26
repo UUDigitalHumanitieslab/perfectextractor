@@ -11,9 +11,9 @@ def process_data_folders(extractors, path):
             d = os.path.join(path, directory)
             if os.path.isdir(d) and d.endswith(extractor.l_from):
                 t0 = time.time()
-                print 'Now processing {} for {}'.format(d, extractor.l_from)
+                print('Now processing {} for {}'.format(d, extractor.l_from))
                 extractor.process_folder(d)
-                print 'Processing finished, took {:.3} seconds'.format(time.time() - t0)
+                print('Processing finished, took {:.3} seconds'.format(time.time() - t0))
 
 
 def create_extractors():
