@@ -7,7 +7,7 @@ import click
 from lxml import etree
 
 from perfectextractor.apps.extractor.base import BaseExtractor
-from perfectextractor.apps.extractor.models import Alignment
+from perfectextractor.apps.extractor.models import Alignment, MARKUP
 from perfectextractor.apps.extractor.perfectextractor import PerfectExtractor, PRESENT
 from perfectextractor.apps.extractor.posextractor import PoSExtractor
 from perfectextractor.apps.extractor.recentpastextractor import RecentPastExtractor
@@ -94,12 +94,15 @@ class EuroparlExtractor(BaseEuroparl, BaseExtractor):
             results.append(result)
         return results
 
-    def get_sentence_words(self, sentence):
+    def get_sentence_words(self, sentence, match=None):
         # TODO: this is copied from apps/models.py. Consider refactoring!
         s = []
         # TODO: this xPath-expression might be specific for a corpus
         for w in sentence.xpath('.//w'):
-            s.append(w.text.strip() if w.text else ' ')
+            if match is not None and w.get('id') == match.get('id'):
+                s.append(MARKUP.format(w.text.strip()))
+            else:
+                s.append(w.text.strip() if w.text else ' ')
         return ' '.join(s)
 
     def get_line_by_number(self, tree, segment_number):
@@ -316,7 +319,7 @@ class EuroparlPoSExtractor(EuroparlExtractor, PoSExtractor):
                 if self.output == XML:
                     result.append('<root>' + etree.tostring(s, encoding=str) + '</root>')
                 else:
-                    result.append(self.get_sentence_words(s))
+                    result.append(self.get_sentence_words(s, w))
                 self.append_metadata(w, s, result)
 
                 # Find the translated lines
