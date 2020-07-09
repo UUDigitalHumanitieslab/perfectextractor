@@ -174,6 +174,16 @@ class TestEuroparlPerfectExtractor(unittest.TestCase):
         self.assertEqual(results[2][3], u'What')
         self.assertEqual(results[3][3], u'When')
 
+    def test_regex_and_pos(self):
+        # Primitive search for wh-questions
+        regex_extractor = EuroparlPoSExtractor('en', ['nl'], regex=['^wh.*'], pos=['WP'], position=1)
+        results = self.merge_results(regex_extractor.generate_results(os.path.join(EUROPARL_DATA, 'en')))
+        self.assertEqual(len(results), 4)
+        self.assertEqual(results[0][3], u'What')
+        self.assertEqual(results[1][3], u'What')
+        self.assertEqual(results[2][3], u'What')
+        self.assertEqual(results[3][3], u'What')
+
     def test_tokens(self):
         tokens_extractor = EuroparlPoSExtractor('en', ['nl'], tokens=[('w1.13', 'w1.15'), ('w2.5', 'w2.8')])
         results = self.merge_results(tokens_extractor.generate_results(os.path.join(EUROPARL_DATA, 'en')))

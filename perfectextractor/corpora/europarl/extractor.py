@@ -283,22 +283,30 @@ class EuroparlPoSExtractor(EuroparlExtractor, PoSExtractor):
         # Find potential words matching the part-of-speech
         pos_attr = self.config.get(self.l_from, 'pos')
         lemma_attr = self.config.get('all', 'lemma_attr')
-        xp = './/w[contains(" {value} ", concat(" ", @{element}, " "))]'
+        xp = './/w[{}]'
         ns = {}
+        predicate = 'contains(" {value} ", concat(" ", @{element}, " "))'
+        predicates = []
+
+        if self.lemmata_list:
+            predicates.append(predicate.format(element=lemma_attr, value=' '.join(self.lemmata_list)))
+
+        if self.tokens:
+            predicates.append(predicate.format(element='id', value=' '.join(self.tokens.keys())))
+
         if self.pos:
-            xpath = xp.format(element=pos_attr, value=' '.join(self.pos))
-        elif self.tokens:
-            xpath = xp.format(element='id', value=' '.join(self.tokens.keys()))
-        elif self.regex:
+            predicates.append(predicate.format(element=pos_attr, value=' '.join(self.pos)))
+
+        if self.regex:
             # prepare a pattern that combines multiple regexps using OR operators
             # and non-capturing groups
             pattern = '|'.join('(?:{})'.format(r) for r in self.regex)
 
             # special namespace required for enabling regular expresssion functions
             ns = {"re": "http://exslt.org/regular-expressions"}
-            xpath = './/w[re:test(., "{pattern}", "i")]'.format(pattern=pattern)
-        else:
-            xpath = xp.format(element=lemma_attr, value=' '.join(self.lemmata_list))
+            predicates.append('re:test(., "{pattern}", "i")'.format(pattern=pattern))
+
+        xpath = xp.format(' and '.join(predicates))
 
         for _, s in s_trees:
             if self.sentence_ids and s.get('id') not in self.sentence_ids:
