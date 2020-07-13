@@ -283,7 +283,6 @@ class EuroparlPoSExtractor(EuroparlExtractor, PoSExtractor):
         # Find potential words matching the part-of-speech
         pos_attr = self.config.get(self.l_from, 'pos')
         lemma_attr = self.config.get('all', 'lemma_attr')
-        xp = './/w[{}]'
         ns = {}
         predicate = 'contains(" {value} ", concat(" ", @{element}, " "))'
         predicates = []
@@ -306,7 +305,9 @@ class EuroparlPoSExtractor(EuroparlExtractor, PoSExtractor):
             ns = {"re": "http://exslt.org/regular-expressions"}
             predicates.append('re:test(., "{pattern}", "i")'.format(pattern=pattern))
 
-        xpath = xp.format(' and '.join(predicates))
+        xpath = './/w'
+        if predicates:
+            xpath = './/w[{}]'.format(' and '.join(predicates))
 
         for _, s in s_trees:
             if self.sentence_ids and s.get('id') not in self.sentence_ids:
