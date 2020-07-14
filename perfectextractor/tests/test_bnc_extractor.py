@@ -34,7 +34,7 @@ class TestBNCPerfectExtractor(unittest.TestCase):
         self.assertEqual(results[4][VERBS_COLUMN], 'has devoted')
 
     def test_ppc(self):
-        # Test whether present perfect continuous are ignored when check_ppc is set to False
+        # Test whether a Perfect continuous is ignored when check_ppc is set to False
         # Only works on Python 3 for some reason...
         if sys.version_info > (3,):
             self.extractor.config[self.language]['ppc'] = 'false'

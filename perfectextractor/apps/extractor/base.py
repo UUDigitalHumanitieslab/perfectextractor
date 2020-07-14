@@ -146,6 +146,9 @@ class BaseExtractor(object):
         return file_names
 
     def generate_results(self, dir_name, file_names=None):
+        """
+        Generates the results for a directory or a set of files
+        """
         if file_names is None:
             file_names = self.collect_file_names(dir_name)
 
@@ -153,6 +156,9 @@ class BaseExtractor(object):
             yield self.process_file(f)
 
     def generate_header(self):
+        """
+        Returns the header for the output file
+        """
         header = [
             'document',
             'sentence',
@@ -168,6 +174,9 @@ class BaseExtractor(object):
         return header
 
     def read_lemmata(self, lemmata):
+        """
+        Gathers the lemmata to be filtered upon
+        """
         if lemmata is not None:
             if type(lemmata) in (list, tuple):
                 self.lemmata_list = list(lemmata)
@@ -190,6 +199,9 @@ class BaseExtractor(object):
         return filter(os.path.isdir, directories)
 
     def append_metadata(self, w, s, result):
+        """
+        Appends metadata for to a result line
+        """
         for metadata, level in self.metadata.items():
             if w is not None and level == 'w':
                 result.append(w.get(metadata))
@@ -203,11 +215,17 @@ class BaseExtractor(object):
                 raise ValueError('Invalid level {}'.format(level))
 
     def get_pos(self, language, element):
+        """
+        Retrieves the part-of-speech tag for the current language and given element
+        :param language: the current language
+        :param element: the current element
+        :return: the part-of-speech tag
+        """
         return element.get(self.config.get(language, 'pos'))
 
     def get_tenses(self, sentence):
         """
-        This method allows to retrieve the "tense" for a sentence. It is very naive,
+        This method allows to retrieve the English "tense" for a complete sentence. It is very naive,
         based upon the part-of-speech tags of verbs that appear in the sentence.
         It should work for the tagsets of both the Penn Treebank Project and the BNC.
         See https://www.cis.uni-muenchen.de/~schmid/tools/TreeTagger/data/Penn-Treebank-Tagset.pdf for the
@@ -302,8 +320,14 @@ class BaseExtractor(object):
 
     @abstractmethod
     def sort_by_alignment_certainty(self, file_names):
+        """
+        Sort files by their probability of having a correct sentence alignment.
+        """
         raise NotImplementedError
 
     @abstractmethod
     def filter_by_file_size(self, file_names):
+        """
+        Filter files based on file size, a minimum and maximum file size can be supplied.
+        """
         raise NotImplementedError

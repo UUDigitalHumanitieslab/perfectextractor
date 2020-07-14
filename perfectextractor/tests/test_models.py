@@ -1,13 +1,13 @@
 import unittest
 
-from perfectextractor.apps.extractor.models import PresentPerfect
+from perfectextractor.apps.extractor.models import Perfect
 
 XML_ID = 'test_id'
 
 
-class TestPresentPerfect(unittest.TestCase):
+class TestPerfect(unittest.TestCase):
     def setUp(self):
-        self.pp = PresentPerfect('has', 'have', XML_ID)
+        self.pp = Perfect('has', 'have', XML_ID)
         self.pp.add_word('always', 'always', False, XML_ID)
         self.pp.add_word('loved', 'love', True, XML_ID)
 
@@ -18,9 +18,9 @@ class TestPresentPerfect(unittest.TestCase):
         self.assertEqual(self.pp.words_between(), 1)
 
     def test_extend(self):
-        ppp = PresentPerfect('has', 'have', XML_ID)
+        ppp = Perfect('has', 'have', XML_ID)
         ppp.add_word('been', 'be', True, XML_ID)
-        pp_extend = PresentPerfect('been', 'be', XML_ID)
+        pp_extend = Perfect('been', 'be', XML_ID)
         pp_extend.add_word('created', 'create', True, XML_ID)
         ppp.extend(pp_extend)
 

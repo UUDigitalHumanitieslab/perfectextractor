@@ -1,5 +1,5 @@
 # PefectExtractor
-*Extracting present perfects (and related forms) from parallel corpora*
+*Extracting Perfects (and related forms) from parallel corpora*
 
 This command-line application allows for extraction of Perfects (and related forms, like the Recent Past construction in French and Spanish) from part-of-speech-tagged, lemmatized and sentence-aligned parallel corpora encoded in XML.
  

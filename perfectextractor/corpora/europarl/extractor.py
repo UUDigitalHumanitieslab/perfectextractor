@@ -571,7 +571,7 @@ class EuroparlPerfectExtractor(EuroparlExtractor, PerfectExtractor):
 
             if self.search_in_to:
                 for e in s.xpath(self.config.get(language_to, 'xpath')):
-                    pp = self.check_present_perfect(e, language_to)
+                    pp = self.check_perfect(e, language_to)
                     if pp:
                         sentence = pp.mark_sentence()
                         break
@@ -595,7 +595,7 @@ class EuroparlPerfectExtractor(EuroparlExtractor, PerfectExtractor):
             aux_xpath = l_config.get(xpath, l_config.get(xpath_fallback))
 
             for e in s.xpath(aux_xpath):
-                pp = self.check_present_perfect(e, self.l_from)
+                pp = self.check_perfect(e, self.l_from)
 
                 # If this is really a present/past perfect, add it to the result
                 if pp:

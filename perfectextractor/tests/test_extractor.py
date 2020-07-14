@@ -4,7 +4,7 @@ import unittest
 
 from lxml import etree
 
-from perfectextractor.apps.extractor.models import PresentPerfect
+from perfectextractor.apps.extractor.models import Perfect
 from perfectextractor.corpora.europarl.extractor import EuroparlPerfectExtractor
 
 
@@ -12,7 +12,7 @@ class TestPerfectExtractor(unittest.TestCase):
     def test_is_lexically_bound(self):
         extractor = EuroparlPerfectExtractor('en', ['de', 'es', 'fr', 'nl'], search_in_to=True)
         lemma_attr = extractor.config.get('all', 'lemma_attr')
-        mock_pp = PresentPerfect('is', 'be', 'w1.1.1')
+        mock_pp = Perfect('is', 'be', 'w1.1.1')
 
         # Default case: English (no lexical bounds)
         mock_aux_verb = {lemma_attr: 'have'}
@@ -38,7 +38,7 @@ class TestPerfectExtractor(unittest.TestCase):
         self.assertTrue(extractor.is_lexically_bound('fr', mock_pp, mock_aux_verb, mock_participle))
 
         # Checking reflexive passé composés (je me suis couché)
-        mock_pp = PresentPerfect('suis', u'être', 'w1.1.1')
+        mock_pp = Perfect('suis', u'être', 'w1.1.1')
         mock_aux_verb = {lemma_attr: u'être'}
         mock_participle = {lemma_attr: 'coucher'}
         self.assertFalse(extractor.is_lexically_bound('fr', mock_pp, mock_aux_verb, mock_participle))
@@ -59,7 +59,7 @@ class TestPerfectExtractor(unittest.TestCase):
         self.assertTrue(mock_pp.is_reflexive)
 
         # Checking reflexive passé composés (puis nous sommes restés)
-        mock_pp = PresentPerfect('sommes', u'être', 'w1.1.1')
+        mock_pp = Perfect('sommes', u'être', 'w1.1.1')
         mock_aux_verb = {lemma_attr: u'être'}
         mock_participle = {lemma_attr: 'rester'}
         self.assertTrue(extractor.is_lexically_bound('fr', mock_pp, mock_aux_verb, mock_participle))

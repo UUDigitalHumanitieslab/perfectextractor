@@ -96,16 +96,16 @@ class MultiWordExpression(object):
         return self.get_sentence_words().replace(pp_text, marked_pp)
 
 
-class PresentPerfect(MultiWordExpression):
+class Perfect(MultiWordExpression):
     """
-    A present perfect consists of a list of Words.
+    A Perfect is a special kind of MultiWordExpression, consisting of an auxiliary and one or more past participles.
     """
 
     def __init__(self, aux_verb, aux_lemma, xml_id, xml_sentence=None):
         """
-        A present perfect is initiated by an auxiliary verb.
+        A (Present/Past) Perfect is initiated by an auxiliary verb.
         """
-        super(PresentPerfect, self).__init__(xml_sentence)
+        super(Perfect, self).__init__(xml_sentence)
         self.is_passive = False
         self.is_continuous = False
         self.is_reflexive = False
@@ -113,7 +113,7 @@ class PresentPerfect(MultiWordExpression):
 
     def extend(self, present_perfect):
         """
-        Extends a present perfect with another one (used to create a present perfect passive or continuous).
+        Extends a Perfect with another one (used to create a passive or continuous Perfect).
         """
         for i, w in enumerate(present_perfect.words):
             if i == 0:
@@ -125,11 +125,15 @@ class PresentPerfect(MultiWordExpression):
 
     def perfect_lemma(self):
         """
-        Returns the lemma of the perfect: the lemma of the last word of the construction.
+        Returns the lemma of the Perfect: the lemma of the last word of the construction.
         """
         return self.words[-1].lemma
 
     def perfect_type(self):
+        """
+        Returns the type of Perfect
+        """
+        # TODO: This should be language-dependent, as well as dependent upon being a Present or Past Perfect
         result = 'present perfect'
         if self.is_passive:
             result += ' passive'

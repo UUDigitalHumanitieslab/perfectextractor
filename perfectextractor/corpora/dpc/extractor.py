@@ -88,7 +88,7 @@ class DPCExtractor(BaseExtractor):
 class DPCPerfectExtractor(PerfectExtractor, DPCExtractor):
     def get_line_and_pp(self, tree, language_to, segment_number):
         """
-        Returns the full line for a segment number, as well as the PresentPerfect found (or None if none found).
+        Returns the full line for a segment number, as well as the Perfect found (or None if none found).
         TODO: handle more than one here? => bug
         """
         sentence = '-'
@@ -101,7 +101,7 @@ class DPCPerfectExtractor(PerfectExtractor, DPCExtractor):
 
             if self.search_in_to:
                 for e in s.xpath(self.config.get(language_to, 'xpath'), namespaces=TEI):
-                    pp = self.check_present_perfect(e, language_to)
+                    pp = self.check_perfect(e, language_to)
                     if pp:
                         sentence = pp.mark_sentence()
                         break
@@ -138,11 +138,11 @@ class DPCPerfectExtractor(PerfectExtractor, DPCExtractor):
             if os.path.isfile(alignment_file):
                 alignment_trees[not_nl] = etree.parse(alignment_file)
 
-        # Find potential present perfects
+        # Find potential Perfects
         for e in tree.xpath('//' + self.config.get(self.l_from, 'xpath'), namespaces=TEI):
-            pp = self.check_present_perfect(e, self.l_from)
+            pp = self.check_perfect(e, self.l_from)
 
-            # If this is really a present perfect, add it to the result
+            # If this is really a Perfect, add it to the result
             if pp:
                 result = list()
                 result.append(document[:-1])

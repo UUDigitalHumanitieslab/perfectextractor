@@ -11,7 +11,7 @@ setuptools.setup(
     version='0.3.1',
     author='Martijn van der Klis',
     author_email='M.H.vanderKlis@uu.nl',
-    description='Extracting present perfects (and related forms) from parallel corpora',
+    description='Extracting Perfects (and related forms) from parallel corpora',
     long_description=readme(),
     long_description_content_type='text/markdown',
     classifiers=[
