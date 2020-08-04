@@ -597,6 +597,10 @@ class EuroparlPerfectExtractor(EuroparlExtractor, PerfectExtractor):
             for e in s.xpath(aux_xpath):
                 pp = self.check_perfect(e, self.l_from)
 
+                # apply position filter
+                if self.position and not e.get('id').endswith('.' + str(self.position)):
+                    continue
+
                 # If this is really a present/past perfect, add it to the result
                 if pp:
                     result = list()
