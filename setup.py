@@ -8,7 +8,7 @@ def readme():
 
 setuptools.setup(
     name='perfectextractor',
-    version='0.3.2',
+    version='0.3.3',
     author='Martijn van der Klis',
     author_email='M.H.vanderKlis@uu.nl',
     description='Extracting Perfects (and related forms) from parallel corpora',
