@@ -122,6 +122,8 @@ Feel free to send a pull request once you have implemented an option, or to requ
 
 ## Other scripts
 
+These scripts can be found in `perfectextractor/scripts`.
+
 ### pick_alignments
 
 This script allows to filter the alignment file based on (for example) a file prefix.
