@@ -6,7 +6,7 @@ from perfectextractor.corpora.bnc.extractor import BNCExtractor, BNCPerfectExtra
 from perfectextractor.corpora.dpc.extractor import DPCExtractor, DPCPerfectExtractor
 from perfectextractor.corpora.europarl.extractor import EuroparlExtractor, EuroparlPoSExtractor, EuroparlPerfectExtractor, \
     EuroparlRecentPastExtractor, EuroparlSinceDurationExtractor
-from perfectextractor.apps.extractor.utils import TXT, XML
+from perfectextractor.apps.extractor.utils import TXT, XML, CSV, XLSX
 from perfectextractor.apps.extractor.perfectextractor import PRESENT, PAST
 
 # Corpora
@@ -61,7 +61,9 @@ def process_data_folders(extractor, path):
 @click.option('--tense', default=PRESENT, type=click.Choice([PRESENT, PAST]),
               help='The tense of perfect (present, past, future)')
 @click.option('--output', default=TXT, type=click.Choice([TXT, XML]),
-              help='Output in text or XML format')
+              help='Output results in text or XML format')
+@click.option('--format', 'format_', default=CSV, type=click.Choice([CSV, XLSX]),
+              help='Output file in .csv or .xlsx format')
 @click.option('--one_per_sentence', is_flag=True,
               help='Output all sentences, and only one classification per sentence')
 @click.option('--sort_by_certainty', is_flag=True,
@@ -74,14 +76,14 @@ def process_data_folders(extractor, path):
               help='Limits the maximal size of the files searched')
 def extract(folder, language_from, languages_to, corpus='europarl', extractor='base',
             pos=None, search_in_to=False, tense=PRESENT,
-            output=TXT, file_names=None, sentence_ids=None,
+            output=TXT, format_=CSV, file_names=None, sentence_ids=None,
             lemmata=None, regex=None, position=None, tokens=None, metadata=None,
             outfile=None, one_per_sentence=False, sort_by_certainty=False, file_limit=0,
             min_file_size=0, max_file_size=0):
     # Set the default arguments
     kwargs = dict(output=output, file_names=file_names, sentence_ids=sentence_ids,
                   lemmata=lemmata, regex=regex, position=position, tokens=tokens, metadata=metadata,
-                  outfile=outfile, one_per_sentence=one_per_sentence,
+                  outfile=outfile, format_=format_, one_per_sentence=one_per_sentence,
                   sort_by_certainty=sort_by_certainty, file_limit=file_limit,
                   min_file_size=min_file_size, max_file_size=max_file_size)
 

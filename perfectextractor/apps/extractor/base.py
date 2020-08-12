@@ -1,11 +1,10 @@
 from abc import ABCMeta, abstractmethod
 import codecs
-import csv
 import os
 
 import click
 
-from .utils import TXT
+from .utils import TXT, CSV, open_csv, open_xlsx
 
 try:
     import ConfigParser
@@ -44,7 +43,7 @@ class BaseExtractor(object):
     def __init__(self, language_from, languages_to=None,
                  file_names=None, sentence_ids=None,
                  lemmata=None, tokens=None, metadata=None, regex=None,
-                 outfile=None, position=None, output=TXT,
+                 outfile=None, position=None, output=TXT, format_=CSV,
                  one_per_sentence=False,
                  sort_by_certainty=False, file_limit=0, min_file_size=0, max_file_size=0):
         """
@@ -60,6 +59,7 @@ class BaseExtractor(object):
         :param outfile: the filename to output the results to
         :param position: whether to limit the search to a certain position (e.g. only sentence-initial)
         :param output: whether to output the results in text or XML format
+        :param format_: whether to output the file as .csv or .xlsx
         :param one_per_sentence: whether to output all lines, and allow one classification per sentence
         :param sort_by_certainty: whether to sort the files by average alignment certainty
         :param file_limit: whether to limit the number of files searched in
@@ -76,6 +76,7 @@ class BaseExtractor(object):
         self.outfile = outfile
         self.position = position
         self.output = output
+        self.format_ = format_
         self.one_per_sentence = one_per_sentence
         self.sort_by_certainty = sort_by_certainty
         self.file_limit = file_limit
@@ -106,18 +107,19 @@ class BaseExtractor(object):
         file_names = self.collect_file_names(dir_name)
         progress_total = len(file_names)
 
-        result_file = self.outfile or '-'.join([dir_name, self.l_from]) + '.csv'
-        with open(result_file, 'w') as f:
-            f.write('\uFEFF')  # the UTF-8 BOM to hint Excel we are using that...
-            csv_writer = csv.writer(f, delimiter=';')
-            csv_writer.writerow(self.generate_header())
+        result_file = self.outfile or '-'.join([dir_name, self.l_from]) + '.' + self.format_
+        opener = open_csv if self.format_ == CSV else open_xlsx
+
+        with opener(result_file) as writer:
+            header = self.generate_header()
+            writer.writerow(header) if self.format_ == CSV else writer.writerow(header, is_header=True)
             for i, part in enumerate(self.generate_results(dir_name, file_names)):
-                csv_writer.writerows(part)
+                writer.writerows(part)
                 if progress_cb:
                     progress_cb(i + 1, progress_total)
 
-        if done_cb:
-            done_cb(result_file)
+            if done_cb:
+                done_cb(result_file)
 
     def collect_file_names(self, dir_name):
         """

@@ -1,14 +1,15 @@
-import codecs
+import contextlib
 import csv
 
-try:
-    from StringIO import StringIO
-except ImportError:
-    from io import StringIO
+from xlsxwriter import Workbook
 
-# Output formats
+# Output formats for the results
 TXT = 'txt'
 XML = 'xml'
+
+# Output format for the file
+CSV = 'csv'
+XLSX = 'xlsx'
 
 
 def get_adjacent_line_number(segment_number, i):
@@ -21,32 +22,43 @@ def get_adjacent_line_number(segment_number, i):
     return split[0] + 's' + str(adj)
 
 
-class UnicodeWriter:
+class ExcelWriter:
     """
-    A CSV writer which will write rows to CSV file "f",
-    which is encoded in the given encoding.
-    Copied from https://docs.python.org/2/library/csv.html#examples
+    Writes xlsx files while mimicking the CSV writer interface.
     """
+    def __init__(self, filename):
+        self._workbook = Workbook(filename)
+        self._worksheet = self._workbook.add_worksheet()  # this assumes an empty file
+        self._row = 0
 
-    def __init__(self, f, dialect=csv.excel, encoding='utf-8', **kwds):
-        # Redirect output to a queue
-        self.queue = StringIO()
-        self.writer = csv.writer(self.queue, dialect=dialect, **kwds)
-        self.stream = f
-        self.encoder = codecs.getincrementalencoder(encoding)()
+    def writerow(self, contents, is_header=False):
+        cell_format = None
 
-    def writerow(self, row):
-        self.writer.writerow([s.encode('utf-8') for s in row])
-        # Fetch UTF-8 output from the queue ...
-        data = self.queue.getvalue()
-        data = data.decode('utf-8')
-        # ... and reencode it into the target encoding
-        data = self.encoder.encode(data)
-        # write to the target stream
-        self.stream.write(data)
-        # empty queue
-        self.queue.truncate(0)
+        # Add bold formatting and an autofilter
+        if is_header:
+            cell_format = self._workbook.add_format({'bold': True})
+            self._worksheet.autofilter(self._row, 0, 0, len(contents) - 1)
+
+        self._worksheet.write_row(self._row, 0, contents, cell_format)
+        self._row += 1
 
     def writerows(self, rows):
         for row in rows:
             self.writerow(row)
+
+    def close(self):
+        self._workbook.close()
+
+
+@contextlib.contextmanager
+def open_csv(filename):
+    with open(filename, 'w') as fileobj:
+        fileobj.write('\uFEFF')  # the UTF-8 BOM to hint Excel we are using that...
+        yield csv.writer(fileobj, delimiter=';')
+
+
+@contextlib.contextmanager
+def open_xlsx(filename):
+    writer = ExcelWriter(filename)
+    yield writer
+    writer.close()
