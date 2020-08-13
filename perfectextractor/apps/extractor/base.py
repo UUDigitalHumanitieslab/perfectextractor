@@ -1,12 +1,11 @@
 from abc import ABCMeta, abstractmethod
 import codecs
+import configparser
 import os
 
 import click
 
 from .utils import TXT, CSV, open_csv, open_xlsx
-
-import configparser
 
 LEMMATA_CONFIG = os.path.join(os.path.dirname(__file__), 'config/{language}_lemmata.txt')
 
