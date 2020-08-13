@@ -6,10 +6,7 @@ import click
 
 from .utils import TXT, CSV, open_csv, open_xlsx
 
-try:
-    import ConfigParser
-except ImportError:
-    import configparser as ConfigParser
+import configparser
 
 LEMMATA_CONFIG = os.path.join(os.path.dirname(__file__), 'config/{language}_lemmata.txt')
 
@@ -87,14 +84,10 @@ class BaseExtractor(object):
         self.lemmata_list = []
         self.read_lemmata(lemmata)
 
-        # Read the config)
-        with codecs.open(self.get_config(), 'r', 'utf8') as config_file:
-            config = ConfigParser.ConfigParser()
-            try:
-                config.read_file(config_file)
-            except AttributeError:  # Support for old method (Python < 3.2)
-                config.readfp(config_file)
-            self.config = CachedConfig(config)
+        # Read the config
+        config = configparser.ConfigParser()
+        config.read(self.get_config())
+        self.config = CachedConfig(config)
 
         # Other variables
         self.other_extractors = []

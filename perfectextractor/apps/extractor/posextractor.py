@@ -1,11 +1,6 @@
 from abc import ABCMeta, abstractmethod
 import os
 
-try:
-    import ConfigParser
-except ImportError:
-    import configparser as ConfigParser
-
 from .base import BaseExtractor
 
 LEMMATA_CONFIG = os.path.join(os.path.dirname(__file__), '../config/{language}_lemmata.txt')

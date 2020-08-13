@@ -451,11 +451,15 @@ class EuroparlSinceDurationExtractor(EuroparlPoSExtractor):
         :param language_from: The language to find the specified part-of-speeches in.
         :param languages_to: The languages to extract the aligned sentences from.
         """
-        super(EuroparlPoSExtractor, self).__init__(language_from, languages_to, **kwargs)
+        super().__init__(language_from, languages_to, **kwargs)
 
         self.lemmata_list = self.config.get(self.l_from, 'since_lem').split(',')
         self.number_pos = self.config.get(self.l_from, 'since_number_pos').split(',')
         self.time_units = self.config.get(self.l_from, 'since_time_units').split(',')
+
+    def get_config(self):
+        since_config = os.path.join(os.path.dirname(__file__), 'since.cfg')
+        return [super().get_config(), since_config]
 
     def preprocess_found(self, word):
         """
@@ -488,6 +492,11 @@ class EuroparlSinceDurationExtractor(EuroparlPoSExtractor):
 
 
 class EuroparlRecentPastExtractor(EuroparlExtractor, RecentPastExtractor):
+    def get_config(self):
+        perfect_config = os.path.join(os.path.dirname(__file__), 'perfect.cfg')
+        rp_config = os.path.join(os.path.dirname(__file__), 'recentpast.cfg')
+        return [super().get_config(), perfect_config, rp_config]
+
     def fetch_results(self, filename, s_trees, alignment_trees, translation_trees):
         """
         Processes a single file.
@@ -555,6 +564,10 @@ class EuroparlRecentPastExtractor(EuroparlExtractor, RecentPastExtractor):
 
 
 class EuroparlPerfectExtractor(EuroparlExtractor, PerfectExtractor):
+    def get_config(self):
+        perfect_config = os.path.join(os.path.dirname(__file__), 'perfect.cfg')
+        return [super().get_config(), perfect_config]
+
     def get_line_and_pp(self, tree, language_to, segment_number):
         """
         Returns the full line for a segment number, as well as the PresentPerfect found (or None if none found).

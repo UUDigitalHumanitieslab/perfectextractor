@@ -4,11 +4,6 @@ import string
 from .base import BaseExtractor
 from .models import MultiWordExpression
 
-try:
-    import ConfigParser
-except ImportError:
-    import configparser as ConfigParser
-
 
 class RecentPastExtractor(BaseExtractor):
     __metaclass__ = ABCMeta

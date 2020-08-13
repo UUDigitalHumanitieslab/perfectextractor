@@ -1,12 +1,12 @@
 import glob
 import os
 
-EUROPARL_CONFIG = os.path.join(os.path.dirname(__file__), 'europarl.cfg')
+BASE_CONFIG = os.path.join(os.path.dirname(__file__), 'base.cfg')
 
 
 class BaseEuroparl(object):
     def get_config(self):
-        return EUROPARL_CONFIG
+        return BASE_CONFIG
 
     def list_filenames(self, dir_name):
         return sorted(glob.glob(os.path.join(dir_name, '*.xml')))
