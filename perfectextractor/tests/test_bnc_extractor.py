@@ -18,7 +18,7 @@ class TestBNCPerfectExtractor(unittest.TestCase):
 
     def test_init(self):
         self.assertEqual(self.extractor.config.get(self.language, 'perfect_tags'), 'VBN,VDN,VHN,VVN')
-        self.assertEqual(self.extractor.config.get(self.language, 'pos'), 'c5')
+        self.assertEqual(self.extractor.config.get('all', 'pos'), 'c5')
 
     def test_list_filenames(self):
         filenames = self.extractor.list_filenames(DATA_FOLDER)

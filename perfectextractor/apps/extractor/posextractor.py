@@ -34,4 +34,4 @@ class PoSExtractor(BaseExtractor):
         """
         Return the type for the found word(s). A sensible default is the part-of-speech of the first found word.
         """
-        return words[0].get(self.config.get(self.l_from, 'pos'))
+        return self.get_pos(self.l_from, words[0])

@@ -20,11 +20,11 @@ class CachedConfig:
             return self.cache[key]
         return self.cache.setdefault(key, func())
 
-    def get(self, section, key):
-        return self.setdefault((section, key), lambda: self.config.get(section, key))
+    def get(self, section, key, **kwargs):
+        return self.setdefault((section, key), lambda: self.config.get(section, key, **kwargs))
 
-    def getboolean(self, section, key):
-        return self.setdefault((section, key), lambda: self.config.getboolean(section, key))
+    def getboolean(self, section, key, **kwargs):
+        return self.setdefault((section, key), lambda: self.config.getboolean(section, key, **kwargs))
 
     def items(self, section):
         return self.setdefault(section, lambda: self.config.items(section))
@@ -210,12 +210,13 @@ class BaseExtractor(object):
 
     def get_pos(self, language, element):
         """
-        Retrieves the part-of-speech tag for the current language and given element
+        Retrieves the part-of-speech tag for the current language and given element,
+        with a fallback to the default part-of-speech tag in the corpus as a whole.
         :param language: the current language
         :param element: the current element
         :return: the part-of-speech tag
         """
-        return element.get(self.config.get(language, 'pos'))
+        return element.get(self.config.get(language, 'pos', fallback=self.config.get('all', 'pos')))
 
     def get_tenses(self, sentence):
         """

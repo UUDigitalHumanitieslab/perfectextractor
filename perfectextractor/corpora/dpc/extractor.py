@@ -7,13 +7,13 @@ from perfectextractor.apps.extractor.base import BaseExtractor
 from perfectextractor.apps.extractor.perfectextractor import PerfectExtractor
 from .utils import is_nl, NL
 
-DPC_CONFIG = os.path.join(os.path.dirname(__file__), 'dpc.cfg')
+BASE_CONFIG = os.path.join(os.path.dirname(__file__), 'base.cfg')
 TEI = {'ns': 'http://www.tei-c.org/ns/1.0'}
 
 
 class DPCExtractor(BaseExtractor):
     def get_config(self):
-        return DPC_CONFIG
+        return BASE_CONFIG
 
     def process_file(self, filename):
         raise NotImplementedError
@@ -86,6 +86,10 @@ class DPCExtractor(BaseExtractor):
 
 
 class DPCPerfectExtractor(PerfectExtractor, DPCExtractor):
+    def get_config(self):
+        perfect_config = os.path.join(os.path.dirname(__file__), 'perfect.cfg')
+        return [super().get_config(), perfect_config]
+
     def get_line_and_pp(self, tree, language_to, segment_number):
         """
         Returns the full line for a segment number, as well as the Perfect found (or None if none found).

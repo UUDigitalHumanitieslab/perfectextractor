@@ -28,7 +28,6 @@ class RecentPastExtractor(BaseExtractor):
 
         # Retrieve the configuration variables
         lemma_attr = self.config.get('all', 'lemma_attr')
-        pos_attr = self.config.get(language, 'pos')
         rp_pre_pos = self.config.get(language, 'rp_pre_pos').split(',')
         rp_pre_lem = self.config.get(language, 'rp_pre_lem')
         rp_inf_pos = self.config.get(language, 'rp_inf_pos')
@@ -45,14 +44,14 @@ class RecentPastExtractor(BaseExtractor):
 
         # Check the siblings for the preposition of the recent past construction
         for pre in self.get_siblings(w, sentence.get('id'), False):
-            pre_pos = pre.get(pos_attr)
+            pre_pos = self.get_pos(language, pre)
             pre_lem = pre.get(lemma_attr)
             if pre_pos in rp_pre_pos and pre_lem == rp_pre_lem:
                 mwe.add_word(pre.text, pre_lem, True, pre.get('id'))
 
                 # Now look at the siblings to find an infinitive
                 for inf in self.get_siblings(pre, sentence.get('id'), False):
-                    inf_pos = inf.get(pos_attr)
+                    inf_pos = self.get_pos(language, inf)
                     inf_lem = inf.get(lemma_attr)
                     if inf_pos == rp_inf_pos:
                         is_recent_past = True
@@ -61,7 +60,7 @@ class RecentPastExtractor(BaseExtractor):
                         # If the language has passive recent pasts, check if this is followed by a perfect
                         if check_ppp and inf_lem == ppp_lemma:
                             s_next = inf.getnext()
-                            if s_next.get(pos_attr) in perfect_tags:
+                            if self.get_pos(language, s_next) in perfect_tags:
                                 mwe.add_word(s_next.text, s_next.get(lemma_attr), True, s_next.get('id'))
 
                         # Break out of the loop: we found our recent past construction

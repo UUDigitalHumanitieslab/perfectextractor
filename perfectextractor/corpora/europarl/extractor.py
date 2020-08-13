@@ -281,7 +281,7 @@ class EuroparlPoSExtractor(EuroparlExtractor, PoSExtractor):
         results = []
 
         # Find potential words matching the part-of-speech
-        pos_attr = self.config.get(self.l_from, 'pos')
+        pos_attr = self.config.get(self.l_from, 'pos', fallback=self.config.get('all', 'pos'))
         lemma_attr = self.config.get('all', 'lemma_attr')
         ns = {}
         predicate = 'contains(" {value} ", concat(" ", @{element}, " "))'
@@ -469,13 +469,12 @@ class EuroparlSinceDurationExtractor(EuroparlPoSExtractor):
         result = []
 
         lemma_attr = self.config.get('all', 'lemma_attr')
-        pos_attr = self.config.get(self.l_from, 'pos')
 
         for w in super(EuroparlSinceDurationExtractor, self).preprocess_found(word):
             result.append(word)
 
             next_word = w.getnext()
-            if next_word is not None and next_word.get(pos_attr) in self.number_pos:
+            if next_word is not None and self.get_pos(self.l_from, next_word) in self.number_pos:
                 result.append(next_word)
             else:
                 result = None

@@ -70,6 +70,10 @@ class BNCExtractor(BaseBNC, BaseExtractor):
 
 
 class BNCPerfectExtractor(BNCExtractor, PerfectExtractor):
+    def get_config(self):
+        perfect_config = os.path.join(os.path.dirname(__file__), 'perfect.cfg')
+        return [super().get_config(), perfect_config]
+
     def get_line_and_pp(self, tree, language_to, segment_number):
         raise NotImplementedError
 
@@ -160,5 +164,4 @@ class BNCPerfectExtractor(BNCExtractor, PerfectExtractor):
         :param element: the current w element
         :return: the (most likely) part-of-speech tag
         """
-        pos = element.get(self.config.get(language, 'pos'))
-        return pos.split('-')[0]
+        return super().get_pos(language, element).split('-')[0]
