@@ -1,7 +1,6 @@
 # -*- encoding: utf-8 -*-
 
 import os
-import time
 
 import click
 from lxml import etree
@@ -18,45 +17,6 @@ from .base import BaseEuroparl
 
 
 class EuroparlExtractor(BaseEuroparl, BaseExtractor):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self._index = dict()  # save segments indexed by id
-
-    def process_file(self, filename):
-        """
-        Processes a single file.
-        """
-        t0 = time.time()
-        click.echo('Now processing {}...'.format(filename))
-
-        # Parse the current tree (create a iterator over 's' elements)
-        s_trees = etree.iterparse(filename, tag='s')
-
-        # Filter the sentence trees
-        if self.sentence_ids:
-            s_trees = self.filter_sentences(s_trees)
-
-        # Parse the alignment and translation trees
-        alignment_trees, translation_trees = self.parse_alignment_trees(filename)
-
-        t1 = time.time()
-        click.echo('Finished parsing trees, took {:.3} seconds'.format(t1 - t0))
-
-        # Fetch the results
-        results = self.fetch_results(filename, s_trees, alignment_trees, translation_trees)
-
-        click.echo('Finished fetching results, took {:.3} seconds'.format(time.time() - t1))
-
-        self._index = dict()  # free index memory
-        return results
-
-    def filter_sentences(self, s_trees):
-        result = []
-        for event, s in s_trees:
-            if s.get('id') in self.sentence_ids:
-                result.append((event, s))
-        return result
-
     def fetch_results(self, filename, s_trees, alignment_trees, translation_trees):
         """
         Fetches the results for a file

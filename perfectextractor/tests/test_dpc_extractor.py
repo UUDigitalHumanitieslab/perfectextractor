@@ -79,3 +79,9 @@ class TestDPCExtractor(unittest.TestCase):
         self.assertEqual(len(results), 2)
         self.assertEqual(results[0][3], u'zijn verbonden')
         self.assertEqual(results[1][3], u'hebben bereikt')
+
+    def test_sentence_filtering(self):
+        extractor = DPCPerfectExtractor('fr', ['nl'], sentence_ids=['p1.s3'])
+        results = self.merge_results(extractor.generate_results(os.path.join(DATA_FOLDER)))
+        self.assertEqual(len(results), 1)
+        self.assertEqual(results[0][3], u'avez dit')

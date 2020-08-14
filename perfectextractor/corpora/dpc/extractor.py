@@ -1,3 +1,5 @@
+# -*- encoding: utf-8 -*-
+
 import glob
 import os
 
@@ -5,21 +7,33 @@ from lxml import etree
 
 from perfectextractor.apps.extractor.base import BaseExtractor
 from perfectextractor.apps.extractor.perfectextractor import PerfectExtractor
+
+from .base import BaseDPC, TEI_NS
 from .utils import is_nl, NL
 
-BASE_CONFIG = os.path.join(os.path.dirname(__file__), 'base.cfg')
-TEI = {'ns': 'http://www.tei-c.org/ns/1.0'}
 
-
-class DPCExtractor(BaseExtractor):
-    def get_config(self):
-        return BASE_CONFIG
-
-    def process_file(self, filename):
-        raise NotImplementedError
-
+class DPCExtractor(BaseDPC, BaseExtractor):
     def list_filenames(self, dir_name):
         return sorted(glob.glob(os.path.join(dir_name, '*[0-9]-' + self.l_from + '-tei.xml')))
+
+    def fetch_results(self, filename, s_trees, alignment_trees, translation_trees):
+        return NotImplementedError
+
+    def parse_alignment_trees(self, filename):
+        document = filename.split(self.l_from + '-tei.xml')[0]
+        translation_trees = dict()
+        alignment_trees = dict()
+        for language_to in self.l_to:
+            translation_file = document + language_to + '-tei.xml'
+            if os.path.exists(translation_file):
+                translation_trees[language_to] = etree.parse(translation_file)
+
+            not_nl = language_to if language_to != NL else self.l_from
+            alignment_file = document + NL + '-' + not_nl + '-tei.xml'
+            if os.path.isfile(alignment_file):
+                alignment_trees[not_nl] = etree.parse(alignment_file)
+
+        return alignment_trees, translation_trees
 
     def get_translated_lines(self, alignment_trees, language_from, language_to, segment_number):
         """
@@ -46,7 +60,7 @@ class DPCExtractor(BaseExtractor):
 
         if NL in [language_from, language_to]:
             not_nl = language_to if language_to != NL else language_from
-            for link in alignment_trees[not_nl].xpath('//ns:link', namespaces=TEI):  # TODO: simplify this
+            for link in alignment_trees[not_nl].xpath('//ns:link', namespaces=TEI_NS):  # TODO: simplify this
                 alignment_type = link.get('type').split(': ')[1]
                 if is_nl(language_to):
                     alignment_type = alignment_type[::-1]  # reverse the alignment type
@@ -73,7 +87,7 @@ class DPCExtractor(BaseExtractor):
         return set(result), alignment_type
 
     def get_sentence(self, element):
-        return element.xpath('ancestor::ns:s', namespaces=TEI)[0]
+        return element.xpath('ancestor::ns:s', namespaces=TEI_NS)[0]
 
     def get_siblings(self, element, sentence_id, check_preceding):
         return element.itersiblings(preceding=check_preceding)
@@ -98,13 +112,13 @@ class DPCPerfectExtractor(PerfectExtractor, DPCExtractor):
         sentence = '-'
         pp = None
 
-        line = tree.xpath('//ns:s[@n="' + segment_number + '"]', namespaces=TEI)
+        line = tree.xpath('//ns:s[@n="' + segment_number + '"]', namespaces=TEI_NS)
         if line:
             s = line[0]
             sentence = s.getprevious().text
 
             if self.search_in_to:
-                for e in s.xpath(self.config.get(language_to, 'xpath'), namespaces=TEI):
+                for e in s.xpath(self.config.get(language_to, 'xpath'), namespaces=TEI_NS):
                     pp = self.check_perfect(e, language_to)
                     if pp:
                         sentence = pp.mark_sentence()
@@ -119,60 +133,46 @@ class DPCPerfectExtractor(PerfectExtractor, DPCExtractor):
         metadata_tree = etree.parse(document + self.l_from + '-mtd.xml')
         return metadata_tree.getroot().find('metaTrans').find('Original').get('lang')
 
-    def process_file(self, filename):
+    def fetch_results(self, filename, s_trees, alignment_trees, translation_trees):
         """
         Processes a single file.
         """
-        document = filename.split(self.l_from + '-tei.xml')[0]
         results = []
 
-        # Parse the current tree
-        tree = etree.parse(filename)
-
-        # Parse the trees with the translations
-        translation_trees = dict()
-        alignment_trees = dict()
-        for language_to in self.l_to:
-            translation_file = document + language_to + '-tei.xml'
-            if os.path.exists(translation_file):
-                translation_trees[language_to] = etree.parse(translation_file)
-
-            not_nl = language_to if language_to != NL else self.l_from
-            alignment_file = document + NL + '-' + not_nl + '-tei.xml'
-            if os.path.isfile(alignment_file):
-                alignment_trees[not_nl] = etree.parse(alignment_file)
+        document = filename.split(self.l_from + '-tei.xml')[0]
 
         # Find potential Perfects
-        for e in tree.xpath('//' + self.config.get(self.l_from, 'xpath'), namespaces=TEI):
-            pp = self.check_perfect(e, self.l_from)
+        for _, s in s_trees:
+            for e in s.xpath(self.config.get(self.l_from, 'xpath'), namespaces=TEI_NS):
+                pp = self.check_perfect(e, self.l_from)
 
-            # If this is really a Perfect, add it to the result
-            if pp:
-                result = list()
-                result.append(document[:-1])
-                result.append(self.get_original_language(document))
-                result.append(pp.perfect_type())
-                result.append(pp.verbs_to_string())
+                # If this is really a Perfect, add it to the result
+                if pp:
+                    result = list()
+                    result.append(document[:-1])
+                    result.append(self.get_original_language(document))
+                    result.append(pp.perfect_type())
+                    result.append(pp.verbs_to_string())
 
-                # Write the complete segment with mark-up
-                result.append(pp.mark_sentence())
+                    # Write the complete segment with mark-up
+                    result.append(pp.mark_sentence())
 
-                # Find the translated lines
-                segment_number = e.getparent().getparent().get('n')[4:]
-                for language_to in self.l_to:
-                    if language_to in translation_trees:
-                        translated_lines, alignment_type = self.get_translated_lines(alignment_trees, self.l_from,
-                                                                                     language_to, segment_number)
-                        translated_present_perfects, translated_sentences, translated_marked_sentences = \
-                            self.find_translated_present_perfects(translation_trees[language_to], language_to, translated_lines)
-                        result.append('\n'.join([tpp.verbs_to_string() if tpp else '' for tpp in translated_present_perfects]))
-                        result.append('\n'.join(self.check_translated_pps(pp, translated_present_perfects, language_to)))
-                        result.append(alignment_type)
-                        result.append('\n'.join(translated_sentences))
-                    else:
-                        # If no translation is available, add empty columns
-                        result.extend([''] * 4)
+                    # Find the translated lines
+                    segment_number = e.getparent().getparent().get('n')[4:]
+                    for language_to in self.l_to:
+                        if language_to in translation_trees:
+                            translated_lines, alignment_type = self.get_translated_lines(alignment_trees, self.l_from,
+                                                                                         language_to, segment_number)
+                            translated_present_perfects, translated_sentences, translated_marked_sentences = \
+                                self.find_translated_present_perfects(translation_trees[language_to], language_to, translated_lines)
+                            result.append('\n'.join([tpp.verbs_to_string() if tpp else '' for tpp in translated_present_perfects]))
+                            result.append('\n'.join(self.check_translated_pps(pp, translated_present_perfects, language_to)))
+                            result.append(alignment_type)
+                            result.append('\n'.join(translated_sentences))
+                        else:
+                            # If no translation is available, add empty columns
+                            result.extend([''] * 4)
 
-                results.append(result)
+                    results.append(result)
 
         return results

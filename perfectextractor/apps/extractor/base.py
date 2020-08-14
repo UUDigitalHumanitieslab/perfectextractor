@@ -2,8 +2,10 @@ from abc import ABCMeta, abstractmethod
 import codecs
 import configparser
 import os
+import time
 
 import click
+from lxml import etree
 
 from .utils import TXT, CSV, open_csv, open_xlsx
 
@@ -91,6 +93,7 @@ class BaseExtractor(object):
         # Other variables
         self.other_extractors = []
         self.alignment_xmls = dict()
+        self._index = dict()  # save segments indexed by id
 
     def process_folder(self, dir_name, progress_cb=None, done_cb=None):
         """
@@ -148,6 +151,41 @@ class BaseExtractor(object):
 
         for f in file_names:
             yield self.process_file(f)
+
+    def process_file(self, filename):
+        """
+        Processes a single file.
+        """
+        t0 = time.time()
+        click.echo('Now processing {}...'.format(filename))
+
+        # Parse the current tree (create a iterator over 's' elements)
+        s_trees = etree.iterparse(filename, tag=self.sentence_tag)
+
+        # Filter the sentence trees
+        if self.sentence_ids:
+            s_trees = self.filter_sentences(s_trees)
+
+        # Parse the alignment and translation trees
+        alignment_trees, translation_trees = self.parse_alignment_trees(filename)
+
+        t1 = time.time()
+        click.echo('Finished parsing trees, took {:.3} seconds'.format(t1 - t0))
+
+        # Fetch the results
+        results = self.fetch_results(filename, s_trees, alignment_trees, translation_trees)
+
+        click.echo('Finished fetching results, took {:.3} seconds'.format(time.time() - t1))
+
+        # Free index memory
+        self._index = dict()
+
+        return results
+
+    @property
+    @abstractmethod
+    def sentence_tag(self):
+        return 's'
 
     def generate_header(self):
         """
@@ -218,6 +256,13 @@ class BaseExtractor(object):
         """
         return element.get(self.config.get(language, 'pos', fallback=self.config.get('all', 'pos')))
 
+    def filter_sentences(self, s_trees):
+        result = []
+        for event, s in s_trees:
+            if s.get(self.config.get('all', 'id')) in self.sentence_ids:
+                result.append((event, s))
+        return result
+
     def get_tenses(self, sentence):
         """
         This method allows to retrieve the English "tense" for a complete sentence. It is very naive,
@@ -278,11 +323,18 @@ class BaseExtractor(object):
         raise NotImplementedError
 
     @abstractmethod
-    def process_file(self, filename):
+    def fetch_results(self, filename, s_trees, alignment_trees, translation_trees):
         """
-        Process a single file
+        Fetches the results for a single file
         """
-        raise NotImplementedError
+        return NotImplementedError
+
+    @abstractmethod
+    def parse_alignment_trees(self, filename):
+        """
+        Parses the alignment trees for a single file
+        """
+        return NotImplementedError
 
     @abstractmethod
     def list_filenames(self, dir_name):
