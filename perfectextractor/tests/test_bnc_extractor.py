@@ -36,10 +36,9 @@ class TestBNCPerfectExtractor(unittest.TestCase):
     def test_ppc(self):
         # Test whether a Perfect continuous is ignored when check_ppc is set to False
         # Only works on Python 3 for some reason...
-        if sys.version_info > (3,):
-            self.extractor.config[self.language]['ppc'] = 'false'
-            results = self.extractor.process_file(self.filename)
-            self.assertEqual(results[3][VERBS_COLUMN], 'has been')
+        self.extractor.config[self.language]['ppc'] = 'false'
+        results = self.extractor.process_file(self.filename)
+        self.assertEqual(results[3][VERBS_COLUMN], 'has been')
 
     def test_lemmata_list(self):
         # Test whether the lemmata_list will exclude the listed verbs

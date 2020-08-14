@@ -112,7 +112,7 @@ class PerfectExtractor(BaseExtractor):
         # Retrieves the auxiliaries, or a fallback if there are none provided
         aux_fallback = 'aux_words'
         aux = aux_fallback + ('_{}'.format(self.tense) if self.tense != PRESENT else '')
-        l_config = dict(self.config.items(language))  # In Python 3, we could consider self.config[language] instead.
+        l_config = self.config[language]
         aux_words = l_config.get(aux, l_config.get(aux_fallback)).split(',')
 
         # Start a potential Perfect
