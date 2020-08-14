@@ -32,6 +32,10 @@ class EuroparlExtractor(BaseEuroparl, BaseExtractor):
         # Parse the current tree (create a iterator over 's' elements)
         s_trees = etree.iterparse(filename, tag='s')
 
+        # Filter the sentence trees
+        if self.sentence_ids:
+            s_trees = self.filter_sentences(s_trees)
+
         # Parse the alignment and translation trees
         alignment_trees, translation_trees = self.parse_alignment_trees(filename)
 
@@ -46,6 +50,13 @@ class EuroparlExtractor(BaseEuroparl, BaseExtractor):
         self._index = dict()  # free index memory
         return results
 
+    def filter_sentences(self, s_trees):
+        result = []
+        for event, s in s_trees:
+            if s.get('id') in self.sentence_ids:
+                result.append((event, s))
+        return result
+
     def fetch_results(self, filename, s_trees, alignment_trees, translation_trees):
         """
         Fetches the results for a file
@@ -58,9 +69,6 @@ class EuroparlExtractor(BaseEuroparl, BaseExtractor):
         results = list()
         # Loop over all sentences
         for _, s in s_trees:
-            if self.sentence_ids and s.get('id') not in self.sentence_ids:
-                continue
-
             result = list()
             result.append(os.path.basename(filename))
             result.append(s.get('id'))
@@ -310,9 +318,6 @@ class EuroparlPoSExtractor(EuroparlExtractor, PoSExtractor):
             xpath = './/w[{}]'.format(' and '.join(predicates))
 
         for _, s in s_trees:
-            if self.sentence_ids and s.get('id') not in self.sentence_ids:
-                continue
-
             for w in s.xpath(xpath, namespaces=ns):
                 words = self.preprocess_found(w)
 
@@ -503,9 +508,6 @@ class EuroparlRecentPastExtractor(EuroparlExtractor, RecentPastExtractor):
         results = []
         # Find potential recent pasts (per sentence)
         for _, s in s_trees:
-            if self.sentence_ids and s.get('id') not in self.sentence_ids:
-                continue
-
             for w in s.xpath(self.config.get(self.l_from, 'rp_xpath')):
                 rp = self.check_recent_past(w, self.l_from)
 
@@ -597,9 +599,6 @@ class EuroparlPerfectExtractor(EuroparlExtractor, PerfectExtractor):
         results = []
         # Find potential present/past perfects (per sentence)
         for _, s in s_trees:
-            if self.sentence_ids and s.get('id') not in self.sentence_ids:
-                continue
-
             # Retrieves the xpath expression for the auxiliary in the given tense or a fallback
             xpath_fallback = 'xpath'
             xpath = xpath_fallback + ('_{}'.format(self.tense) if self.tense != PRESENT else '')

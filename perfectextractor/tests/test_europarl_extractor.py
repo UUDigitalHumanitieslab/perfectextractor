@@ -164,6 +164,13 @@ class TestEuroparlPerfectExtractor(unittest.TestCase):
         self.assertEqual(results[2][3], u'a été')
         self.assertEqual(results[3][3], u'a été')
 
+    def test_sentence_filtering(self):
+        extractor = EuroparlPerfectExtractor('fr', ['nl'], lemmata=['être'], sentence_ids=['69', '65'])
+        results = self.merge_results(extractor.generate_results(os.path.join(EUROPARL_DATA, 'fr')))
+        self.assertEqual(len(results), 2)
+        self.assertEqual(results[0][1], u'65')
+        self.assertEqual(results[1][1], u'69')
+
     def test_regex(self):
         # Primitive search for wh-questions
         regex_extractor = EuroparlPoSExtractor('en', ['nl'], regex=['^wh.*', '^how$'], position=1)
