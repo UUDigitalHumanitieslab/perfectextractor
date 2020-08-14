@@ -127,6 +127,7 @@ class TestEuroparlPerfectExtractor(unittest.TestCase):
 
         results = list(fr_extractor.process_file(self.fr_filename))
         self.assertEqual(len(results), 4)
+        self.assertEqual(results[0][2], u'passé récent')
         self.assertEqual(results[0][3], u'vient de dire')
         self.assertEqual(results[1][3], u'viens d\' aborder')
         self.assertEqual(results[2][3], u'viens d\' évoquer')
@@ -154,11 +155,18 @@ class TestEuroparlPerfectExtractor(unittest.TestCase):
         extractor = EuroparlExtractor('en', ['nl', 'de'], file_limit=1)
         results = self.merge_results(extractor.generate_results(os.path.join(DCEP_DATA, 'en')))
         self.assertEqual(len(results), 37)
+        self.assertEqual(results[0][0], u'16451293__IM-PRESS__20060131-IPR-04891__EN.xml')
+        self.assertEqual(results[0][1], u's1.1')
+        self.assertEqual(results[0][2], u'')
+        self.assertEqual(results[0][3], u'')
+        self.assertEqual(results[0][4], u'')
+        self.assertEqual(results[0][5][:14], u'In reaction to')
 
     def test_lemmata(self):
         extractor = EuroparlPerfectExtractor('fr', ['nl'], lemmata=['être'])
         results = self.merge_results(extractor.generate_results(os.path.join(EUROPARL_DATA, 'fr')))
         self.assertEqual(len(results), 25)
+        self.assertEqual(results[0][2], u'present perfect')
         self.assertEqual(results[0][3], u'a été')
         self.assertEqual(results[1][3], u'ont été')
         self.assertEqual(results[2][3], u'a été')
@@ -186,6 +194,7 @@ class TestEuroparlPerfectExtractor(unittest.TestCase):
         regex_extractor = EuroparlPoSExtractor('en', ['nl'], regex=['^wh.*'], pos=['WP'], position=1)
         results = self.merge_results(regex_extractor.generate_results(os.path.join(EUROPARL_DATA, 'en')))
         self.assertEqual(len(results), 4)
+        self.assertEqual(results[0][2], u'WP')
         self.assertEqual(results[0][3], u'What')
         self.assertEqual(results[1][3], u'What')
         self.assertEqual(results[2][3], u'What')
@@ -215,6 +224,7 @@ class TestEuroparlPerfectExtractor(unittest.TestCase):
         metadata_extractor = EuroparlSinceDurationExtractor('nl', [])
         results = self.merge_results(metadata_extractor.generate_results(os.path.join(EUROPARL_DATA, 'nl')))
         self.assertEqual(len(results), 1)
+        self.assertEqual(results[0][2], u'prep')
         self.assertEqual(results[0][3], u'sinds tien jaar')
 
     def test_articles(self):

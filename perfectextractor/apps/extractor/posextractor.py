@@ -29,9 +29,3 @@ class PoSExtractor(BaseExtractor):
         Preprocesses the found word: potentially add more words to the found words, or filter based on lemmata.
         """
         raise NotImplementedError
-
-    def get_type(self, words):
-        """
-        Return the type for the found word(s). A sensible default is the part-of-speech of the first found word.
-        """
-        return self.get_pos(self.l_from, words[0])

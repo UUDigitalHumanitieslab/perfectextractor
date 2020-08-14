@@ -69,17 +69,7 @@ class EuroparlExtractor(BaseEuroparl, BaseExtractor):
         results = list()
         # Loop over all sentences
         for _, s in s_trees:
-            result = list()
-            result.append(os.path.basename(filename))
-            result.append(s.get('id'))
-            result.append('')
-            result.append('')
-            result.append('')
-            if self.output == XML:
-                result.append('<root>' + etree.tostring(s, encoding=str) + '</root>')
-            else:
-                result.append(self.get_sentence_words(s))
-            self.append_metadata(None, s, result)
+            result = self.generate_result_line(filename, s)
 
             for language_to in self.l_to:
                 if language_to in translation_trees:
@@ -94,7 +84,7 @@ class EuroparlExtractor(BaseEuroparl, BaseExtractor):
                         result.append('<root>' + '\n'.join(translated_sentences) + '</root>' if translated_sentences else '')
                     else:
                         translated_sentences = [self.get_line_as_xml(translation_trees[language_to], line) for line in translated_lines]
-                        result.append('\n'.join([self.get_sentence_words(ts) for ts in translated_sentences]) if translated_sentences else '')
+                        result.append('\n'.join([self.mark_sentence(ts) for ts in translated_sentences]) if translated_sentences else '')
                 else:
                     # If no translation is available, add empty columns
                     result.extend([''] * 2)
@@ -102,7 +92,45 @@ class EuroparlExtractor(BaseEuroparl, BaseExtractor):
             results.append(result)
         return results
 
-    def get_sentence_words(self, sentence, match=None):
+    def generate_result_line(self, filename, sentence, words=None, mwe=None):
+        result = list()
+        result.append(os.path.basename(filename))
+        result.append(sentence.get('id'))
+
+        if mwe:
+            result.append(self.get_type(sentence, mwe=mwe))
+            result.append(mwe.verbs_to_string())
+            result.append(mwe.verb_ids())
+            if self.output == XML:
+                result.append('<root>' + etree.tostring(sentence, encoding=str) + '</root>')
+            else:
+                result.append(mwe.mark_sentence())
+            self.append_metadata(mwe.words[0], sentence, result)
+        elif words:
+            result.append(self.get_type(sentence, words=words))
+            result.append(' '.join([w.text for w in words]))
+            result.append(' '.join([w.get('id') for w in words]))
+            if self.output == XML:
+                result.append('<root>' + etree.tostring(sentence, encoding=str) + '</root>')
+            else:
+                result.append(self.mark_sentence(sentence, words[0]))
+            self.append_metadata(words[0], sentence, result)
+        else:
+            result.append('')
+            result.append('')
+            result.append('')
+            if self.output == XML:
+                result.append('<root>' + etree.tostring(sentence, encoding=str) + '</root>')
+            else:
+                result.append(self.mark_sentence(sentence))
+            self.append_metadata(None, sentence, result)
+
+        return result
+
+    def get_type(self, sentence, words=None, mwe=None):
+        return NotImplementedError
+
+    def mark_sentence(self, sentence, match=None):
         # TODO: this is copied from apps/models.py. Consider refactoring!
         s = []
         # TODO: this xPath-expression might be specific for a corpus
@@ -324,17 +352,7 @@ class EuroparlPoSExtractor(EuroparlExtractor, PoSExtractor):
                 if not words:
                     continue
 
-                result = list()
-                result.append(os.path.basename(filename))
-                result.append(s.get('id'))
-                result.append(self.get_type(words))
-                result.append(' '.join([w.text for w in words]))
-                result.append(' '.join([w.get('id') for w in words]))
-                if self.output == XML:
-                    result.append('<root>' + etree.tostring(s, encoding=str) + '</root>')
-                else:
-                    result.append(self.get_sentence_words(s, w))
-                self.append_metadata(w, s, result)
+                result = self.generate_result_line(filename, s, words=words)
 
                 # Find the translated lines
                 for language_to in self.l_to:
@@ -350,7 +368,7 @@ class EuroparlPoSExtractor(EuroparlExtractor, PoSExtractor):
                             result.append('<root>' + '\n'.join(translated_sentences) + '</root>' if translated_sentences else '')
                         else:
                             translated_sentences = [self.get_line_as_xml(translation_trees[language_to], line) for line in translated_lines]
-                            result.append('\n'.join([self.get_sentence_words(ts) for ts in translated_sentences]) if translated_sentences else '')
+                            result.append('\n'.join([self.mark_sentence(ts) for ts in translated_sentences]) if translated_sentences else '')
                     else:
                         # If no translation is available, add empty columns
                         result.extend([''] * 2)
@@ -393,6 +411,12 @@ class EuroparlPoSExtractor(EuroparlExtractor, PoSExtractor):
 
         return result
 
+    def get_type(self, sentence, words=None, mwe=None):
+        """
+        Return the type for the found word(s). A sensible default is the part-of-speech of the first found word.
+        """
+        return self.get_pos(self.l_from, words[0])
+
 
 class EuroparlFrenchArticleExtractor(EuroparlPoSExtractor):
     def __init__(self, language_from, languages_to):
@@ -424,7 +448,7 @@ class EuroparlFrenchArticleExtractor(EuroparlPoSExtractor):
 
         return result
 
-    def get_type(self, words):
+    def get_type(self, sentence, words=None, mwe=None):
         """
         Return the type for a found article: definite, indefinite or partitive.
         For 'des', this is quite hard to decide, so we leave both options open.
@@ -512,14 +536,7 @@ class EuroparlRecentPastExtractor(EuroparlExtractor, RecentPastExtractor):
                 rp = self.check_recent_past(w, self.l_from)
 
                 if rp:
-                    result = list()
-                    result.append(os.path.basename(filename))
-                    result.append(s.get('id'))
-                    result.append(u'passé récent')
-                    result.append(rp.verbs_to_string())
-                    result.append(rp.verb_ids())
-                    result.append('<root>' + etree.tostring(rp.xml_sentence, encoding=str) + '</root>')
-                    self.append_metadata(w, s, result)
+                    result = self.generate_result_line(filename, s, mwe=rp)
 
                     found_trans = False
                     for language_to in self.l_to:
@@ -556,12 +573,15 @@ class EuroparlRecentPastExtractor(EuroparlExtractor, RecentPastExtractor):
 
         return results
 
-    def get_sentence_words(self, xml_sentence):
+    def mark_sentence(self, sentence, match=None):
         s = []
         # TODO: this xPath-expression might be specific for a corpus
-        for w in xml_sentence.xpath('.//w'):
+        for w in sentence.xpath('.//w'):
             s.append(w.text.strip() if w.text else ' ')
         return ' '.join(s)
+
+    def get_type(self, sentence, words=None, mwe=None):
+        return 'passé récent'
 
 
 class EuroparlPerfectExtractor(EuroparlExtractor, PerfectExtractor):
@@ -614,17 +634,7 @@ class EuroparlPerfectExtractor(EuroparlExtractor, PerfectExtractor):
 
                 # If this is really a present/past perfect, add it to the result
                 if pp:
-                    result = list()
-                    result.append(os.path.basename(filename))
-                    result.append(s.get('id'))
-                    result.append(pp.perfect_type())
-                    result.append(pp.verbs_to_string())
-                    result.append(pp.verb_ids())
-                    if self.output == XML:
-                        result.append('<root>' + etree.tostring(pp.xml_sentence, encoding=str) + '</root>')
-                    else:
-                        result.append(pp.mark_sentence())
-                    self.append_metadata(e, s, result)
+                    result = self.generate_result_line(filename, s, mwe=pp)
 
                     # Find the translated lines
                     for language_to in self.l_to:
@@ -661,8 +671,11 @@ class EuroparlPerfectExtractor(EuroparlExtractor, PerfectExtractor):
                     result.append(tense)
                     result.append(','.join(tenses))
                     result.append('')
-                    result.append(self.get_sentence_words(s))
+                    result.append(self.mark_sentence(s))
                     self.append_metadata(None, s, result)
                     results.append(result)
 
         return results
+
+    def get_type(self, sentence, words=None, mwe=None):
+        return mwe.perfect_type()
