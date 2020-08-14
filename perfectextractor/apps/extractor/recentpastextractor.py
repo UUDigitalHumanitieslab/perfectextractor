@@ -28,13 +28,13 @@ class RecentPastExtractor(BaseExtractor):
 
         # Retrieve the configuration variables
         lemma_attr = self.config.get('all', 'lemma_attr')
-        rp_pre_pos = self.config.get(language, 'rp_pre_pos').split(',')
+        rp_pre_pos = self.config.get(language, 'rp_pre_pos').split('|')
         rp_pre_lem = self.config.get(language, 'rp_pre_lem')
         rp_inf_pos = self.config.get(language, 'rp_inf_pos')
         check_ppp = self.config.get(language, 'ppp')
         ppp_lemma = self.config.get(language, 'ppp_lemma')
-        perfect_tags = self.config.get(language, 'perfect_tags').split(',')
-        stop_tags = tuple(self.config.get(language, 'stop_tags').split(','))
+        perfect_tags = self.config.get(language, 'perfect_tags').split('|')
+        stop_tags = tuple(self.config.get(language, 'stop_tags').split('|'))
 
         sentence = self.get_sentence(w)
 

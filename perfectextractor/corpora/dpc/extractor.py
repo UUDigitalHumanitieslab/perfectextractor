@@ -110,7 +110,7 @@ class DPCPerfectExtractor(PerfectExtractor, DPCExtractor):
                         sentence = pp.mark_sentence()
                         break
 
-        return sentence, pp
+        return etree.tostring(s, encoding=str), sentence, pp
 
     def get_original_language(self, document):
         """
@@ -151,6 +151,7 @@ class DPCPerfectExtractor(PerfectExtractor, DPCExtractor):
                 result = list()
                 result.append(document[:-1])
                 result.append(self.get_original_language(document))
+                result.append(pp.perfect_type())
                 result.append(pp.verbs_to_string())
 
                 # Write the complete segment with mark-up
@@ -162,7 +163,7 @@ class DPCPerfectExtractor(PerfectExtractor, DPCExtractor):
                     if language_to in translation_trees:
                         translated_lines, alignment_type = self.get_translated_lines(alignment_trees, self.l_from,
                                                                                      language_to, segment_number)
-                        translated_present_perfects, translated_sentences = \
+                        translated_present_perfects, translated_sentences, translated_marked_sentences = \
                             self.find_translated_present_perfects(translation_trees[language_to], language_to, translated_lines)
                         result.append('\n'.join([tpp.verbs_to_string() if tpp else '' for tpp in translated_present_perfects]))
                         result.append('\n'.join(self.check_translated_pps(pp, translated_present_perfects, language_to)))

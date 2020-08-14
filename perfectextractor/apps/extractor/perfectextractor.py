@@ -82,7 +82,7 @@ class PerfectExtractor(BaseExtractor):
         Check whether we are dealing with a reflexive Perfect
         """
         lemma_attr = self.config.get('all', 'lemma_attr')
-        reflexive_lemmata = self.config.get(language, 'reflexive_lemmata').split(',')
+        reflexive_lemmata = self.config.get(language, 'reflexive_lemmata').split('|')
 
         precondition = reflexive_lemmata and w_before is not None and len(w_before) >= 2
         if precondition:
@@ -101,19 +101,19 @@ class PerfectExtractor(BaseExtractor):
         If not, None is returned.
         """
         lemma_attr = self.config.get('all', 'lemma_attr')
-        perfect_tags = self.config.get(language, 'perfect_tags').split(',')
+        perfect_tags = self.config.get(language, 'perfect_tags').split('|')
         check_ppp = check_ppp and self.config.getboolean(language, 'ppp')
         ppp_lemma = self.config.get(language, 'ppp_lemma')
         check_ppc = check_ppc and self.config.getboolean(language, 'ppc')
-        ppc_tags = self.config.get(language, 'ppc_tags').split(',')
-        stop_tags = tuple(self.config.get(language, 'stop_tags').split(','))
+        ppc_tags = self.config.get(language, 'ppc_tags').split('|')
+        stop_tags = tuple(self.config.get(language, 'stop_tags').split('|'))
         allow_reversed = self.config.getboolean(language, 'allow_reversed')
 
         # Retrieves the auxiliaries, or a fallback if there are none provided
         aux_fallback = 'aux_words'
         aux = aux_fallback + ('_{}'.format(self.tense) if self.tense != PRESENT else '')
         l_config = self.config[language]
-        aux_words = l_config.get(aux, l_config.get(aux_fallback)).split(',')
+        aux_words = l_config.get(aux, l_config.get(aux_fallback)).split('|')
 
         # Start a potential Perfect
         s = self.get_sentence(auxiliary)

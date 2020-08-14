@@ -17,7 +17,7 @@ class TestBNCPerfectExtractor(unittest.TestCase):
         self.filename = os.path.join(DATA_FOLDER, 'ALP-formatted.xml')
 
     def test_init(self):
-        self.assertEqual(self.extractor.config.get(self.language, 'perfect_tags'), 'VBN,VDN,VHN,VVN')
+        self.assertEqual(self.extractor.config.get(self.language, 'perfect_tags'), 'VBN|VDN|VHN|VVN')
         self.assertEqual(self.extractor.config.get('all', 'pos'), 'c5')
 
     def test_list_filenames(self):

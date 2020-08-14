@@ -465,9 +465,9 @@ class EuroparlSinceDurationExtractor(EuroparlPoSExtractor):
         """
         super().__init__(language_from, languages_to, **kwargs)
 
-        self.lemmata_list = self.config.get(self.l_from, 'since_lem').split(',')
-        self.number_pos = self.config.get(self.l_from, 'since_number_pos').split(',')
-        self.time_units = self.config.get(self.l_from, 'since_time_units').split(',')
+        self.lemmata_list = self.config.get(self.l_from, 'since_lem').split('|')
+        self.number_pos = self.config.get(self.l_from, 'since_number_pos').split('|')
+        self.time_units = self.config.get(self.l_from, 'since_time_units').split('|')
 
     def get_config(self):
         since_config = os.path.join(os.path.dirname(__file__), 'since.cfg')
