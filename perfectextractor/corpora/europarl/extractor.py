@@ -70,25 +70,7 @@ class EuroparlExtractor(BaseEuroparl, BaseExtractor):
         # Loop over all sentences
         for _, s in s_trees:
             result = self.generate_result_line(filename, s)
-
-            for language_to in self.l_to:
-                if language_to in translation_trees:
-                    # TODO: deal with source_lines
-                    source_lines, translated_lines, alignment_type = self.get_translated_lines(alignment_trees,
-                                                                                               self.l_from,
-                                                                                               language_to,
-                                                                                               s.get('id'))
-                    result.append(alignment_type)
-                    if self.output == XML:
-                        translated_sentences = [self.get_line(translation_trees[language_to], line) for line in translated_lines]
-                        result.append('<root>' + '\n'.join(translated_sentences) + '</root>' if translated_sentences else '')
-                    else:
-                        translated_sentences = [self.get_line_as_xml(translation_trees[language_to], line) for line in translated_lines]
-                        result.append('\n'.join([self.mark_sentence(ts) for ts in translated_sentences]) if translated_sentences else '')
-                else:
-                    # If no translation is available, add empty columns
-                    result.extend([''] * 2)
-
+            result.extend(self.generate_translations(alignment_trees, translation_trees, s))
             results.append(result)
         return results
 
@@ -124,6 +106,26 @@ class EuroparlExtractor(BaseEuroparl, BaseExtractor):
             else:
                 result.append(self.mark_sentence(sentence))
             self.append_metadata(None, sentence, result)
+
+        return result
+
+    def generate_translations(self, alignment_trees, translation_trees, sentence):
+        result = []
+
+        for language_to in self.l_to:
+            if language_to in translation_trees:
+                # TODO: potentially deal with source_lines if len(source_lines) > 1
+                source_lines, translated_lines, alignment_type = self.get_translated_lines(alignment_trees, self.l_from, language_to, sentence.get('id'))
+                result.append(alignment_type)
+                if self.output == XML:
+                    translated_sentences = [self.get_line(translation_trees[language_to], line) for line in translated_lines]
+                    result.append('<root>' + '\n'.join(translated_sentences) + '</root>' if translated_sentences else '')
+                else:
+                    translated_sentences = [self.get_line_as_xml(translation_trees[language_to], line) for line in translated_lines]
+                    result.append('\n'.join([self.mark_sentence(ts) for ts in translated_sentences]) if translated_sentences else '')
+            else:
+                # If no translation is available, add empty columns
+                result.extend([''] * 2)
 
         return result
 
@@ -353,26 +355,7 @@ class EuroparlPoSExtractor(EuroparlExtractor, PoSExtractor):
                     continue
 
                 result = self.generate_result_line(filename, s, words=words)
-
-                # Find the translated lines
-                for language_to in self.l_to:
-                    if language_to in translation_trees:
-                        # TODO: deal with source_lines
-                        source_lines, translated_lines, alignment_type = self.get_translated_lines(alignment_trees,
-                                                                                                   self.l_from,
-                                                                                                   language_to,
-                                                                                                   s.get('id'))
-                        result.append(alignment_type)
-                        if self.output == XML:
-                            translated_sentences = [self.get_line(translation_trees[language_to], line) for line in translated_lines]
-                            result.append('<root>' + '\n'.join(translated_sentences) + '</root>' if translated_sentences else '')
-                        else:
-                            translated_sentences = [self.get_line_as_xml(translation_trees[language_to], line) for line in translated_lines]
-                            result.append('\n'.join([self.mark_sentence(ts) for ts in translated_sentences]) if translated_sentences else '')
-                    else:
-                        # If no translation is available, add empty columns
-                        result.extend([''] * 2)
-
+                result.extend(self.generate_translations(alignment_trees, translation_trees, s))
                 results.append(result)
 
         return results
@@ -537,39 +520,8 @@ class EuroparlRecentPastExtractor(EuroparlExtractor, RecentPastExtractor):
 
                 if rp:
                     result = self.generate_result_line(filename, s, mwe=rp)
-
-                    found_trans = False
-                    for language_to in self.l_to:
-                        if language_to in translation_trees:
-                            # TODO: deal with source_lines
-                            source_lines, translated_lines, alignment_type = self.get_translated_lines(alignment_trees,
-                                                                                                       self.l_from,
-                                                                                                       language_to,
-                                                                                                       s.get('id'))
-                            if translated_lines:
-                                translated_sentences = [self.get_line(translation_trees[language_to], line) for line in
-                                                        translated_lines]
-                                translated_sentences_xml = [self.get_line_as_xml(translation_trees[language_to], line) for line in
-                                                            translated_lines]
-
-                                if language_to == 'fr':
-                                    for ts in translated_sentences_xml:
-                                        for e in ts.xpath(self.config.get(language_to, 'rp_xpath')):
-                                            rp = self.check_recent_past(e, language_to)
-                                            if rp:
-                                                found_trans = True
-
-                                result.append(alignment_type)
-                                result.append('<root>' + '\n'.join(translated_sentences) + '</root>' if translated_sentences else '')
-                            else:
-                                result.append('')
-                                result.append('')
-                        else:
-                            # If no translation is available, add empty columns
-                            result.extend([''] * 2)
-
-                    if not found_trans:
-                        results.append(result)
+                    result.extend(self.generate_translations(alignment_trees, translation_trees, s))
+                    results.append(result)
 
         return results
 
@@ -635,26 +587,7 @@ class EuroparlPerfectExtractor(EuroparlExtractor, PerfectExtractor):
                 # If this is really a present/past perfect, add it to the result
                 if pp:
                     result = self.generate_result_line(filename, s, mwe=pp)
-
-                    # Find the translated lines
-                    for language_to in self.l_to:
-                        if language_to in translation_trees:
-                            # TODO: deal with source_lines
-                            source_lines, translated_lines, alignment_type = self.get_translated_lines(alignment_trees,
-                                                                                                       self.l_from,
-                                                                                                       language_to,
-                                                                                                       s.get('id'))
-                            translated_present_perfects, translated_sentences, translated_marked_sentences = \
-                                self.find_translated_present_perfects(translation_trees[language_to], language_to, translated_lines)
-                            result.append(alignment_type)
-                            if self.output == XML:
-                                result.append('<root>' + '\n'.join(translated_sentences) + '</root>' if translated_sentences else '')
-                            else:
-                                result.append('\n'.join(translated_marked_sentences) if translated_marked_sentences else '')
-                        else:
-                            # If no translation is available, add empty columns
-                            result.extend([''] * 2)
-
+                    result.extend(self.generate_translations(alignment_trees, translation_trees, s))
                     results.append(result)
 
                     # If we want (only) one classification per sentence, break the for loop here.
