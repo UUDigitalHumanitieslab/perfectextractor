@@ -4,7 +4,7 @@ import os
 import sys
 import unittest
 
-from perfectextractor.corpora.bnc.extractor import BNCPerfectExtractor
+from perfectextractor.corpora.bnc.perfect import BNCPerfectExtractor
 
 DATA_FOLDER = os.path.join(os.path.dirname(__file__), 'data/bnc')
 VERBS_COLUMN = 4

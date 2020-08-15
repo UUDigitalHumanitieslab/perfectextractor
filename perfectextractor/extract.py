@@ -2,10 +2,15 @@ import time
 
 import click
 
-from perfectextractor.corpora.bnc.extractor import BNCExtractor, BNCPerfectExtractor
-from perfectextractor.corpora.dpc.extractor import DPCExtractor, DPCPerfectExtractor
-from perfectextractor.corpora.europarl.extractor import EuroparlExtractor, EuroparlPoSExtractor, EuroparlPerfectExtractor, \
-    EuroparlRecentPastExtractor, EuroparlSinceDurationExtractor
+from perfectextractor.corpora.bnc.extractor import BNCExtractor
+from perfectextractor.corpora.bnc.perfect import BNCPerfectExtractor
+from perfectextractor.corpora.dpc.extractor import DPCExtractor
+from perfectextractor.corpora.dpc.perfect import DPCPerfectExtractor
+from perfectextractor.corpora.europarl.extractor import EuroparlExtractor
+from perfectextractor.corpora.europarl.perfect import EuroparlPerfectExtractor
+from perfectextractor.corpora.europarl.pos import EuroparlPoSExtractor
+from perfectextractor.corpora.europarl.recentpast import EuroparlRecentPastExtractor
+from perfectextractor.corpora.europarl.since import EuroparlSinceDurationExtractor
 from perfectextractor.apps.extractor.utils import TXT, XML, CSV, XLSX
 from perfectextractor.apps.extractor.perfectextractor import PRESENT, PAST
 

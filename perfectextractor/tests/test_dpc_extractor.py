@@ -6,7 +6,7 @@ import unittest
 from lxml import etree
 
 from perfectextractor.apps.extractor.models import Perfect
-from perfectextractor.corpora.dpc.extractor import DPCPerfectExtractor
+from perfectextractor.corpora.dpc.perfect import DPCPerfectExtractor
 
 DATA_FOLDER = os.path.join(os.path.dirname(__file__), 'data/dpc')
 

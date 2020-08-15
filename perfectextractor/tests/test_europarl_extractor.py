@@ -5,9 +5,13 @@ import unittest
 
 from lxml import etree
 
-from perfectextractor.corpora.europarl.extractor import EuroparlExtractor, EuroparlPerfectExtractor, EuroparlRecentPastExtractor, \
-    EuroparlPoSExtractor, EuroparlSinceDurationExtractor, EuroparlFrenchArticleExtractor
 from perfectextractor.apps.extractor.perfectextractor import PAST
+from perfectextractor.corpora.europarl.article import EuroparlFrenchArticleExtractor
+from perfectextractor.corpora.europarl.extractor import EuroparlExtractor
+from perfectextractor.corpora.europarl.perfect import EuroparlPerfectExtractor
+from perfectextractor.corpora.europarl.pos import EuroparlPoSExtractor
+from perfectextractor.corpora.europarl.recentpast import EuroparlRecentPastExtractor
+from perfectextractor.corpora.europarl.since import EuroparlSinceDurationExtractor
 
 EUROPARL_DATA = os.path.join(os.path.dirname(__file__), 'data/europarl')
 DCEP_DATA = os.path.join(os.path.dirname(__file__), 'data/dcep')
