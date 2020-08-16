@@ -145,9 +145,3 @@ def extract(folder, language_from, languages_to, corpus='europarl', extractor='b
 
 if __name__ == "__main__":
     extract()
-
-
-# TODO:
-# switch between perfect, recentpast, pos, word
-# dependent on this choice, add other questions
-# allow output to .xlsx
