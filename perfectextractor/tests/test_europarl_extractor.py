@@ -78,7 +78,6 @@ class TestEuroparlPerfectExtractor(unittest.TestCase):
     def test_get_line_by_number(self):
         xml_sentence, _, pp = self.nl_extractor.get_line_and_pp(self.nl_tree, 'nl', '4')
         self.assertEqual(etree.fromstring(xml_sentence).get('id'), '4')
-        self.assertEqual(pp.get_sentence_id(), '4')
         self.assertEqual(pp.verbs(), ['is', 'aangebroken'])
         self.assertEqual(pp.verb_ids(), 'w4.9 w4.19')
         self.assertEqual(pp.words_between(), 9)

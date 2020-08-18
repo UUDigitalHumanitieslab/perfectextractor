@@ -31,7 +31,7 @@ class EuroparlPoSExtractor(EuroparlExtractor, PoSExtractor):
             # and non-capturing groups
             pattern = '|'.join('(?:{})'.format(r) for r in self.regex)
 
-            # special namespace required for enabling regular expresssion functions
+            # special namespace required for enabling regular expression functions
             ns = {"re": "http://exslt.org/regular-expressions"}
             predicates.append('re:test(., "{pattern}", "i")'.format(pattern=pattern))
 
@@ -62,20 +62,22 @@ class EuroparlPoSExtractor(EuroparlExtractor, PoSExtractor):
         """
         result = [word]
 
+        id_attr = self.config.get('all', 'id')
         lemma_attr = self.config.get('all', 'lemma_attr')
+
         if self.lemmata_list and word.get(lemma_attr) not in self.lemmata_list:
             result = []
 
-        if self.position and not word.get('id').endswith('.' + str(self.position)):
+        if self.position and not word.get(id_attr).endswith('.' + str(self.position)):
             result = []
 
         if self.tokens:
-            end_token = self.tokens.get(word.get('id'))
+            end_token = self.tokens.get(word.get(id_attr))
             next_word = word.getnext()
             if next_word is None:
                 raise ValueError('End token {} not found'.format(end_token))
             else:
-                while next_word.get('id') != end_token:
+                while next_word.get(id_attr) != end_token:
                     result.append(next_word)
 
                     next_word = next_word.getnext()

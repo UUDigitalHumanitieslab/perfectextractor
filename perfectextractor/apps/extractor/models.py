@@ -72,9 +72,6 @@ class MultiWordExpression(object):
             s.append(w.text.strip() if w.text else ' ')
         return ' '.join(s)
 
-    def get_sentence_id(self):
-        return self.xml_sentence.get('id')
-
     def mark_sentence(self):
         """
         Marks the MultiWordExpression in a full sentence.
