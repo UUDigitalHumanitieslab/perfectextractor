@@ -35,6 +35,38 @@ class TestCLI(unittest.TestCase):
             with open(cmp_file) as cmp:
                 self.assertListEqual(tmp.readlines(), cmp.readlines())
 
+    def test_recentpastextractor(self):
+        os.mkdir(self.folder_out)
+
+        filename = 'fr-nl-recentpast.csv'
+        out_file = os.path.join(self.folder_out, filename)
+        result = self.runner.invoke(extract, [EUROPARL_DATA, 'fr', 'nl',
+                                              '--extractor', 'recent_past',
+                                              '--outfile', out_file])
+        self.assertEqual(result.exit_code, 0)
+
+        cmp_file = os.path.join(self.folder_cmp, filename)
+
+        with open(out_file) as tmp:
+            with open(cmp_file) as cmp:
+                self.assertListEqual(tmp.readlines(), cmp.readlines())
+
+    def test_sinceextractor(self):
+        os.mkdir(self.folder_out)
+
+        filename = 'nl-en-since.csv'
+        out_file = os.path.join(self.folder_out, filename)
+        result = self.runner.invoke(extract, [EUROPARL_DATA, 'nl', 'en',
+                                              '--extractor', 'since_duration',
+                                              '--outfile', out_file])
+        self.assertEqual(result.exit_code, 0)
+
+        cmp_file = os.path.join(self.folder_cmp, filename)
+
+        with open(out_file) as tmp:
+            with open(cmp_file) as cmp:
+                self.assertListEqual(tmp.readlines(), cmp.readlines())
+
     def tearDown(self):
         if os.path.isdir(self.folder_out):
             shutil.rmtree(self.folder_out)
