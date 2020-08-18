@@ -268,3 +268,8 @@ class TestEuroparlPerfectExtractor(unittest.TestCase):
         results = self.merge_results(sv_extractor.generate_results(os.path.join(EUROPARL_DATA, 'sv')))
         self.assertEqual(len(results), 38)
         self.assertEqual(results[0][3], u'har gjort')
+
+    def test_language_without_config(self):
+        self.assertRaises(Exception, EuroparlPerfectExtractor, 'it', [])
+        EuroparlPerfectExtractor('en', ['it'])  # should not raise a ValueError
+        self.assertRaises(Exception, EuroparlPerfectExtractor, 'en', ['it'], {'search_in_to': True})

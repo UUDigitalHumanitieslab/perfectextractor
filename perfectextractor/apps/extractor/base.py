@@ -31,6 +31,9 @@ class CachedConfig:
     def items(self, section):
         return self.setdefault(section, lambda: self.config.items(section))
 
+    def sections(self):
+        return self.config.sections()
+
     def __getitem__(self, key):
         return self.config[key]
 
@@ -92,6 +95,11 @@ class BaseExtractor(ABC):
         self.other_extractors = []
         self.alignment_xmls = dict()
         self._index = dict()  # save segments indexed by id
+
+    def check_language_in_config(self, language):
+        if language not in self.config.sections():
+            msg = 'No implementation for {} for language {}'.format(self.__class__.__name__, language)
+            raise click.ClickException(msg)
 
     def process_folder(self, dir_name, progress_cb=None, done_cb=None):
         """

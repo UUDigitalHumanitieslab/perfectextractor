@@ -15,6 +15,8 @@ class RecentPastExtractor(BaseExtractor, ABC):
         """
         super().__init__(language_from, languages_to, **kwargs)
 
+        self.check_language_in_config(language_from)
+
     def check_recent_past(self, w, language):
         """
         Checks if the element w is the start of a recent past construction

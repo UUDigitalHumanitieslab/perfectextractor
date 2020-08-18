@@ -34,11 +34,16 @@ class PerfectExtractor(BaseExtractor, ABC):
         self.search_in_to = search_in_to
         self.tense = tense
 
-        # Read the list of verbs that use 'to be' as auxiliary verb per language
-        self.aux_be_list = {}
         languages = [self.l_from]
         if search_in_to:
             languages.extend(self.l_to)
+
+        # Check whether there is a configuration available for this language
+        for language in languages:
+            self.check_language_in_config(language)
+
+        # Read the list of verbs that use 'to be' as auxiliary verb per language
+        self.aux_be_list = {}
         for language in languages:
             aux_be_list = []
             if self.config.get(language, 'lexical_bound'):
