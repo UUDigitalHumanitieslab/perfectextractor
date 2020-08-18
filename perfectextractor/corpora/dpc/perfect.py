@@ -61,7 +61,7 @@ class DPCPerfectExtractor(DPCExtractor, PerfectExtractor):
                     result.append(document[:-1])
                     result.append(self.get_original_language(document))
                     result.append(pp.perfect_type())
-                    result.append(pp.verbs_to_string())
+                    result.append(pp.construction_to_string())
 
                     # Write the complete segment with mark-up
                     result.append(pp.mark_sentence())
@@ -74,7 +74,7 @@ class DPCPerfectExtractor(DPCExtractor, PerfectExtractor):
                                                                                          language_to, segment_number)
                             translated_present_perfects, translated_sentences, translated_marked_sentences = \
                                 self.find_translated_present_perfects(translation_trees[language_to], language_to, translated_lines)
-                            result.append('\n'.join([tpp.verbs_to_string() if tpp else '' for tpp in translated_present_perfects]))
+                            result.append('\n'.join([tpp.construction_to_string() if tpp else '' for tpp in translated_present_perfects]))
                             result.append('\n'.join(self.check_translated_pps(pp, translated_present_perfects, language_to)))
                             result.append(alignment_type)
                             result.append('\n'.join(translated_sentences))

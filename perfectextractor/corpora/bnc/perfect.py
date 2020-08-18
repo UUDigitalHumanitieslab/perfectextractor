@@ -58,7 +58,7 @@ class BNCPerfectExtractor(BNCExtractor, PerfectExtractor):
                     result.append(genre)
                     result.append('1')
                     result.append(pp.perfect_type())
-                    result.append(pp.verbs_to_string())
+                    result.append(pp.construction_to_string())
                     result.append(pp.perfect_lemma())
                     result.append('1' if is_question else '0')
                     result.append(sentence)

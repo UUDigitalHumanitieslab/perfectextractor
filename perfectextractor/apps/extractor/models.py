@@ -5,11 +5,12 @@ class Word(object):
     """
     Each Word consists of a word, its lemma, and a designation if this is a verb.
     """
-    def __init__(self, word, lemma, is_verb, xml_id):
+    def __init__(self, word, lemma, pos, xml_id, in_construction=True):
         self.word = word.strip() if word else ' '
         self.lemma = lemma.strip() if lemma else '?'
-        self.is_verb = is_verb
+        self.pos = pos.strip() if pos else '?'
         self.xml_id = xml_id
+        self.in_construction = in_construction
 
 
 class MultiWordExpression(object):
@@ -17,47 +18,47 @@ class MultiWordExpression(object):
         self.xml_sentence = xml_sentence
         self.words = []
 
-    def add_word(self, word, lemma, is_verb, xml_id):
+    def add_word(self, word, lemma, pos, xml_id, in_construction=True):
         """
         Adds a word to the MultiWordExpression.
         """
-        self.words.append(Word(word, lemma, is_verb, xml_id))
+        self.words.append(Word(word, lemma, pos, xml_id, in_construction))
 
-    def prepend_word(self, word, lemma, is_verb, xml_id):
+    def prepend_word(self, word, lemma, pos, xml_id, in_construction=True):
         """
         Prepends a word to the MultiWordExpression.
         """
-        self.words.insert(0, Word(word, lemma, is_verb, xml_id))
+        self.words.insert(0, Word(word, lemma, pos, xml_id, in_construction))
 
-    def verbs(self):
+    def construction(self):
         """
         Extracts the verbs from the MultiWordExpression.
         """
-        return [w.word for w in self.words if w.is_verb]
+        return [w.word for w in self.words if w.in_construction]
 
-    def verbs_to_string(self):
+    def construction_to_string(self):
         """
         Returns the verbs from the MultiWordExpression as a string.
         """
-        return ' '.join(self.verbs())
+        return ' '.join(self.construction())
 
-    def verb_ids(self):
-        return ' '.join([w.xml_id for w in self.words if w.is_verb])
+    def construction_ids(self):
+        return ' '.join([w.xml_id for w in self.words if w.in_construction])
 
     def words_between(self):
         """
-        Returns the total number of non-verbs in a MultiWordExpression.
+        Returns the total number of words in a MultiWordExpression not of part of the construction.
         """
-        return len([w.word for w in self.words if not w.is_verb])
+        return len([w.word for w in self.words if not w.in_construction])
 
-    def words_between_verbs(self):
+    def words_between_construction(self):
         """
-        Returns the number of non-verbs in a MultiWordExpression between the verbs.
+        Returns the number of words in a MultiWordExpression between the construction.
         """
         result = []
         current_count = 0
         for w in self.words:
-            if w.is_verb:
+            if w.in_construction:
                 result.append(current_count)
                 current_count = 0
             else:
@@ -85,10 +86,10 @@ class MultiWordExpression(object):
         pp_text = ' '.join([w.word for w in self.words])
 
         # For the replacement, mark the verbs with the MARKUP
-        if len(self.words) == len(self.verbs()):
+        if len(self.words) == len(self.construction()):
             marked_pp = MARKUP.format(pp_text)
         else:
-            marked_pp = ' '.join([MARKUP.format(w.word) if w.is_verb else w.word for w in self.words])
+            marked_pp = ' '.join([MARKUP.format(w.word) if w.in_construction else w.word for w in self.words])
 
         return self.get_sentence_words().replace(pp_text, marked_pp)
 
@@ -98,7 +99,7 @@ class Perfect(MultiWordExpression):
     A Perfect is a special kind of MultiWordExpression, consisting of an auxiliary and one or more past participles.
     """
 
-    def __init__(self, aux_verb, aux_lemma, xml_id, xml_sentence=None):
+    def __init__(self, aux_verb, aux_lemma, aux_pos, xml_id, xml_sentence=None):
         """
         A (Present/Past) Perfect is initiated by an auxiliary verb.
         """
@@ -106,7 +107,7 @@ class Perfect(MultiWordExpression):
         self.is_passive = False
         self.is_continuous = False
         self.is_reflexive = False
-        self.add_word(aux_verb, aux_lemma, True, xml_id)
+        self.add_word(aux_verb, aux_lemma, aux_pos, xml_id)
 
     def extend(self, present_perfect):
         """
@@ -115,7 +116,7 @@ class Perfect(MultiWordExpression):
         for i, w in enumerate(present_perfect.words):
             if i == 0:
                 continue
-            self.add_word(w.word, w.lemma, w.is_verb, w.xml_id)
+            self.add_word(w.word, w.lemma, w.pos, w.xml_id, w.in_construction)
 
         self.is_passive = not present_perfect.is_continuous
         self.is_continuous = present_perfect.is_continuous

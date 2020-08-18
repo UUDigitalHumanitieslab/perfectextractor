@@ -36,8 +36,8 @@ class EuroparlExtractor(BaseEuroparl, BaseExtractor):
 
         if mwe:
             result.append(self.get_type(sentence, mwe=mwe))
-            result.append(mwe.verbs_to_string())
-            result.append(mwe.verb_ids())
+            result.append(mwe.construction_to_string())
+            result.append(mwe.construction_ids())
             if self.output == XML:
                 result.append('<root>' + etree.tostring(sentence, encoding=str) + '</root>')
             else:

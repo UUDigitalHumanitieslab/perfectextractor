@@ -12,7 +12,7 @@ class TestPerfectExtractor(unittest.TestCase):
     def test_is_lexically_bound(self):
         extractor = EuroparlPerfectExtractor('en', ['de', 'es', 'fr', 'nl'], search_in_to=True)
         lemma_attr = extractor.config.get('all', 'lemma_attr')
-        mock_pp = Perfect('is', 'be', 'w1.1.1')
+        mock_pp = Perfect('is', 'be', 'VERB', 'w1.1.1')
 
         # Default case: English (no lexical bounds)
         mock_aux_verb = {lemma_attr: 'have'}
@@ -38,7 +38,7 @@ class TestPerfectExtractor(unittest.TestCase):
         self.assertTrue(extractor.is_lexically_bound('fr', mock_pp, mock_aux_verb, mock_participle))
 
         # Checking reflexive passé composés (je me suis couché)
-        mock_pp = Perfect('suis', u'être', 'w1.1.1')
+        mock_pp = Perfect('suis', u'être', 'VERB', 'w1.1.1')
         mock_aux_verb = {lemma_attr: u'être'}
         mock_participle = {lemma_attr: 'coucher'}
         self.assertFalse(extractor.is_lexically_bound('fr', mock_pp, mock_aux_verb, mock_participle))
@@ -55,11 +55,11 @@ class TestPerfectExtractor(unittest.TestCase):
 
         self.assertTrue(extractor.is_lexically_bound('fr', mock_pp, mock_aux_verb, mock_participle, mock_sentence))
         self.assertEqual(len(mock_pp.words), 2)
-        self.assertEqual(mock_pp.verbs_to_string(), 'me suis')
+        self.assertEqual(mock_pp.construction_to_string(), 'me suis')
         self.assertTrue(mock_pp.is_reflexive)
 
         # Checking reflexive passé composés (puis nous sommes restés)
-        mock_pp = Perfect('sommes', u'être', 'w1.1.1')
+        mock_pp = Perfect('sommes', u'être', 'VERB', 'w1.1.1')
         mock_aux_verb = {lemma_attr: u'être'}
         mock_participle = {lemma_attr: 'rester'}
         self.assertTrue(extractor.is_lexically_bound('fr', mock_pp, mock_aux_verb, mock_participle))
@@ -76,6 +76,6 @@ class TestPerfectExtractor(unittest.TestCase):
 
         # This should be lexically bound, but 'nous' should not be part of the passé composé
         self.assertTrue(extractor.is_lexically_bound('fr', mock_pp, mock_aux_verb, mock_participle, mock_sentence))
-        self.assertEqual(mock_pp.verbs_to_string(), 'sommes')
+        self.assertEqual(mock_pp.construction_to_string(), 'sommes')
         self.assertEqual(len(mock_pp.words), 1)
         self.assertFalse(mock_pp.is_reflexive)
