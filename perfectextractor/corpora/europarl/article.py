@@ -9,7 +9,7 @@ class EuroparlFrenchArticleExtractor(EuroparlPoSExtractor):
         :param language_from: The language to find the specified part-of-speeches in.
         :param languages_to: The languages to extract the aligned sentences from.
         """
-        super().__init__(language_from, languages_to, ['DET:ART', 'PRP:det'])
+        super().__init__(language_from, languages_to, pos=['DET:ART', 'PRP:det'])
 
         self.lemmata_list = ['le', 'un', 'du']
         self.particles = ['de', 'du']
@@ -31,25 +31,24 @@ class EuroparlFrenchArticleExtractor(EuroparlPoSExtractor):
 
         return result
 
-    def get_type(self, sentence, words=None, mwe=None):
+    def get_type(self, sentence, mwe=None):
         """
         Return the type for a found article: definite, indefinite or partitive.
         For 'des', this is quite hard to decide, so we leave both options open.
         """
         result = ''
-        lemma_attr = self.config.get('all', 'lemma_attr')
 
-        if words[-1].get(lemma_attr) == 'le':
+        if mwe.words[-1].lemma == 'le':
             result = 'definite'
-        elif words[-1].get(lemma_attr) == 'un':
+        elif mwe.words[-1].lemma == 'un':
             result = 'indefinite'
 
-        if words[0].get(lemma_attr) in self.particles:
+        if mwe.words[0].lemma in self.particles:
             if result:
                 result += ' '
             result += 'partitive'
 
-        if words[0].text == 'des':
+        if mwe.words[0].word == 'des':
             result = 'indefinite/partitive'
 
         return result

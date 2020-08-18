@@ -34,5 +34,5 @@ class EuroparlRecentPastExtractor(EuroparlExtractor, RecentPastExtractor):
             s.append(w.text.strip() if w.text else ' ')
         return ' '.join(s)
 
-    def get_type(self, sentence, words=None, mwe=None):
+    def get_type(self, sentence, mwe=None):
         return 'passé récent'

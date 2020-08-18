@@ -82,5 +82,5 @@ class EuroparlPerfectExtractor(EuroparlExtractor, PerfectExtractor):
 
         return results
 
-    def get_type(self, sentence, words=None, mwe=None):
+    def get_type(self, sentence, mwe=None):
         return mwe.perfect_type()

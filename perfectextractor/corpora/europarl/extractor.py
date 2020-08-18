@@ -29,7 +29,7 @@ class EuroparlExtractor(BaseEuroparl, BaseExtractor):
             results.append(result)
         return results
 
-    def generate_result_line(self, filename, sentence, words=None, mwe=None):
+    def generate_result_line(self, filename, sentence, mwe=None):
         result = list()
         result.append(os.path.basename(filename))
         result.append(sentence.get('id'))
@@ -43,15 +43,6 @@ class EuroparlExtractor(BaseEuroparl, BaseExtractor):
             else:
                 result.append(mwe.mark_sentence())
             self.append_metadata(mwe.words[0], sentence, result)
-        elif words:
-            result.append(self.get_type(sentence, words=words))
-            result.append(' '.join([w.text for w in words]))
-            result.append(' '.join([w.get('id') for w in words]))
-            if self.output == XML:
-                result.append('<root>' + etree.tostring(sentence, encoding=str) + '</root>')
-            else:
-                result.append(self.mark_sentence(sentence, words[0]))
-            self.append_metadata(words[0], sentence, result)
         else:
             result.append('')
             result.append('')
@@ -84,7 +75,7 @@ class EuroparlExtractor(BaseEuroparl, BaseExtractor):
 
         return result
 
-    def get_type(self, sentence, words=None, mwe=None):
+    def get_type(self, sentence, mwe=None):
         raise NotImplementedError
 
     def mark_sentence(self, sentence, match=None):
