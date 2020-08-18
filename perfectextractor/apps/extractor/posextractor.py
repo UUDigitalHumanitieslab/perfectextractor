@@ -30,10 +30,6 @@ class PoSExtractor(BaseExtractor, ABC):
         result = [word]
 
         id_attr = self.config.get('all', 'id')
-        lemma_attr = self.config.get('all', 'lemma_attr')
-
-        if self.lemmata_list and word.get(lemma_attr) not in self.lemmata_list:
-            result = []
 
         # TODO: check if this is generic
         if self.position and not word.get(id_attr).endswith('.' + str(self.position)):

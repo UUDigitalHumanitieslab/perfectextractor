@@ -95,5 +95,3 @@ class DPCExtractor(BaseDPC, BaseExtractor):
 
     def filter_by_file_size(self, file_names):
         raise NotImplementedError
-
-

@@ -10,18 +10,20 @@ class EuroparlPoSExtractor(EuroparlExtractor, PoSExtractor):
         """
         results = []
 
-        # Find potential words matching the part-of-speech
-        pos_attr = self.config.get(self.l_from, 'pos', fallback=self.config.get('all', 'pos'))
+        # Prepare the search predicates
+        id_attr = self.config.get('all', 'id')
         lemma_attr = self.config.get('all', 'lemma_attr')
+        pos_attr = self.config.get(self.l_from, 'pos', fallback=self.config.get('all', 'pos'))
+
         ns = {}
         predicate = 'contains(" {value} ", concat(" ", @{element}, " "))'
         predicates = []
 
+        if self.tokens:
+            predicates.append(predicate.format(element=id_attr, value=' '.join(self.tokens.keys())))
+
         if self.lemmata_list:
             predicates.append(predicate.format(element=lemma_attr, value=' '.join(self.lemmata_list)))
-
-        if self.tokens:
-            predicates.append(predicate.format(element='id', value=' '.join(self.tokens.keys())))
 
         if self.pos:
             predicates.append(predicate.format(element=pos_attr, value=' '.join(self.pos)))
