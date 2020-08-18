@@ -1,11 +1,9 @@
-from abc import ABCMeta, abstractmethod
+from abc import ABC, abstractmethod
 
 from perfectextractor.apps.extractor.utils import CSV, open_csv, open_xlsx
 
 
-class BaseCounter(object):
-    __metaclass__ = ABCMeta
-
+class BaseCounter(ABC):
     def __init__(self, language_from, format_=CSV):
         """
         Initializes the counter for the given source and target language(s).
@@ -35,18 +33,18 @@ class BaseCounter(object):
         """
         Returns the location of the configuration file.
         """
-        raise NotImplementedError
+        pass
 
     @abstractmethod
     def process_file(self, filename):
         """
         Process a single file
         """
-        raise NotImplementedError
+        pass
 
     @abstractmethod
     def list_filenames(self, dir_name):
         """
         List all to be processed files in the given directory.
         """
-        raise NotImplementedError
+        pass

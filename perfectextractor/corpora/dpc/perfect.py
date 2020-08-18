@@ -8,7 +8,7 @@ from .base import TEI_NS
 from .extractor import DPCExtractor
 
 
-class DPCPerfectExtractor(PerfectExtractor, DPCExtractor):
+class DPCPerfectExtractor(DPCExtractor, PerfectExtractor):
     def get_config(self):
         perfect_config = os.path.join(os.path.dirname(__file__), 'perfect.cfg')
         return [super().get_config(), perfect_config]

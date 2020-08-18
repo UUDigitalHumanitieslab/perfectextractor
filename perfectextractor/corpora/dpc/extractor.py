@@ -15,7 +15,7 @@ class DPCExtractor(BaseDPC, BaseExtractor):
         return sorted(glob.glob(os.path.join(dir_name, '*[0-9]-' + self.l_from + '-tei.xml')))
 
     def fetch_results(self, filename, s_trees, alignment_trees, translation_trees):
-        return NotImplementedError
+        raise NotImplementedError
 
     def parse_alignment_trees(self, filename):
         document = filename.split(self.l_from + '-tei.xml')[0]

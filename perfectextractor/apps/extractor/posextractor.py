@@ -1,4 +1,4 @@
-from abc import ABCMeta, abstractmethod
+from abc import ABC, abstractmethod
 import os
 
 from .base import BaseExtractor
@@ -6,9 +6,7 @@ from .base import BaseExtractor
 LEMMATA_CONFIG = os.path.join(os.path.dirname(__file__), '../config/{language}_lemmata.txt')
 
 
-class PoSExtractor(BaseExtractor):
-    __metaclass__ = ABCMeta
-
+class PoSExtractor(BaseExtractor, ABC):
     def __init__(self, language_from, languages_to=None, pos=None, regex=None, **kwargs):
         """
         Initializes the extractor for the given source and target language(s).
@@ -18,7 +16,7 @@ class PoSExtractor(BaseExtractor):
         :param pos: A list of part-of-speech tags
         :param regex: A list of regular expressions
         """
-        super(PoSExtractor, self).__init__(language_from, languages_to, **kwargs)
+        super().__init__(language_from, languages_to, **kwargs)
 
         self.pos = pos
         self.regex = regex
@@ -28,4 +26,4 @@ class PoSExtractor(BaseExtractor):
         """
         Preprocesses the found word: potentially add more words to the found words, or filter based on lemmata.
         """
-        raise NotImplementedError
+        pass

@@ -105,7 +105,7 @@ class Perfect(MultiWordExpression):
         """
         A (Present/Past) Perfect is initiated by an auxiliary verb.
         """
-        super(Perfect, self).__init__(xml_sentence)
+        super().__init__(xml_sentence)
         self.is_passive = False
         self.is_continuous = False
         self.is_reflexive = False

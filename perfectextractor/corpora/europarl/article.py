@@ -9,7 +9,7 @@ class EuroparlFrenchArticleExtractor(EuroparlPoSExtractor):
         :param language_from: The language to find the specified part-of-speeches in.
         :param languages_to: The languages to extract the aligned sentences from.
         """
-        super(EuroparlFrenchArticleExtractor, self).__init__(language_from, languages_to, ['DET:ART', 'PRP:det'])
+        super().__init__(language_from, languages_to, ['DET:ART', 'PRP:det'])
 
         self.lemmata_list = ['le', 'un', 'du']
         self.particles = ['de', 'du']
@@ -22,7 +22,7 @@ class EuroparlFrenchArticleExtractor(EuroparlPoSExtractor):
         result = []
 
         lemma_attr = self.config.get('all', 'lemma_attr')
-        for w in super(EuroparlFrenchArticleExtractor, self).preprocess_found(word):
+        for w in super().preprocess_found(word):
             prev = w.getprevious()
             if prev is not None and prev.get(lemma_attr) in self.particles:
                 result.append(prev)

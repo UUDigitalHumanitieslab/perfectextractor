@@ -1,6 +1,6 @@
 # -*- encoding: utf-8 -*-
 
-from abc import ABCMeta, abstractmethod
+from abc import ABC, abstractmethod
 import codecs
 import string
 import os
@@ -18,9 +18,7 @@ PAST = 'past'
 # FUTURE = 'future'  # TODO: implement this somewhere in the near future
 
 
-class PerfectExtractor(BaseExtractor):
-    __metaclass__ = ABCMeta
-
+class PerfectExtractor(BaseExtractor, ABC):
     def __init__(self, language_from, languages_to=None, search_in_to=False, tense=PRESENT, **kwargs):
         """
         Initializes the PerfectExtractor for the given source and target language(s).
@@ -31,7 +29,7 @@ class PerfectExtractor(BaseExtractor):
         :param search_in_to: whether to look for perfects in the target language
         :param tense: whether to search for present, past or future perfects
         """
-        super(PerfectExtractor, self).__init__(language_from, languages_to, **kwargs)
+        super().__init__(language_from, languages_to, **kwargs)
 
         self.search_in_to = search_in_to
         self.tense = tense
@@ -53,7 +51,7 @@ class PerfectExtractor(BaseExtractor):
         """
         Returns the full line for a segment number, as well as the PresentPerfect found (or None if none found)
         """
-        raise NotImplementedError
+        pass
 
     def is_lexically_bound(self, language, pp, aux_verb, past_participle, w_before=None):
         """

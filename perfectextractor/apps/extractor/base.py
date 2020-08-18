@@ -1,4 +1,4 @@
-from abc import ABCMeta, abstractmethod
+from abc import ABC, abstractmethod
 import codecs
 import configparser
 import os
@@ -35,9 +35,7 @@ class CachedConfig:
         return self.config[key]
 
 
-class BaseExtractor(object):
-    __metaclass__ = ABCMeta
-
+class BaseExtractor(ABC):
     def __init__(self, language_from, languages_to=None,
                  file_names=None, sentence_ids=None,
                  lemmata=None, tokens=None, metadata=None, regex=None,
@@ -183,7 +181,6 @@ class BaseExtractor(object):
         return results
 
     @property
-    @abstractmethod
     def sentence_tag(self):
         return 's'
 
@@ -320,42 +317,42 @@ class BaseExtractor(object):
         """
         Returns the location of the configuration file.
         """
-        raise NotImplementedError
+        pass
 
     @abstractmethod
     def fetch_results(self, filename, s_trees, alignment_trees, translation_trees):
         """
         Fetches the results for a single file
         """
-        return NotImplementedError
+        pass
 
     @abstractmethod
     def parse_alignment_trees(self, filename):
         """
         Parses the alignment trees for a single file
         """
-        return NotImplementedError
+        pass
 
     @abstractmethod
     def list_filenames(self, dir_name):
         """
         List all to be processed files in the given directory.
         """
-        raise NotImplementedError
+        pass
 
     @abstractmethod
     def get_translated_lines(self, alignment_trees, language_from, language_to, segment_number):
         """
         Returns the translated segment numbers (could be multiple) for a segment number in the original text.
         """
-        raise NotImplementedError
+        pass
 
     @abstractmethod
     def get_sentence(self, element):
         """
         Returns the full sentence XML for the given element.
         """
-        raise NotImplementedError
+        pass
 
     @abstractmethod
     def get_siblings(self, element, sentence_id, check_preceding):
@@ -363,18 +360,18 @@ class BaseExtractor(object):
         Returns the siblings of the given element in the given sentence_id.
         The check_preceding parameter allows to look either forwards or backwards.
         """
-        raise NotImplementedError
+        pass
 
     @abstractmethod
     def sort_by_alignment_certainty(self, file_names):
         """
         Sort files by their probability of having a correct sentence alignment.
         """
-        raise NotImplementedError
+        pass
 
     @abstractmethod
     def filter_by_file_size(self, file_names):
         """
         Filter files based on file size, a minimum and maximum file size can be supplied.
         """
-        raise NotImplementedError
+        pass

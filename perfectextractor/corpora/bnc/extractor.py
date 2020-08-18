@@ -10,6 +10,13 @@ from .base import BaseBNC
 
 
 class BNCExtractor(BaseBNC, BaseExtractor):
+    def fetch_results(self, filename, s_trees, alignment_trees, translation_trees):
+        raise NotImplementedError
+
+    def parse_alignment_trees(self, filename):
+        # The BNC has no alignment trees, as it's a monolingual corpus.
+        raise NotImplementedError
+
     def process_file(self, filename):
         results = []
 

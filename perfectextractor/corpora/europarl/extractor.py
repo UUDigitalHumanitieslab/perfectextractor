@@ -85,7 +85,7 @@ class EuroparlExtractor(BaseEuroparl, BaseExtractor):
         return result
 
     def get_type(self, sentence, words=None, mwe=None):
-        return NotImplementedError
+        raise NotImplementedError
 
     def mark_sentence(self, sentence, match=None):
         # TODO: this is copied from apps/models.py. Consider refactoring!
@@ -263,4 +263,4 @@ class EuroparlExtractor(BaseEuroparl, BaseExtractor):
         return results
 
     def list_directories(self, path):
-        return filter(lambda x: x.endswith(self.l_from), super(EuroparlExtractor, self).list_directories(path))
+        return filter(lambda x: x.endswith(self.l_from), super().list_directories(path))

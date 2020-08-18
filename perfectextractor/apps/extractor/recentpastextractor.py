@@ -1,13 +1,11 @@
-from abc import ABCMeta
+from abc import ABC
 import string
 
 from .base import BaseExtractor
 from .models import MultiWordExpression
 
 
-class RecentPastExtractor(BaseExtractor):
-    __metaclass__ = ABCMeta
-
+class RecentPastExtractor(BaseExtractor, ABC):
     def __init__(self, language_from, languages_to=None, **kwargs):
         """
         Initializes the extractor for the given source and target language(s).
@@ -15,7 +13,7 @@ class RecentPastExtractor(BaseExtractor):
         :param language_from: the source language
         :param languages_to: the target language(s)
         """
-        super(RecentPastExtractor, self).__init__(language_from, languages_to, **kwargs)
+        super().__init__(language_from, languages_to, **kwargs)
 
     def check_recent_past(self, w, language):
         """
