@@ -18,30 +18,6 @@ class DPCExtractor(BaseDPC, BaseExtractor):
     def fetch_results(self, filename, s_trees, alignment_trees, translation_trees):
         raise NotImplementedError
 
-    def generate_result_line(self, filename, sentence, mwe=None):
-        result = list()
-        result.append(os.path.basename(filename))
-        result.append(sentence.get('n'))
-
-        if mwe:
-            result.append(self.get_type(sentence, mwe=mwe))
-            result.append(mwe.construction_to_string())
-            if self.output == XML:
-                result.append('<root>' + etree.tostring(sentence, encoding=str) + '</root>')
-            else:
-                result.append(mwe.mark_sentence())
-            self.append_metadata(mwe.words[0], sentence, result)
-        else:
-            result.append('')
-            result.append('')
-            if self.output == XML:
-                result.append('<root>' + etree.tostring(sentence, encoding=str) + '</root>')
-            else:
-                result.append(self.mark_sentence(sentence))
-            self.append_metadata(None, sentence, result)
-
-        return result
-
     def generate_translations(self, alignment_trees, translation_trees, sentence):
         result = []
 

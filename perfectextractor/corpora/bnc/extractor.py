@@ -11,40 +11,8 @@ from .base import BaseBNC
 
 class BNCExtractor(BaseBNC, BaseExtractor):
     def fetch_results(self, filename, s_trees, alignment_trees, translation_trees):
+        # TODO: implement
         raise NotImplementedError
-
-    def parse_alignment_trees(self, filename):
-        # The BNC has no alignment trees, as it's a monolingual corpus.
-        raise NotImplementedError
-
-    def process_file(self, filename):
-        results = []
-
-        # Retrieve the genre
-        tree = etree.parse(filename)
-        genre = self.get_genre(tree)
-
-        # Parse the current tree (create a iterator over 's' elements)
-        s_trees = etree.iterparse(filename, tag='s')
-
-        # Find potential Perfects
-        for _, s in s_trees:
-            if self.sentence_ids and s.get('n') not in self.sentence_ids:
-                continue
-
-            result = list()
-            result.append(os.path.basename(filename))
-            result.append(s.get('n'))
-            result.append(genre)
-            result.append('')
-            result.append('')
-            if self.output == XML:
-                result.append('<root>' + etree.tostring(s) + '</root>')
-            else:
-                result.append(self.get_sentence_words(s))
-
-            results.append(result)
-        return results
 
     def get_sentence(self, element):
         return element.xpath('ancestor::s')[0]
@@ -64,11 +32,18 @@ class BNCExtractor(BaseBNC, BaseExtractor):
             s.append(w.text.strip() if w.text else ' ')
         return ' '.join(s)
 
-    def sort_by_alignment_certainty(self, file_names):
-        raise NotImplementedError
+    def parse_alignment_trees(self, filename):
+        # Not implemented as the BNC is a monolingual corpus.
+        return None, None
 
-    def filter_by_file_size(self, file_names):
+    def sort_by_alignment_certainty(self, file_names):
+        # Not implemented as the BNC is a monolingual corpus.
         raise NotImplementedError
 
     def get_translated_lines(self, alignment_trees, language_from, language_to, segment_number):
+        # Not implemented as the BNC is a monolingual corpus.
+        raise NotImplementedError
+
+    def filter_by_file_size(self, file_names):
+        # TODO: implement
         raise NotImplementedError

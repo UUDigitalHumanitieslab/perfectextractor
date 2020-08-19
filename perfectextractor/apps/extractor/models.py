@@ -9,7 +9,7 @@ class Word(object):
         self.word = word.strip() if word else ' '
         self.lemma = lemma.strip() if lemma else '?'
         self.pos = pos.strip() if pos else '?'
-        self.xml_id = xml_id
+        self.xml_id = xml_id.strip() if xml_id else '?'  # for corpora without XML id, we should base this on the position in the sentence
         self.in_construction = in_construction
 
 

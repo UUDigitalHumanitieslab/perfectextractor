@@ -1,20 +1,23 @@
 # -*- coding: utf-8 -*-
 
 import os
-import sys
 import unittest
 
 from perfectextractor.corpora.bnc.perfect import BNCPerfectExtractor
+from perfectextractor.corpora.bnc.pos import BNCPoSExtractor
 
 DATA_FOLDER = os.path.join(os.path.dirname(__file__), 'data/bnc')
 VERBS_COLUMN = 4
 
 
-class TestBNCPerfectExtractor(unittest.TestCase):
+class TestBNCExtractor(unittest.TestCase):
     def setUp(self):
         self.language = 'en'
         self.extractor = BNCPerfectExtractor(self.language)
         self.filename = os.path.join(DATA_FOLDER, 'ALP-formatted.xml')
+
+    def merge_results(self, generator):
+        return sum(list(generator), [])
 
     def test_init(self):
         self.assertEqual(self.extractor.config.get(self.language, 'perfect_tags'), 'VBN|VDN|VHN|VVN')
@@ -42,13 +45,23 @@ class TestBNCPerfectExtractor(unittest.TestCase):
 
     def test_lemmata_list(self):
         # Test whether the lemmata_list will exclude the listed verbs
-        self.extractor = BNCPerfectExtractor(self.language, lemmata=['show', 'run'])
-        results = self.extractor.process_file(self.filename)
+        extractor = BNCPerfectExtractor(self.language, lemmata=['show', 'run'])
+        results = extractor.process_file(self.filename)
+        self.assertEqual(len(results), 6)
         self.assertEqual(results[0][VERBS_COLUMN], 'has shown')
         self.assertEqual(results[1][VERBS_COLUMN], 'has been running')
         self.assertEqual(results[2][VERBS_COLUMN], 'has shown')
         self.assertEqual(results[3][VERBS_COLUMN], 'have been shown')
         self.assertEqual(results[4][VERBS_COLUMN], 'has shown')
+
+    def test_pos_extractor(self):
+        extractor = BNCPoSExtractor('en', [], pos=['AJ0'])
+        results = extractor.process_file(self.filename)
+        self.assertEqual(len(results), 1805)
+
+        extractor = BNCPoSExtractor('en', [], pos=['AJ0'], regex=['cal\s?$'])
+        results = extractor.process_file(self.filename)
+        self.assertEqual(len(results), 74)
 
     def test_not_implemented(self):
         self.assertRaises(NotImplementedError, self.extractor.get_line_and_pp, None, None, None)

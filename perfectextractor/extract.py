@@ -4,6 +4,7 @@ import click
 
 from perfectextractor.corpora.bnc.extractor import BNCExtractor
 from perfectextractor.corpora.bnc.perfect import BNCPerfectExtractor
+from perfectextractor.corpora.bnc.pos import BNCPoSExtractor
 from perfectextractor.corpora.dpc.extractor import DPCExtractor
 from perfectextractor.corpora.dpc.perfect import DPCPerfectExtractor
 from perfectextractor.corpora.dpc.pos import DPCPoSExtractor
@@ -120,7 +121,7 @@ def extract(folder, language_from, languages_to, corpus='europarl', extractor='b
             resulting_extractor = DPCExtractor
     elif corpus == BNC:
         if extractor == POS:
-            raise click.ClickException('Corpus or extractor type not implemented!')
+            resulting_extractor = BNCPoSExtractor
         elif extractor == PERFECT:
             resulting_extractor = BNCPerfectExtractor
         elif extractor == RECENT_PAST:

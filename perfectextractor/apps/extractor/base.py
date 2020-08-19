@@ -7,7 +7,7 @@ import time
 import click
 from lxml import etree
 
-from .utils import TXT, CSV, open_csv, open_xlsx
+from .utils import TXT, XML, CSV, open_csv, open_xlsx
 
 LEMMATA_CONFIG = os.path.join(os.path.dirname(__file__), 'config/{language}_lemmata.txt')
 
@@ -213,6 +213,34 @@ class BaseExtractor(ABC):
             header.append('alignment type')
             header.append(language)
         return header
+
+    def generate_result_line(self, filename, sentence, mwe=None):
+        id_attr = self.config.get('all', 'id')
+
+        result = list()
+        result.append(os.path.basename(filename))
+        result.append(sentence.get(id_attr))
+
+        if mwe:
+            result.append(self.get_type(sentence, mwe=mwe))
+            result.append(mwe.construction_to_string())
+            result.append(mwe.construction_ids())
+            if self.output == XML:
+                result.append('<root>' + etree.tostring(sentence, encoding=str) + '</root>')
+            else:
+                result.append(mwe.mark_sentence())
+            self.append_metadata(mwe.words[0], sentence, result)
+        else:
+            result.append('')
+            result.append('')
+            result.append('')
+            if self.output == XML:
+                result.append('<root>' + etree.tostring(sentence, encoding=str) + '</root>')
+            else:
+                result.append(self.mark_sentence(sentence))
+            self.append_metadata(None, sentence, result)
+
+        return result
 
     def read_lemmata(self, lemmata):
         """
