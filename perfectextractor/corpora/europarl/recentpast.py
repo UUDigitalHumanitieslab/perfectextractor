@@ -27,12 +27,5 @@ class EuroparlRecentPastExtractor(EuroparlExtractor, RecentPastExtractor):
 
         return results
 
-    def mark_sentence(self, sentence, match=None):
-        s = []
-        # TODO: this xPath-expression might be specific for a corpus
-        for w in sentence.xpath('.//w'):
-            s.append(w.text.strip() if w.text else ' ')
-        return ' '.join(s)
-
     def get_type(self, sentence, mwe=None):
         return 'passé récent'
