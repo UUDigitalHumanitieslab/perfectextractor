@@ -81,7 +81,7 @@ class EuroparlExtractor(BaseEuroparl, BaseExtractor):
     def mark_sentence(self, sentence, match=None):
         # TODO: this is copied from apps/models.py. Consider refactoring!
         s = []
-        # TODO: this xPath-expression might be specific for a corpus
+        # TODO: this xPath-expression is specific for a corpus
         for w in sentence.xpath('.//w'):
             if match is not None and w.get('id') == match.get('id'):
                 s.append(MARKUP.format(w.text.strip()))

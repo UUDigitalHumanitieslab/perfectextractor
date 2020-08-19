@@ -7,6 +7,7 @@ from lxml import etree
 
 from perfectextractor.apps.extractor.models import Perfect
 from perfectextractor.corpora.dpc.perfect import DPCPerfectExtractor
+from perfectextractor.corpora.dpc.pos import DPCPoSExtractor
 
 DATA_FOLDER = os.path.join(os.path.dirname(__file__), 'data/dpc')
 
@@ -85,3 +86,12 @@ class TestDPCExtractor(unittest.TestCase):
         results = self.merge_results(extractor.generate_results(os.path.join(DATA_FOLDER)))
         self.assertEqual(len(results), 1)
         self.assertEqual(results[0][3], u'avez dit')
+
+    def test_pos_extractor(self):
+        extractor = DPCPoSExtractor('en', ['nl'], pos=['JJ'])
+        results = self.merge_results(extractor.generate_results(os.path.join(DATA_FOLDER)))
+        self.assertEqual(len(results), 41)
+
+        extractor = DPCPoSExtractor('en', ['nl'], pos=['JJ'], regex=['cal$'])
+        results = self.merge_results(extractor.generate_results(os.path.join(DATA_FOLDER)))
+        self.assertEqual(len(results), 14)

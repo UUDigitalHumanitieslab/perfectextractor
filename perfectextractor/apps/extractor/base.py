@@ -192,6 +192,10 @@ class BaseExtractor(ABC):
     def sentence_tag(self):
         return 's'
 
+    @property
+    def word_tag(self):
+        return 'w'
+
     def generate_header(self):
         """
         Returns the header for the output file

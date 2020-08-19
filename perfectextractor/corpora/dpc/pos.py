@@ -1,9 +1,10 @@
 from perfectextractor.apps.extractor.posextractor import PoSExtractor
 
-from .extractor import EuroparlExtractor
+from .base import TEI_NS
+from .extractor import DPCExtractor
 
 
-class EuroparlPoSExtractor(EuroparlExtractor, PoSExtractor):
+class DPCPoSExtractor(DPCExtractor, PoSExtractor):
     def fetch_results(self, filename, s_trees, alignment_trees, translation_trees):
         """
         Processes a single file.
@@ -12,6 +13,7 @@ class EuroparlPoSExtractor(EuroparlExtractor, PoSExtractor):
 
         # Prepare the search predicates
         xpath, ns = self.prepare_xpath()
+        ns.update(TEI_NS)
 
         for _, s in s_trees:
             for w in s.xpath(xpath, namespaces=ns):

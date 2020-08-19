@@ -13,3 +13,7 @@ class BaseDPC(object):
     @property
     def sentence_tag(self):
         return '{{{}}}s'.format(TEI_URL)
+
+    @property
+    def word_tag(self):
+        return 'ns:w'

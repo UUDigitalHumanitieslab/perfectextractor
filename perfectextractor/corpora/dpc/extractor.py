@@ -6,6 +6,7 @@ import os
 from lxml import etree
 
 from perfectextractor.apps.extractor.base import BaseExtractor
+from perfectextractor.apps.extractor.utils import XML
 from .base import BaseDPC, TEI_NS
 from .utils import is_nl, NL
 
@@ -16,6 +17,55 @@ class DPCExtractor(BaseDPC, BaseExtractor):
 
     def fetch_results(self, filename, s_trees, alignment_trees, translation_trees):
         raise NotImplementedError
+
+    def generate_result_line(self, filename, sentence, mwe=None):
+        result = list()
+        result.append(os.path.basename(filename))
+        result.append(sentence.get('n'))
+
+        if mwe:
+            result.append(self.get_type(sentence, mwe=mwe))
+            result.append(mwe.construction_to_string())
+            if self.output == XML:
+                result.append('<root>' + etree.tostring(sentence, encoding=str) + '</root>')
+            else:
+                result.append(mwe.mark_sentence())
+            self.append_metadata(mwe.words[0], sentence, result)
+        else:
+            result.append('')
+            result.append('')
+            if self.output == XML:
+                result.append('<root>' + etree.tostring(sentence, encoding=str) + '</root>')
+            else:
+                result.append(self.mark_sentence(sentence))
+            self.append_metadata(None, sentence, result)
+
+        return result
+
+    def generate_translations(self, alignment_trees, translation_trees, sentence):
+        result = []
+
+        for language_to in self.l_to:
+            if language_to in translation_trees:
+                translated_lines, alignment_type = self.get_translated_lines(alignment_trees, self.l_from, language_to, sentence.get('n'))
+                translated_sentences = [self.get_line_as_xml(translation_trees[language_to], line) for line in translated_lines]
+                result.append('\n'.join([self.mark_sentence(ts) for ts in translated_sentences]) if translated_sentences else '')
+            else:
+                # If no translation is available, add empty columns
+                result.extend([''] * 2)
+
+        return result
+
+    def get_line_as_xml(self, tree, segment_number):
+        return tree.xpath('//ns:s[@n="' + segment_number + '"]', namespaces=TEI_NS)[0]
+
+    def mark_sentence(self, sentence, match=None):
+        # TODO: this is copied from apps/models.py. Consider refactoring!
+        s = []
+        # TODO: this xPath-expression is specific for a corpus
+        for w in sentence.xpath('.//ns:w', namespaces=TEI_NS):
+            s.append(w.text.strip() if w.text else ' ')
+        return ' '.join(s)
 
     def parse_alignment_trees(self, filename):
         document = filename.split(self.l_from + '-tei.xml')[0]

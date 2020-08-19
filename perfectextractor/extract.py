@@ -6,6 +6,7 @@ from perfectextractor.corpora.bnc.extractor import BNCExtractor
 from perfectextractor.corpora.bnc.perfect import BNCPerfectExtractor
 from perfectextractor.corpora.dpc.extractor import DPCExtractor
 from perfectextractor.corpora.dpc.perfect import DPCPerfectExtractor
+from perfectextractor.corpora.dpc.pos import DPCPoSExtractor
 from perfectextractor.corpora.europarl.extractor import EuroparlExtractor
 from perfectextractor.corpora.europarl.perfect import EuroparlPerfectExtractor
 from perfectextractor.corpora.europarl.pos import EuroparlPoSExtractor
@@ -108,7 +109,7 @@ def extract(folder, language_from, languages_to, corpus='europarl', extractor='b
             resulting_extractor = EuroparlExtractor
     elif corpus == DPC:
         if extractor == POS:
-            raise click.ClickException('Corpus or extractor type not implemented!')
+            resulting_extractor = DPCPoSExtractor
         elif extractor == PERFECT:
             resulting_extractor = DPCPerfectExtractor
         elif extractor == RECENT_PAST:

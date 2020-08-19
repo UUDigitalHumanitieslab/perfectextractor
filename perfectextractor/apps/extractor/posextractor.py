@@ -19,6 +19,36 @@ class PoSExtractor(BaseExtractor, ABC):
         self.pos = pos
         self.regex = regex
 
+    def prepare_xpath(self):
+        id_attr = self.config.get('all', 'id')
+        lemma_attr = self.config.get('all', 'lemma_attr')
+        pos_attr = self.config.get(self.l_from, 'pos', fallback=self.config.get('all', 'pos'))
+
+        ns = {}
+        predicate = 'contains(" {value} ", concat(" ", @{element}, " "))'
+        predicates = []
+
+        if self.tokens:
+            predicates.append(predicate.format(element=id_attr, value=' '.join(self.tokens.keys())))
+        if self.lemmata_list:
+            predicates.append(predicate.format(element=lemma_attr, value=' '.join(self.lemmata_list)))
+        if self.pos:
+            predicates.append(predicate.format(element=pos_attr, value=' '.join(self.pos)))
+        if self.regex:
+            # prepare a pattern that combines multiple regexps using OR operators
+            # and non-capturing groups
+            pattern = '|'.join('(?:{})'.format(r) for r in self.regex)
+
+            # special namespace required for enabling regular expression functions
+            ns = {"re": "http://exslt.org/regular-expressions"}
+            predicates.append('re:test(., "{pattern}", "i")'.format(pattern=pattern))
+
+        xpath = './/' + self.word_tag
+        if predicates:
+            xpath = './/{}[{}]'.format(self.word_tag, ' and '.join(predicates))
+
+        return xpath, ns
+
     def preprocess_found(self, word):
         """
         Preprocesses the found word:
