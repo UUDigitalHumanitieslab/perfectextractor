@@ -77,7 +77,7 @@ class OPUSPerfectExtractor(OPUSExtractor, PerfectExtractor):
                     result.append(','.join(tenses))
                     result.append('')
                     result.append(self.mark_sentence(s))
-                    self.append_metadata(None, s, result)
+                    self.append_metadata(s, result)
                     results.append(result)
 
         return results

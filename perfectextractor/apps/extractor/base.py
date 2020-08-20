@@ -3,7 +3,7 @@ import codecs
 import configparser
 import os
 import time
-from typing import List, Generator, Iterator, Optional
+from typing import Dict, Generator, Iterator, List, Optional, Tuple, Union
 
 import click
 from lxml import etree
@@ -15,12 +15,24 @@ LEMMATA_CONFIG = os.path.join(os.path.dirname(__file__), 'config/{language}_lemm
 
 
 class BaseExtractor(ABC):
-    def __init__(self, language_from, languages_to=None,
-                 file_names=None, sentence_ids=None,
-                 lemmata=None, tokens=None, metadata=None, regex=None,
-                 outfile=None, position=None, output=TXT, format_=CSV,
-                 one_per_sentence=False,
-                 sort_by_certainty=False, file_limit=0, min_file_size=0, max_file_size=0):
+    def __init__(self,
+                 language_from: str,
+                 languages_to: Optional[List[str]] = None,
+                 file_names: Optional[List[str]] = None,
+                 sentence_ids: Optional[List[str]] = None,
+                 lemmata: Optional[Union[Tuple[str], List[str], bool]] = None,
+                 tokens: Optional[List[Tuple[str, str]]] = None,
+                 metadata: Optional[List[Tuple[str, str]]] = None,
+                 regex: Optional[List[str]] = None,
+                 outfile: Optional[str] = None,
+                 position: Optional[int] = None,
+                 output: str = TXT,
+                 format_: str = CSV,
+                 one_per_sentence: bool = False,
+                 sort_by_certainty: bool = False,
+                 file_limit: int = 0,
+                 min_file_size: int = 0,
+                 max_file_size: int = 0) -> None:
         """
         Initializes the extractor for the given source and target language(s).
         :param language_from: the source language
@@ -45,8 +57,8 @@ class BaseExtractor(ABC):
         self.l_to = languages_to or []
         self.file_names = file_names
         self.sentence_ids = sentence_ids
-        self.tokens = dict(tokens) if tokens else None
-        self.metadata = dict(metadata) if metadata else {}
+        self.tokens: Optional[Dict[str, str]] = dict(tokens) if tokens else None
+        self.metadata: Dict[str, str] = dict(metadata) if metadata else {}
         self.regex = regex
         self.outfile = outfile
         self.position = position
@@ -59,7 +71,7 @@ class BaseExtractor(ABC):
         self.max_file_size = max_file_size
 
         # Read in the lemmata list (if provided)
-        self.lemmata_list = []
+        self.lemmata_list: List[str] = []
         self.read_lemmata(lemmata)
 
         # Read the config
@@ -68,11 +80,11 @@ class BaseExtractor(ABC):
         self.config = CachedConfig(config)
 
         # Other variables
-        self.other_extractors = []
-        self.alignment_xmls = dict()
-        self._index = dict()  # save segments indexed by id
+        self.other_extractors: List[BaseExtractor] = []
+        self.alignment_xmls: Dict[str, str] = dict()
+        self._index: Dict[str, str] = dict()  # save segments indexed by id
 
-    def read_lemmata(self, lemmata):
+    def read_lemmata(self, lemmata: Optional[Union[Tuple[str], List[str], bool]]) -> None:
         """
         Gathers the lemmata to be filtered upon.
         """
@@ -162,8 +174,7 @@ class BaseExtractor(ABC):
         s_trees = etree.iterparse(filename, tag=self.sentence_tag)
 
         # Filter the sentence trees
-        if self.sentence_ids:
-            s_trees = self.filter_sentences(s_trees)
+        s_trees = self.filter_sentences(s_trees)
 
         # Parse the alignment and translation trees
         alignment_trees, translation_trees = self.parse_alignment_trees(filename)
@@ -185,12 +196,15 @@ class BaseExtractor(ABC):
         """
         Filters the sentences based on the provided sentence_ids.
         """
-        # TODO: preferably, this should also return an iterparse instead of a list
-        result = []
-        for event, s in s_trees:
-            if s.get(self.config.get('all', 'id')) in self.sentence_ids:
-                result.append((event, s))
-        return result
+        if self.sentence_ids:
+            # TODO: preferably, this should also return an iterparse instead of a list
+            result = []
+            for event, s in s_trees:
+                if s.get(self.config.get('all', 'id')) in self.sentence_ids:
+                    result.append((event, s))
+            return result
+        else:
+            return s_trees
 
     @property
     def sentence_tag(self) -> str:
@@ -249,7 +263,7 @@ class BaseExtractor(ABC):
                 result.append('<root>' + str(etree.tostring(sentence, encoding=str)) + '</root>')
             else:
                 result.append(mwe.mark_sentence())
-            self.append_metadata(mwe.words[0], sentence, result)
+            self.append_metadata(sentence, result)
         else:
             result.append('')
             result.append('')
@@ -258,21 +272,18 @@ class BaseExtractor(ABC):
                 result.append('<root>' + str(etree.tostring(sentence, encoding=str)) + '</root>')
             else:
                 result.append(self.mark_sentence(sentence))
-            self.append_metadata(None, sentence, result)
+            self.append_metadata(sentence, result)
 
         return result
 
     def append_metadata(self,
-                        w: Optional[etree._Element],
                         s: Optional[etree._Element],
                         result: List[Optional[str]]) -> None:
         """
         Appends metadata for to a result line.
         """
         for metadata, level in self.metadata.items():
-            if w is not None and level == 'w':
-                result.append(w.get(metadata))
-            elif s is not None and level == 's':
+            if s is not None and level == 's':
                 result.append(s.get(metadata))
             elif s is not None and level == 'p':
                 result.append(s.getparent().get(metadata))
@@ -281,7 +292,7 @@ class BaseExtractor(ABC):
             else:
                 raise ValueError('Invalid level {}'.format(level))
 
-    def add_extractor(self, extractor):
+    def add_extractor(self, extractor: 'BaseExtractor') -> None:
         """
         Adds another Extractor to this Extractor. This allows to combine Extractors.
         The last added Extractor determines the output.
@@ -355,9 +366,9 @@ class BaseExtractor(ABC):
         return tense, tenses
 
     @abstractmethod
-    def get_config(self):
+    def get_config(self) -> Union[str, List[str]]:
         """
-        Returns the location of the configuration file.
+        Returns the location of the configuration file, potentially multiple
         """
         pass
 
@@ -369,14 +380,14 @@ class BaseExtractor(ABC):
         pass
 
     @abstractmethod
-    def parse_alignment_trees(self, filename):
+    def parse_alignment_trees(self, filename: str):
         """
         Parses the alignment trees for a single file.
         """
         pass
 
     @abstractmethod
-    def list_filenames(self, dir_name):
+    def list_filenames(self, dir_name: str) -> List[str]:
         """
         List all to be processed files in the given directory.
         """
@@ -390,14 +401,14 @@ class BaseExtractor(ABC):
         pass
 
     @abstractmethod
-    def get_sentence(self, element):
+    def get_sentence(self, element: etree._Element) -> etree._Element:
         """
         Returns the full sentence XML for the given element.
         """
         pass
 
     @abstractmethod
-    def get_siblings(self, element, sentence_id, check_preceding):
+    def get_siblings(self, element: etree._Element, sentence_id: Optional[str], check_preceding: bool):
         """
         Returns the siblings of the given element in the given sentence_id.
         The check_preceding parameter allows to look either forwards or backwards.
@@ -405,21 +416,21 @@ class BaseExtractor(ABC):
         pass
 
     @abstractmethod
-    def sort_by_alignment_certainty(self, file_names):
+    def sort_by_alignment_certainty(self, file_names: List[str]) -> List[str]:
         """
         Sort files by their probability of having a correct sentence alignment.
         """
         pass
 
     @abstractmethod
-    def filter_by_file_size(self, file_names):
+    def filter_by_file_size(self, file_names: List[str]) -> List[str]:
         """
         Filter files based on file size, a minimum and maximum file size can be supplied.
         """
         pass
 
     @abstractmethod
-    def get_type(self, sentence, mwe=None):
+    def get_type(self, sentence: etree._Element, mwe: Optional[MultiWordExpression] = None) -> str:
         """
         Return a classification for the sentence or the found MultiWordExpression.
         """

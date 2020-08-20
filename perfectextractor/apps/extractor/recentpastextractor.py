@@ -1,12 +1,18 @@
 from abc import ABC
 import string
+from typing import List, Optional
+
+from lxml import etree
 
 from .base import BaseExtractor
 from .models import MultiWordExpression
 
 
 class RecentPastExtractor(BaseExtractor, ABC):
-    def __init__(self, language_from, languages_to=None, **kwargs):
+    def __init__(self,
+                 language_from: str,
+                 languages_to: Optional[List[str]] = None,
+                 **kwargs) -> None:
         """
         Initializes the extractor for the given source and target language(s).
         Reads in the config for the source language.
@@ -17,7 +23,7 @@ class RecentPastExtractor(BaseExtractor, ABC):
 
         self.check_language_in_config(language_from)
 
-    def check_recent_past(self, w, language):
+    def check_recent_past(self, w: etree._Element, language: str) -> Optional[MultiWordExpression]:
         """
         Checks if the element w is the start of a recent past construction
         :param w: the starting element

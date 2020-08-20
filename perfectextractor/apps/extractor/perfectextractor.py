@@ -4,6 +4,7 @@ from abc import ABC, abstractmethod
 import codecs
 import string
 import os
+from typing import List, Optional
 
 from .base import BaseExtractor
 from .models import Perfect
@@ -19,7 +20,12 @@ PAST = 'past'
 
 
 class PerfectExtractor(BaseExtractor, ABC):
-    def __init__(self, language_from, languages_to=None, search_in_to=False, tense=PRESENT, **kwargs):
+    def __init__(self,
+                 language_from: str,
+                 languages_to: Optional[List[str]] = None,
+                 search_in_to: bool = False,
+                 tense: str = PRESENT,
+                 **kwargs):
         """
         Initializes the PerfectExtractor for the given source and target language(s).
         Reads in the config for the source language,

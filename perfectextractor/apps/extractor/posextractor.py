@@ -1,11 +1,19 @@
 from abc import ABC
+from typing import Dict, List, Optional, Tuple
+
+from lxml import etree
 
 from .base import BaseExtractor
 from .models import MultiWordExpression
 
 
 class PoSExtractor(BaseExtractor, ABC):
-    def __init__(self, language_from, languages_to=None, pos=None, regex=None, **kwargs):
+    def __init__(self,
+                 language_from: str,
+                 languages_to: Optional[List[str]] = None,
+                 pos: Optional[List[str]] = None,
+                 regex: Optional[List[str]] = None,
+                 **kwargs) -> None:
         """
         Initializes the extractor for the given source and target language(s).
         Reads in the config for the source language.
@@ -19,7 +27,7 @@ class PoSExtractor(BaseExtractor, ABC):
         self.pos = pos
         self.regex = regex
 
-    def prepare_xpath(self):
+    def prepare_xpath(self) -> Tuple[str, Dict[str, str]]:
         id_attr = self.config.get('all', 'id')
         lemma_attr = self.config.get('all', 'lemma_attr')
         pos_attr = self.config.get(self.l_from, 'pos', fallback=self.config.get('all', 'pos'))
@@ -49,7 +57,7 @@ class PoSExtractor(BaseExtractor, ABC):
 
         return xpath, ns
 
-    def preprocess_found(self, word):
+    def preprocess_found(self, word: etree._Element) -> List[etree._Element]:
         """
         Preprocesses the found word:
         - removes a word if it does not occur in the lemmata list
@@ -82,11 +90,11 @@ class PoSExtractor(BaseExtractor, ABC):
 
         return result
 
-    def words2mwe(self, words, sentence):
+    def words2mwe(self, words: List[etree._Element], sentence: etree._Element) -> MultiWordExpression:
         id_attr = self.config.get('all', 'id')
         lemma_attr = self.config.get('all', 'lemma_attr')
 
         result = MultiWordExpression(sentence)
         for word in words:
-            result.add_word(word.text, word.get(lemma_attr), self.get_pos(self.l_from, word), word.get(id_attr))
+            result.add_word(str(word.text), word.get(lemma_attr), self.get_pos(self.l_from, word), word.get(id_attr))
         return result

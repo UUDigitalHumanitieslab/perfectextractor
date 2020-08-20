@@ -1,57 +1,77 @@
+from typing import List, Optional
+
+from lxml import etree
+
 MARKUP = u'**{}**'
 
 
-class Word(object):
+class Word:
     """
-    Each Word consists of a word, its lemma, and a designation if this is a verb.
+    Each Word consists of a word, its lemma, and a designation if this is part of a construction.
     """
-    def __init__(self, word, lemma, pos, xml_id, in_construction=True):
+    def __init__(self,
+                 word: Optional[str],
+                 lemma: Optional[str],
+                 pos: Optional[str],
+                 xml_id: Optional[str],
+                 in_construction: bool = True) -> None:
         self.word = word.strip() if word else ' '
         self.lemma = lemma.strip() if lemma else '?'
         self.pos = pos.strip() if pos else '?'
-        self.xml_id = xml_id.strip() if xml_id else '?'  # for corpora without XML id, we should base this on the position in the sentence
+        self.xml_id = xml_id.strip() if xml_id else '?'  # TODO: for corpora without XML id, we should base this on the position in the sentence
         self.in_construction = in_construction
 
 
-class MultiWordExpression(object):
-    def __init__(self, xml_sentence=None):
+class MultiWordExpression:
+    def __init__(self,
+                 xml_sentence: Optional[etree._Element] = None) -> None:
         self.xml_sentence = xml_sentence
-        self.words = []
+        self.words: List[Word] = []
 
-    def add_word(self, word, lemma, pos, xml_id, in_construction=True):
+    def add_word(self,
+                 word: Optional[str],
+                 lemma: Optional[str],
+                 pos: Optional[str],
+                 xml_id: Optional[str],
+                 in_construction: bool = True) -> None:
         """
         Adds a word to the MultiWordExpression.
         """
         self.words.append(Word(word, lemma, pos, xml_id, in_construction))
 
-    def prepend_word(self, word, lemma, pos, xml_id, in_construction=True):
+    def prepend_word(self,
+                     word: Optional[str],
+                     lemma: Optional[str],
+                     pos: Optional[str],
+                     xml_id: Optional[str],
+                     in_construction: bool = True) -> None:
         """
         Prepends a word to the MultiWordExpression.
         """
         self.words.insert(0, Word(word, lemma, pos, xml_id, in_construction))
 
-    def construction(self):
+    def construction(self) -> List[str]:
         """
-        Extracts the verbs from the MultiWordExpression.
+        Extracts the words in the construction from the MultiWordExpression.
         """
         return [w.word for w in self.words if w.in_construction]
 
-    def construction_to_string(self):
+    def construction_to_string(self) -> str:
         """
-        Returns the verbs from the MultiWordExpression as a string.
+        Returns the construction from the MultiWordExpression as a string.
         """
         return ' '.join(self.construction())
 
-    def construction_ids(self):
+    def construction_ids(self) -> str:
         return ' '.join([w.xml_id for w in self.words if w.in_construction])
 
-    def words_between(self):
+    def words_between(self) -> int:
         """
         Returns the total number of words in a MultiWordExpression not of part of the construction.
         """
         return len([w.word for w in self.words if not w.in_construction])
 
-    def words_between_construction(self):
+    def words_between_construction(self) -> List[int]:
         """
         Returns the number of words in a MultiWordExpression between the construction.
         """
@@ -66,14 +86,16 @@ class MultiWordExpression(object):
 
         return result
 
-    def get_sentence_words(self):
+    def get_sentence_words(self) -> str:
         s = []
         # TODO: this xPath-expression might be specific for a corpus
-        for w in self.xml_sentence.xpath('.//w'):
-            s.append(w.text.strip() if w.text else ' ')
+        if self.xml_sentence:
+            words: List[etree._Element] = self.xml_sentence.xpath('.//w')
+            for w in words:
+                s.append(str(w.text.strip() if w.text else ' '))
         return ' '.join(s)
 
-    def mark_sentence(self):
+    def mark_sentence(self) -> str:
         """
         Marks the MultiWordExpression in a full sentence.
         """
@@ -99,7 +121,12 @@ class Perfect(MultiWordExpression):
     A Perfect is a special kind of MultiWordExpression, consisting of an auxiliary and one or more past participles.
     """
 
-    def __init__(self, aux_verb, aux_lemma, aux_pos, xml_id, xml_sentence=None):
+    def __init__(self,
+                 aux_verb: Optional[str],
+                 aux_lemma: Optional[str],
+                 aux_pos: Optional[str],
+                 xml_id: Optional[str],
+                 xml_sentence: Optional[etree._Element] = None) -> None:
         """
         A (Present/Past) Perfect is initiated by an auxiliary verb.
         """
@@ -109,27 +136,27 @@ class Perfect(MultiWordExpression):
         self.is_reflexive = False
         self.add_word(aux_verb, aux_lemma, aux_pos, xml_id)
 
-    def extend(self, present_perfect):
+    def extend(self, perfect: 'Perfect') -> None:
         """
         Extends a Perfect with another one (used to create a passive or continuous Perfect).
         """
-        for i, w in enumerate(present_perfect.words):
+        for i, w in enumerate(perfect.words):
             if i == 0:
                 continue
             self.add_word(w.word, w.lemma, w.pos, w.xml_id, w.in_construction)
 
-        self.is_passive = not present_perfect.is_continuous
-        self.is_continuous = present_perfect.is_continuous
+        self.is_passive = not perfect.is_continuous
+        self.is_continuous = perfect.is_continuous
 
-    def perfect_lemma(self):
+    def perfect_lemma(self) -> str:
         """
         Returns the lemma of the Perfect: the lemma of the last word of the construction.
         """
         return self.words[-1].lemma
 
-    def perfect_type(self):
+    def perfect_type(self) -> str:
         """
-        Returns the type of Perfect
+        Returns the type of Perfect.
         """
         # TODO: This should be language-dependent, as well as dependent upon being a Present or Past Perfect
         result = 'present perfect'
@@ -140,8 +167,8 @@ class Perfect(MultiWordExpression):
         return result
 
 
-class Alignment(object):
-    def __init__(self, sources, targets, certainty=None):
+class Alignment:
+    def __init__(self, sources: List[str], targets: List[str], certainty: Optional[float] = None) -> None:
         self.sources = sources
         self.targets = targets
         self.certainty = certainty

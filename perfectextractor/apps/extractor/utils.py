@@ -1,7 +1,9 @@
 import contextlib
+import configparser
 import csv
+from typing import Dict, List, Tuple, Union
 
-from xlsxwriter import Workbook
+from xlsxwriter import Workbook  # type: ignore
 
 # Output formats for the results
 TXT = 'txt'
@@ -58,26 +60,23 @@ class CachedConfig:
     """
     Caches the parsed config to save time when doing the lookups.
     """
-    def __init__(self, config):
-        self.cache = dict()
+    def __init__(self, config: configparser.ConfigParser) -> None:
+        self.cache: Dict[Tuple[str, str], Union[str, bool]] = dict()
         self.config = config
 
-    def setdefault(self, key, func):
+    def setdefault(self, key: Tuple[str, str], func):
         if key in self.cache:
             return self.cache[key]
         return self.cache.setdefault(key, func())
 
-    def get(self, section, key, **kwargs):
+    def get(self, section: str, key: str, **kwargs) -> str:
         return self.setdefault((section, key), lambda: self.config.get(section, key, **kwargs))
 
-    def getboolean(self, section, key, **kwargs):
+    def getboolean(self, section: str, key: str, **kwargs) -> bool:
         return self.setdefault((section, key), lambda: self.config.getboolean(section, key, **kwargs))
 
-    def items(self, section):
-        return self.setdefault(section, lambda: self.config.items(section))
-
-    def sections(self):
+    def sections(self) -> List[str]:
         return self.config.sections()
 
-    def __getitem__(self, key):
+    def __getitem__(self, key: str) -> configparser.SectionProxy:
         return self.config[key]
