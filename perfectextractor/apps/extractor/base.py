@@ -3,10 +3,12 @@ import codecs
 import configparser
 import os
 import time
+from typing import List, Generator, Iterator, Optional
 
 import click
 from lxml import etree
 
+from .models import MultiWordExpression
 from .utils import TXT, XML, CSV, open_csv, open_xlsx, CachedConfig
 
 LEMMATA_CONFIG = os.path.join(os.path.dirname(__file__), 'config/{language}_lemmata.txt')
@@ -84,7 +86,7 @@ class BaseExtractor(ABC):
             else:
                 raise ValueError('Unknown value for lemmata')
 
-    def check_language_in_config(self, language):
+    def check_language_in_config(self, language: str) -> None:
         """
         Checks whether there is an implementation available for the given language.
         """
@@ -92,7 +94,7 @@ class BaseExtractor(ABC):
             msg = 'No implementation for {} for language {}'.format(self.__class__.__name__, language)
             raise click.ClickException(msg)
 
-    def process_folder(self, dir_name, progress_cb=None, done_cb=None):
+    def process_folder(self, dir_name: str, progress_cb=None, done_cb=None) -> None:
         """
         Creates a result file and processes each file in a folder.
         """
@@ -113,7 +115,7 @@ class BaseExtractor(ABC):
             if done_cb:
                 done_cb(result_file)
 
-    def collect_file_names(self, dir_name):
+    def collect_file_names(self, dir_name: str) -> List[str]:
         """
         Collects the file names in a given directory and (potentially) filters these based on file size,
         alignment certainty or a limited number of files.
@@ -139,7 +141,7 @@ class BaseExtractor(ABC):
         click.echo('Finished collecting file names, starting processing...')
         return file_names
 
-    def generate_results(self, dir_name, file_names=None):
+    def generate_results(self, dir_name: str, file_names: List[str] = None) -> Generator[List[str], List[str], None]:
         """
         Generates the results for a directory or a set of files.
         """
@@ -149,7 +151,7 @@ class BaseExtractor(ABC):
         for f in file_names:
             yield self.process_file(f)
 
-    def process_file(self, filename):
+    def process_file(self, filename: str) -> List[str]:
         """
         Processes a single file.
         """
@@ -179,10 +181,11 @@ class BaseExtractor(ABC):
 
         return results
 
-    def filter_sentences(self, s_trees):
+    def filter_sentences(self, s_trees: etree.iterparse):
         """
         Filters the sentences based on the provided sentence_ids.
         """
+        # TODO: preferably, this should also return an iterparse instead of a list
         result = []
         for event, s in s_trees:
             if s.get(self.config.get('all', 'id')) in self.sentence_ids:
@@ -190,20 +193,20 @@ class BaseExtractor(ABC):
         return result
 
     @property
-    def sentence_tag(self):
+    def sentence_tag(self) -> str:
         """
         The XML tag used for sentences.
         """
         return 's'
 
     @property
-    def word_tag(self):
+    def word_tag(self) -> str:
         """
         The XML tag used for words.
         """
         return 'w'
 
-    def generate_header(self):
+    def generate_header(self) -> List[str]:
         """
         Returns the header for the output file.
         """
@@ -221,7 +224,10 @@ class BaseExtractor(ABC):
             header.append(language)
         return header
 
-    def generate_result_line(self, filename, sentence, mwe=None):
+    def generate_result_line(self,
+                             filename: str,
+                             sentence: etree._Element,
+                             mwe: MultiWordExpression = None) -> List[Optional[str]]:
         """
         Returns a single result line
         :param filename: The current filename
@@ -231,7 +237,7 @@ class BaseExtractor(ABC):
         """
         id_attr = self.config.get('all', 'id')
 
-        result = list()
+        result: List[Optional[str]] = list()
         result.append(os.path.basename(filename))
         result.append(sentence.get(id_attr))
 
@@ -240,7 +246,7 @@ class BaseExtractor(ABC):
             result.append(mwe.construction_to_string())
             result.append(mwe.construction_ids())
             if self.output == XML:
-                result.append('<root>' + etree.tostring(sentence, encoding=str) + '</root>')
+                result.append('<root>' + str(etree.tostring(sentence, encoding=str)) + '</root>')
             else:
                 result.append(mwe.mark_sentence())
             self.append_metadata(mwe.words[0], sentence, result)
@@ -249,14 +255,17 @@ class BaseExtractor(ABC):
             result.append('')
             result.append('')
             if self.output == XML:
-                result.append('<root>' + etree.tostring(sentence, encoding=str) + '</root>')
+                result.append('<root>' + str(etree.tostring(sentence, encoding=str)) + '</root>')
             else:
                 result.append(self.mark_sentence(sentence))
             self.append_metadata(None, sentence, result)
 
         return result
 
-    def append_metadata(self, w, s, result):
+    def append_metadata(self,
+                        w: Optional[etree._Element],
+                        s: Optional[etree._Element],
+                        result: List[Optional[str]]) -> None:
         """
         Appends metadata for to a result line.
         """
@@ -279,11 +288,11 @@ class BaseExtractor(ABC):
         """
         self.other_extractors.append(extractor)
 
-    def list_directories(self, path):
+    def list_directories(self, path: str) -> Iterator[str]:
         directories = [os.path.join(path, directory) for directory in os.listdir(path)]
         return filter(os.path.isdir, directories)
 
-    def get_pos(self, language, element):
+    def get_pos(self, language: str, element: etree._Element) -> Optional[str]:
         """
         Retrieves the part-of-speech tag for the current language and given element,
         with a fallback to the default part-of-speech tag in the corpus as a whole.
