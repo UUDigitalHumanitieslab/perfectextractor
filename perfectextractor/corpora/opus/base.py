@@ -4,7 +4,7 @@ import os
 BASE_CONFIG = os.path.join(os.path.dirname(__file__), 'base.cfg')
 
 
-class BaseEuroparl(object):
+class BaseOPUS(object):
     def get_config(self):
         return BASE_CONFIG
 

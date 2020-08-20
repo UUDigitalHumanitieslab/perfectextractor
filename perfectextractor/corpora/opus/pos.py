@@ -1,9 +1,9 @@
 from perfectextractor.apps.extractor.posextractor import PoSExtractor
 
-from .extractor import EuroparlExtractor
+from .extractor import OPUSExtractor
 
 
-class EuroparlPoSExtractor(EuroparlExtractor, PoSExtractor):
+class OPUSPoSExtractor(OPUSExtractor, PoSExtractor):
     def fetch_results(self, filename, s_trees, alignment_trees, translation_trees):
         """
         Processes a single file.

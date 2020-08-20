@@ -5,12 +5,12 @@ import unittest
 from lxml import etree
 
 from perfectextractor.apps.extractor.models import Perfect
-from perfectextractor.corpora.europarl.perfect import EuroparlPerfectExtractor
+from perfectextractor.corpora.opus.perfect import OPUSPerfectExtractor
 
 
 class TestPerfectExtractor(unittest.TestCase):
     def test_is_lexically_bound(self):
-        extractor = EuroparlPerfectExtractor('en', ['de', 'es', 'fr', 'nl'], search_in_to=True)
+        extractor = OPUSPerfectExtractor('en', ['de', 'es', 'fr', 'nl'], search_in_to=True)
         lemma_attr = extractor.config.get('all', 'lemma_attr')
         mock_pp = Perfect('is', 'be', 'VERB', 'w1.1.1')
 

@@ -8,18 +8,18 @@ from perfectextractor.corpora.bnc.pos import BNCPoSExtractor
 from perfectextractor.corpora.dpc.extractor import DPCExtractor
 from perfectextractor.corpora.dpc.perfect import DPCPerfectExtractor
 from perfectextractor.corpora.dpc.pos import DPCPoSExtractor
-from perfectextractor.corpora.europarl.extractor import EuroparlExtractor
-from perfectextractor.corpora.europarl.perfect import EuroparlPerfectExtractor
-from perfectextractor.corpora.europarl.pos import EuroparlPoSExtractor
-from perfectextractor.corpora.europarl.recentpast import EuroparlRecentPastExtractor
-from perfectextractor.corpora.europarl.since import EuroparlSinceDurationExtractor
+from perfectextractor.corpora.opus.extractor import OPUSExtractor
+from perfectextractor.corpora.opus.perfect import OPUSPerfectExtractor
+from perfectextractor.corpora.opus.pos import OPUSPoSExtractor
+from perfectextractor.corpora.opus.recentpast import OPUSRecentPastExtractor
+from perfectextractor.corpora.opus.since import OPUSSinceDurationExtractor
 from perfectextractor.apps.extractor.utils import TXT, XML, CSV, XLSX
 from perfectextractor.apps.extractor.perfectextractor import PRESENT, PAST
 
 # Corpora
 BNC = 'bnc'
 DPC = 'dpc'
-EUROPARL = 'europarl'
+OPUS = 'opus'
 
 # Extractor types
 BASE = 'base'
@@ -41,7 +41,7 @@ def process_data_folders(extractor, path):
 @click.argument('folder')
 @click.argument('language_from')
 @click.argument('languages_to', nargs=-1)  # nargs=-1 eats up all remaining arguments
-@click.option('--corpus', default=EUROPARL, type=click.Choice([EUROPARL, DPC, BNC]),
+@click.option('--corpus', default=OPUS, type=click.Choice([OPUS, DPC, BNC]),
               help='Which type of corpus to use')
 @click.option('--extractor', default=BASE, type=click.Choice([BASE, POS, PERFECT, RECENT_PAST, SINCE_DURATION]),
               help='Which kind of extractor to use')
@@ -81,7 +81,7 @@ def process_data_folders(extractor, path):
               help='Limits the minimal size of the files searched')
 @click.option('--max_file_size', default=0,
               help='Limits the maximal size of the files searched')
-def extract(folder, language_from, languages_to, corpus='europarl', extractor='base',
+def extract(folder, language_from, languages_to, corpus='opus', extractor='base',
             pos=None, search_in_to=False, tense=PRESENT,
             output=TXT, format_=CSV, file_names=None, sentence_ids=None,
             lemmata=None, regex=None, position=None, tokens=None, metadata=None,
@@ -97,17 +97,17 @@ def extract(folder, language_from, languages_to, corpus='europarl', extractor='b
     # Determine the extractor to be used
     # TODO: add more varieties
     resulting_extractor = None
-    if corpus == EUROPARL:
+    if corpus == OPUS:
         if extractor == POS:
-            resulting_extractor = EuroparlPoSExtractor
+            resulting_extractor = OPUSPoSExtractor
         elif extractor == PERFECT:
-            resulting_extractor = EuroparlPerfectExtractor
+            resulting_extractor = OPUSPerfectExtractor
         elif extractor == RECENT_PAST:
-            resulting_extractor = EuroparlRecentPastExtractor
+            resulting_extractor = OPUSRecentPastExtractor
         elif extractor == SINCE_DURATION:
-            resulting_extractor = EuroparlSinceDurationExtractor
+            resulting_extractor = OPUSSinceDurationExtractor
         else:
-            resulting_extractor = EuroparlExtractor
+            resulting_extractor = OPUSExtractor
     elif corpus == DPC:
         if extractor == POS:
             resulting_extractor = DPCPoSExtractor

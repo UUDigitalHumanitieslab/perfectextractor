@@ -5,10 +5,10 @@ from lxml import etree
 from perfectextractor.apps.extractor.perfectextractor import PerfectExtractor, PRESENT
 from perfectextractor.apps.extractor.xml_utils import get_sentence_from_element
 
-from .extractor import EuroparlExtractor
+from .extractor import OPUSExtractor
 
 
-class EuroparlPerfectExtractor(EuroparlExtractor, PerfectExtractor):
+class OPUSPerfectExtractor(OPUSExtractor, PerfectExtractor):
     def get_config(self):
         perfect_config = os.path.join(os.path.dirname(__file__), 'perfect.cfg')
         return [super().get_config(), perfect_config]

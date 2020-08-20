@@ -8,10 +8,10 @@ from lxml import etree
 from perfectextractor.apps.extractor.base import BaseExtractor
 from perfectextractor.apps.extractor.models import Alignment, MARKUP
 from perfectextractor.apps.extractor.utils import XML
-from .base import BaseEuroparl
+from .base import BaseOPUS
 
 
-class EuroparlExtractor(BaseEuroparl, BaseExtractor):
+class OPUSExtractor(BaseOPUS, BaseExtractor):
     def fetch_results(self, filename, s_trees, alignment_trees, translation_trees):
         """
         Fetches the results for a file
@@ -109,14 +109,14 @@ class EuroparlExtractor(BaseEuroparl, BaseExtractor):
         """
         Returns the translated segment numbers (could be multiple) for a segment number in the original text.
 
-        Alignment lines in the Europarl corpus look like this:
+        Alignment lines in the OPUS corpora look like this:
             <linkGrp targType="s" fromDoc="en/ep-00-01-17.xml.gz" toDoc="nl/ep-00-01-17.xml.gz">
                 <link xtargets="1;1" />
                 <link xtargets="2;2 3" />
                 <link xtargets="3;4 5" />
             </linkGrp>
 
-        To get from language A to B, we should order the languages
+        To get from language A to B, we should order the languages.
 
         This function supports n-to-n alignments, as it will return both the source and translated lines as a list.
         """
@@ -167,7 +167,7 @@ class EuroparlExtractor(BaseEuroparl, BaseExtractor):
             alignment_tree = self.alignment_xmls[language_to]
             base_filename = os.path.basename(filename)
             doc = '{}/{}'.format(self.l_from, base_filename)
-            doc_gz = doc + '.gz'  # Europarl uses .gz natively, deal with both options
+            doc_gz = doc + '.gz'  # OPUS uses .gz natively, deal with both options
             path = '@fromDoc="{}"' if sl[0] == self.l_from else '@toDoc="{}"'
             linkGrps = alignment_tree.xpath('//linkGrp[{} or {}]'.format(path.format(doc), path.format(doc_gz)))
 
@@ -179,7 +179,7 @@ class EuroparlExtractor(BaseEuroparl, BaseExtractor):
 
                 if include_translations:
                     translation_link = linkGrp.get('toDoc') if sl[0] == self.l_from else linkGrp.get('fromDoc')
-                    if translation_link.endswith('.gz'):   # See comment above: Europarl uses .gz as extension
+                    if translation_link.endswith('.gz'):   # See comment above: OPUS uses .gz as extension
                         translation_link = translation_link[:-3]
                     translation_file = os.path.join(data_folder, translation_link)
                     translation_trees[language_to] = etree.parse(translation_file)

@@ -1,12 +1,12 @@
 import os
 
-from .pos import EuroparlPoSExtractor
+from .pos import OPUSPoSExtractor
 
 
-class EuroparlSinceDurationExtractor(EuroparlPoSExtractor):
+class OPUSSinceDurationExtractor(OPUSPoSExtractor):
     def __init__(self, language_from, languages_to, **kwargs):
         """
-        Initializes the EuroparlSinceDurationExtractor with a set of lemmata, part-of-speech for numbers,
+        Initializes the OPUSSinceDurationExtractor with a set of lemmata, part-of-speech for numbers,
         and time units, so that it should find [seit] + [number] + [unit of time].
         :param language_from: The language to find the specified part-of-speeches in.
         :param languages_to: The languages to extract the aligned sentences from.

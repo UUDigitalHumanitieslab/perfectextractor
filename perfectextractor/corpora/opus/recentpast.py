@@ -1,10 +1,10 @@
 import os
 
 from perfectextractor.apps.extractor.recentpastextractor import RecentPastExtractor
-from .extractor import EuroparlExtractor
+from .extractor import OPUSExtractor
 
 
-class EuroparlRecentPastExtractor(EuroparlExtractor, RecentPastExtractor):
+class OPUSRecentPastExtractor(OPUSExtractor, RecentPastExtractor):
     def get_config(self):
         perfect_config = os.path.join(os.path.dirname(__file__), 'perfect.cfg')
         rp_config = os.path.join(os.path.dirname(__file__), 'recentpast.cfg')

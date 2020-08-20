@@ -1,10 +1,10 @@
-from .pos import EuroparlPoSExtractor
+from .pos import OPUSPoSExtractor
 
 
-class EuroparlFrenchArticleExtractor(EuroparlPoSExtractor):
+class OPUSFrenchArticleExtractor(OPUSPoSExtractor):
     def __init__(self, language_from, languages_to):
         """
-        Initializes the EuroparlFrenchArticleExtractor with a set of part-of-speeches and lemmata that the found
+        Initializes the OPUSFrenchArticleExtractor with a set of part-of-speeches and lemmata that the found
         words should adhere to. Also initializes a list of particles that could appear before a determiner.
         :param language_from: The language to find the specified part-of-speeches in.
         :param languages_to: The languages to extract the aligned sentences from.

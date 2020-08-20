@@ -55,7 +55,7 @@ class PoSExtractor(BaseExtractor, ABC):
         - removes a word if it does not occur in the lemmata list
         - removes a word if it is not in the correct position in the sentence
         Returns the found word as a list, as it might be interesting to include words before and after
-        (see e.g. EuroparlFrenchArticleExtractor)
+        (see e.g. OPUSFrenchArticleExtractor)
         """
         result = [word]
 

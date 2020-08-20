@@ -77,7 +77,7 @@ This application also allows extraction from parallel corpora based on part-of-s
 
 The extraction was first tested with the [Dutch Parallel Corpus](http://www.kuleuven-kulak.be/DPC).
 This corpus (that uses the [TEI format](http://www.tei-c.org/)) consists of three languages: Dutch, French and English. 
-The configuration for this corpus can be found in `corpora/dpc/dpc.cfg`.
+The configuration for this corpus can be found in `corpora/dpc/base.cfg` and `corpora/dpc/perfect.cfg`.
 Example documents from this corpus are included in the `tests/data/dpc` directory.
 The data for this corpus is **closed source**, to retrieve the corpus, you'll have to contact the authors on the cited website.
 After you've obtained the data, you can run the extraction script with:
@@ -88,12 +88,12 @@ After you've obtained the data, you can run the extraction script with:
 
 The extraction has also been implemented for the open parallel corpus [OPUS](http://opus.nlpl.eu/), that contains most notably the [Europarl Corpus](http://opus.nlpl.eu/Europarl.php) and the [OpenSubtitles Corpus](http://opus.nlpl.eu/OpenSubtitles.php).
 This corpus (that uses the [XCES format](http://www.tei-c.org/) for alignment) consists of a wide variety of languages. 
-The configuration for this corpus can be found in `corpora/europarl/europarl.cfg`: implementations have been made for Dutch, English, French, German and Spanish. 
+The configuration for this corpus can be found in `corpora/opus/base.cfg` and `corpora/opus/perfect.cfg`: implementations have been made for Dutch, English, French, German and Spanish. 
 Example documents from this corpus are included in the `tests/data/europarl` directory.
 The data for this corpus is **open source**: you can download the corpus and the alignment files from the cited website.
 After you've obtained the data, you can run the extraction script with:
 
-    python extract.py <folder> en de es --corpus=europarl --extractor=perfect
+    python extract.py <folder> en de es --corpus=opus --extractor=perfect
 
 ### BNC Corpus
 
@@ -107,8 +107,8 @@ After you've obtained the data, you can run the extraction script with:
 
 If you want to implement the extraction for another corpus, you'll have to create: 
 
-* An implementation of the corpus in the `corpora` directory (see `corpora/europarl` for an example).
-* A configuration file in this directory (see `corpora/europarl/europarl.cfg` for an example).
+* An implementation of the corpus in the `corpora` directory (see `corpora/opus` for an example).
+* A configuration file in this directory (see `corpora/opus/base.cfg` for an example).
 * An entry in the main script (see `extract.py`)
 
 ## Other options to the extraction script
