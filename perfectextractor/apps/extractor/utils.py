@@ -12,16 +12,6 @@ CSV = 'csv'
 XLSX = 'xlsx'
 
 
-def get_adjacent_line_number(segment_number, i):
-    """
-    Returns the next segment number + i.
-    Segment numbers have the form "pN.sM", where N/M are positive integers.
-    """
-    split = segment_number.split('s')
-    adj = int(split[1]) + i
-    return split[0] + 's' + str(adj)
-
-
 class ExcelWriter:
     """
     Writes xlsx files while mimicking the CSV writer interface.
@@ -62,3 +52,32 @@ def open_xlsx(filename):
     writer = ExcelWriter(filename)
     yield writer
     writer.close()
+
+
+class CachedConfig:
+    """
+    Caches the parsed config to save time when doing the lookups.
+    """
+    def __init__(self, config):
+        self.cache = dict()
+        self.config = config
+
+    def setdefault(self, key, func):
+        if key in self.cache:
+            return self.cache[key]
+        return self.cache.setdefault(key, func())
+
+    def get(self, section, key, **kwargs):
+        return self.setdefault((section, key), lambda: self.config.get(section, key, **kwargs))
+
+    def getboolean(self, section, key, **kwargs):
+        return self.setdefault((section, key), lambda: self.config.getboolean(section, key, **kwargs))
+
+    def items(self, section):
+        return self.setdefault(section, lambda: self.config.items(section))
+
+    def sections(self):
+        return self.config.sections()
+
+    def __getitem__(self, key):
+        return self.config[key]

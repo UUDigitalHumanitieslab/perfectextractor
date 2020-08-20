@@ -47,3 +47,11 @@ class BNCExtractor(BaseBNC, BaseExtractor):
     def filter_by_file_size(self, file_names):
         # TODO: implement
         raise NotImplementedError
+
+    def get_type(self, sentence, mwe=None):
+        # TODO: implement
+        raise NotImplementedError
+
+    def mark_sentence(self, sentence, match=None):
+        # TODO: implement
+        raise NotImplementedError

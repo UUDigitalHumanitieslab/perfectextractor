@@ -7,35 +7,9 @@ import time
 import click
 from lxml import etree
 
-from .utils import TXT, XML, CSV, open_csv, open_xlsx
+from .utils import TXT, XML, CSV, open_csv, open_xlsx, CachedConfig
 
 LEMMATA_CONFIG = os.path.join(os.path.dirname(__file__), 'config/{language}_lemmata.txt')
-
-
-class CachedConfig:
-    def __init__(self, config):
-        self.cache = dict()
-        self.config = config
-
-    def setdefault(self, key, func):
-        if key in self.cache:
-            return self.cache[key]
-        return self.cache.setdefault(key, func())
-
-    def get(self, section, key, **kwargs):
-        return self.setdefault((section, key), lambda: self.config.get(section, key, **kwargs))
-
-    def getboolean(self, section, key, **kwargs):
-        return self.setdefault((section, key), lambda: self.config.getboolean(section, key, **kwargs))
-
-    def items(self, section):
-        return self.setdefault(section, lambda: self.config.items(section))
-
-    def sections(self):
-        return self.config.sections()
-
-    def __getitem__(self, key):
-        return self.config[key]
 
 
 class BaseExtractor(ABC):
@@ -96,7 +70,24 @@ class BaseExtractor(ABC):
         self.alignment_xmls = dict()
         self._index = dict()  # save segments indexed by id
 
+    def read_lemmata(self, lemmata):
+        """
+        Gathers the lemmata to be filtered upon.
+        """
+        if lemmata is not None:
+            if type(lemmata) in (list, tuple):
+                self.lemmata_list = list(lemmata)
+            elif type(lemmata) == bool:
+                if lemmata:
+                    with codecs.open(LEMMATA_CONFIG.format(language=self.l_from), 'r', 'utf-8') as lexicon:
+                        self.lemmata_list = lexicon.read().split()
+            else:
+                raise ValueError('Unknown value for lemmata')
+
     def check_language_in_config(self, language):
+        """
+        Checks whether there is an implementation available for the given language.
+        """
         if language not in self.config.sections():
             msg = 'No implementation for {} for language {}'.format(self.__class__.__name__, language)
             raise click.ClickException(msg)
@@ -150,7 +141,7 @@ class BaseExtractor(ABC):
 
     def generate_results(self, dir_name, file_names=None):
         """
-        Generates the results for a directory or a set of files
+        Generates the results for a directory or a set of files.
         """
         if file_names is None:
             file_names = self.collect_file_names(dir_name)
@@ -188,17 +179,33 @@ class BaseExtractor(ABC):
 
         return results
 
+    def filter_sentences(self, s_trees):
+        """
+        Filters the sentences based on the provided sentence_ids.
+        """
+        result = []
+        for event, s in s_trees:
+            if s.get(self.config.get('all', 'id')) in self.sentence_ids:
+                result.append((event, s))
+        return result
+
     @property
     def sentence_tag(self):
+        """
+        The XML tag used for sentences.
+        """
         return 's'
 
     @property
     def word_tag(self):
+        """
+        The XML tag used for words.
+        """
         return 'w'
 
     def generate_header(self):
         """
-        Returns the header for the output file
+        Returns the header for the output file.
         """
         header = [
             'document',
@@ -215,6 +222,13 @@ class BaseExtractor(ABC):
         return header
 
     def generate_result_line(self, filename, sentence, mwe=None):
+        """
+        Returns a single result line
+        :param filename: The current filename
+        :param sentence: The current sentence (in XML format)
+        :param mwe: The found MultiWordExpression
+        :return: A list of output properties.
+        """
         id_attr = self.config.get('all', 'id')
 
         result = list()
@@ -242,34 +256,9 @@ class BaseExtractor(ABC):
 
         return result
 
-    def read_lemmata(self, lemmata):
-        """
-        Gathers the lemmata to be filtered upon
-        """
-        if lemmata is not None:
-            if type(lemmata) in (list, tuple):
-                self.lemmata_list = list(lemmata)
-            elif type(lemmata) == bool:
-                if lemmata:
-                    with codecs.open(LEMMATA_CONFIG.format(language=self.l_from), 'r', 'utf-8') as lexicon:
-                        self.lemmata_list = lexicon.read().split()
-            else:
-                raise ValueError('Unknown value for lemmata')
-
-    def add_extractor(self, extractor):
-        """
-        Adds another Extractor to this Extractor. This allows to combine Extractors.
-        The last added Extractor determines the output.
-        """
-        self.other_extractors.append(extractor)
-
-    def list_directories(self, path):
-        directories = [os.path.join(path, directory) for directory in os.listdir(path)]
-        return filter(os.path.isdir, directories)
-
     def append_metadata(self, w, s, result):
         """
-        Appends metadata for to a result line
+        Appends metadata for to a result line.
         """
         for metadata, level in self.metadata.items():
             if w is not None and level == 'w':
@@ -283,6 +272,17 @@ class BaseExtractor(ABC):
             else:
                 raise ValueError('Invalid level {}'.format(level))
 
+    def add_extractor(self, extractor):
+        """
+        Adds another Extractor to this Extractor. This allows to combine Extractors.
+        The last added Extractor determines the output.
+        """
+        self.other_extractors.append(extractor)
+
+    def list_directories(self, path):
+        directories = [os.path.join(path, directory) for directory in os.listdir(path)]
+        return filter(os.path.isdir, directories)
+
     def get_pos(self, language, element):
         """
         Retrieves the part-of-speech tag for the current language and given element,
@@ -292,13 +292,6 @@ class BaseExtractor(ABC):
         :return: the part-of-speech tag
         """
         return element.get(self.config.get(language, 'pos', fallback=self.config.get('all', 'pos')))
-
-    def filter_sentences(self, s_trees):
-        result = []
-        for event, s in s_trees:
-            if s.get(self.config.get('all', 'id')) in self.sentence_ids:
-                result.append((event, s))
-        return result
 
     def get_tenses(self, sentence):
         """
@@ -362,14 +355,14 @@ class BaseExtractor(ABC):
     @abstractmethod
     def fetch_results(self, filename, s_trees, alignment_trees, translation_trees):
         """
-        Fetches the results for a single file
+        Fetches the results for a single file.
         """
         pass
 
     @abstractmethod
     def parse_alignment_trees(self, filename):
         """
-        Parses the alignment trees for a single file
+        Parses the alignment trees for a single file.
         """
         pass
 
@@ -413,5 +406,19 @@ class BaseExtractor(ABC):
     def filter_by_file_size(self, file_names):
         """
         Filter files based on file size, a minimum and maximum file size can be supplied.
+        """
+        pass
+
+    @abstractmethod
+    def get_type(self, sentence, mwe=None):
+        """
+        Return a classification for the sentence or the found MultiWordExpression.
+        """
+        pass
+
+    @abstractmethod
+    def mark_sentence(self, sentence, match=None):
+        """
+        Mark the found match (if any) in the sentence.
         """
         pass

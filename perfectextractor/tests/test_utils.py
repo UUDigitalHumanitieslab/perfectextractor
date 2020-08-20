@@ -1,6 +1,6 @@
 import unittest
 
-from perfectextractor.apps.extractor.utils import get_adjacent_line_number
+from perfectextractor.apps.extractor.xml_utils import get_adjacent_line_number
 from perfectextractor.corpora.dpc.utils import is_nl
 
 
