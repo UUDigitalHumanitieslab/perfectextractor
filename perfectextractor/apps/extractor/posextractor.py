@@ -96,5 +96,5 @@ class PoSExtractor(BaseExtractor, ABC):
 
         result = MultiWordExpression(sentence)
         for word in words:
-            result.add_word(str(word.text), word.get(lemma_attr), self.get_pos(self.l_from, word), word.get(id_attr))
+            result.add_word(self.get_text(word), word.get(lemma_attr), self.get_pos(self.l_from, word), word.get(id_attr))
         return result

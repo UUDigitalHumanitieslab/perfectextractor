@@ -15,38 +15,42 @@ class TestPerfectExtractor(unittest.TestCase):
         mock_pp = Perfect()
         mock_pp.add_word('is', 'be', 'VERB', 'w1.1.1')
 
+        mock_before1 = etree.Element('w')
+        mock_before2 = etree.Element('w')
+        mock_before = [mock_before1, mock_before2]
+
         # Default case: English (no lexical bounds)
         mock_aux_verb = etree.Element('w')
         mock_aux_verb.set(lemma_attr, 'have')
         mock_participle = etree.Element('w')
         mock_participle.set(lemma_attr, 'collided')
-        self.assertTrue(extractor.is_lexically_bound('en', mock_pp, mock_aux_verb, mock_participle))
+        self.assertTrue(extractor.is_lexically_bound('en', mock_pp, mock_aux_verb, mock_participle, mock_before))
 
         # Checking Dutch (ik ben gebotst vs. *ik ben gehad)
         mock_aux_verb = etree.Element('w')
         mock_aux_verb.set(lemma_attr, 'zijn')
         mock_participle = etree.Element('w')
         mock_participle.set(lemma_attr, 'botsen')
-        self.assertTrue(extractor.is_lexically_bound('nl', mock_pp, mock_aux_verb, mock_participle))
+        self.assertTrue(extractor.is_lexically_bound('nl', mock_pp, mock_aux_verb, mock_participle, mock_before))
 
         mock_aux_verb = etree.Element('w')
         mock_aux_verb.set(lemma_attr, 'zijn')
         mock_participle = etree.Element('w')
         mock_participle.set(lemma_attr, 'hebben')
-        self.assertFalse(extractor.is_lexically_bound('nl', mock_pp, mock_aux_verb, mock_participle))
+        self.assertFalse(extractor.is_lexically_bound('nl', mock_pp, mock_aux_verb, mock_participle, mock_before))
 
         # Checking French (*je suis regardé vs. je suis revenu)
         mock_aux_verb = etree.Element('w')
         mock_aux_verb.set(lemma_attr, 'être')
         mock_participle = etree.Element('w')
         mock_participle.set(lemma_attr, 'regarder')
-        self.assertFalse(extractor.is_lexically_bound('fr', mock_pp, mock_aux_verb, mock_participle))
+        self.assertFalse(extractor.is_lexically_bound('fr', mock_pp, mock_aux_verb, mock_participle, mock_before))
 
         mock_aux_verb = etree.Element('w')
         mock_aux_verb.set(lemma_attr, 'être')
         mock_participle = etree.Element('w')
         mock_participle.set(lemma_attr, 'revenir')
-        self.assertTrue(extractor.is_lexically_bound('fr', mock_pp, mock_aux_verb, mock_participle))
+        self.assertTrue(extractor.is_lexically_bound('fr', mock_pp, mock_aux_verb, mock_participle, mock_before))
 
         # Checking reflexive passé composés (je me suis couché)
         mock_pp = Perfect()
@@ -55,7 +59,7 @@ class TestPerfectExtractor(unittest.TestCase):
         mock_aux_verb.set(lemma_attr, 'être')
         mock_participle = etree.Element('w')
         mock_participle.set(lemma_attr, 'coucher')
-        self.assertFalse(extractor.is_lexically_bound('fr', mock_pp, mock_aux_verb, mock_participle))
+        self.assertFalse(extractor.is_lexically_bound('fr', mock_pp, mock_aux_verb, mock_participle, mock_before))
 
         mock_sentence = etree.Element('s')
         me = etree.SubElement(mock_sentence, 'w')
@@ -66,8 +70,9 @@ class TestPerfectExtractor(unittest.TestCase):
         je.text = 'je'
         je.set(lemma_attr, 'je')
         je.set('pos', 'PRO:PER')
+        me_je = [me, je]
 
-        self.assertTrue(extractor.is_lexically_bound('fr', mock_pp, mock_aux_verb, mock_participle, mock_sentence))
+        self.assertTrue(extractor.is_lexically_bound('fr', mock_pp, mock_aux_verb, mock_participle, me_je))
         self.assertEqual(len(mock_pp.words), 2)
         self.assertEqual(mock_pp.construction_to_string(), 'me suis')
         self.assertTrue(mock_pp.is_reflexive)
@@ -79,7 +84,7 @@ class TestPerfectExtractor(unittest.TestCase):
         mock_aux_verb.set(lemma_attr, 'être')
         mock_participle = etree.Element('w')
         mock_participle.set(lemma_attr, 'rester')
-        self.assertTrue(extractor.is_lexically_bound('fr', mock_pp, mock_aux_verb, mock_participle))
+        self.assertTrue(extractor.is_lexically_bound('fr', mock_pp, mock_aux_verb, mock_participle, mock_before))
 
         mock_sentence = etree.Element('s')
         nous = etree.SubElement(mock_sentence, 'w')
@@ -90,9 +95,10 @@ class TestPerfectExtractor(unittest.TestCase):
         puis.text = 'puis'
         puis.set(lemma_attr, 'puis')
         puis.set('pos', 'ADV')
+        nous_puis = [nous, puis]
 
         # This should be lexically bound, but 'nous' should not be part of the passé composé
-        self.assertTrue(extractor.is_lexically_bound('fr', mock_pp, mock_aux_verb, mock_participle, mock_sentence))
+        self.assertTrue(extractor.is_lexically_bound('fr', mock_pp, mock_aux_verb, mock_participle, nous_puis))
         self.assertEqual(mock_pp.construction_to_string(), 'sommes')
         self.assertEqual(len(mock_pp.words), 1)
         self.assertFalse(mock_pp.is_reflexive)

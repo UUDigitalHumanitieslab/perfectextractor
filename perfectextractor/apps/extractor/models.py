@@ -89,7 +89,7 @@ class MultiWordExpression:
     def get_sentence_words(self) -> str:
         s = []
         # TODO: this xPath-expression might be specific for a corpus
-        if self.xml_sentence:
+        if self.xml_sentence is not None:
             words: List[etree._Element] = self.xml_sentence.xpath('.//w')
             for w in words:
                 s.append(str(w.text.strip() if w.text else ' '))

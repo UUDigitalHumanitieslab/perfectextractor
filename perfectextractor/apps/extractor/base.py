@@ -8,7 +8,7 @@ from typing import Dict, Generator, Iterator, List, Optional, Tuple, Union
 import click
 from lxml import etree
 
-from .models import MultiWordExpression
+from .models import Alignment, MultiWordExpression
 from .utils import TXT, XML, CSV, open_csv, open_xlsx, CachedConfig
 
 LEMMATA_CONFIG = os.path.join(os.path.dirname(__file__), 'config/{language}_lemmata.txt')
@@ -192,7 +192,7 @@ class BaseExtractor(ABC):
 
         return results
 
-    def filter_sentences(self, s_trees: etree.iterparse):
+    def filter_sentences(self, s_trees):
         """
         Filters the sentences based on the provided sentence_ids.
         """
@@ -303,6 +303,10 @@ class BaseExtractor(ABC):
         directories = [os.path.join(path, directory) for directory in os.listdir(path)]
         return filter(os.path.isdir, directories)
 
+    @staticmethod
+    def get_text(element: etree._Element) -> str:
+        return str(element.text) if element.text else ''
+
     def get_pos(self, language: str, element: etree._Element) -> Optional[str]:
         """
         Retrieves the part-of-speech tag for the current language and given element,
@@ -373,14 +377,19 @@ class BaseExtractor(ABC):
         pass
 
     @abstractmethod
-    def fetch_results(self, filename, s_trees, alignment_trees, translation_trees):
+    def fetch_results(self,
+                      filename: str,
+                      s_trees: etree.iterparse,
+                      alignment_trees: Dict[str, List[Alignment]],
+                      translation_trees: Dict[str, etree._ElementTree]):
         """
         Fetches the results for a single file.
         """
         pass
 
     @abstractmethod
-    def parse_alignment_trees(self, filename: str):
+    def parse_alignment_trees(self, filename: str) -> Tuple[Dict[str, List[Alignment]],
+                                                            Dict[str, etree._ElementTree]]:
         """
         Parses the alignment trees for a single file.
         """
@@ -394,7 +403,11 @@ class BaseExtractor(ABC):
         pass
 
     @abstractmethod
-    def get_translated_lines(self, alignment_trees, language_from, language_to, segment_number):
+    def get_translated_lines(self,
+                             alignment_trees: Dict[str, List[Alignment]],
+                             language_from: str,
+                             language_to: str,
+                             segment_number: str) -> List[str]:
         """
         Returns the translated segment numbers (could be multiple) for a segment number in the original text.
         """
@@ -408,7 +421,10 @@ class BaseExtractor(ABC):
         pass
 
     @abstractmethod
-    def get_siblings(self, element: etree._Element, sentence_id: Optional[str], check_preceding: bool):
+    def get_siblings(self,
+                     element: etree._Element,
+                     sentence_id: Optional[str],
+                     check_preceding: bool) -> List[etree._Element]:
         """
         Returns the siblings of the given element in the given sentence_id.
         The check_preceding parameter allows to look either forwards or backwards.
@@ -437,7 +453,7 @@ class BaseExtractor(ABC):
         pass
 
     @abstractmethod
-    def mark_sentence(self, sentence, match=None):
+    def mark_sentence(self, sentence: etree._Element, match: Optional[str] = None) -> str:
         """
         Mark the found match (if any) in the sentence.
         """
