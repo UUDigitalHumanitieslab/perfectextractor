@@ -121,20 +121,11 @@ class Perfect(MultiWordExpression):
     A Perfect is a special kind of MultiWordExpression, consisting of an auxiliary and one or more past participles.
     """
 
-    def __init__(self,
-                 aux_verb: Optional[str],
-                 aux_lemma: Optional[str],
-                 aux_pos: Optional[str],
-                 xml_id: Optional[str],
-                 xml_sentence: Optional[etree._Element] = None) -> None:
-        """
-        A (Present/Past) Perfect is initiated by an auxiliary verb.
-        """
+    def __init__(self, xml_sentence: Optional[etree._Element] = None) -> None:
         super().__init__(xml_sentence)
         self.is_passive = False
         self.is_continuous = False
         self.is_reflexive = False
-        self.add_word(aux_verb, aux_lemma, aux_pos, xml_id)
 
     def extend(self, perfect: 'Perfect') -> None:
         """

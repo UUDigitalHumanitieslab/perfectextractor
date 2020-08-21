@@ -6,6 +6,8 @@ import string
 import os
 from typing import List, Optional
 
+from lxml import etree
+
 from .base import BaseExtractor
 from .models import Perfect
 from .wiktionary import get_translations
@@ -64,7 +66,12 @@ class PerfectExtractor(BaseExtractor, ABC):
         """
         pass
 
-    def is_lexically_bound(self, language, pp, aux_verb, past_participle, w_before=None):
+    def is_lexically_bound(self,
+                           language: str,
+                           pp: Perfect,
+                           aux_verb: etree._Element,
+                           past_participle: etree._Element,
+                           w_before=None) -> bool:
         """
         Checks if the perfect is lexically bound to the auxiliary verb.
         If not, we are not dealing with a Perfect here.
@@ -87,7 +94,7 @@ class PerfectExtractor(BaseExtractor, ABC):
         # Finally, check whether the past participle is in the list of bound verbs
         return past_participle.get(lemma_attr) in self.aux_be_list[language]
 
-    def is_reflexive(self, language, w_before):
+    def is_reflexive(self, language: str, w_before) -> bool:
         """
         Check whether we are dealing with a reflexive Perfect
         """
@@ -103,7 +110,12 @@ class PerfectExtractor(BaseExtractor, ABC):
         else:
             return False
 
-    def check_perfect(self, auxiliary, language, check_ppp=True, check_ppc=False, check_preceding=False):
+    def check_perfect(self,
+                      auxiliary: etree._Element,
+                      language: str,
+                      check_ppp: bool = True,
+                      check_ppc: bool = False,
+                      check_preceding: bool = False):
         """
         Checks whether this element (i.e. the auxiliary) is the start of a Perfect (pp),
         a Perfect continuous (ppc) or passive Perfect (ppp).
@@ -128,7 +140,8 @@ class PerfectExtractor(BaseExtractor, ABC):
 
         # Start a potential Perfect
         s = self.get_sentence(auxiliary)
-        pp = Perfect(auxiliary.text, auxiliary.get(lemma_attr), self.get_pos(language, auxiliary), auxiliary.get(id_attr), s)
+        pp = Perfect(s)
+        pp.add_word(auxiliary.text, auxiliary.get(lemma_attr), self.get_pos(language, auxiliary), auxiliary.get(id_attr))
         is_pp = False
 
         # Check if the starting auxiliary is actually allowed
@@ -190,12 +203,12 @@ class PerfectExtractor(BaseExtractor, ABC):
 
         return pp if is_pp else None
 
-    def in_lemmata_list(self, element):
+    def in_lemmata_list(self, lemma: str) -> bool:
         """
         Returns whether the given element is in the lemmata list.
         Returns True when there is no lemmata list given.
         """
-        return not self.lemmata_list or element in self.lemmata_list
+        return not self.lemmata_list or lemma in self.lemmata_list
 
     def find_translated_present_perfects(self, translated_tree, language_to, translated_lines):
         """

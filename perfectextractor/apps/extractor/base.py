@@ -82,7 +82,7 @@ class BaseExtractor(ABC):
         # Other variables
         self.other_extractors: List[BaseExtractor] = []
         self.alignment_xmls: Dict[str, str] = dict()
-        self._index: Dict[str, str] = dict()  # save segments indexed by id
+        self._index: Dict[str, etree._Element] = dict()  # save segments indexed by id
 
     def read_lemmata(self, lemmata: Optional[Union[Tuple[str], List[str], bool]]) -> None:
         """
