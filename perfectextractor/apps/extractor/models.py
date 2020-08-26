@@ -9,41 +9,28 @@ class Word:
     """
     Each Word consists of a word, its lemma, and a designation if this is part of a construction.
     """
-    def __init__(self,
-                 word: Optional[str],
-                 lemma: Optional[str],
-                 pos: Optional[str],
-                 xml_id: Optional[str],
+    def __init__(self, word: str, lemma: str, pos: str, xml_id: str,
                  in_construction: bool = True) -> None:
-        self.word = word.strip() if word else ' '
-        self.lemma = lemma.strip() if lemma else '?'
-        self.pos = pos.strip() if pos else '?'
-        self.xml_id = xml_id.strip() if xml_id else '?'  # TODO: for corpora without XML id, we should base this on the position in the sentence
+        self.word = word.strip()
+        self.lemma = lemma.strip()
+        self.pos = pos.strip()
+        self.xml_id = xml_id.strip()
         self.in_construction = in_construction
 
 
 class MultiWordExpression:
-    def __init__(self,
-                 xml_sentence: Optional[etree._Element] = None) -> None:
+    def __init__(self, xml_sentence: etree._Element) -> None:
         self.xml_sentence = xml_sentence
         self.words: List[Word] = []
 
-    def add_word(self,
-                 word: Optional[str],
-                 lemma: Optional[str],
-                 pos: Optional[str],
-                 xml_id: Optional[str],
+    def add_word(self, word: str, lemma: str, pos: str, xml_id: str,
                  in_construction: bool = True) -> None:
         """
         Adds a word to the MultiWordExpression.
         """
         self.words.append(Word(word, lemma, pos, xml_id, in_construction))
 
-    def prepend_word(self,
-                     word: Optional[str],
-                     lemma: Optional[str],
-                     pos: Optional[str],
-                     xml_id: Optional[str],
+    def prepend_word(self, word: str, lemma: str, pos: str, xml_id: str,
                      in_construction: bool = True) -> None:
         """
         Prepends a word to the MultiWordExpression.
@@ -121,7 +108,7 @@ class Perfect(MultiWordExpression):
     A Perfect is a special kind of MultiWordExpression, consisting of an auxiliary and one or more past participles.
     """
 
-    def __init__(self, xml_sentence: Optional[etree._Element] = None) -> None:
+    def __init__(self, xml_sentence: etree._Element) -> None:
         super().__init__(xml_sentence)
         self.is_passive = False
         self.is_continuous = False

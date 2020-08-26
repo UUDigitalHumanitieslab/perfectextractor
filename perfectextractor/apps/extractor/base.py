@@ -249,11 +249,9 @@ class BaseExtractor(ABC):
         :param mwe: The found MultiWordExpression
         :return: A list of output properties.
         """
-        id_attr = self.config.get('all', 'id')
-
         result: List[Optional[str]] = list()
         result.append(os.path.basename(filename))
-        result.append(sentence.get(id_attr))
+        result.append(self.get_id(sentence))
 
         if mwe:
             result.append(self.get_type(sentence, mwe=mwe))
@@ -307,7 +305,16 @@ class BaseExtractor(ABC):
     def get_text(element: etree._Element) -> str:
         return str(element.text) if element.text else ''
 
-    def get_pos(self, language: str, element: etree._Element) -> Optional[str]:
+    def get_id(self, element: etree._Element) -> str:
+        # TODO: for corpora without XML id, we should base this on the position in the sentence
+        id_attr = self.config.get('all', 'id')
+        return element.get(id_attr, '?')
+
+    def get_lemma(self, element: etree._Element) -> str:
+        lemma_attr = self.config.get('all', 'lemma_attr')
+        return element.get(lemma_attr, '?')
+
+    def get_pos(self, language: str, element: etree._Element) -> str:
         """
         Retrieves the part-of-speech tag for the current language and given element,
         with a fallback to the default part-of-speech tag in the corpus as a whole.
@@ -315,7 +322,7 @@ class BaseExtractor(ABC):
         :param element: the current element
         :return: the part-of-speech tag
         """
-        return element.get(self.config.get(language, 'pos', fallback=self.config.get('all', 'pos')))
+        return element.get(self.config.get(language, 'pos', fallback=self.config.get('all', 'pos')), '?')
 
     def get_tenses(self, sentence):
         """
@@ -381,7 +388,7 @@ class BaseExtractor(ABC):
                       filename: str,
                       s_trees: etree.iterparse,
                       alignment_trees: Dict[str, List[Alignment]],
-                      translation_trees: Dict[str, etree._ElementTree]):
+                      translation_trees: Dict[str, etree._ElementTree]) -> List[str]:
         """
         Fetches the results for a single file.
         """

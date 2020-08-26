@@ -22,13 +22,7 @@ class OPUSSinceDurationExtractor(OPUSPoSExtractor):
         return [super().get_config(), since_config]
 
     def preprocess_found(self, word):
-        """
-        Removes a word if does not occur in the lemmata list, and then checks if it might be preceded by a particle.
-        If so, add the particle to the found words.
-        """
         result = []
-
-        lemma_attr = self.config.get('all', 'lemma_attr')
 
         for w in super().preprocess_found(word):
             result.append(word)
@@ -41,7 +35,7 @@ class OPUSSinceDurationExtractor(OPUSPoSExtractor):
                 continue
 
             next_word2 = next_word.getnext()
-            if next_word2 is not None and next_word2.get(lemma_attr) in self.time_units:
+            if next_word2 is not None and self.get_lemma(next_word2) in self.time_units:
                 result.append(next_word2)
             else:
                 result = None

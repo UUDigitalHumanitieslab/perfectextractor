@@ -67,19 +67,17 @@ class PoSExtractor(BaseExtractor, ABC):
         """
         result = [word]
 
-        id_attr = self.config.get('all', 'id')
-
         # TODO: check if this is generic
-        if self.position and not word.get(id_attr).endswith('.' + str(self.position)):
+        if self.position and not self.get_id(word).endswith('.' + str(self.position)):
             result = []
 
         if self.tokens:
-            end_token = self.tokens.get(word.get(id_attr))
+            end_token = self.tokens.get(self.get_id(word))
             next_word = word.getnext()
             if next_word is None:
                 raise ValueError('End token {} not found'.format(end_token))
             else:
-                while next_word.get(id_attr) != end_token:
+                while self.get_id(next_word) != end_token:
                     result.append(next_word)
 
                     next_word = next_word.getnext()
@@ -91,10 +89,8 @@ class PoSExtractor(BaseExtractor, ABC):
         return result
 
     def words2mwe(self, words: List[etree._Element], sentence: etree._Element) -> MultiWordExpression:
-        id_attr = self.config.get('all', 'id')
-        lemma_attr = self.config.get('all', 'lemma_attr')
-
         result = MultiWordExpression(sentence)
         for word in words:
-            result.add_word(self.get_text(word), word.get(lemma_attr), self.get_pos(self.l_from, word), word.get(id_attr))
+            result.add_word(self.get_text(word), self.get_lemma(word),
+                            self.get_pos(self.l_from, word), self.get_id(word))
         return result

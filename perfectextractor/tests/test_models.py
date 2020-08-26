@@ -1,5 +1,7 @@
 import unittest
 
+from lxml import etree
+
 from perfectextractor.apps.extractor.models import Perfect
 
 XML_ID = 'test_id'
@@ -7,7 +9,8 @@ XML_ID = 'test_id'
 
 class TestPerfect(unittest.TestCase):
     def setUp(self):
-        self.pp = Perfect()
+        mock_s = etree.Element('s')
+        self.pp = Perfect(mock_s)
         self.pp.add_word('has', 'have', 'VERB', XML_ID)
         self.pp.add_word('always', 'always', 'ADVERB', XML_ID, in_construction=False)
         self.pp.add_word('loved', 'love', 'VERB', XML_ID)
@@ -19,10 +22,11 @@ class TestPerfect(unittest.TestCase):
         self.assertEqual(self.pp.words_between(), 1)
 
     def test_extend(self):
-        ppp = Perfect()
+        mock_s = etree.Element('s')
+        ppp = Perfect(mock_s)
         ppp.add_word('has', 'have', 'VERB', XML_ID)
         ppp.add_word('been', 'be', 'VERB', XML_ID)
-        pp_extend = Perfect()
+        pp_extend = Perfect(mock_s)
         pp_extend.add_word('been', 'be', 'VERB', XML_ID)
         pp_extend.add_word('created', 'create', 'VERB', XML_ID)
         ppp.extend(pp_extend)

@@ -21,10 +21,9 @@ class OPUSFrenchArticleExtractor(OPUSPoSExtractor):
         """
         result = []
 
-        lemma_attr = self.config.get('all', 'lemma_attr')
         for w in super().preprocess_found(word):
             prev = w.getprevious()
-            if prev is not None and prev.get(lemma_attr) in self.particles:
+            if prev is not None and self.get_lemma(prev) in self.particles:
                 result.append(prev)
 
             result.append(word)

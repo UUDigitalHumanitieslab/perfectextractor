@@ -76,36 +76,35 @@ class PerfectExtractor(BaseExtractor, ABC):
         Checks if the perfect is lexically bound to the auxiliary verb.
         If not, we are not dealing with a Perfect here.
         """
-        id_attr = self.config.get('all', 'id')
-        lemma_attr = self.config.get('all', 'lemma_attr')
         aux_be = self.config.get(language, 'lexical_bound')
 
         # If lexical bounds do not exist or we're dealing with an auxiliary verb that is unbound, return True
         # Note: we check with "not in", because in French the lemma can be e.g. 'suivre|être'
-        if not aux_be or aux_be not in aux_verb.get(lemma_attr):
+        if not aux_be or aux_be not in self.get_lemma(aux_verb):
             return True
 
         # Else, check if we are dealing with a reflexive Perfect (in that case, there is no lexical bound)
         if self.is_reflexive(language, w_before):
-            pp.prepend_word(self.get_text(w_before[0]), w_before[0].get(lemma_attr), self.get_pos(language, w_before[0]), w_before[0].get(id_attr))
+            pp.prepend_word(self.get_text(w_before[0]), self.get_lemma(w_before[0]),
+                            self.get_pos(language, w_before[0]), self.get_id(w_before[0]))
             pp.is_reflexive = True
             return True
 
         # Finally, check whether the past participle is in the list of bound verbs
-        return past_participle.get(lemma_attr) in self.aux_be_list[language]
+        return self.get_lemma(past_participle) in self.aux_be_list[language]
 
     def is_reflexive(self, language: str, w_before: List[etree._Element]) -> bool:
         """
         Check whether we are dealing with a reflexive Perfect
         """
-        lemma_attr = self.config.get('all', 'lemma_attr')
         reflexive_lemmata = self.config.get(language, 'reflexive_lemmata').split('|')
 
-        precondition = reflexive_lemmata and w_before is not None and len(w_before) >= 2
+        precondition = any(reflexive_lemmata) and w_before is not None and len(w_before) >= 2
         if precondition:
-            prev_reflexive = w_before[0].get(lemma_attr) in reflexive_lemmata
+            prev_reflexive = self.get_lemma(w_before[0]) in reflexive_lemmata
             # TODO: below condition is language-specific, and does not yet work for e.g. negation
-            prevprev_pronoun = w_before[0].get(lemma_attr) not in ['nous', 'vous'] or self.get_pos(language, w_before[1]) == 'PRO:PER'
+            prevprev_pronoun = self.get_lemma(w_before[0]) not in ['nous', 'vous'] \
+                               or self.get_pos(language, w_before[1]) == 'PRO:PER'
             return prev_reflexive and prevprev_pronoun
         else:
             return False
@@ -122,8 +121,6 @@ class PerfectExtractor(BaseExtractor, ABC):
         If it is, the complete construction is returned as a Perfect object.
         If not, None is returned.
         """
-        id_attr = self.config.get('all', 'id')
-        lemma_attr = self.config.get('all', 'lemma_attr')
         perfect_tags = self.config.get(language, 'perfect_tags').split('|')
         check_ppp = check_ppp and self.config.getboolean(language, 'ppp')
         ppp_lemma = self.config.get(language, 'ppp_lemma')
@@ -141,7 +138,8 @@ class PerfectExtractor(BaseExtractor, ABC):
         # Start a potential Perfect
         s = self.get_sentence(auxiliary)
         pp = Perfect(s)
-        pp.add_word(self.get_text(auxiliary), auxiliary.get(lemma_attr), self.get_pos(language, auxiliary), auxiliary.get(id_attr))
+        pp.add_word(self.get_text(auxiliary), self.get_lemma(auxiliary),
+                    self.get_pos(language, auxiliary), self.get_id(auxiliary))
         is_pp = False
 
         # Check if the starting auxiliary is actually allowed
@@ -149,15 +147,17 @@ class PerfectExtractor(BaseExtractor, ABC):
             return None
 
         # Loop over the siblings of the current element.
-        siblings = self.get_siblings(auxiliary, s.get(id_attr), check_preceding)
+        siblings = self.get_siblings(auxiliary, self.get_id(s), check_preceding)
         for n, sibling in enumerate(siblings):
-            # If the tag of the sibling is the perfect tag, we found a Perfect!
+            sibling_text = self.get_text(sibling)
+            sibling_lemma = self.get_lemma(sibling)
             sibling_pos = self.get_pos(language, sibling)
-            sibling_lemma = sibling.get(lemma_attr)
+            sibling_id = self.get_id(sibling)
+            # If the tag of the sibling is the perfect tag, we found a Perfect!
             if sibling_pos in perfect_tags:
                 # Check if the sibling is lexically bound to the auxiliary verb
                 # (only if we're not checking for passive Perfect)
-                before = self.get_siblings(auxiliary, s.get(id_attr), not check_preceding)
+                before = self.get_siblings(auxiliary, self.get_id(s), not check_preceding)
                 if check_ppp and not self.is_lexically_bound(language, pp, auxiliary, sibling, before):
                     break
 
@@ -166,13 +166,12 @@ class PerfectExtractor(BaseExtractor, ABC):
                     if not(check_ppp and sibling_lemma == ppp_lemma):
                         break
 
-                pp.add_word(self.get_text(sibling), sibling_lemma, self.get_pos(language, sibling), sibling.get(id_attr))
+                pp.add_word(sibling_text, sibling_lemma, sibling_pos, sibling_id)
                 is_pp = True
 
                 # ... now check whether this is a passive Perfect or Perfect continuous (by recursion)
                 if check_ppp and sibling_lemma == ppp_lemma:
-                    ppp = self.check_perfect(sibling,
-                                             language,
+                    ppp = self.check_perfect(sibling, language,
                                              check_ppp=False,
                                              check_ppc=True,
                                              check_preceding=check_preceding)
@@ -183,16 +182,16 @@ class PerfectExtractor(BaseExtractor, ABC):
                 break
             # Check if this is a Perfect continuous (in the recursion step)
             elif check_ppc and sibling_pos in ppc_tags and self.in_lemmata_list(sibling_lemma):
-                pp.add_word(self.get_text(sibling), sibling_lemma, self.get_pos(language, sibling), sibling.get(id_attr))
+                pp.add_word(sibling_text, sibling_lemma, sibling_pos, sibling_id)
                 pp.is_continuous = True
                 is_pp = True
                 break
             # Stop looking at punctuation or stop tags
-            elif (self.get_text(sibling) in string.punctuation) or (sibling_pos and sibling_pos.startswith(stop_tags)):
+            elif (sibling_text in string.punctuation) or (sibling_pos and sibling_pos.startswith(stop_tags)):
                 break
             # We didn't break yet? Then add this sibling as a potential non-verb part of the Perfect.
             else:
-                pp.add_word(self.get_text(sibling), sibling_lemma, self.get_pos(language, sibling), sibling.get(id_attr), in_construction=False)
+                pp.add_word(sibling_text, sibling_lemma, sibling_pos, sibling_id, in_construction=False)
 
         # If we haven't yet found a past participle, and we are allowed to look in the other direction,
         # try to find a past participle by looking backwards in the sentence.
