@@ -1,4 +1,9 @@
 # PefectExtractor
+
+![GitHub](https://img.shields.io/github/license/UUDigitalHumanitieslab/perfectextractor?style=plastic)
+![Travis (.org)](https://img.shields.io/travis/UUDigitalHumanitieslab/perfectextractor?style=plastic)
+![PyPI](https://img.shields.io/pypi/v/perfectextractor?style=plastic)
+
 *Extracting Perfects (and related forms) from parallel corpora*
 
 This command-line application allows for extraction of Perfects (and related forms, like the Recent Past construction in French and Spanish) from part-of-speech-tagged, lemmatized and sentence-aligned parallel corpora encoded in XML.
