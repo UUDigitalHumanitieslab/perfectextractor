@@ -1,11 +1,6 @@
 # -*- encoding: utf-8 -*-
 
-import os
-
-from lxml import etree
-
 from perfectextractor.apps.extractor.base import BaseExtractor
-from perfectextractor.apps.extractor.utils import XML
 from .base import BaseBNC
 
 

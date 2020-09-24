@@ -13,6 +13,6 @@ class TestWiktionary(unittest.TestCase):
             self.assertIn('prove', get_translations('aantonen', 'nl', 'en'))
             self.assertIn('blijken', get_translations('prove', 'en', 'nl'))
             self.assertIn('arriver', get_translations('arriveren', 'nl', 'fr'))
-        except ConnectionError as e:
+        except ConnectionError:
             # No connection available, skipping tests
             pass

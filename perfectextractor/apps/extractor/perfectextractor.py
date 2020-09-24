@@ -148,7 +148,7 @@ class PerfectExtractor(BaseExtractor, ABC):
 
         # Loop over the siblings of the current element.
         siblings = self.get_siblings(auxiliary, self.get_id(s), check_preceding)
-        for n, sibling in enumerate(siblings):
+        for sibling in siblings:
             sibling_text = self.get_text(sibling)
             sibling_lemma = self.get_lemma(sibling)
             sibling_pos = self.get_pos(language, sibling)

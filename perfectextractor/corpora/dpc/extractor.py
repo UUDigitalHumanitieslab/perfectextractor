@@ -6,7 +6,6 @@ import os
 from lxml import etree
 
 from perfectextractor.apps.extractor.base import BaseExtractor
-from perfectextractor.apps.extractor.utils import XML
 from .base import BaseDPC, TEI_NS
 from .utils import is_nl, NL
 
@@ -25,6 +24,7 @@ class DPCExtractor(BaseDPC, BaseExtractor):
             if language_to in translation_trees:
                 translated_lines, alignment_type = self.get_translated_lines(alignment_trees, self.l_from, language_to, sentence.get('n'))
                 translated_sentences = [self.get_line_as_xml(translation_trees[language_to], line) for line in translated_lines]
+                result.append(alignment_type)
                 result.append('\n'.join([self.mark_sentence(ts) for ts in translated_sentences]) if translated_sentences else '')
             else:
                 # If no translation is available, add empty columns

@@ -112,9 +112,9 @@ After you've obtained the data, you can run the extraction script with:
 
 If you want to implement the extraction for another corpus, you'll have to create: 
 
-* An implementation of the corpus in the `corpora` directory (see `corpora/opus` for an example).
-* A configuration file in this directory (see `corpora/opus/base.cfg` for an example).
-* An entry in the main script (see `extract.py`)
+  * An implementation of the corpus in the `corpora` directory (see `corpora/opus` for an example).
+  * A configuration file in this directory (see `corpora/opus/base.cfg` for an example).
+  * An entry in the main script (see `extract.py`)
 
 ## Other options to the extraction script
 
