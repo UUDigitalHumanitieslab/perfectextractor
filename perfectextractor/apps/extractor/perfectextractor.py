@@ -143,8 +143,9 @@ class PerfectExtractor(BaseExtractor, ABC):
         is_pp = False
 
         # Check if the starting auxiliary is actually allowed
-        if any(aux_words) and self.get_text(auxiliary).lower() not in aux_words:
-            return None
+        if not check_ppc:
+            if any(aux_words) and self.get_text(auxiliary).lower() not in aux_words:
+                return None
 
         # Loop over the siblings of the current element.
         siblings = self.get_siblings(auxiliary, self.get_id(s), check_preceding)
