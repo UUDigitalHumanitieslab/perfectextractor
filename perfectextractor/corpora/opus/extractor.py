@@ -124,7 +124,7 @@ class OPUSExtractor(BaseOPUS, BaseExtractor):
         to_lines = []
         certainty = None
 
-        sl = sorted([language_from, language_to])
+        sl = self.languages_ordered(language_from, language_to)
         for alignment in alignment_trees[language_to]:
             if sl[0] == language_from:
                 if segment_number in alignment.sources:
@@ -152,7 +152,7 @@ class OPUSExtractor(BaseOPUS, BaseExtractor):
         # Cache the alignment XMLs on the first run
         if not self.alignment_xmls:
             for language_to in self.l_to:
-                sl = sorted([self.l_from, language_to])
+                sl = self.languages_ordered(self.l_from, language_to)
                 alignment_file = os.path.join(data_folder, '-'.join(sl) + '.xml')
                 if os.path.isfile(alignment_file):
                     alignment_tree = etree.parse(alignment_file)
@@ -163,7 +163,7 @@ class OPUSExtractor(BaseOPUS, BaseExtractor):
         alignment_trees = dict()
         translation_trees = dict()
         for language_to in self.alignment_xmls.keys():
-            sl = sorted([self.l_from, language_to])
+            sl = self.languages_ordered(self.l_from, language_to)
             alignment_tree = self.alignment_xmls[language_to]
             base_filename = os.path.basename(filename)
             doc = '{}/{}'.format(self.l_from, base_filename)

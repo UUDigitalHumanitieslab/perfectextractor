@@ -30,6 +30,7 @@ class BaseExtractor(ABC):
                  format_: str = CSV,
                  one_per_sentence: bool = False,
                  sort_by_certainty: bool = False,
+                 no_order_languages: bool = False,
                  file_limit: int = 0,
                  min_file_size: int = 0,
                  max_file_size: int = 0) -> None:
@@ -49,6 +50,7 @@ class BaseExtractor(ABC):
         :param format_: whether to output the file as .csv or .xlsx
         :param one_per_sentence: whether to output all lines, and allow one classification per sentence
         :param sort_by_certainty: whether to sort the files by average alignment certainty
+        :param no_order_languages: whether to order the languages on alignment
         :param file_limit: whether to limit the number of files searched in
         :param min_file_size: whether to only use files larger (or equal) than a certain size
         :param max_file_size: whether to only use files smaller (or equal) than a certain size
@@ -66,6 +68,7 @@ class BaseExtractor(ABC):
         self.format_ = format_
         self.one_per_sentence = one_per_sentence
         self.sort_by_certainty = sort_by_certainty
+        self.no_order_languages = no_order_languages
         self.file_limit = file_limit
         self.min_file_size = min_file_size
         self.max_file_size = max_file_size
@@ -300,6 +303,9 @@ class BaseExtractor(ABC):
     def list_directories(self, path: str) -> Iterator[str]:
         directories = [os.path.join(path, directory) for directory in os.listdir(path)]
         return filter(os.path.isdir, directories)
+
+    def languages_ordered(self, language_from: str, language_to: str) -> List[str]:
+        return [language_from, language_to] if self.no_order_languages else sorted([language_from, language_to])
 
     @staticmethod
     def get_text(element: etree._Element) -> str:

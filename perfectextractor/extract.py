@@ -75,6 +75,8 @@ def process_data_folders(extractor, path):
               help='Output all sentences, and only one classification per sentence')
 @click.option('--sort_by_certainty', is_flag=True,
               help='Sort by certainty?')
+@click.option('--no_order_languages', is_flag=True,
+              help='Do not order the languages alphabetically on alignment')
 @click.option('--file_limit', default=0,
               help='Limit number of files searched')
 @click.option('--min_file_size', default=0,
@@ -85,14 +87,15 @@ def extract(folder, language_from, languages_to, corpus='opus', extractor='base'
             pos=None, search_in_to=False, tense=PRESENT,
             output=TXT, format_=CSV, file_names=None, sentence_ids=None,
             lemmata=None, regex=None, position=None, tokens=None, metadata=None,
-            outfile=None, one_per_sentence=False, sort_by_certainty=False, file_limit=0,
-            min_file_size=0, max_file_size=0):
+            outfile=None, one_per_sentence=False, sort_by_certainty=False,
+            no_order_languages=False,
+            file_limit=0, min_file_size=0, max_file_size=0):
     # Set the default arguments
     kwargs = dict(output=output, file_names=file_names, sentence_ids=sentence_ids,
                   lemmata=lemmata, regex=regex, position=position, tokens=tokens, metadata=metadata,
                   outfile=outfile, format_=format_, one_per_sentence=one_per_sentence,
-                  sort_by_certainty=sort_by_certainty, file_limit=file_limit,
-                  min_file_size=min_file_size, max_file_size=max_file_size)
+                  sort_by_certainty=sort_by_certainty, no_order_languages=no_order_languages,
+                  file_limit=file_limit, min_file_size=min_file_size, max_file_size=max_file_size)
 
     # Determine the extractor to be used
     # TODO: add more varieties
