@@ -1,5 +1,0 @@
-TODO:
-- backwards alignment (2 => 1)
-v laatste nl-en? waarom geen zin? omdat ik 'm afkap
-- niet zoeken naar present perfects bij vertalingen
-- alleen sentence-id's afdrukken i.p.v. hele xml?
