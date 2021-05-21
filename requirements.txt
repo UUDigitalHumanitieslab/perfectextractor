@@ -8,7 +8,7 @@ certifi==2020.12.5
     # via requests
 chardet==4.0.0
     # via requests
-click==7.1.2
+click==8.0.1
     # via -r requirements.in
 idna==2.10
     # via requests
@@ -18,5 +18,5 @@ requests==2.25.1
     # via -r requirements.in
 urllib3==1.26.4
     # via requests
-xlsxwriter==1.4.2
+xlsxwriter==1.4.3
     # via -r requirements.in
