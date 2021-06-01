@@ -16,7 +16,7 @@ lxml==4.6.3
     # via -r requirements.in
 requests==2.25.1
     # via -r requirements.in
-urllib3==1.26.4
+urllib3==1.26.5
     # via requests
 xlsxwriter==1.4.3
     # via -r requirements.in
