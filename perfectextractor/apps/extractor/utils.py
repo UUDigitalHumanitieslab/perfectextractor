@@ -44,7 +44,7 @@ class ExcelWriter:
 
 @contextlib.contextmanager
 def open_csv(filename):
-    with open(filename, 'w') as fileobj:
+    with open(filename, 'w', encoding='utf-8') as fileobj:
         fileobj.write('\uFEFF')  # the UTF-8 BOM to hint Excel we are using that...
         yield csv.writer(fileobj, delimiter=';')
 
