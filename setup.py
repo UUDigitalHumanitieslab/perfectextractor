@@ -31,4 +31,7 @@ setuptools.setup(
         'lxml',
         'requests',
     ],
+    entry_points={
+        'console_scripts': ['extract=perfectextractor.extract:extract'],
+    },
 )

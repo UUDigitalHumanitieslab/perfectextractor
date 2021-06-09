@@ -8,6 +8,21 @@
 
 This command-line application allows for extraction of Perfects (and related forms, like the Recent Past construction in French and Spanish) from part-of-speech-tagged, lemmatized and sentence-aligned parallel corpora encoded in XML.
  
+## Installation
+
+First, create a [virtual environment](https://docs.python.org/3/library/venv.html) and activate it:
+
+    $ python -m venv venv
+    $ source venv/bin/activate
+
+Then, install the requirements in this virtual environment via:
+
+    $ pip install -r requirements.txt
+
+Finally, create the executable `extract` via:
+
+    $ pip install --editable .
+
 ## Recognizing Perfects 
 
 In English, a *present perfect* is easily recognizable as a present form of *to have* plus a past participle, like in (1):
@@ -44,7 +59,7 @@ The extraction script provided here takes care of all these issues, and can have
 
 ### Implementation 
 
-The extraction script (`apps/extractor/perfectextractor.py`) is implemented using the [lxml XML toolkit](http://lxml.de/). 
+The extraction script (`perfectextractor/apps/extractor/perfectextractor.py`) is implemented using the [lxml XML toolkit](http://lxml.de/). 
 
 The script looks for auxiliary verbs (using a [XPath expression](https://en.wikipedia.org/wiki/XPath)), and for each of these, 
 it tries to find a past participle on the right hand side of the sentence (or left hand side in Dutch/German), allowing for words between the verbs, 
@@ -53,7 +68,7 @@ though this lookup stops at the occurrence of other verbs, punctuation and coord
 The script also allows for extraction of *present perfect continuous* forms. 
 
 The script handles these by a list of verbs that use Be as auxiliary. 
-The function *get_ergative_verbs* in `extractor/wiktionary.py` extracts these verbs from [Wiktionary](https://en.wiktionary.org) for Dutch.
+The function *get_ergative_verbs* in `perfectextractor/apps/extractor/wiktionary.py` extracts these verbs from [Wiktionary](https://en.wiktionary.org) for Dutch.
 This function uses the [Requests: HTTP for Humans](http://docs.python-requests.org/) package.
 For German, the list is compiled from [this list](https://deutsch.lingolia.com/en/grammar/verbs/sein-haben).
 
@@ -70,7 +85,7 @@ The Spanish *pasado reciente* is (quite similarly) formed with a present tense o
 
     (9) Acabo de ver a María. [lit. I finish DE see Mary]
 
-The extraction script (`apps/extractor/recentpastextractor.py`) provided here allows export of these constructions from parallel corpora.  
+The extraction script (`perfectextractor/apps/extractor/recentpastextractor.py`) provided here allows export of these constructions from parallel corpora.  
 
 ## Other extractors
 
@@ -82,45 +97,45 @@ This application also allows extraction from parallel corpora based on part-of-s
 
 The extraction was first tested with the [Dutch Parallel Corpus](http://www.kuleuven-kulak.be/DPC).
 This corpus (that uses the [TEI format](http://www.tei-c.org/)) consists of three languages: Dutch, French and English. 
-The configuration for this corpus can be found in `corpora/dpc/base.cfg` and `corpora/dpc/perfect.cfg`.
-Example documents from this corpus are included in the `tests/data/dpc` directory.
+The configuration for this corpus can be found in `perfectextractor/corpora/dpc/base.cfg` and `perfectextractor/corpora/dpc/perfect.cfg`.
+Example documents from this corpus are included in the `perfectextractor/tests/data/dpc` directory.
 The data for this corpus is **closed source**, to retrieve the corpus, you'll have to contact the authors on the cited website.
 After you've obtained the data, you can run the extraction script with:
 
-    python extract.py <folder> en fr nl --corpus=dpc --extractor=perfect
+    extract <folder> en fr nl --corpus=dpc --extractor=perfect
 
 ### OPUS Corpora
 
-The extraction has also been implemented for the open parallel corpus [OPUS](http://opus.nlpl.eu/), that contains most notably the [Europarl Corpus](http://opus.nlpl.eu/Europarl.php) and the [OpenSubtitles Corpus](http://opus.nlpl.eu/OpenSubtitles.php).
+The extraction has also been implemented for the open parallel corpus collection [OPUS](http://opus.nlpl.eu/), that contains most notably the [Europarl Corpus](http://opus.nlpl.eu/Europarl.php) and the [OpenSubtitles Corpus](http://opus.nlpl.eu/OpenSubtitles.php).
 This corpus (that uses the [XCES format](http://www.tei-c.org/) for alignment) consists of a wide variety of languages. 
-The configuration for this corpus can be found in `corpora/opus/base.cfg` and `corpora/opus/perfect.cfg`: implementations have been made for Dutch, English, French, German and Spanish. 
-Example documents from this corpus are included in the `tests/data/europarl` directory.
+The configuration for this corpus can be found in `perfectextractor/corpora/opus/base.cfg` and `perfectextractor/corpora/opus/perfect.cfg`: implementations have been made for Dutch, English, French, German and Spanish. 
+Example documents from this corpus are included in the `perfectextractor/tests/data/europarl` directory.
 The data for this corpus is **open source**: you can download the corpus and the alignment files from the cited website.
 After you've obtained the data, you can run the extraction script with:
 
-    python extract.py <folder> en de es --corpus=opus --extractor=perfect
+    extract <folder> en de es --corpus=opus --extractor=perfect
 
-### BNC Corpus
+### British National Corpus (BNC)
 
-The extraction has also been implemented for the monolingual BNC Corpus.
-The data for this corpus is **open source**: you can download the corpus from the cited website.
+The extraction has also been implemented for the monolingual [British National Corpus](http://www.natcorp.ox.ac.uk/).
+The data for this corpus is **open source**: you can download the corpus from the linked website.
 After you've obtained the data, you can run the extraction script with:
 
-    python extract.py <folder> en --corpus=bnc --extractor=perfect
+    extract <folder> en --corpus=bnc --extractor=perfect
 
 ### Implementing your own corpus
 
 If you want to implement the extraction for another corpus, you'll have to create: 
 
-  * An implementation of the corpus in the `corpora` directory (see `corpora/opus` for an example).
-  * A configuration file in this directory (see `corpora/opus/base.cfg` for an example).
-  * An entry in the main script (see `extract.py`)
+  * An implementation of the corpus in the `perfectextractor/corpora` directory (see `perfectextractor/corpora/opus` for an example).
+  * A configuration file in this directory (see `perfectextractor/corpora/opus/base.cfg` for an example).
+  * An entry in the main script (see `perfectextractor/extract.py`)
 
 ## Other options to the extraction script
 
 You can view all options of the extraction script by typing:
 
-    python extract.py --help
+    extract --help
 
 Do note that at this point in time, not all options are available in all corpora.
 Feel free to send a pull request once you have implemented an option, or to request one by creating an issue. 
@@ -139,7 +154,7 @@ Example usage:
 
 ### merge_results
 
-This script allows to merge results from various files.
+This script allows merging results from various files.
 Example usage:
 
     python merge_results.py 
