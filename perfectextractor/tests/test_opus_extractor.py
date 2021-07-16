@@ -76,11 +76,11 @@ class TestEuroparlPerfectExtractor(unittest.TestCase):
         self.assertEqual(align, '2 => 1')
 
     def test_get_line_by_number(self):
-        xml_sentence, _, pp = self.nl_extractor.get_line_and_pp(self.nl_tree, 'nl', '4')
-        self.assertEqual(etree.fromstring(xml_sentence).get('id'), '4')
-        self.assertEqual(pp.construction(), ['is', 'aangebroken'])
-        self.assertEqual(pp.construction_ids(), 'w4.9 w4.19')
-        self.assertEqual(pp.words_between(), 9)
+        xml_sentence, _, pp = self.nl_extractor.get_line_and_pp(self.nl_tree, 'nl', '16')
+        self.assertEqual(etree.fromstring(xml_sentence).get('id'), '16')
+        self.assertEqual(pp.construction(), ['is', 'hersteld'])
+        self.assertEqual(pp.construction_ids(), 'w16.17 w16.31')
+        self.assertEqual(pp.words_between(), 13)
         self.assertFalse(pp.is_passive)
         self.assertFalse(pp.is_continuous)
 
@@ -244,7 +244,7 @@ class TestEuroparlPerfectExtractor(unittest.TestCase):
 
         past_perfect_extractor = OPUSPerfectExtractor('nl', [], tense=PAST)
         results = self.merge_results(past_perfect_extractor.generate_results(os.path.join(EUROPARL_DATA, 'nl')))
-        self.assertEqual(len(results), 5)
+        self.assertEqual(len(results), 3)
         self.assertEqual(results[0][3], u'had gelegd')
 
         past_perfect_extractor = OPUSPerfectExtractor('fr', [], tense=PAST)
