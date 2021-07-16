@@ -1,20 +1,20 @@
-from abc import ABC, abstractmethod
+from abc import abstractmethod
 import codecs
-import configparser
 import os
 import time
-from typing import Dict, Generator, Iterator, List, Optional, Tuple, Union
+from typing import Dict, Generator, List, Optional, Tuple, Union
 
 import click
 from lxml import etree
 
+from perfectextractor.apps.core.base import BaseWorker
 from .models import Alignment, MultiWordExpression
-from .utils import TXT, XML, CSV, open_csv, open_xlsx, CachedConfig
+from .utils import TXT, XML, CSV, open_csv, open_xlsx
 
 LEMMATA_CONFIG = os.path.join(os.path.dirname(__file__), 'config/{language}_lemmata.txt')
 
 
-class BaseExtractor(ABC):
+class BaseExtractor(BaseWorker):
     def __init__(self,
                  language_from: str,
                  languages_to: Optional[List[str]] = None,
@@ -55,17 +55,16 @@ class BaseExtractor(ABC):
         :param min_file_size: whether to only use files larger (or equal) than a certain size
         :param max_file_size: whether to only use files smaller (or equal) than a certain size
         """
-        self.l_from = language_from
+        super().__init__(language_from, outfile, format_)
+
         self.l_to = languages_to or []
         self.file_names = file_names
         self.sentence_ids = sentence_ids
         self.tokens: Optional[Dict[str, str]] = dict(tokens) if tokens else None
         self.metadata: Dict[str, str] = dict(metadata) if metadata else {}
         self.regex = regex
-        self.outfile = outfile
         self.position = position
         self.output = output
-        self.format_ = format_
         self.one_per_sentence = one_per_sentence
         self.sort_by_certainty = sort_by_certainty
         self.no_order_languages = no_order_languages
@@ -76,11 +75,6 @@ class BaseExtractor(ABC):
         # Read in the lemmata list (if provided)
         self.lemmata_list: List[str] = []
         self.read_lemmata(lemmata)
-
-        # Read the config
-        config = configparser.ConfigParser()
-        config.read(self.get_config())
-        self.config = CachedConfig(config)
 
         # Other variables
         self.other_extractors: List[BaseExtractor] = []
@@ -300,35 +294,8 @@ class BaseExtractor(ABC):
         """
         self.other_extractors.append(extractor)
 
-    def list_directories(self, path: str) -> Iterator[str]:
-        directories = [os.path.join(path, directory) for directory in os.listdir(path)]
-        return filter(os.path.isdir, directories)
-
     def languages_ordered(self, language_from: str, language_to: str) -> List[str]:
         return [language_from, language_to] if self.no_order_languages else sorted([language_from, language_to])
-
-    @staticmethod
-    def get_text(element: etree._Element) -> str:
-        return str(element.text) if element.text else ''
-
-    def get_id(self, element: etree._Element) -> str:
-        # TODO: for corpora without XML id, we should base this on the position in the sentence
-        id_attr = self.config.get('all', 'id')
-        return element.get(id_attr, '?')
-
-    def get_lemma(self, element: etree._Element) -> str:
-        lemma_attr = self.config.get('all', 'lemma_attr')
-        return element.get(lemma_attr, '?')
-
-    def get_pos(self, language: str, element: etree._Element) -> str:
-        """
-        Retrieves the part-of-speech tag for the current language and given element,
-        with a fallback to the default part-of-speech tag in the corpus as a whole.
-        :param language: the current language
-        :param element: the current element
-        :return: the part-of-speech tag
-        """
-        return element.get(self.config.get(language, 'pos', fallback=self.config.get('all', 'pos')), '?')
 
     def get_tenses(self, sentence):
         """

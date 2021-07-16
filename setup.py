@@ -32,6 +32,7 @@ setuptools.setup(
         'requests',
     ],
     entry_points={
-        'console_scripts': ['extract=perfectextractor.extract:extract'],
+        'console_scripts': ['extract=perfectextractor.extract:extract',
+                            'count=perfectextractor.count:count'],
     },
 )

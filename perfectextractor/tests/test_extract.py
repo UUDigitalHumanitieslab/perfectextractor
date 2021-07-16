@@ -8,6 +8,7 @@ from perfectextractor.extract import extract
 
 EUROPARL_DATA = os.path.join(os.path.dirname(__file__), 'data/europarl')
 
+
 class TestCLI(unittest.TestCase):
     def setUp(self):
         self.runner = CliRunner()

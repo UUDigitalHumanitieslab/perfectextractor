@@ -1,4 +1,5 @@
 from collections import Counter
+import os
 
 from lxml import etree
 
@@ -7,6 +8,10 @@ from .base import BaseOPUS
 
 
 class OPUSCounter(BaseOPUS, BaseCounter):
+    def get_config(self):
+        counter_config = os.path.join(os.path.dirname(__file__), 'counter.cfg')
+        return [super().get_config(), counter_config]
+
     def process_file(self, filename):
         """
         Processes a single file.
@@ -17,10 +22,13 @@ class OPUSCounter(BaseOPUS, BaseCounter):
         tree = etree.parse(filename)
 
         c = Counter()
-        for w in tree.xpath('.//w[starts-with(@tree, "V")]'):
-            c[w.get('lem', '-')] += 1
+        for w in tree.xpath(self.config.get(self.l_from, 'xpath')):
+            c[self.get_lemma(w)] += 1
 
         for k, v in c.most_common():
-            results.append([filename, 'opus', k, str(v)])
+            results.append([os.path.basename(filename), 'opus', k, str(v)])
 
         return results
+
+    def list_directories(self, path):
+        return filter(lambda x: x.endswith(self.l_from), super().list_directories(path))
