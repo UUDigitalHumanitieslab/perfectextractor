@@ -62,6 +62,7 @@ class PoSExtractor(BaseExtractor, ABC):
         Preprocesses the found word:
         - removes a word if it does not occur in the lemmata list
         - removes a word if it is not in the correct position in the sentence
+        - captures the next element for an extraction of tokens
         Returns the found word as a list, as it might be interesting to include words before and after
         (see e.g. OPUSFrenchArticleExtractor)
         """
@@ -73,18 +74,21 @@ class PoSExtractor(BaseExtractor, ABC):
 
         if self.tokens:
             end_token = self.tokens.get(self.get_id(word))
-            next_word = word.getnext()
-            if next_word is None:
-                raise ValueError('End token {} not found'.format(end_token))
-            else:
-                while self.get_id(next_word) != end_token:
-                    result.append(next_word)
-
-                    next_word = next_word.getnext()
-                    if next_word is None:
-                        raise ValueError('End token {} not found'.format(end_token))
+            # If the end_token is the same as the start_token, we're done, otherwise continue
+            if self.get_id(word) != end_token:
+                # Find the end_token in the next w elements
+                next_word = word.getnext()
+                if next_word is None:
+                    raise ValueError('End token {} not found'.format(end_token))
                 else:
-                    result.append(next_word)
+                    while self.get_id(next_word) != end_token:
+                        result.append(next_word)
+
+                        next_word = next_word.getnext()
+                        if next_word is None:
+                            raise ValueError('End token {} not found'.format(end_token))
+                    else:
+                        result.append(next_word)
 
         return result
 
