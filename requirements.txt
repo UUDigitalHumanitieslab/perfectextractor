@@ -4,19 +4,19 @@
 #
 #    pip-compile requirements.in
 #
-certifi==2021.5.30
+certifi==2021.10.8
     # via requests
-charset-normalizer==2.0.6
+charset-normalizer==2.0.12
     # via requests
-click==8.0.1
+click==8.0.4
     # via -r requirements.in
-idna==3.2
+idna==3.3
     # via requests
-lxml==4.6.3
+lxml==4.8.0
     # via -r requirements.in
-requests==2.26.0
+requests==2.27.1
     # via -r requirements.in
-urllib3==1.26.7
+urllib3==1.26.8
     # via requests
-xlsxwriter==3.0.1
+xlsxwriter==3.0.3
     # via -r requirements.in
