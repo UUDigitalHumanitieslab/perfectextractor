@@ -1,4 +1,4 @@
 click<8.1
 lxml
-requests
+requests<2.28
 xlsxwriter
