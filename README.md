@@ -87,6 +87,20 @@ The Spanish *pasado reciente* is (quite similarly) formed with a present tense o
 
 The extraction script (`perfectextractor/apps/extractor/recentpastextractor.py`) provided here allows export of these constructions from parallel corpora.  
 
+## SINCE + duration
+
+In most languages, the adverb SINCE can be followed by a durational adverbial, such as *seit drei Jahren* 'since three years' in (10) below.
+
+    (10) Marie ist seit drei Jahren glücklich mit Jan zusammen.
+
+We allow extraction of such phrases in German and Dutch.
+
+## Present Continuous
+
+This application also allows extraction of the English *Present Continuous* form, such as *is reading* in (11) below.
+
+    (11) Mary is reading Middlemarch.
+
 ## Other extractors
 
 This application also allows extraction from parallel corpora based on part-of-speech tags or regexes. 
