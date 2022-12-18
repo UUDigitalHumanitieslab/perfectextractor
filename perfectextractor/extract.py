@@ -13,6 +13,7 @@ from perfectextractor.corpora.opus.perfect import OPUSPerfectExtractor
 from perfectextractor.corpora.opus.pos import OPUSPoSExtractor
 from perfectextractor.corpora.opus.recentpast import OPUSRecentPastExtractor
 from perfectextractor.corpora.opus.since import OPUSSinceDurationExtractor
+from perfectextractor.corpora.opus.continuous import OPUSContinuousExtractor
 from perfectextractor.apps.extractor.utils import TXT, XML, CSV, XLSX
 from perfectextractor.apps.extractor.perfectextractor import PRESENT, PAST
 
@@ -27,6 +28,7 @@ POS = 'pos'
 PERFECT = 'perfect'
 RECENT_PAST = 'recent_past'
 SINCE_DURATION = 'since_duration'
+CONTINUOUS = 'continuous'
 
 
 def process_data_folders(extractor, path):
@@ -43,7 +45,8 @@ def process_data_folders(extractor, path):
 @click.argument('languages_to', nargs=-1)  # nargs=-1 eats up all remaining arguments
 @click.option('--corpus', default=OPUS, type=click.Choice([OPUS, DPC, BNC]),
               help='Which type of corpus to use')
-@click.option('--extractor', default=BASE, type=click.Choice([BASE, POS, PERFECT, RECENT_PAST, SINCE_DURATION]),
+@click.option('--extractor', default=BASE, type=click.Choice([BASE, POS, PERFECT, RECENT_PAST,
+                                                              SINCE_DURATION, CONTINUOUS]),
               help='Which kind of extractor to use')
 @click.option('--file_names', '-f', multiple=True,
               help='Limits the file names searched into')
@@ -109,6 +112,8 @@ def extract(folder, language_from, languages_to, corpus='opus', extractor='base'
             resulting_extractor = OPUSRecentPastExtractor
         elif extractor == SINCE_DURATION:
             resulting_extractor = OPUSSinceDurationExtractor
+        elif extractor == CONTINUOUS:
+            resulting_extractor = OPUSContinuousExtractor
         else:
             resulting_extractor = OPUSExtractor
     elif corpus == DPC:
@@ -120,6 +125,8 @@ def extract(folder, language_from, languages_to, corpus='opus', extractor='base'
             raise click.ClickException('Corpus or extractor type not implemented!')
         elif extractor == SINCE_DURATION:
             raise click.ClickException('Corpus or extractor type not implemented!')
+        elif extractor == CONTINUOUS:
+            raise click.ClickException('Corpus or extractor type not implemented!')
         else:
             resulting_extractor = DPCExtractor
     elif corpus == BNC:
@@ -130,6 +137,8 @@ def extract(folder, language_from, languages_to, corpus='opus', extractor='base'
         elif extractor == RECENT_PAST:
             raise click.ClickException('Corpus or extractor type not implemented!')
         elif extractor == SINCE_DURATION:
+            raise click.ClickException('Corpus or extractor type not implemented!')
+        elif extractor == CONTINUOUS:
             raise click.ClickException('Corpus or extractor type not implemented!')
         else:
             resulting_extractor = BNCExtractor

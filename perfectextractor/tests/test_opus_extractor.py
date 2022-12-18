@@ -12,6 +12,7 @@ from perfectextractor.corpora.opus.perfect import OPUSPerfectExtractor
 from perfectextractor.corpora.opus.pos import OPUSPoSExtractor
 from perfectextractor.corpora.opus.recentpast import OPUSRecentPastExtractor
 from perfectextractor.corpora.opus.since import OPUSSinceDurationExtractor
+from perfectextractor.corpora.opus.continuous import OPUSContinuousExtractor
 
 EUROPARL_DATA = os.path.join(os.path.dirname(__file__), 'data/europarl')
 DCEP_DATA = os.path.join(os.path.dirname(__file__), 'data/dcep')
@@ -235,6 +236,19 @@ class TestEuroparlPerfectExtractor(unittest.TestCase):
         results = self.merge_results(article_extractor.generate_results(os.path.join(EUROPARL_DATA, 'fr')))
         self.assertEqual(len(results), 2041)
         self.assertEqual(results[0][2], u'indefinite partitive')
+
+    def test_continuous(self):
+        article_extractor = OPUSContinuousExtractor('en', [])
+        results = self.merge_results(article_extractor.generate_results(os.path.join(EUROPARL_DATA, 'en')))
+        self.assertEqual(len(results), 61)
+        self.assertEqual(results[0][2], u'present continuous')
+        self.assertEqual(results[0][3], u'is sitting')
+        self.assertEqual(results[1][2], u'present continuous')
+        self.assertEqual(results[1][3], u'are going')
+        self.assertEqual(results[2][2], u'present continuous')
+        self.assertEqual(results[2][3], u'is sitting')
+        self.assertEqual(results[3][2], u'present continuous')
+        self.assertEqual(results[3][3], u'are attending')
 
     def test_past_perfect(self):
         past_perfect_extractor = OPUSPerfectExtractor('en', [], tense=PAST)
