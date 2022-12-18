@@ -5,14 +5,14 @@ name: perfectextractor
 
 on:
   push:
-    branches: [ $default-branch ]
+    branches: 'develop'
   pull_request:
-    branches: [ $default-branch ]
+    branches: 'develop'
 
 jobs:
   build:
 
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     strategy:
       fail-fast: false
       matrix:
